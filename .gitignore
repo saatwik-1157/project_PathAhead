@@ -1,0 +1,18 @@
+# Local integration keys — NEVER commit these
+js/config.js
+
+# Local dev / preview tooling
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+
+# Logs & temp
+*.log
+node_modules/
