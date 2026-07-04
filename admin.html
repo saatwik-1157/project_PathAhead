@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — PathAhead</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#2563EB" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    body { background: var(--surface); }
+
+    /* Header */
+    .admin-top { background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+    .admin-top .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
+    .admin-top .brand { font-size: 1.15rem; }
+    .admin-top .brand-logo { width: 40px; height: 40px; }
+    .admin-top .brand-logo img { width: 100%; height: 100%; object-fit: contain; }
+    .admin-right { display: flex; align-items: center; gap: 10px; }
+    .admin-user { font-size: .82rem; color: var(--muted); font-weight: 600; margin-right: 4px; }
+    .admin-badge { font-size: .72rem; font-weight: 700; padding: 6px 12px; border-radius: 999px; letter-spacing: .02em; white-space: nowrap; }
+    .badge-demo { background: var(--secondary-soft); color: var(--secondary-dark); }
+    .badge-live { background: #ECFDF5; color: #059669; }
+    [data-theme="dark"] .badge-live { background: rgba(16,185,129,.16); color: #34D399; }
+    .icon-btn { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; color: var(--muted); border: 1px solid var(--border); background: var(--bg); transition: all .2s; }
+    .icon-btn:hover { color: var(--ink); border-color: var(--border-strong); }
+    .icon-btn svg { width: 18px; height: 18px; }
+
+    /* Login */
+    .login-wrap { max-width: 420px; margin: 7vh auto; padding: 0 20px; }
+    .login-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 38px; box-shadow: var(--shadow-lg); }
+    .login-card .brand { justify-content: center; margin-bottom: 6px; }
+    .login-card .brand-logo { width: 46px; height: 46px; }
+    .login-card .brand-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+    /* Stat cards */
+    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 28px 0; }
+    .mini { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 22px; box-shadow: var(--shadow-sm); transition: transform .2s, box-shadow .2s; position: relative; overflow: hidden; }
+    .mini:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .mini .mini-ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 14px; }
+    .mini .mini-ic svg { width: 21px; height: 21px; }
+    .mini .n { font-size: 2rem; font-weight: 800; color: var(--ink); line-height: 1; }
+    .mini .l { color: var(--muted); font-size: .86rem; margin-top: 6px; font-weight: 600; }
+    .mini.c-blue .mini-ic { background: var(--primary-soft); color: var(--primary); }
+    .mini.c-orange .mini-ic { background: var(--secondary-soft); color: var(--secondary); }
+    .mini.c-green .mini-ic { background: rgba(16,185,129,.14); color: #10B981; }
+    .mini.c-purple .mini-ic { background: rgba(139,92,246,.14); color: #8B5CF6; }
+
+    /* Toolbar */
+    .toolbar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
+    .seg { display: flex; gap: 4px; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 5px; flex-wrap: wrap; }
+    .seg button { padding: 9px 16px; border-radius: 999px; font-weight: 600; font-size: .86rem; color: var(--muted); transition: all .18s; }
+    .seg button:hover { color: var(--ink); }
+    .seg button.active { background: var(--primary); color: #fff; }
+    .search { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; margin-left: auto; }
+    .search svg { width: 16px; height: 16px; color: var(--muted); flex: none; }
+    .search input { border: none; background: none; outline: none; font-family: inherit; font-size: .9rem; color: var(--text); width: 160px; }
+
+    /* Table */
+    .table-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: auto; box-shadow: var(--shadow-sm); }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 680px; }
+    th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--surface-2); vertical-align: top; }
+    [data-theme="dark"] th, [data-theme="dark"] td { border-bottom-color: var(--border); }
+    th { background: var(--surface); font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); position: sticky; top: 0; font-weight: 700; }
+    tbody tr { transition: background .15s; }
+    tbody tr:hover { background: var(--surface); }
+    td { color: var(--text); }
+    td.time { color: var(--muted); white-space: nowrap; font-size: .82rem; }
+    td.first { font-weight: 700; color: var(--ink); }
+    .empty { padding: 60px 20px; text-align: center; color: var(--muted); }
+    .empty svg { width: 42px; height: 42px; margin: 0 auto 14px; opacity: .5; }
+    .err-msg { color: #EF4444; font-size: .85rem; margin-top: 12px; display: none; }
+    .err-msg.show { display: block; }
+
+    @media (max-width: 680px) { .stat-row { grid-template-columns: 1fr 1fr; } .search { margin-left: 0; width: 100%; } .search input { width: 100%; } .admin-user { display: none; } }
+  </style>
+</head>
+<body data-page="admin">
+
+  <!-- LOGIN -->
+  <div id="login" class="login-wrap">
+    <div class="login-card">
+      <a class="brand" href="index.html"><span class="brand-logo"><img src="assets/logo-mark.svg" alt="PathAhead" /></span>PathAhead</a>
+      <h1 class="center" style="font-size:1.35rem;margin:8px 0 4px">Admin Dashboard</h1>
+      <p class="center muted" id="login-sub" style="font-size:.9rem;margin-bottom:24px">Sign in to view submissions.</p>
+      <form id="login-form">
+        <div id="live-fields" style="display:none">
+          <div class="field" style="margin-bottom:14px"><label>Email</label><input type="email" id="admin-email" placeholder="you@example.com" autocomplete="username" /></div>
+          <div class="field"><label>Password</label><input type="password" id="admin-pass" placeholder="Your password" autocomplete="current-password" /></div>
+        </div>
+        <div id="demo-fields">
+          <div class="field"><label>Passcode</label><input type="password" id="admin-code" placeholder="Enter passcode" autocomplete="off" /></div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top:20px" id="login-btn">Sign In</button>
+        <p class="err-msg" id="login-err">Incorrect credentials. Please try again.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dash" style="display:none">
+    <div class="admin-top">
+      <div class="container">
+        <a class="brand" href="index.html"><span class="brand-logo"><img src="assets/logo-mark.svg" alt="PathAhead" /></span>PathAhead Admin</a>
+        <div class="admin-right">
+          <span class="admin-user" id="admin-user"></span>
+          <span class="admin-badge" id="mode-badge"></span>
+          <button class="icon-btn" id="theme-btn" aria-label="Toggle theme" title="Toggle theme">
+            <span class="moon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+            <span class="sun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span>
+          </button>
+          <button class="btn btn-ghost" id="refresh-btn" style="padding:9px 16px">Refresh</button>
+          <button class="btn btn-outline" id="logout-btn" style="padding:9px 16px">Log out</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="padding-top:28px;padding-bottom:64px">
+      <div id="demo-note" style="display:none;background:var(--secondary-soft);border:1px solid rgba(249,115,22,.3);color:var(--secondary-dark);padding:14px 18px;border-radius:var(--r);font-size:.9rem;margin-bottom:22px">
+        <strong>Demo mode.</strong> Showing submissions saved in <em>this browser</em>. Connect Supabase (see SETUP.md) for a live database across all visitors.
+      </div>
+
+      <div class="stat-row">
+        <div class="mini c-blue"><div class="mini-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="n" id="c-contact">0</div><div class="l">Contact Messages</div></div>
+        <div class="mini c-orange"><div class="mini-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div><div class="n" id="c-college">0</div><div class="l">College Inquiries</div></div>
+        <div class="mini c-green"><div class="mini-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div class="n" id="c-student">0</div><div class="l">Student Registrations</div></div>
+        <div class="mini c-purple"><div class="mini-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></div><div class="n" id="c-news">0</div><div class="l">Newsletter Signups</div></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="seg" id="seg">
+          <button class="active" data-kind="college_inquiry">College Inquiries</button>
+          <button data-kind="student_registration">Student Registrations</button>
+          <button data-kind="contact">Contact Messages</button>
+          <button data-kind="newsletter">Newsletter</button>
+        </div>
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="search" placeholder="Search leads…" />
+        </div>
+        <button class="btn btn-primary" id="export-btn" style="padding:9px 18px">Export CSV</button>
+      </div>
+
+      <div class="table-wrap"><div id="table"></div></div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var CFG = window.PATHAHEAD || {};
+    var LIVE = !!(CFG.supabaseUrl && CFG.supabaseAnonKey);
+    var DEMO_PASSCODE = CFG.adminPasscode || "pathahead";
+    var KINDS = { college_inquiry: "College Inquiries", student_registration: "Student Registrations", contact: "Contact Messages", newsletter: "Newsletter" };
+    var store = { college_inquiry: [], student_registration: [], contact: [], newsletter: [] };
+    var current = "college_inquiry";
+    var filterText = "";
+    var sb = null, adminEmail = "";
+    var el = function (id) { return document.getElementById(id); };
+
+    // Theme toggle (shares the site's preference)
+    el("theme-btn").addEventListener("click", function () {
+      var dark = document.documentElement.getAttribute("data-theme") === "dark";
+      if (dark) document.documentElement.removeAttribute("data-theme");
+      else document.documentElement.setAttribute("data-theme", "dark");
+      try { localStorage.setItem("pathahead-theme", dark ? "light" : "dark"); } catch (e) {}
+    });
+
+    // Login UI
+    el("live-fields").style.display = LIVE ? "block" : "none";
+    el("demo-fields").style.display = LIVE ? "none" : "block";
+    el("login-sub").textContent = LIVE ? "Sign in with your admin account." : "Demo mode — enter the passcode to preview saved submissions.";
+
+    el("login-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      el("login-err").classList.remove("show");
+      var btn = el("login-btn"); btn.disabled = true; btn.textContent = "Signing in…";
+      function fail(msg) { el("login-err").textContent = msg; el("login-err").classList.add("show"); btn.disabled = false; btn.textContent = "Sign In"; }
+      if (LIVE) {
+        window.PATHAHEAD_getSupabase().then(function (client) {
+          sb = client;
+          return client.auth.signInWithPassword({ email: el("admin-email").value.trim(), password: el("admin-pass").value });
+        }).then(function (res) {
+          if (res && res.error) { fail(res.error.message || "Sign-in failed."); return; }
+          adminEmail = (res.data.user && res.data.user.email) || "";
+          openDash();
+        }).catch(function () { fail("Could not reach the server."); });
+      } else {
+        if (el("admin-code").value === DEMO_PASSCODE) { adminEmail = "Demo user"; openDash(); }
+        else fail("Incorrect passcode.");
+      }
+    });
+
+    function openDash() {
+      el("login").style.display = "none";
+      el("dash").style.display = "block";
+      el("mode-badge").textContent = LIVE ? "● Live" : "● Demo";
+      el("mode-badge").className = "admin-badge " + (LIVE ? "badge-live" : "badge-demo");
+      el("admin-user").textContent = adminEmail ? ("Signed in · " + adminEmail) : "";
+      el("demo-note").style.display = LIVE ? "none" : "block";
+      loadData();
+    }
+
+    function loadData() {
+      if (LIVE && sb) {
+        sb.from("submissions").select("kind,payload,created_at").order("created_at", { ascending: false }).then(function (res) {
+          store = { college_inquiry: [], student_registration: [], contact: [], newsletter: [] };
+          (res.data || []).forEach(function (row) { if (store[row.kind]) store[row.kind].push({ data: row.payload || {}, at: row.created_at }); });
+          render();
+        });
+      } else {
+        Object.keys(store).forEach(function (k) {
+          try { store[k] = JSON.parse(localStorage.getItem("pathahead_" + k) || "[]").slice().reverse(); } catch (e) { store[k] = []; }
+        });
+        render();
+      }
+    }
+
+    function render() {
+      el("c-college").textContent = store.college_inquiry.length;
+      el("c-student").textContent = store.student_registration.length;
+      el("c-contact").textContent = store.contact.length;
+      el("c-news").textContent = store.newsletter.length;
+      renderTable();
+    }
+
+    function fmt(iso) { try { return new Date(iso).toLocaleString(); } catch (e) { return iso || ""; } }
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
+
+    function filtered() {
+      var rows = store[current] || [];
+      if (!filterText) return rows;
+      var q = filterText.toLowerCase();
+      return rows.filter(function (r) {
+        return Object.keys(r.data || {}).some(function (k) { return String(r.data[k]).toLowerCase().indexOf(q) > -1; });
+      });
+    }
+
+    function renderTable() {
+      var rows = filtered();
+      var box = el("table");
+      if (!rows.length) {
+        box.innerHTML = '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>' +
+          (filterText ? "No results for “" + esc(filterText) + "”." : "No " + KINDS[current].toLowerCase() + " yet.") + "</div>";
+        return;
+      }
+      var cols = [];
+      rows.forEach(function (r) { Object.keys(r.data || {}).forEach(function (k) { if (cols.indexOf(k) < 0) cols.push(k); }); });
+      var html = "<table><thead><tr>";
+      cols.forEach(function (c) { html += "<th>" + esc(c) + "</th>"; });
+      html += "<th>Received</th></tr></thead><tbody>";
+      rows.forEach(function (r) {
+        html += "<tr>";
+        cols.forEach(function (c, i) { html += '<td' + (i === 0 ? ' class="first"' : '') + ">" + esc((r.data || {})[c] || "—") + "</td>"; });
+        html += '<td class="time">' + esc(fmt(r.at)) + "</td></tr>";
+      });
+      html += "</tbody></table>";
+      box.innerHTML = html;
+    }
+
+    el("seg").addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      el("seg").querySelectorAll("button").forEach(function (x) { x.classList.remove("active"); });
+      b.classList.add("active"); current = b.getAttribute("data-kind"); renderTable();
+    });
+    el("search").addEventListener("input", function () { filterText = this.value.trim(); renderTable(); });
+    el("refresh-btn").addEventListener("click", loadData);
+    el("logout-btn").addEventListener("click", function () { if (LIVE && sb) { try { sb.auth.signOut(); } catch (e) {} } location.reload(); });
+
+    el("export-btn").addEventListener("click", function () {
+      var rows = filtered(); if (!rows.length) return;
+      var cols = []; rows.forEach(function (r) { Object.keys(r.data || {}).forEach(function (k) { if (cols.indexOf(k) < 0) cols.push(k); }); });
+      cols.push("received");
+      var lines = [cols.join(",")];
+      rows.forEach(function (r) {
+        lines.push(cols.map(function (c) {
+          var v = c === "received" ? fmt(r.at) : ((r.data || {})[c] || "");
+          return '"' + String(v).replace(/"/g, '""') + '"';
+        }).join(","));
+      });
+      var blob = new Blob([lines.join("\n")], { type: "text/csv" });
+      var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "pathahead-" + current + ".csv"; a.click();
+    });
+  })();
+  </script>
+</body>
+</html>

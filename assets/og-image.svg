@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#EFF4FF"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#1E40AF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1050" cy="120" r="240" fill="#2563EB" opacity="0.08"/>
+  <circle cx="150" cy="560" r="220" fill="#F97316" opacity="0.08"/>
+
+  <!-- Brand -->
+  <g transform="translate(90,90)">
+    <rect width="64" height="64" rx="16" fill="url(#brand)"/>
+    <g transform="translate(19,19)" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 1h9a5 5 0 0 1 5 5v20a4 4 0 0 0-4-4H1z" transform="scale(0.9)"/>
+      <path d="M29 1h-9a5 5 0 0 0-5 5v20a4 4 0 0 1 4-4h10z" transform="scale(0.9)"/>
+    </g>
+    <text x="82" y="44" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800" fill="#0F172A">PathAhead</text>
+  </g>
+
+  <!-- Headline -->
+  <text x="90" y="300" font-family="Inter, Arial, sans-serif" font-size="88" font-weight="800" fill="#0F172A" letter-spacing="-2">Your Career</text>
+  <text x="90" y="400" font-family="Inter, Arial, sans-serif" font-size="88" font-weight="800" fill="#2563EB" letter-spacing="-2">Starts Here.</text>
+
+  <!-- Sub -->
+  <text x="94" y="470" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="500" fill="#64748B">Premium career workshops for Intermediate students across India.</text>
+
+  <!-- Pills -->
+  <g font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600">
+    <rect x="90" y="520" width="230" height="56" rx="28" fill="#2563EB"/>
+    <text x="205" y="556" fill="#fff" text-anchor="middle">Book a Workshop</text>
+    <rect x="340" y="520" width="220" height="56" rx="28" fill="#fff" stroke="#CBD5E1" stroke-width="1.5"/>
+    <text x="450" y="556" fill="#0F172A" text-anchor="middle">Future-Ready</text>
+  </g>
+</svg>

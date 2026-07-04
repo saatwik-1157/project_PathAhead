@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PathAhead — Premium Career Guidance Brochure</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --blue:#2563EB; --purple:#6A5CFF; --cyan:#00C9FF; --orange:#F97316; --orange-d:#EA580C;
+      --success:#00D084; --navy:#0B1120; --ink:#16294A; --slate:#1E293B; --muted:#64748B;
+      --light:#F8FAFC; --border:#E6EBF4;
+      --g-hero:linear-gradient(135deg,#0B1120 0%,#152046 45%,#3A2A7A 100%);
+      --g-bp:linear-gradient(135deg,#2563EB,#6A5CFF);
+      --g-pc:linear-gradient(135deg,#6A5CFF,#00C9FF);
+      --g-bc:linear-gradient(135deg,#2563EB,#00C9FF);
+      --g-or:linear-gradient(135deg,#F97316,#FB923C);
+      --shadow:0 20px 50px rgba(15,23,42,.10); --shadow-lg:0 30px 70px rgba(15,23,42,.16);
+      --ease:cubic-bezier(.22,1,.36,1);
+    }
+    *{box-sizing:border-box;margin:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',system-ui,sans-serif;color:var(--slate);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased;-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow-x:hidden}
+    img{display:block;max-width:100%}
+    .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+    h1,h2,h3{color:var(--ink);font-weight:800;letter-spacing:-.02em;line-height:1.12}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:7px 15px;border-radius:999px}
+    .eyebrow.blue{color:var(--blue);background:rgba(37,99,235,.1)}
+    .eyebrow.orange{color:var(--orange-d);background:rgba(249,115,22,.12)}
+    .eyebrow.light{color:#9DB8FF;background:rgba(255,255,255,.1)}
+    .muted{color:var(--muted)}
+    .grad-text{background:var(--g-pc);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .grad-text-or{background:var(--g-or);-webkit-background-clip:text;background-clip:text;color:transparent}
+    section{position:relative}
+    .sec{padding:74px 0}
+    .center{text-align:center}
+    .head{max-width:640px;margin:0 auto 46px;text-align:center}
+    .head h2{font-size:clamp(1.8rem,3.6vw,2.6rem);margin:16px 0 10px}
+    .head p{font-size:1.05rem;color:var(--muted)}
+
+    /* Reveal */
+    .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .rv.in{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}
+
+    /* HERO */
+    .hero{background:var(--g-hero);color:#fff;position:relative;overflow:hidden;padding:64px 0 200px}
+    .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none}
+    .b1{width:460px;height:460px;background:#2563EB;top:-140px;right:-80px}
+    .b2{width:380px;height:380px;background:#6A5CFF;bottom:-120px;left:-100px;opacity:.5}
+    .b3{width:300px;height:300px;background:#00C9FF;top:40%;right:20%;opacity:.28}
+    .hero .wrap{position:relative;z-index:2}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.35rem;color:#fff}
+    .logo{width:48px;height:48px;border-radius:13px;background:#fff;display:grid;place-items:center;flex:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+    .logo svg{width:38px;height:38px}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;margin-top:46px}
+    .hero h1{color:#fff;font-size:clamp(2.4rem,5vw,3.7rem);margin:20px 0 18px}
+    .hero p.lead{font-size:1.15rem;color:#C7D3EE;max-width:520px}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+    .chip{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(8px);padding:8px 15px;border-radius:999px;font-size:.82rem;font-weight:700;color:#EAF0FF}
+    .chip b{color:var(--cyan)}
+    .hero-photo{position:relative}
+    .hero-photo .frame{border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.18);box-shadow:0 30px 70px rgba(0,0,0,.4);transform:rotate(1.5deg)}
+    .hero-photo .frame img{width:100%;height:340px;object-fit:cover}
+    .float-badge{position:absolute;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-radius:16px;padding:12px 16px;box-shadow:0 16px 40px rgba(0,0,0,.28);display:flex;align-items:center;gap:11px}
+    .float-badge .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;color:#fff;flex:none}
+    .float-badge .k{font-size:1.05rem;font-weight:800;color:var(--ink);line-height:1}
+    .float-badge .s{font-size:.72rem;color:var(--muted)}
+    .fb1{bottom:-26px;left:-24px} .fb2{top:-24px;right:-18px}
+
+    /* Wave divider */
+    .wave{position:absolute;bottom:-1px;left:0;width:100%;line-height:0}
+    .wave svg{width:100%;height:90px;display:block}
+
+    /* STATS glass bar */
+    .stats-wrap{margin-top:-120px;position:relative;z-index:3}
+    .stats{background:rgba(255,255,255,.85);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.7);border-radius:24px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:repeat(4,1fr);padding:30px 20px}
+    .stat{text-align:center;position:relative}
+    .stat+.stat::before{content:"";position:absolute;left:0;top:15%;height:70%;width:1px;background:var(--border)}
+    .stat .n{font-size:2.2rem;font-weight:900;line-height:1;letter-spacing:-.02em}
+    .stat .l{font-size:.82rem;color:var(--muted);margin-top:6px;font-weight:600}
+
+    /* Glass cards */
+    .grid{display:grid;gap:20px}
+    .cols3{grid-template-columns:repeat(3,1fr)} .cols2{grid-template-columns:repeat(2,1fr)}
+    .card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:28px;box-shadow:var(--shadow);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+    .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+    .gic{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;color:#fff;margin-bottom:16px;box-shadow:0 10px 22px rgba(37,99,235,.28)}
+    .gic svg{width:26px;height:26px}
+    .g-blue{background:var(--g-bp)} .g-cyan{background:var(--g-pc)} .g-or{background:var(--g-or);box-shadow:0 10px 22px rgba(249,115,22,.3)} .g-bc{background:var(--g-bc)}
+    .card h3{font-size:1.15rem;margin-bottom:7px}
+    .card p{font-size:.92rem;color:var(--muted)}
+
+    /* Programs */
+    .prog{position:relative;overflow:hidden;border-radius:24px;border:1px solid var(--border);background:#fff;box-shadow:var(--shadow);padding:32px;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+    .prog:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+    .prog .topbar{position:absolute;top:0;left:0;right:0;height:6px}
+    .tb-b{background:var(--g-bp)} .tb-o{background:var(--g-or)}
+    .prog .pill{display:inline-block;font-size:.68rem;font-weight:800;padding:6px 13px;border-radius:999px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px}
+    .pill-b{background:rgba(37,99,235,.1);color:var(--blue)} .pill-o{background:rgba(249,115,22,.12);color:var(--orange-d)}
+    .prog h3{font-size:1.55rem} .prog .meta{color:var(--muted);font-size:.85rem;margin:4px 0 12px}
+    .prog>p{color:var(--muted);font-size:.95rem;margin-bottom:16px}
+    .tlist{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+    .tlist li{font-size:.88rem;padding-left:24px;position:relative}
+    .tlist li::before{content:"";position:absolute;left:0;top:4px;width:16px;height:16px;border-radius:5px;background:var(--g-bp)}
+    .tlist.o li::before{background:var(--g-or)}
+
+    /* Domains */
+    .dom{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .dcard{border:1px solid var(--border);border-radius:18px;padding:22px;background:#fff;box-shadow:var(--shadow);transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+    .dcard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+    .dcard .di{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.9rem;margin-bottom:12px}
+    .dcard h3{font-size:1.02rem;margin-bottom:4px} .dcard p{font-size:.8rem;color:var(--muted)}
+
+    /* Comparison */
+    .cmp{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto}
+    .col{border-radius:20px;padding:28px;border:1px solid var(--border);background:#fff}
+    .col.good{background:linear-gradient(160deg,rgba(37,99,235,.06),rgba(0,201,255,.05));border-color:rgba(37,99,235,.28)}
+    .col h3{display:flex;align-items:center;gap:10px;font-size:1.1rem;margin-bottom:16px}
+    .col .dot{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;font-weight:800;flex:none}
+    .col ul{list-style:none;padding:0;display:grid;gap:12px}
+    .col li{font-size:.92rem;padding-left:24px;position:relative;color:var(--slate)}
+    .col.bad li{color:var(--muted)}
+    .col li::before{position:absolute;left:0;font-weight:800}
+    .col.bad li::before{content:"✕";color:#EF4444}
+    .col.good li::before{content:"✓";color:var(--blue)}
+
+    /* Photo gallery */
+    .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .gal .ph{position:relative;border-radius:16px;overflow:hidden;height:200px;box-shadow:var(--shadow)}
+    .gal .ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+    .gal .ph:hover img{transform:scale(1.06)}
+    .gal .ph .t{position:absolute;inset:auto 0 0 0;padding:22px 14px 12px;background:linear-gradient(transparent,rgba(11,17,32,.88));color:#fff;font-size:.8rem;font-weight:700}
+
+    /* Kit grid */
+    .kit{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .kcard{border:1px solid var(--border);border-radius:16px;padding:20px;background:#fff;box-shadow:var(--shadow);display:flex;gap:14px;align-items:flex-start;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+    .kcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+    .kcard .ki{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff;flex:none;font-weight:800}
+    .kcard .kk{font-weight:700;font-size:.95rem} .kcard .kd{font-size:.78rem;color:var(--muted)}
+
+    /* Quote */
+    .quote{background:var(--g-hero);color:#fff;border-radius:28px;padding:56px 40px;text-align:center;position:relative;overflow:hidden;margin:0 auto;max-width:960px}
+    .quote .qm{font-size:3.4rem;line-height:.3;background:var(--g-or);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900}
+    .quote .q{font-size:clamp(1.4rem,2.8vw,2rem);font-weight:800;max-width:720px;margin:14px auto 0;color:#fff;position:relative}
+    .quote .qa{margin-top:16px;font-size:.9rem;color:#B9C6E8;font-weight:600}
+
+    /* CTA / Contact */
+    .cta{background:var(--g-hero);color:#fff;border-radius:28px;padding:52px 44px;position:relative;overflow:hidden}
+    .cta h2{color:#fff;font-size:clamp(1.8rem,3.6vw,2.6rem);margin-bottom:10px}
+    .cta p{color:#C7D3EE;max-width:520px}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px;position:relative;z-index:2}
+    .ci{display:flex;align-items:center;gap:13px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:14px 16px;backdrop-filter:blur(8px)}
+    .ci .cic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;color:#fff;flex:none}
+    .ci .kk{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:#9DB8FF;font-weight:700}
+    .ci .vv{font-weight:700;font-size:.95rem;word-break:break-word}
+    .cta-btn{grid-column:1/-1;margin-top:8px;background:var(--g-or);color:#fff;text-align:center;padding:16px;border-radius:999px;font-weight:800;font-size:1.05rem;box-shadow:0 14px 34px rgba(249,115,22,.4)}
+
+    .foot{padding:26px 0;text-align:center;color:var(--muted);font-size:.82rem}
+    .print{position:sticky;top:0;z-index:50;text-align:center;padding:12px;background:rgba(255,255,255,.7);backdrop-filter:blur(10px)}
+    .print button{background:var(--g-bp);color:#fff;border:none;padding:11px 26px;border-radius:999px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:inherit;box-shadow:0 10px 26px rgba(37,99,235,.3)}
+
+    /* colorful additions */
+    .card.tint-b{background:linear-gradient(160deg,rgba(37,99,235,.09),#fff)}
+    .card.tint-c{background:linear-gradient(160deg,rgba(0,201,255,.11),#fff)}
+    .card.tint-o{background:linear-gradient(160deg,rgba(249,115,22,.1),#fff)}
+    .dcard.tint-b{background:linear-gradient(160deg,rgba(37,99,235,.08),#fff)}
+    .dcard.tint-c{background:linear-gradient(160deg,rgba(0,201,255,.1),#fff)}
+    .dcard.tint-p{background:linear-gradient(160deg,rgba(106,92,255,.09),#fff)}
+    .dcard.tint-o{background:linear-gradient(160deg,rgba(249,115,22,.09),#fff)}
+    .prog-photo{border-radius:14px;overflow:hidden;height:130px;margin:2px 0 14px}
+    .prog-photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+    .prog:hover .prog-photo img{transform:scale(1.05)}
+    .gal4{grid-template-columns:repeat(4,1fr)!important}
+    .band{position:relative;border-radius:24px;overflow:hidden;height:280px;box-shadow:var(--shadow-lg)}
+    .band img{width:100%;height:100%;object-fit:cover}
+    .band .ov{position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,17,32,.9) 30%,rgba(11,17,32,.25));display:flex;flex-direction:column;justify-content:center;padding:0 8%}
+    .band .ov .e{color:#9DB8FF;font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px}
+    .band .ov h2{color:#fff;font-size:clamp(1.5rem,3vw,2.3rem);max-width:560px;line-height:1.2}
+    .band .ov .stats-b{display:flex;gap:26px;margin-top:18px}
+    .band .ov .sb .n{color:var(--cyan);font-size:1.5rem;font-weight:900;line-height:1}
+    .band .ov .sb .l{color:#C7D3EE;font-size:.7rem;font-weight:600}
+    @media(max-width:820px){.gal4{grid-template-columns:1fr 1fr!important}}
+    @media print{.print{display:none}.rv{opacity:1;transform:none}.blob{display:none}}
+    @media(max-width:820px){.hero-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr;gap:20px 0}.cols3,.cols2,.dom,.gal,.kit,.cmp,.contact-grid{grid-template-columns:1fr}.tlist{grid-template-columns:1fr}.stat+.stat::before{display:none}}
+  </style>
+</head>
+<body>
+
+  <div class="print"><button onclick="window.print()">🖨  Print / Save as PDF</button></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <div class="wrap">
+      <div class="brand">
+        <span class="logo">
+          <svg viewBox="0 0 120 120" fill="none"><g transform="translate(2 6) scale(0.92)">
+            <path fill="#16294A" fill-rule="evenodd" d="M26 102 V22 H60 C78 22 88 33 88 48 C88 63 78 73 60 73 H43 V102 Z M43 36 H58 C66 36 71 41 71 48 C71 55 66 59 58 59 H43 Z"/>
+            <path fill="#F26A21" fill-rule="evenodd" d="M83 22 L109 102 H93 L88.5 87 H70.5 L66 102 H50 Z M79.5 47 L74 71 H85 Z"/>
+            <path d="M62 100 C64 74 72 52 84 30" stroke="#fff" stroke-width="13" stroke-linecap="round"/>
+            <path d="M62 100 C64 74 72 52 84 30" stroke="#16294A" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="5 9"/>
+            <g transform="translate(72 -2) scale(1.25)"><path fill="#F26A21" d="M12 2 L14.7 8.4 L21.6 9 L16.3 13.6 L18 20.5 L12 16.7 L6 20.5 L7.7 13.6 L2.4 9 L9.3 8.4 Z"/></g>
+          </g></svg>
+        </span>PathAhead
+      </div>
+      <div class="hero-grid">
+        <div class="rv">
+          <span class="eyebrow light">★ India's Premium Career Guidance</span>
+          <h1>Your Career <span class="grad-text">Starts Here.</span></h1>
+          <p class="lead">Helping Intermediate students make smarter, future-ready career decisions before college — through practical workshops, AI awareness and expert guidance.</p>
+          <div class="chips">
+            <span class="chip"><b>★ 4.9/5</b> Rating</span>
+            <span class="chip"><b>5,000+</b> Students</span>
+            <span class="chip"><b>30+</b> Colleges</span>
+            <span class="chip">Unbiased Guidance</span>
+          </div>
+        </div>
+        <div class="hero-photo rv d2">
+          <div class="frame"><img src="img/study.jpg" alt="PathAhead workshop in action" /></div>
+          <div class="float-badge fb1"><span class="ic g-blue">★</span><div><div class="k">4.9/5</div><div class="s">Average rating</div></div></div>
+          <div class="float-badge fb2"><span class="ic g-or">◎</span><div><div class="k">5,000+</div><div class="s">Students guided</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="wave"><svg viewBox="0 0 1440 90" preserveAspectRatio="none"><path fill="#ffffff" d="M0,64L60,58.7C120,53,240,43,360,42.7C480,43,600,53,720,58.7C840,64,960,64,1080,56C1200,48,1320,32,1380,24L1440,16L1440,90L0,90Z"></path></svg></div>
+  </section>
+
+  <!-- STATS -->
+  <div class="wrap">
+    <div class="stats-wrap rv">
+      <div class="stats">
+        <div class="stat"><div class="n grad-text-or" data-count="5000" data-suffix="+">0</div><div class="l">Students Guided</div></div>
+        <div class="stat"><div class="n grad-text" data-count="50" data-suffix="+">0</div><div class="l">Workshops Delivered</div></div>
+        <div class="stat"><div class="n grad-text-or" data-count="30" data-suffix="+">0</div><div class="l">Partner Colleges</div></div>
+        <div class="stat"><div class="n grad-text" data-count="4.9" data-suffix="/5">0</div><div class="l">Average Rating</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="head rv"><span class="eyebrow blue">Why PathAhead</span><h2>Guidance that bridges school and the real world</h2><p>Practical, honest and future-ready — delivered right on your campus.</p></div>
+      <div class="grid cols3">
+        <div class="card tint-b rv"><div class="gic g-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h3>Clarity over confusion</h3><p>Clear, actionable advice on courses, colleges and career paths.</p></div>
+        <div class="card tint-c rv d1"><div class="gic g-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15 14a5 5 0 1 0-6 0c.8.6 1 1.2 1 2h4c0-.8.2-1.4 1-2z"/></svg></div><h3>Future-ready skills</h3><p>Awareness of AI, Data Science and modern engineering domains.</p></div>
+        <div class="card tint-o rv d2"><div class="gic g-or"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div><h3>Unbiased &amp; practical</h3><p>Independent guidance focused only on the student's best interests.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="sec" style="background:var(--light)">
+    <div class="wrap">
+      <div class="head rv"><span class="eyebrow blue">Our Programs</span><h2>Two interactive 2-hour workshops</h2><p>Tailored to exactly where each student is in their journey.</p></div>
+      <div class="grid cols2">
+        <div class="prog rv"><div class="topbar tb-b"></div>
+          <div class="prog-photo"><img src="img/study.jpg" alt="Future Ready workshop" /></div>
+          <span class="pill pill-b">For Inter 1st Year</span><h3>Future Ready</h3><div class="meta">2 Hours · Intermediate 1st Year</div>
+          <p>Lay a strong foundation early — career awareness, future skills and personality development.</p>
+          <ul class="tlist"><li>Career Awareness</li><li>Engineering Branches</li><li>AI Awareness</li><li>Future Skills</li><li>Communication</li><li>Personality Dev.</li><li>Career Planning</li></ul>
+        </div>
+        <div class="prog rv d1"><div class="topbar tb-o"></div>
+          <div class="prog-photo"><img src="img/tech.jpg" alt="Career Blueprint workshop" /></div>
+          <span class="pill pill-o">For Inter 2nd Year</span><h3>Career Blueprint</h3><div class="meta">2 Hours · Intermediate 2nd Year</div>
+          <p>Make the right choices before college — college selection, tech domains and a clear roadmap.</p>
+          <ul class="tlist o"><li>College Selection</li><li>Engineering Branches</li><li>Technology Domains</li><li>Programming</li><li>Scholarships</li><li>AI Careers</li><li>Career Roadmap</li><li>Q&amp;A Session</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO BAND -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="band rv">
+        <img src="img/students-group.jpg" alt="PathAhead workshop" />
+        <div class="ov">
+          <div class="e">On-campus · Interactive · Future-ready</div>
+          <h2>Premium workshops, delivered right on your campus.</h2>
+          <div class="stats-b">
+            <div class="sb"><div class="n">5,000+</div><div class="l">Students</div></div>
+            <div class="sb"><div class="n">30+</div><div class="l">Colleges</div></div>
+            <div class="sb"><div class="n">4.9/5</div><div class="l">Rating</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOMAINS -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="head rv"><span class="eyebrow blue">Explore the Future</span><h2>Careers we open students' eyes to</h2><p>We show students where tomorrow's opportunities really are.</p></div>
+      <div class="dom">
+        <div class="dcard tint-b rv"><div class="di g-blue">AI</div><h3>Artificial Intelligence</h3><p>Machine learning &amp; generative AI reshaping every industry.</p></div>
+        <div class="dcard tint-c rv d1"><div class="di g-cyan">DS</div><h3>Data Science</h3><p>Turning data into decisions — one of today's top fields.</p></div>
+        <div class="dcard tint-p rv d2"><div class="di g-bc">CS</div><h3>Cybersecurity</h3><p>Ethical hacking and security careers protecting the world.</p></div>
+        <div class="dcard tint-b rv"><div class="di g-blue">CL</div><h3>Cloud &amp; DevOps</h3><p>The backbone of the internet and the roles behind it.</p></div>
+        <div class="dcard tint-c rv d1"><div class="di g-cyan">SE</div><h3>Software Engineering</h3><p>What developers do and the languages worth learning.</p></div>
+        <div class="dcard tint-o rv d2"><div class="di g-or">RB</div><h3>Robotics &amp; IoT</h3><p>Where hardware meets intelligence — automation &amp; more.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFFERENCE -->
+  <section class="sec" style="background:var(--light)">
+    <div class="wrap">
+      <div class="head rv"><span class="eyebrow blue">The Difference</span><h2>We turn guesswork into a clear plan</h2></div>
+      <div class="cmp">
+        <div class="col bad rv"><h3><span class="dot" style="background:#EF4444">✕</span>Without guidance</h3><ul><li>Streams chosen on hearsay &amp; pressure</li><li>Little awareness of AI &amp; future careers</li><li>Confusion over colleges &amp; scholarships</li><li>Decisions made too late, with regret</li></ul></div>
+        <div class="col good rv d1"><h3><span class="dot g-blue" style="background:var(--blue)">✓</span>With PathAhead</h3><ul><li>A clear, personalised sense of direction</li><li>Real awareness of AI &amp; technology careers</li><li>Confidence in college &amp; branch choices</li><li>A concrete roadmap they act on — now</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT STUDENTS RECEIVE -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="head rv"><span class="eyebrow orange">What Students Receive</span><h2>A complete career starter kit</h2></div>
+      <div class="kit">
+        <div class="kcard rv"><span class="ki g-blue">✓</span><div><div class="kk">Career Guide</div><div class="kd">Options after Intermediate, matched to interests.</div></div></div>
+        <div class="kcard rv d1"><span class="ki g-cyan">✓</span><div><div class="kk">Technology Roadmap</div><div class="kd">What to learn and when — a practical path.</div></div></div>
+        <div class="kcard rv d2"><span class="ki g-bc">✓</span><div><div class="kk">Engineering Guide</div><div class="kd">Every branch explained and where it leads.</div></div></div>
+        <div class="kcard rv"><span class="ki g-or">✓</span><div><div class="kk">Career Checklist</div><div class="kd">Step-by-step to stay on track all year.</div></div></div>
+        <div class="kcard rv d1"><span class="ki g-blue">✓</span><div><div class="kk">Resource Kit</div><div class="kd">Curated links &amp; tools to keep learning.</div></div></div>
+        <div class="kcard rv d2"><span class="ki g-cyan">✓</span><div><div class="kk">Certificate + Community</div><div class="kd">Participation certificate &amp; ongoing support.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IN ACTION -->
+  <section class="sec" style="background:var(--light)">
+    <div class="wrap">
+      <div class="head rv"><span class="eyebrow blue">In Action</span><h2>PathAhead workshops across India</h2></div>
+      <div class="gal gal4">
+        <div class="ph rv"><img src="img/study.jpg" alt="On-campus workshop" /><div class="t">On-campus workshops</div></div>
+        <div class="ph rv d1"><img src="img/students-group.jpg" alt="Engaged students" /><div class="t">Engaged students</div></div>
+        <div class="ph rv d2"><img src="img/workshop.jpg" alt="Career mentoring" /><div class="t">Career mentoring</div></div>
+        <div class="ph rv d3"><img src="img/tech.jpg" alt="Future-ready skills" /><div class="t">Future-ready skills</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="quote rv">
+        <div class="qm">“</div>
+        <div class="q">No student should choose their future by accident. Give them clarity early — and you change the entire course of their life.</div>
+        <div class="qa">— The PathAhead Founder</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta rv">
+        <div class="blob b3" style="opacity:.3;top:-60px;right:10%"></div>
+        <span class="eyebrow light">Get in Touch</span>
+        <h2 style="margin-top:14px">Book a workshop for your college</h2>
+        <p>Give your students clarity and confidence before college. We handle everything — you pick a date.</p>
+        <div class="contact-grid">
+          <div class="ci"><span class="cic g-blue">📞</span><div><div class="kk">Phone</div><div class="vv">+91 7780109877</div></div></div>
+          <div class="ci"><span class="cic g-cyan">📞</span><div><div class="kk">Phone</div><div class="vv">+91 9989057655</div></div></div>
+          <div class="ci"><span class="cic g-or">✉</span><div><div class="kk">Email</div><div class="vv">nirishapavuluri@gmail.com</div></div></div>
+          <div class="ci"><span class="cic g-bc">✉</span><div><div class="kk">Email</div><div class="vv">saathwik.13@gmail.com</div></div></div>
+          <div class="cta-btn">Book a Workshop — Your Career Starts Here.</div>
+        </div>
+      </div>
+      <div class="foot">© 2026 PathAhead. All Rights Reserved. · India's Premium Career Guidance</div>
+    </div>
+  </section>
+
+  <script>
+    // Scroll reveal
+    var io = new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.rv').forEach(function(n){io.observe(n);});
+    // Animated counters
+    function animate(el){
+      var t=parseFloat(el.getAttribute('data-count')),suf=el.getAttribute('data-suffix')||'',dec=(t%1!==0)?1:0,t0=null;
+      function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1500,1),e=1-Math.pow(1-p,3);el.textContent=(t*e).toFixed(dec)+suf;if(p<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);
+    }
+    var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){animate(e.target);cio.unobserve(e.target);}});},{threshold:.5});
+    document.querySelectorAll('[data-count]').forEach(function(n){cio.observe(n);});
+  </script>
+</body>
+</html>

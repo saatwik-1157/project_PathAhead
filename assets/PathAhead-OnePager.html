@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PathAhead — One-Page Overview</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --blue:#2563EB;--purple:#6A5CFF;--cyan:#00C9FF;--orange:#F97316;--orange-d:#EA580C;
+      --ink:#16294A;--slate:#1E293B;--muted:#64748B;--light:#F5F8FD;--border:#E5EAF3;
+      --g-dark:linear-gradient(135deg,#0B1120,#152046 55%,#3A2A7A);
+      --g-bp:linear-gradient(135deg,#2563EB,#6A5CFF);--g-pc:linear-gradient(135deg,#6A5CFF,#00C9FF);
+      --g-bc:linear-gradient(135deg,#2563EB,#00C9FF);--g-or:linear-gradient(135deg,#F97316,#FB923C);
+    }
+    *{box-sizing:border-box;margin:0}
+    body{font-family:'Inter',system-ui,sans-serif;color:var(--slate);background:#e9edf5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .toolbar{position:sticky;top:0;z-index:9;text-align:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(10px)}
+    .toolbar button{background:var(--g-bp);color:#fff;border:none;padding:10px 24px;border-radius:999px;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit}
+    .page{width:210mm;min-height:297mm;margin:16px auto;background:#fff;box-shadow:0 20px 60px rgba(15,23,42,.18);padding:9mm 10mm 8mm;display:flex;flex-direction:column;gap:3.4mm}
+    h1,h2,h3,h4{color:var(--ink);font-weight:800;line-height:1.12;letter-spacing:-.01em}
+    .muted{color:var(--muted)}
+    .grad{background:var(--g-pc);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+    /* Header */
+    .hdr{background:var(--g-dark);color:#fff;border-radius:12px;padding:5mm 6mm;display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative;overflow:hidden}
+    .hdr .blob{position:absolute;width:150px;height:150px;border-radius:50%;filter:blur(40px);background:#2563EB;opacity:.5;top:-60px;right:20%}
+    .hdr .l{display:flex;align-items:center;gap:10px;position:relative;z-index:2}
+    .logo{width:40px;height:40px;border-radius:11px;background:#fff;display:grid;place-items:center;flex:none}
+    .logo svg{width:32px;height:32px}
+    .hdr h1{color:#fff;font-size:1.5rem;line-height:1}
+    .hdr .tag{font-size:.66rem;color:#B9C6E8;font-weight:600;margin-top:2px}
+    .hdr .r{text-align:right;position:relative;z-index:2;font-size:.64rem;line-height:1.5}
+    .hdr .r b{color:var(--cyan)}
+    .hdr .r .lbl{color:#8FA3CC;text-transform:uppercase;letter-spacing:.04em;font-weight:700;font-size:.56rem}
+
+    /* Summary */
+    .summary{background:var(--light);border:1px solid var(--border);border-radius:10px;padding:3.5mm 5mm;font-size:.74rem;line-height:1.5}
+    .summary b{color:var(--ink)}
+
+    .eyebrow{display:inline-block;font-size:.58rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-bottom:2mm}
+    .e-b{color:var(--blue);background:rgba(37,99,235,.1)} .e-o{color:var(--orange-d);background:rgba(249,115,22,.12)}
+
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+    .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm}
+    .box{border:1px solid var(--border);border-radius:10px;padding:3.5mm 4mm;background:#fff}
+    .box.soft{background:var(--light)}
+
+    .prog{position:relative;overflow:hidden}
+    .prog .bar{position:absolute;top:0;left:0;right:0;height:3px}
+    .tb-b{background:var(--g-bp)} .tb-o{background:var(--g-or)}
+    .pill{display:inline-block;font-size:.54rem;font-weight:800;padding:3px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+    .pill-b{background:rgba(37,99,235,.1);color:var(--blue)} .pill-o{background:rgba(249,115,22,.12);color:var(--orange-d)}
+    .prog h3{font-size:.98rem;margin:3px 0 1px} .prog .meta{font-size:.58rem;color:var(--muted);margin-bottom:3px}
+    ul{list-style:none;padding:0}
+    .chk{display:grid;grid-template-columns:1fr 1fr;gap:1px 8px}
+    .chk.one{grid-template-columns:1fr}
+    .chk li{font-size:.66rem;padding-left:13px;position:relative;line-height:1.5;color:var(--slate)}
+    .chk li::before{content:"";position:absolute;left:0;top:5px;width:7px;height:7px;border-radius:2px;background:var(--g-bp)}
+    .chk.o li::before{background:var(--g-or)}
+
+    h4.t{font-size:.82rem;margin-bottom:2mm}
+    .dom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2.5mm}
+    .dchip{display:flex;align-items:center;gap:6px;font-size:.62rem;font-weight:700;color:var(--ink)}
+    .di{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.55rem;flex:none}
+    .g-b{background:var(--g-bp)}.g-c{background:var(--g-pc)}.g-bc{background:var(--g-bc)}.g-o{background:var(--g-or)}
+
+    /* Stats */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}
+    .stat{background:var(--light);border:1px solid var(--border);border-radius:9px;padding:3mm;text-align:center}
+    .stat .n{font-size:1.35rem;font-weight:900;line-height:1} .stat .l{font-size:.56rem;color:var(--muted);margin-top:2px;font-weight:600}
+
+    /* Why + difference */
+    .why li{font-size:.66rem;padding-left:15px;position:relative;margin-bottom:1.5mm;line-height:1.4}
+    .why li::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:800}
+    .cmp .c{margin-bottom:2mm} .cmp .c b{font-size:.66rem}
+    .cmp li{font-size:.62rem;padding-left:14px;position:relative;line-height:1.45}
+    .cmp .bad li::before{content:"✕";position:absolute;left:0;color:#EF4444;font-weight:800}
+    .cmp .good li::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:800}
+
+    /* CTA footer */
+    .cta{background:var(--g-dark);color:#fff;border-radius:12px;padding:4mm 6mm;display:flex;justify-content:space-between;align-items:center;gap:12px;position:relative;overflow:hidden;margin-top:auto}
+    .cta .blob{position:absolute;width:160px;height:160px;border-radius:50%;filter:blur(40px);background:#F97316;opacity:.35;bottom:-70px;left:30%}
+    .cta h3{color:#fff;font-size:1.05rem;position:relative;z-index:2} .cta .s{font-size:.62rem;color:#C7D3EE;position:relative;z-index:2}
+    .cta .btn{background:var(--g-or);color:#fff;padding:8px 18px;border-radius:999px;font-weight:800;font-size:.74rem;white-space:nowrap;position:relative;z-index:2}
+
+    @page{size:A4 portrait;margin:0}
+    @media print{body{background:#fff}.toolbar{display:none}.page{margin:0;box-shadow:none}}
+  </style>
+</head>
+<body>
+  <div class="toolbar"><button onclick="window.print()">🖨  Print / Save as PDF (A4)</button></div>
+
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="hdr">
+      <div class="blob"></div>
+      <div class="l">
+        <span class="logo"><svg viewBox="0 0 120 120" fill="none"><g transform="translate(2 6) scale(0.92)"><path fill="#16294A" fill-rule="evenodd" d="M26 102 V22 H60 C78 22 88 33 88 48 C88 63 78 73 60 73 H43 V102 Z M43 36 H58 C66 36 71 41 71 48 C71 55 66 59 58 59 H43 Z"/><path fill="#F26A21" fill-rule="evenodd" d="M83 22 L109 102 H93 L88.5 87 H70.5 L66 102 H50 Z M79.5 47 L74 71 H85 Z"/><path d="M62 100 C64 74 72 52 84 30" stroke="#fff" stroke-width="13" stroke-linecap="round"/><path d="M62 100 C64 74 72 52 84 30" stroke="#16294A" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="5 9"/><g transform="translate(72 -2) scale(1.25)"><path fill="#F26A21" d="M12 2 L14.7 8.4 L21.6 9 L16.3 13.6 L18 20.5 L12 16.7 L6 20.5 L7.7 13.6 L2.4 9 L9.3 8.4 Z"/></g></g></svg></span>
+        <div><h1>PathAhead <span class="grad">— Your Career Starts Here.</span></h1><div class="tag">India's Premium Career Guidance · Workshops for Intermediate 1st &amp; 2nd Year Students</div></div>
+      </div>
+      <div class="r">
+        <div class="lbl">Phone</div><b>+91 7780109877 · +91 9989057655</b>
+        <div class="lbl" style="margin-top:3px">Email</div><b>nirishapavuluri@gmail.com</b><br/><b>saathwik.13@gmail.com</b>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="summary">
+      <b>Summary —</b> PathAhead conducts career awareness workshops for Intermediate students across schools and junior colleges in India, helping them make <b>smarter, future-ready career decisions before college</b> through practical guidance, AI &amp; technology awareness, and personalised career planning. We bring content, mentors and materials on-campus — colleges just pick a date.
+    </div>
+
+    <!-- PROGRAMS -->
+    <div>
+      <span class="eyebrow e-b">Our Programs — Two Interactive 2-Hour Workshops</span>
+      <div class="grid2">
+        <div class="box prog"><div class="bar tb-b"></div>
+          <span class="pill pill-b">Inter 1st Year</span><h3>Future Ready</h3><div class="meta">2 Hours · Foundation &amp; Awareness</div>
+          <ul class="chk"><li>Career Awareness</li><li>Engineering Branches</li><li>AI Awareness</li><li>Future Skills</li><li>Communication</li><li>Personality Dev.</li><li>Career Planning</li></ul>
+        </div>
+        <div class="box prog"><div class="bar tb-o"></div>
+          <span class="pill pill-o">Inter 2nd Year</span><h3>Career Blueprint</h3><div class="meta">2 Hours · Decision &amp; Roadmap</div>
+          <ul class="chk o"><li>College Selection</li><li>Engineering Branches</li><li>Technology Domains</li><li>Programming</li><li>Scholarships</li><li>AI Careers</li><li>Career Roadmap</li><li>Q&amp;A Session</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECEIVE + DOMAINS -->
+    <div class="grid2">
+      <div class="box soft">
+        <h4 class="t">What Every Student Receives</h4>
+        <ul class="chk"><li>Career Guide</li><li>Technology Roadmap</li><li>Engineering Guide</li><li>Career Checklist</li><li>Resource Kit</li><li>Certificate</li><li>Community Access</li><li>Ongoing Support</li></ul>
+      </div>
+      <div class="box soft">
+        <h4 class="t">Careers We Open Their Eyes To</h4>
+        <div class="dom">
+          <div class="dchip"><span class="di g-b">AI</span>Artificial Intelligence</div>
+          <div class="dchip"><span class="di g-c">DS</span>Data Science</div>
+          <div class="dchip"><span class="di g-bc">CS</span>Cybersecurity</div>
+          <div class="dchip"><span class="di g-b">CL</span>Cloud &amp; DevOps</div>
+          <div class="dchip"><span class="di g-c">SE</span>Software Eng.</div>
+          <div class="dchip"><span class="di g-o">RB</span>Robotics &amp; IoT</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat"><div class="n grad">5,000+</div><div class="l">Students Guided</div></div>
+      <div class="stat"><div class="n grad">50+</div><div class="l">Workshops Delivered</div></div>
+      <div class="stat"><div class="n grad">30+</div><div class="l">Partner Colleges</div></div>
+      <div class="stat"><div class="n grad">4.9/5</div><div class="l">Average Rating</div></div>
+    </div>
+
+    <!-- WHY + DIFFERENCE -->
+    <div class="grid2">
+      <div class="box">
+        <h4 class="t">Why Colleges Choose Us</h4>
+        <ul class="why">
+          <li>Better student outcomes &amp; motivation</li>
+          <li>Zero hassle — we bring everything on-campus</li>
+          <li>Future-ready content, refreshed every term</li>
+          <li>Certificates &amp; feedback reports for parents</li>
+          <li>Flexible scheduling around your calendar</li>
+        </ul>
+      </div>
+      <div class="box cmp">
+        <h4 class="t">The PathAhead Difference</h4>
+        <div class="c bad"><b style="color:#EF4444">Without guidance</b>
+          <ul><li>Choices on hearsay &amp; pressure</li><li>Unaware of AI &amp; future careers</li><li>Decisions made too late</li></ul>
+        </div>
+        <div class="c good"><b style="color:var(--blue)">With PathAhead</b>
+          <ul><li>Clear, personalised direction</li><li>Awareness of tech &amp; AI careers</li><li>A roadmap they act on — now</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <div class="blob"></div>
+      <div><h3>Book a workshop for your college</h3><div class="s">Give your students clarity &amp; confidence before college — Your Career Starts Here.</div></div>
+      <div class="btn">📞 +91 7780109877  ·  Book Now</div>
+    </div>
+
+  </div>
+</body>
+</html>

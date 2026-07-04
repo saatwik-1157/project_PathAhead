@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+
+# Update the domain below to your live site after deploying.
+Sitemap: https://pathahead.example/sitemap.xml

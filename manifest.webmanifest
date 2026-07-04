@@ -1,0 +1,17 @@
+{
+  "name": "PathAhead — Career Guidance",
+  "short_name": "PathAhead",
+  "description": "Premium career awareness workshops for Intermediate students across India. Your Career Starts Here.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#2563EB",
+  "lang": "en-IN",
+  "categories": ["education"],
+  "icons": [
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/icon.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
