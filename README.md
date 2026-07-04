@@ -1,205 +1,197 @@
-# PathAhead — Career Guidance Website
+<div align="center">
 
-> **Your Career Starts Here.**
-> A premium, responsive, production-ready marketing website for PathAhead — career awareness workshops for Intermediate (1st & 2nd year) students across India.
+<img src="assets/logo-source.png" alt="PathAhead logo" width="160" />
 
-### 👥 Built by
-This project was designed and developed by **two members**:
+# PathAhead
 
-| Member | Email |
-|--------|-------|
-| **Saathwik** | saathwik.13@gmail.com |
-| **Nirisha** | nirishapavuluri@gmail.com |
+### *Your Career Starts Here.*
 
-> 🔑 **Setup note:** integration keys live in `js/config.js`, which is git-ignored. After cloning, copy `js/config.example.js` → `js/config.js` and add your own keys (see [SETUP.md](SETUP.md)).
+A premium, responsive, production-ready website for **PathAhead** — a career-guidance platform that runs career-awareness workshops for Intermediate (1st & 2nd year) students across India.
 
-Built as a **zero-dependency static site** (HTML + CSS + vanilla JS). No build step, no Node.js, no frameworks. It runs by opening `index.html` in any browser and deploys anywhere (Netlify, Vercel, GitHub Pages, any web host) by uploading the folder.
+<br/>
 
-**Production features included:** real form delivery (email + database), an admin dashboard, offline PWA, WhatsApp chat, full SEO, and analytics — all controlled from one `CONFIG` block and working in safe "demo mode" until you add your keys.
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![PWA](https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)
 
-> 👉 **To go fully live** (email leads, database, deploy, analytics), follow **[SETUP.md](SETUP.md)** — a step-by-step guide. It takes ~30 minutes and no coding.
+![No build step](https://img.shields.io/badge/Build_step-none-2563EB?style=flat-square)
+![Responsive](https://img.shields.io/badge/Responsive-mobile_%7C_tablet_%7C_desktop-F97316?style=flat-square)
+![Dark mode](https://img.shields.io/badge/Dark_mode-yes-0F172A?style=flat-square)
+![Status](https://img.shields.io/badge/status-production_ready-00D084?style=flat-square)
 
----
+</div>
 
-## 1. Quick start
+<br/>
 
-**Option A — just open it**
-Double-click `index.html`. Everything works offline (the Google Fonts link falls back to system fonts if there's no internet).
-
-**Option B — run a local server (recommended for forms/routing)**
-```bash
-# from the project folder
-python -m http.server 8000
-# then visit http://localhost:8000
-```
-
-**Deploy**
-- **Netlify / Vercel:** drag-and-drop the whole folder. Done.
-- **GitHub Pages:** push to a repo → Settings → Pages → deploy from branch root.
+<div align="center">
+  <img src="assets/screenshots/home.png" alt="PathAhead homepage" width="88%" />
+</div>
 
 ---
 
-## 2. Project structure
+## 📖 About
+
+**PathAhead** helps students make smarter, future-ready career decisions *before* college — through practical, on-campus workshops covering career awareness, AI & technology, engineering branches and personalised career planning.
+
+This repository contains the complete brand website **plus** a full promotional kit (presentation, brochure, tri-fold pamphlet and one-pager). It's a **zero-dependency static site** — pure HTML, CSS and vanilla JavaScript with **no build step and no frameworks** — that runs by opening `index.html` and deploys anywhere by uploading the folder.
+
+---
+
+## ✨ Features
+
+| | |
+|---|---|
+| 🎨 **Premium, modern UI** | Apple / Stripe-inspired design, gradients, glassmorphism, soft shadows |
+| 🌗 **Dark mode** | System-aware theme toggle that remembers your choice (no flash) |
+| 📱 **Fully responsive** | Verified on mobile, tablet and desktop |
+| 📝 **Working forms** | College inquiry, student registration, contact & newsletter — with validation |
+| 📧 **Email delivery** | Every submission is emailed via **Web3Forms** |
+| 🗄️ **Database + Admin** | Submissions stored in **Supabase**; a protected `/admin.html` dashboard with search & CSV export |
+| ⚡ **PWA** | Installable, works offline (service worker + manifest) |
+| 🔍 **SEO ready** | Per-page meta, Open Graph & Twitter cards, JSON-LD, sitemap, robots, custom 404 |
+| ♿ **Accessible** | Semantic HTML, keyboard navigation, ARIA, reduced-motion support |
+| 💬 **Extras** | Floating WhatsApp button, scroll animations, animated counters, accordion FAQ |
+
+---
+
+## 🖼️ Screenshots
+
+<div align="center">
+
+| Home | Programs |
+|:---:|:---:|
+| <img src="assets/screenshots/home.png" width="100%"/> | <img src="assets/screenshots/programs.png" width="100%"/> |
+
+**Presentation deck**
+
+<img src="assets/screenshots/deck.png" width="88%"/>
+
+</div>
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** HTML5, CSS3 (custom design system with CSS variables), Vanilla JavaScript
+- **Backend / Data:** [Supabase](https://supabase.com) (PostgreSQL + Row-Level Security + Auth)
+- **Email:** [Web3Forms](https://web3forms.com)
+- **PWA:** Web App Manifest + Service Worker
+- **Fonts:** Inter · **No frameworks, no build tools**
+
+---
+
+## 📂 Project Structure
 
 ```
 project_nirdhan/
-├── index.html            # Home
-├── about.html            # Our story, mission, vision, founder, values, timeline
-├── programs.html         # Future Ready + Career Blueprint (topics + outcomes)
-├── for-colleges.html     # Benefits, process, outcomes, booking, FAQ, inquiry form
-├── for-students.html     # What students receive + registration form
-├── gallery.html          # Workshop image grid + future videos
-├── testimonials.html     # Filterable student/teacher/principal cards
-├── faq.html              # Grouped accordion FAQ
-├── contact.html          # Phone/email/WhatsApp + contact form + quick actions
-├── css/
-│   └── styles.css        # Full design system (tokens, components, responsive)
+├── index.html                 # Home
+├── about.html  programs.html  for-colleges.html  for-students.html
+├── gallery.html  testimonials.html  faq.html  contact.html
+├── admin.html                 # Admin dashboard (Supabase Auth)
+├── 404.html
+├── css/styles.css             # Full design system + dark mode
 ├── js/
-│   └── main.js           # Shared navbar/footer/back-to-top + all interactions
-├── assets/
-│   ├── favicon.svg
-│   └── PathAhead-Brochure.html   # Printable brochure (Download Brochure target)
-├── .claude/launch.json   # Local preview config
+│   ├── main.js                # Shared nav/footer, interactions, form pipeline
+│   ├── config.example.js      # Copy → config.js and add your keys
+│   └── config.js              # Your keys (git-ignored, not committed)
+├── assets/                    # Logo, icons, images, + promo kit ↓
+│   ├── PathAhead-Deck.html         # Web presentation (16:9, navigable)
+│   ├── PathAhead-Brochure.html     # Premium scrolling brochure
+│   ├── PathAhead-Pamphlet.html/pdf # Print-ready tri-fold
+│   └── PathAhead-OnePager.html     # One-page overview
+├── manifest.webmanifest  sw.js  sitemap.xml  robots.txt  netlify.toml
+├── SETUP.md                   # Full go-live guide (keys, DB, deploy)
 └── README.md
 ```
 
-**How the shared UI works:** the navbar, footer and back-to-top button are injected by `js/main.js` on every page from a single config object (`CONFIG` + `NAV`). Update them once and every page updates. Brand phone, email and nav links all live in that one place.
+---
+
+## 🚀 Getting Started
+
+```bash
+# 1. Clone
+git clone https://github.com/saatwik-1157/project_nirdhan.git
+cd project_nirdhan
+
+# 2. Add your keys (integration is optional — the site runs in demo mode without them)
+cp js/config.example.js js/config.js      # then edit js/config.js
+
+# 3. Run it — any static server works
+python -m http.server 8000
+#    → open http://localhost:8000
+```
+
+> Or simply **open `index.html`** in a browser — no server required.
 
 ---
 
-## 3. Functional Requirements (FR)
+## 🔧 Configuration
 
-| # | Requirement | Where | Status |
-|---|-------------|-------|--------|
-| FR-1 | Sticky navigation with all 9 links + active-page highlight | All pages | ✅ |
-| FR-2 | Responsive mobile menu (hamburger drawer) | All pages | ✅ |
-| FR-3 | Hero with headline, subheading, "Book a Workshop" + "Download Brochure" | Home | ✅ |
-| FR-4 | "Download Brochure" opens a printable / save-as-PDF brochure | Home, hero | ✅ |
-| FR-5 | Two program cards (Future Ready, Career Blueprint) with topics + outcomes | Home, Programs | ✅ |
-| FR-6 | "How It Works" 4-step process | Home, For Colleges | ✅ |
-| FR-7 | Animated statistics counters | Home, Testimonials | ✅ |
-| FR-8 | Testimonials with filter chips (All / Students / Teachers / Principals) | Testimonials | ✅ |
-| FR-9 | Accordion FAQ (one-open-at-a-time) | Home, FAQ, For Colleges | ✅ |
-| FR-10 | About page: story, mission, vision, founder, values, **timeline** | About | ✅ |
-| FR-11 | College Booking / Inquiry form (Name, College, City, Phone, Email, Program, Message) | For Colleges | ✅ |
-| FR-12 | Student Registration form (Name, Year, College, City, Phone, Email) | For Students | ✅ |
-| FR-13 | Contact form (Name, College, City, Phone, Email, Message) | Contact | ✅ |
-| FR-14 | Client-side form validation (required, email format, phone format) with inline errors | All forms | ✅ |
-| FR-15 | Success confirmation message on submit + form reset | All forms | ✅ |
-| FR-16 | Submissions saved locally (`localStorage`) — ready to swap for a real backend | All forms | ✅ |
-| FR-17 | Newsletter subscribe with email validation | Home footer area | ✅ |
-| FR-18 | Prominent contact details: **+91 7780109877**, **nirishapavuluri@gmail.com**, WhatsApp | Contact, Footer | ✅ |
-| FR-19 | Click-to-call (`tel:`), click-to-email (`mailto:`), WhatsApp deep link | Contact, Footer | ✅ |
-| FR-20 | Quick-action buttons: Call Now / Email Us / Book a Workshop | Contact | ✅ |
-| FR-21 | Gallery image grid + "videos coming soon" placeholders | Gallery | ✅ |
-| FR-22 | Back-to-top button (appears after scroll) | All pages | ✅ |
-| FR-23 | Smooth scrolling for in-page anchors (with sticky-nav offset) | All pages | ✅ |
-| FR-24 | Scroll-reveal animations on sections/cards | All pages | ✅ |
-| FR-25 | Footer with logo, quick links, programs, contact, socials, copyright | All pages | ✅ |
+Integration keys are kept out of the repo for security. They live in **`js/config.js`** (git-ignored):
 
-### Premium enhancements (v2)
-| # | Enhancement | Where | Status |
-|---|-------------|-------|--------|
-| FR-26 | Slim scroll-progress bar (reading position) | All pages | ✅ |
-| FR-27 | Upgraded hero: grid texture + floating glass credential cards | Home | ✅ |
-| FR-28 | Auto-scrolling "trusted by" marquee (pauses on hover) | Home | ✅ |
-| FR-29 | **"The PathAhead Difference"** — With vs Without comparison | Home | ✅ |
-| FR-30 | **Interactive Career Domains explorer** (AI, Data Science, Cybersecurity, Cloud, Software, Robotics) | Home | ✅ |
-| FR-31 | **Interactive "Find your program" chooser** (year → recommended workshop) | Programs | ✅ |
-| FR-32 | Founder quote band with signature | Home, About | ✅ |
-| FR-33 | Subtle cursor "spotlight" on cards (desktop, tasteful) | All pages | ✅ |
-| FR-34 | Open Graph + Twitter social cards + share image | All pages | ✅ |
-| FR-35 | JSON-LD structured data (EducationalOrganization) for SEO | Home | ✅ |
+```js
+window.PATHAHEAD_CONFIG = {
+  web3formsKey:    "your-web3forms-key",   // https://web3forms.com
+  supabaseUrl:     "https://xxxx.supabase.co",
+  supabaseAnonKey: "your-anon-key"
+};
+```
 
-### Form fields captured
-- **College Inquiry:** name, designation, college, city, phone, email, program, students, message
-- **Student Registration:** name, year, college, city, phone, email, message
-- **Contact:** name, college, city, phone, email, message
-- **Newsletter:** email
-
-All are validated on the client and persisted under `localStorage` keys:
-`pathahead_college_inquiry`, `pathahead_student_registration`, `pathahead_contact`, `pathahead_newsletter`.
+Full instructions — Supabase tables & SQL, admin login, analytics — are in **[SETUP.md](SETUP.md)**.
 
 ---
 
-## 4. Non-Functional Requirements (NFR)
+## 🌐 Deployment
 
-| Category | Requirement | How it's met |
-|----------|-------------|--------------|
-| **Performance** | Fast first paint, minimal payload | No frameworks/bundles; pure HTML/CSS/JS; SVG icons inline (no icon-font download); fonts `display=swap` |
-| **Responsiveness** | Works on Desktop, Tablet, Mobile | Fluid `clamp()` typography + breakpoints at 1024 / 820 / 560px; verified at 375px, 768px, 1360px |
-| **Accessibility** | Keyboard + screen-reader friendly | Semantic landmarks, `aria-label`/`aria-expanded` on nav & accordion, visible focus rings, labelled form fields, `prefers-reduced-motion` support |
-| **Usability** | Clear IA, consistent components, trust signals | Consistent nav/footer, obvious CTAs, inline validation with helpful errors |
-| **Maintainability** | One source of truth for brand + nav | `CONFIG` and `NAV` in `main.js`; design tokens (CSS variables) in `:root` |
-| **Browser support** | Modern evergreen browsers | Standard APIs (IntersectionObserver, backdrop-filter) with graceful fallbacks |
-| **SEO** | Discoverable, shareable | Unique `<title>` + meta description per page, semantic headings, descriptive links, `theme-color` |
-| **Reliability** | No runtime errors | Verified: all pages return 200, zero console errors/warnings, forms validate & submit |
-| **Portability** | Runs anywhere, no install | Static files; works on `file://` and any static host |
-| **Security** | Safe by construction | No inline secrets; external links use `rel="noopener"`; validation on input (add server-side validation when a backend is connected) |
-| **Branding** | Premium, trustworthy, on-palette | Primary `#2563EB`, Secondary `#F97316`, Text `#1E293B`, BG `#FFFFFF`, Inter font |
+Any static host works (Netlify, Vercel, GitHub Pages):
+
+1. **Netlify (easiest):** drag the project folder onto [app.netlify.com](https://app.netlify.com) → *Deploy manually*. A `netlify.toml` with security headers is included.
+2. Update the domain in `js/config.js` → `siteUrl`, `sitemap.xml` and `robots.txt`.
+
+> ℹ️ `config.js` is git-ignored, so include it in your deploy (drag-and-drop already does).
 
 ---
 
-## 5. Design system
+## 📎 Promotional Kit
 
-- **Colors** (CSS variables in `css/styles.css` → `:root`):
-  `--primary #2563EB` · `--secondary #F97316` · `--text #1E293B` · `--bg #FFFFFF` (+ slate neutrals)
-- **Font:** Inter (Google Fonts) with a system-font fallback stack.
-- **Components:** buttons (primary/secondary/outline/ghost/dark), cards, program cards, steps, stats, testimonial cards, accordion, timeline, gallery tiles, forms, CTA bands, newsletter.
-- Change the palette in one place (`:root`) and it cascades everywhere.
+Alongside the site, this repo ships a full marketing kit — all in `assets/`:
 
-### Social share image (one optional tip)
-Link previews use `assets/og-image.svg`. Facebook, WhatsApp and LinkedIn preview SVGs inconsistently — for guaranteed thumbnails, open the SVG and export a **1200×630 PNG** (e.g. in Canva/Figma or any converter), save it as `assets/og-image.png`, and change the `og:image` / `twitter:image` paths in each page's `<head>` to `assets/og-image.png`. Everything else works as-is.
-
-> **Browser note:** the numbered "How It Works" steps use the CSS `:has()` selector (supported in all current Chrome, Edge, Safari and Firefox).
-
-### Replacing placeholder content
-- **Gallery photos:** in `gallery.html`, swap the `.g-item` gradient backgrounds (`.gp1`–`.gp6`) for real images, e.g. `style="background-image:url('assets/photo1.jpg');background-size:cover"`.
-- **Statistics:** edit the `data-count` / `data-suffix` attributes on the `.stat` blocks.
-- **Testimonials / FAQ / timeline:** plain HTML — edit the text directly.
-- **Founder photo:** replace the `PA` avatar block in `about.html`.
+- 🎬 **Presentation** — `PathAhead-Deck.html` (fullscreen, arrow-key navigable)
+- 📄 **Brochure** — `PathAhead-Brochure.html` (premium scrolling page)
+- 📑 **Pamphlet** — `PathAhead-Pamphlet.html` + **`.pdf`** (print-ready tri-fold)
+- 📃 **One-Pager** — `PathAhead-OnePager.html`
 
 ---
 
-## 6. Backend, admin & production features (built in)
+## 👥 Authors
 
-These are **already implemented** and wired up — you just add your keys in `CONFIG` (see **[SETUP.md](SETUP.md)**). Until then, they run in safe demo mode.
+Designed & developed by **two members**:
 
-| Feature | How it works | To activate |
-|---------|--------------|-------------|
-| **Email leads** | Every submission POSTs to Web3Forms → your inbox | `CONFIG.web3formsKey` |
-| **Database** | Submissions insert into Supabase `submissions` table | `CONFIG.supabaseUrl` + `supabaseAnonKey` |
-| **Admin dashboard** (`/admin.html`) | Supabase-Auth login → live counts, tables, CSV export | Create an admin user in Supabase |
-| **Local backup** | Every lead is also saved to `localStorage` — never lost | Always on |
-| **PWA / offline** | `manifest.webmanifest` + `sw.js` — installable, works offline | Always on (over http/https) |
-| **WhatsApp chat** | Floating button, pre-filled booking message | Edit `CONFIG.whatsappMsg` |
-| **SEO** | Titles, OG/Twitter, JSON-LD, `sitemap.xml`, `robots.txt`, canonical, `404.html` | Set `CONFIG.siteUrl` + domain in sitemap/robots |
-| **Analytics** | Privacy-friendly Plausible, loaded only if set | `CONFIG.analyticsDomain` |
-
-The send pipeline lives in `sendSubmission()` in `js/main.js`: it always backs up locally, then delivers to whatever is configured (email + database), and shows a fallback "call/email us" message if a network send ever fails — so a lead is never silently lost.
-
-**Supabase security model:** the included SQL uses Row Level Security so the public (anon key) can only *insert* leads, and only an authenticated admin can *read* them. Full SQL + steps are in [SETUP.md](SETUP.md).
-
-### Future modules the schema already supports
-Workshop bookings (status: new / contacted / booked), certificate generation (reuse the brochure print flow), and email notifications (Supabase Edge Function on insert).
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/saatwik-1157"><b>Saathwik</b></a><br/>
+      <a href="https://github.com/saatwik-1157">@saatwik-1157</a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Nirisha22"><b>Nirisha</b></a><br/>
+      <a href="https://github.com/Nirisha22">@Nirisha22</a>
+    </td>
+  </tr>
+</table>
 
 ---
 
-## 7. Verification performed
+## 📄 License
 
-- ✅ All 9 pages + assets return HTTP 200
-- ✅ Zero console errors / warnings
-- ✅ Navbar, footer, back-to-top injected on every page; active link highlighting correct
-- ✅ Accordion open/close, counters, and scroll-reveal all firing
-- ✅ Forms: empty submit flags all required fields; valid submit clears errors, shows success banner, saves data
-- ✅ Responsive verified at mobile (375px), tablet (768px) and desktop (1360px)
-- ✅ Inter font loads; palette matches brief exactly
+Released under the **MIT License** — see [LICENSE](LICENSE).
 
----
+<div align="center">
 
-## 8. Contact
+**PathAhead — Your Career Starts Here.** ⭐
 
-**Phone:** +91 7780109877 · +91 9989057655
-**Email:** nirishapavuluri@gmail.com · saathwik.13@gmail.com
+*If you find this project useful, consider giving it a star!*
 
-© 2026 PathAhead. All Rights Reserved.
+</div>
