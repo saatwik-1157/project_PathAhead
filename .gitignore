@@ -16,3 +16,8 @@ desktop.ini
 # Logs & temp
 *.log
 node_modules/
+profile-readmes/
+
+# Python
+__pycache__/
+*.pyc
