@@ -102,6 +102,56 @@
   function list(arr){ if(!arr||!arr.length) return ""; return '<ul>'+arr.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>'; }
   function bySlug(arr, slug){ arr=arr||[]; for(var i=0;i<arr.length;i++){ if(arr[i].slug===slug) return arr[i]; } return null; }
 
+  // ---- Resource links -----------------------------------------------------
+  // Known platforms -> their real URL (specific keys BEFORE generic ones).
+  var LINKS = {
+    "the odin project":"https://www.theodinproject.com/","odin project":"https://www.theodinproject.com/",
+    "full stack open":"https://fullstackopen.com/","fullstackopen":"https://fullstackopen.com/",
+    "javascript.info":"https://javascript.info/","freecodecamp":"https://www.freecodecamp.org/learn/",
+    "frontend mentor":"https://www.frontendmentor.io/","the net ninja":"https://www.youtube.com/@NetNinja",
+    "programming with mosh":"https://www.youtube.com/@programmingwithmosh","traversy":"https://www.youtube.com/@TraversyMedia",
+    "corey schafer":"https://www.youtube.com/@coreyms","fireship":"https://www.youtube.com/@Fireship",
+    "techworld with nana":"https://www.youtube.com/@TechWorldwithNana","tech world with nana":"https://www.youtube.com/@TechWorldwithNana",
+    "statquest":"https://www.youtube.com/@statquest","3blue1brown":"https://www.youtube.com/@3blue1brown",
+    "sentdex":"https://www.youtube.com/@sentdex","mdn":"https://developer.mozilla.org/",
+    "w3schools":"https://www.w3schools.com/","geeksforgeeks":"https://www.geeksforgeeks.org/",
+    "codecademy":"https://www.codecademy.com/","cs50":"https://cs50.harvard.edu/x/",
+    "fast.ai":"https://course.fast.ai/","khan academy":"https://www.khanacademy.org/",
+    "nptel":"https://nptel.ac.in/","leetcode":"https://leetcode.com/","hackerrank":"https://www.hackerrank.com/",
+    "codewars":"https://www.codewars.com/","codeforces":"https://codeforces.com/",
+    "kaggle":"https://www.kaggle.com/learn","tryhackme":"https://tryhackme.com/",
+    "hackthebox":"https://www.hackthebox.com/","hack the box":"https://www.hackthebox.com/",
+    "owasp":"https://owasp.org/www-project-top-ten/","professor messer":"https://www.professormesser.com/",
+    "aws skill builder":"https://skillbuilder.aws/","aws":"https://aws.amazon.com/training/",
+    "microsoft learn":"https://learn.microsoft.com/training/","azure":"https://learn.microsoft.com/training/azure/",
+    "google cloud":"https://cloud.google.com/learn","kodekloud":"https://kodekloud.com/",
+    "docker":"https://docs.docker.com/get-started/","kubernetes":"https://kubernetes.io/docs/tutorials/",
+    "terraform":"https://developer.hashicorp.com/terraform/tutorials","flutter":"https://docs.flutter.dev/get-started",
+    "firebase":"https://firebase.google.com/docs","react native":"https://reactnative.dev/docs/getting-started",
+    "android":"https://developer.android.com/courses","google codelabs":"https://codelabs.developers.google.com/",
+    "figma":"https://www.figma.com/resources/learn-design/","refactoring ui":"https://www.refactoringui.com/",
+    "laws of ux":"https://lawsofux.com/","nielsen norman":"https://www.nngroup.com/articles/",
+    "google ux":"https://www.coursera.org/professional-certificates/google-ux-design",
+    "dbt":"https://learn.getdbt.com/","data engineering zoomcamp":"https://github.com/DataTalksClub/data-engineering-zoomcamp",
+    "datacamp":"https://www.datacamp.com/","mode":"https://mode.com/sql-tutorial/",
+    "unity learn":"https://learn.unity.com/","unreal":"https://dev.epicgames.com/community/unreal-engine/learning",
+    "godot":"https://docs.godotengine.org/","blender":"https://www.blender.org/support/tutorials/",
+    "gamedev.tv":"https://www.gamedev.tv/","alchemy":"https://university.alchemy.com/",
+    "cyfrin":"https://updraft.cyfrin.io/","solidity":"https://docs.soliditylang.org/",
+    "coursera":"https://www.coursera.org/","edx":"https://www.edx.org/","udemy":"https://www.udemy.com/",
+    "udacity":"https://www.udacity.com/","github":"https://github.com/","roadmap.sh":"https://roadmap.sh/"
+  };
+  function resourceURL(text, kind){
+    var lower=String(text).toLowerCase();
+    for(var key in LINKS){ if(lower.indexOf(key)!==-1) return LINKS[key]; }
+    if(kind==="youtube") return "https://www.youtube.com/results?search_query="+encodeURIComponent(text);
+    return "https://www.google.com/search?q="+encodeURIComponent(text);
+  }
+  function resourceLink(text, kind){
+    return '<a href="'+resourceURL(text,kind)+'" target="_blank" rel="noopener noreferrer">'+esc(text)+'</a>';
+  }
+  function linkList(arr, kind){ if(!arr||!arr.length) return ""; return '<ul>'+arr.map(function(x){return '<li>'+resourceLink(x,kind)+'</li>';}).join("")+'</ul>'; }
+
   // ---- Progress tracker (saved in the browser) ----------------------------
   var PKEY = "pa-progress";
   function loadProg(){ try { return JSON.parse(localStorage.getItem(PKEY) || "{}") || {}; } catch (e) { return {}; } }
@@ -214,22 +264,31 @@
       html+=block("Projects to Build", '<p>Pick a target domain above to get 18 tailored project ideas (beginner → advanced). In general: start small, finish things, and put every project on GitHub with a README.</p>');
     }
 
-    // 6. Certifications
-    var certs=[]; if(domain&&domain.certs) certs=certs.concat(domain.certs);
-    certs=certs.concat((branch.higherStudies||[]).map(function(h){return "Higher study option: "+h;}));
-    html+=block("Certifications & Credentials", '<p>Free and well-known options first — a certificate only matters if you can back it with a project.</p>'+list(certs));
+    // 6. Certifications (clickable)
+    var higher = (branch.higherStudies||[]).map(function(h){return "Higher study option: "+h;});
+    html+=block("Certifications & Credentials",
+      '<p>Free and well-known options first — a certificate only matters if you can back it with a project. Links open the provider.</p>'+
+      (domain&&domain.certs&&domain.certs.length ? ('<p><strong>Certifications & courses</strong></p>'+linkList(domain.certs)) : '')+
+      '<p><strong>Higher-study options</strong></p>'+list(higher));
 
-    // 6b. Learning Resources (if we have curated ones for this domain)
+    // 6b. Learning Resources — every item is a clickable link
     var rsrc = (domain && window.RESOURCES) ? window.RESOURCES[domain.slug] : null;
     if(rsrc){
       html+=block("Learning Resources ("+esc(domain.name)+")",
-        '<p>Free and well-known first. Prefer building over binge-watching.</p>'+
+        '<p>Click any resource to open it. Free and well-known first — prefer building over binge-watching.</p>'+
         '<div class="res-grid">'+
-        '<div class="col"><h5>Books</h5>'+list(rsrc.books)+'</div>'+
-        '<div class="col"><h5>Courses</h5>'+list(rsrc.courses)+'</div>'+
-        '<div class="col"><h5>YouTube</h5>'+list(rsrc.youtube)+'</div>'+
-        '<div class="col"><h5>Practice</h5>'+list(rsrc.practice)+'</div>'+
-        '</div>');
+        '<div class="col"><h5>Books</h5>'+linkList(rsrc.books,"book")+'</div>'+
+        '<div class="col"><h5>Courses</h5>'+linkList(rsrc.courses,"course")+'</div>'+
+        '<div class="col"><h5>YouTube</h5>'+linkList(rsrc.youtube,"youtube")+'</div>'+
+        '<div class="col"><h5>Practice</h5>'+linkList(rsrc.practice,"practice")+'</div>'+
+        '</div>'+
+        '<p class="res-universal">Universal (any field): '+
+          '<a href="https://roadmap.sh/" target="_blank" rel="noopener noreferrer">roadmap.sh</a> · '+
+          '<a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">freeCodeCamp</a> · '+
+          '<a href="https://education.github.com/pack" target="_blank" rel="noopener noreferrer">GitHub Student Pack</a> · '+
+          '<a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Coursera</a> · '+
+          '<a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube</a>'+
+        '</p>');
     }
 
     // 7. Internships
