@@ -42,6 +42,14 @@
     .proj p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
     .note-band{border-left:4px solid var(--primary);background:var(--primary-soft);padding:14px 18px;border-radius:0 12px 12px 0;margin:8px auto 0;max-width:820px;font-size:.9rem;color:var(--text)}
     .disclaimer{font-size:.82rem;color:var(--muted);max-width:760px;margin:14px auto 0;text-align:center}
+    .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+    .res-grid .col h5{margin:0 0 8px;font-size:.95rem;color:var(--primary)}
+    .res-grid .col ul{padding-left:18px;margin:0}
+    .res-grid .col ul li{margin:6px 0;font-size:.9rem;line-height:1.5}
+    .res-grid a{color:var(--primary);text-decoration:none;border-bottom:1px solid transparent}
+    .res-grid a:hover{border-bottom-color:currentColor}
+    .res-universal{font-size:.85rem;color:var(--muted);margin-top:18px;border-top:1px solid var(--border);padding-top:14px}
+    .res-universal a{color:var(--primary);text-decoration:none}.res-universal a:hover{text-decoration:underline}
     .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
     .outcomes{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;align-items:stretch}
     .oc-card{border:1px solid var(--border);border-radius:16px;padding:22px 24px;background:var(--surface)}
@@ -132,6 +140,13 @@
   </section>
 
   <section class="section">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow reveal">Learn It</span><h2 class="h-xl reveal reveal-d1">Learning resources</h2><p class="lead reveal reveal-d2">Click any resource to open it — free and well-known first, then build something with it.</p></div>
+      <div class="res-grid reveal"><div class="col"><h5>Books</h5><ul><li><a href="https://developer.android.com/courses" target="_blank" rel="noopener noreferrer">Head First Android Development by Dawn Griffiths and David Griffiths</a></li><li><a href="https://www.google.com/search?q=iOS%20Programming%20The%20Big%20Nerd%20Ranch%20Guide%20by%20Christian%20Keur%20and%20Aaron%20Hillegass" target="_blank" rel="noopener noreferrer">iOS Programming The Big Nerd Ranch Guide by Christian Keur and Aaron Hillegass</a></li><li><a href="https://docs.flutter.dev/get-started" target="_blank" rel="noopener noreferrer">Flutter Apprentice by the Kodeco Team</a></li></ul></div><div class="col"><h5>Courses</h5><ul><li><a href="https://developer.android.com/courses" target="_blank" rel="noopener noreferrer">Android Basics with Compose by Google (free)</a></li><li><a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">Flutter Course by freeCodeCamp (free)</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Meta iOS Developer by Coursera</a></li><li><a href="https://reactnative.dev/docs/getting-started" target="_blank" rel="noopener noreferrer">React Native by Coursera</a></li></ul></div><div class="col"><h5>YouTube</h5><ul><li><a href="https://www.youtube.com/@NetNinja" target="_blank" rel="noopener noreferrer">The Net Ninja</a></li><li><a href="https://www.youtube.com/results?search_query=Philipp%20Lackner" target="_blank" rel="noopener noreferrer">Philipp Lackner</a></li><li><a href="https://docs.flutter.dev/get-started" target="_blank" rel="noopener noreferrer">Flutter</a></li></ul></div><div class="col"><h5>Practice</h5><ul><li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a></li><li><a href="https://www.google.com/search?q=Google%20Play%20Console" target="_blank" rel="noopener noreferrer">Google Play Console</a></li><li><a href="https://www.google.com/search?q=Exercism" target="_blank" rel="noopener noreferrer">Exercism</a></li></ul></div></div><p class="res-universal">Universal (any field): <a href="https://roadmap.sh/" target="_blank" rel="noopener noreferrer">roadmap.sh</a> · <a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">freeCodeCamp</a> · <a href="https://education.github.com/pack" target="_blank" rel="noopener noreferrer">GitHub Student Pack</a> · <a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Coursera</a></p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow reveal">Do This Today</span>
