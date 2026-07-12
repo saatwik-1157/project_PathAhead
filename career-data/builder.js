@@ -258,8 +258,12 @@
     html+=block("Your Personalised Next Steps", '<p>Start here — this week.</p>'+list(next));
 
     out.innerHTML=html;
+    // The site's scroll-reveal observer only watches elements present at page
+    // load, so dynamically-inserted .reveal blocks would stay at opacity:0.
+    // Force them visible immediately.
+    var rev=out.querySelectorAll(".reveal");
+    for(var r=0;r<rev.length;r++){ rev[r].classList.add("in"); }
     document.getElementById("btn-print").style.display="";
-    if(window.__pa_reveal) window.__pa_reveal();
     out.scrollIntoView({behavior:"smooth",block:"start"});
   }
 
