@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Mobile App Developer Roadmap</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:#1e293b; font-size:10.5pt; line-height:1.5; margin:0; }
+  h1,h2,h3,h4 { color:#0f172a; margin:0; }
+  .cover { height:247mm; display:flex; flex-direction:column; justify-content:center; background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%); color:#fff; border-radius:14px; padding:0 20mm; break-after:page; }
+  .cover .kicker { font-size:12pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.85; }
+  .cover h1 { color:#fff; font-size:34pt; font-weight:900; line-height:1.08; margin:14px 0 18px; }
+  .cover p { font-size:12.5pt; max-width:150mm; opacity:.95; line-height:1.5; }
+  .cover .stats { display:flex; gap:26px; margin-top:36px; flex-wrap:wrap; }
+  .cover .stat .n { font-size:28pt; font-weight:900; line-height:1; }
+  .cover .stat .l { font-size:9.5pt; opacity:.9; margin-top:4px; }
+  .cover .foot { margin-top:42px; font-size:10pt; opacity:.8; }
+  .sec-kick { font-size:9pt; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#2563eb; }
+  h2.sec { font-size:19pt; font-weight:800; margin:4px 0 4px; }
+  .rule { height:3px; width:54px; background:#2563eb; border-radius:2px; margin:8px 0 14px; }
+  .lead { color:#475569; font-size:10.5pt; margin-bottom:16px; }
+  .phase { border:1px solid #e2e8f0; border-radius:12px; padding:15px 17px; margin-bottom:13px; break-inside:avoid; }
+  .phase-head { display:flex; align-items:center; gap:12px; margin-bottom:9px; }
+  .pnum { width:32px; height:32px; flex:0 0 32px; border-radius:9px; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:12pt; background:linear-gradient(135deg,#2563eb,#7c3aed); }
+  .phase-head h3 { font-size:12.5pt; } .phase-head .dates { font-size:8.5pt; color:#64748b; font-weight:600; }
+  .goal { color:#64748b; font-size:9pt; margin:0 0 11px; }
+  .weeks { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+  .wk { border:1px solid #e8edf3; border-radius:8px; padding:7px 10px; background:#f8fafc; }
+  .wk.proj { border-color:#2563eb; background:#eff4ff; }
+  .wk .d { font-size:7pt; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#2563eb; }
+  .wk h4 { font-size:9pt; margin:2px 0 2px; } .wk p { font-size:8pt; color:#64748b; margin:0; line-height:1.35; }
+  .projects { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  .proj { border:1px solid #e2e8f0; border-radius:10px; padding:11px 13px; break-inside:avoid; }
+  .proj .tag { display:inline-block; font-size:7pt; font-weight:700; color:#2563eb; background:#eef2ff; padding:2px 8px; border-radius:999px; margin-bottom:5px; }
+  .proj h4 { font-size:10pt; margin:0 0 3px; } .proj p { font-size:8.5pt; color:#475569; margin:0; line-height:1.4; }
+  .steps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:11px; margin-top:8px; }
+  .step { border:1px solid #e2e8f0; border-radius:10px; padding:13px; break-inside:avoid; }
+  .step .n { width:24px; height:24px; border-radius:50%; background:#2563eb; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:9.5pt; margin-bottom:7px; }
+  .step h4 { font-size:9.5pt; margin:0 0 3px; } .step p { font-size:8.3pt; color:#64748b; margin:0; line-height:1.4; }
+  .callout { border-left:4px solid #2563eb; background:#f8fafc; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9.5pt; }
+  .note-print { border-left:4px solid #d97706; background:#fffbeb; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9pt; color:#7c2d12; }
+  .pc-outcomes { display:grid; grid-template-columns:1.6fr 1fr; gap:10px; margin:14px 0; break-inside:avoid; }
+  .pc-roles, .pc-salary { border:1px solid #e2e8f0; border-radius:10px; padding:11px 14px; background:#f8fafc; font-size:9pt; }
+  .pc-roles .k, .pc-salary .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:3px; }
+  .pc-salary { background:linear-gradient(135deg,#eef2ff,#f8fafc); text-align:center; }
+  .pc-salary .v { font-size:15pt; font-weight:900; color:#2563eb; }
+  .footer { margin-top:20px; padding-top:11px; border-top:1px solid #e2e8f0; font-size:8pt; color:#94a3b8; }
+  .spacer { break-after:page; }
+</style></head><body>
+  <div class="cover">
+    <div class="kicker">PathAhead · Free Roadmap</div>
+    <h1>Become a<br>Mobile App Developer<br>from Scratch</h1>
+    <p>Build apps people carry in their pocket. Go from zero to a published app in about five months — using Flutter to ship for Android and iOS from one codebase.</p>
+    <div class="stats"><div class="stat"><div class="n">22</div><div class="l">weeks · ~10–12 hrs/wk</div></div><div class="stat"><div class="n">5</div><div class="l">portfolio apps</div></div><div class="stat"><div class="n">4</div><div class="l">phases · to Play Store</div></div><div class="stat"><div class="n">₹0</div><div class="l">free tools only</div></div></div>
+    <div class="foot">A free PathAhead learning resource · adjust the pace to your life — the order matters more than the dates.</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The One Rule</div>
+    <h2 class="sec">Learn → build an app → ship it</h2><div class="rule"></div>
+    <p class="lead">You learn mobile by shipping apps, not watching them. Every phase below ends in a working app on your own phone — and the last one goes live on the Play Store.</p>
+    
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The Roadmap</div>
+    <h2 class="sec">Four phases, step by step</h2><div class="rule"></div>
+    <div class="phase"><div class="phase-head"><span class="pnum">0</span><div><h3>Foundations</h3><span class="dates">Weeks 1–4</span></div></div><p class="goal">Programming and the mobile mindset.</p><div class="weeks"><div class="wk"><div class="d">Week 1</div><h4>Programming basics</h4><p>Dart fundamentals: variables, functions, classes.</p></div><div class="wk"><div class="d">Week 2</div><h4>Mobile UI concepts</h4><p>Screens, navigation, touch, responsiveness.</p></div><div class="wk"><div class="d">Week 3</div><h4>Git & tooling</h4><p>Flutter SDK, Android Studio, emulator setup.</p></div><div class="wk"><div class="d">Week 4</div><h4>First app</h4><p>A simple single-screen app you run yourself.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">1</span><div><h3>Flutter Core</h3><span class="dates">Weeks 5–11</span></div></div><p class="goal">Build real, multi-screen apps with Flutter.</p><div class="weeks"><div class="wk"><div class="d">Week 5</div><h4>Widgets</h4><p>The building blocks of every Flutter UI.</p></div><div class="wk"><div class="d">Week 6</div><h4>Layouts & styling</h4><p>Rows, columns, themes, responsive design.</p></div><div class="wk"><div class="d">Week 7</div><h4>State management</h4><p>setState and Provider.</p></div><div class="wk"><div class="d">Week 8</div><h4>Navigation</h4><p>Routes, passing data between screens.</p></div><div class="wk"><div class="d">Week 9</div><h4>Forms & input</h4><p>Text fields, validation, user input.</p></div><div class="wk"><div class="d">Week 10</div><h4>Local storage</h4><p>Persist data on the device.</p></div><div class="wk proj"><div class="d">Week 11 · Project ▶</div><h4>Multi-screen app</h4><p>A notes or expense-tracker app.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">2</span><div><h3>Data & Backend</h3><span class="dates">Weeks 12–17</span></div></div><p class="goal">Connect apps to APIs and a real backend.</p><div class="weeks"><div class="wk"><div class="d">Week 12</div><h4>REST APIs</h4><p>Fetch live data over the network.</p></div><div class="wk"><div class="d">Week 13</div><h4>JSON & models</h4><p>Parse data into typed objects.</p></div><div class="wk"><div class="d">Week 14</div><h4>Firebase auth</h4><p>Sign-up, login, user sessions.</p></div><div class="wk"><div class="d">Week 15</div><h4>Firestore</h4><p>A cloud database for your app.</p></div><div class="wk"><div class="d">Week 16</div><h4>Push notifications</h4><p>Re-engage users with messages.</p></div><div class="wk proj"><div class="d">Week 17 · Project ▶</div><h4>App with backend</h4><p>A social or chat app backed by Firebase.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">3</span><div><h3>Polish & Ship</h3><span class="dates">Weeks 18–22</span></div></div><p class="goal">Make it feel great and publish it.</p><div class="weeks"><div class="wk"><div class="d">Week 18</div><h4>Animations & UX</h4><p>Smooth transitions and micro-interactions.</p></div><div class="wk"><div class="d">Week 19</div><h4>Testing & debugging</h4><p>Find and fix issues before release.</p></div><div class="wk"><div class="d">Week 20</div><h4>Build & assets</h4><p>App icons, splash screens, release builds.</p></div><div class="wk"><div class="d">Week 21</div><h4>Publishing</h4><p>Get an app onto the Google Play Store.</p></div><div class="wk proj"><div class="d">Week 22 · Capstone ▶</div><h4>Production app</h4><p>A polished, published app people can install.</p></div></div></div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="section">
+    <div class="sec-kick">Build a Portfolio</div>
+    <h2 class="sec">Five projects that get you hired</h2><div class="rule"></div>
+    <p class="lead">Projects beat certificates. Do them in order — each builds on the last. Put every one on GitHub with a clear README: problem → approach → result.</p>
+    <div class="projects"><div class="proj"><span class="tag">Start here</span><h4>1 · Calculator / Weather App</h4><p>Your first real app — layout, logic, and a live API.</p></div><div class="proj"><span class="tag">Flutter</span><h4>2 · Multi-Screen App</h4><p>A notes or expense tracker with navigation and storage.</p></div><div class="proj"><span class="tag">APIs</span><h4>3 · API-Driven App</h4><p>A news or movies app pulling live data.</p></div><div class="proj"><span class="tag">In demand</span><h4>4 · Firebase App with Auth</h4><p>Login, a cloud database, and real-time updates.</p></div><div class="proj"><span class="tag">Capstone</span><h4>5 · Published Play Store App</h4><p>A complete app, live and installable by anyone.</p></div></div>
+    <div class="pc-outcomes">
+      <div class="pc-roles"><span class="k">Roles you can apply for</span>Mobile App Developer · Flutter Developer · Android Developer · iOS Developer</div>
+      <div class="pc-salary"><span class="k">Typical starting salary · India</span><span class="v">₹4–10 LPA</span></div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top:20px">
+    <div class="sec-kick">Do This Today</div>
+    <h2 class="sec">Your first step (takes 30 minutes)</h2><div class="rule"></div>
+    <div class="steps"><div class="step"><div class="n">1</div><h4>Install Flutter + Android Studio</h4><p>Free — the full mobile toolchain and an emulator.</p></div><div class="step"><div class="n">2</div><h4>Run the demo app</h4><p>flutter create then flutter run to see it on the emulator.</p></div><div class="step"><div class="n">3</div><h4>Change one thing</h4><p>Edit the text and hot-reload it. You're building apps now.</p></div></div>
+    <div class="callout"><strong>Job-ready checklist:</strong> 3–5 solid projects on GitHub (≥1 deployed or documented) · can explain your work in an interview · comfortable with the core tools of the field · a portfolio or profile recruiters can find.</div>
+    <div class="footer">PathAhead — India's premium career guidance platform. This roadmap is a free educational resource; timelines are a guide and everyone learns at a different pace. Referenced third-party resources (Flutter docs, freeCodeCamp, The Net Ninja (YouTube), Google Codelabs, Firebase docs) are for learning only and are not affiliated with PathAhead.</div>
+  </div>
+</body></html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI/UX Designer Roadmap — PathAhead | Learn from Scratch</title>
+  <meta name="description" content="A 20-week roadmap to become a UI/UX designer from scratch — design principles, Figma, wireframing, prototyping, user research, and a portfolio." />
+  <meta name="theme-color" content="#2563EB" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PathAhead" />
+  <meta property="og:title" content="UI/UX Designer Roadmap — PathAhead" />
+  <meta property="og:description" content="A 20-week roadmap to become a UI/UX designer from scratch — design principles, Figma, wireframing, prototyping, user research, and a portfolio." />
+  <meta property="og:image" content="assets/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="assets/og-image.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .roadmap-phase{border:1px solid var(--border);border-radius:18px;padding:26px 24px;margin-bottom:22px;background:var(--surface)}
+    .roadmap-phase .phase-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+    .phase-num{width:44px;height:44px;flex:0 0 44px;border-radius:12px;display:grid;place-items:center;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--primary),#7c3aed)}
+    .phase-dates{font-weight:600;color:var(--muted);font-size:.92rem}
+    .phase-goal{color:var(--muted);margin:2px 0 18px}
+    .week-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+    .week{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--bg)}
+    .week h4{margin:0 0 6px;font-size:.98rem}
+    .week .wk-date{font-size:.78rem;font-weight:700;color:var(--primary);letter-spacing:.02em;text-transform:uppercase}
+    .week p{margin:6px 0 0;font-size:.88rem;color:var(--muted);line-height:1.5}
+    .week.is-project{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary) inset}
+    .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:8px}
+    .stat-box{border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;background:var(--surface)}
+    .stat-box .n{font-size:1.9rem;font-weight:900;color:var(--primary);line-height:1}
+    .stat-box .l{color:var(--muted);font-size:.85rem;margin-top:6px}
+    .proj-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+    .proj{border:1px solid var(--border);border-radius:14px;padding:18px 18px 16px;background:var(--surface)}
+    .proj .tag{display:inline-block;font-size:.72rem;font-weight:700;color:var(--primary);background:var(--primary-soft);padding:3px 10px;border-radius:999px;margin-bottom:8px}
+    .proj h4{margin:0 0 6px;font-size:1.02rem}
+    .proj p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
+    .note-band{border-left:4px solid var(--primary);background:var(--primary-soft);padding:14px 18px;border-radius:0 12px 12px 0;margin:8px auto 0;max-width:820px;font-size:.9rem;color:var(--text)}
+    .disclaimer{font-size:.82rem;color:var(--muted);max-width:760px;margin:14px auto 0;text-align:center}
+    .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+    .outcomes{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;align-items:stretch}
+    .oc-card{border:1px solid var(--border);border-radius:16px;padding:22px 24px;background:var(--surface)}
+    .oc-card h4{margin:0 0 4px;font-size:1rem}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+    .chip{background:var(--primary-soft);color:var(--primary);font-weight:600;font-size:.85rem;padding:6px 13px;border-radius:999px}
+    .oc-suits{color:var(--muted);font-size:.92rem;margin:0}
+    .oc-salary{border:1px solid var(--border);border-radius:16px;padding:22px 24px;background:linear-gradient(135deg,var(--primary-soft),var(--surface));text-align:center;display:flex;flex-direction:column;justify-content:center}
+    .oc-salary .n{font-size:2rem;font-weight:900;color:var(--primary);line-height:1}
+    .oc-salary .l{color:var(--muted);font-size:.85rem;margin-top:8px}
+    .oc-note{font-size:.8rem;color:var(--muted);max-width:820px;margin:16px auto 0;text-align:center}
+    @media(max-width:640px){.outcomes{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+  <section class="page-hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <span class="eyebrow reveal">Free Roadmap</span>
+      <h1 class="h-xl reveal reveal-d1">Become a <span class="text-accent">UI/UX Designer</span> from scratch</h1>
+      <p class="lead reveal reveal-d2">Design products people love to use — no coding required to start. Go from zero to a portfolio in about five months, built around real design case studies.</p>
+      <div class="stat-row reveal reveal-d2" style="margin-top:26px"><div class="stat-box"><div class="n">20</div><div class="l">weeks · ~10–12 hrs/wk</div></div><div class="stat-box"><div class="n">5</div><div class="l">portfolio pieces</div></div><div class="stat-box"><div class="n">4</div><div class="l">phases · to portfolio</div></div><div class="stat-box"><div class="n">₹0</div><div class="l">free tools only</div></div></div>
+      <div class="hero-actions reveal reveal-d2">
+        <a href="roadmaps/ui-ux-design-roadmap.pdf" class="btn btn-primary btn-lg" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download PDF
+        </a>
+        <a href="roadmaps.html" class="btn btn-outline btn-lg">All roadmaps</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">The one rule</span>
+        <h2 class="h-xl reveal reveal-d1">Study → design → get feedback</h2>
+        <p class="lead reveal reveal-d2">Design improves through critique, not isolation. Every project below is something you design in Figma, test with real people, and refine. No coding needed.</p>
+      </div>
+      
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">Where This Leads</span>
+        <h2 class="h-xl reveal reveal-d1">Career outcomes</h2>
+      </div>
+      <div class="outcomes reveal">
+        <div class="oc-card">
+          <h4>Roles you can apply for</h4>
+          <div class="chips"><span class="chip">UI Designer</span><span class="chip">UX Designer</span><span class="chip">Product Designer</span><span class="chip">UX Researcher</span></div>
+          <p class="oc-suits"><strong>Who it suits:</strong> You care how things look and feel, and like solving problems for people — no coding required.</p>
+        </div>
+        <div class="oc-salary">
+          <div class="n">₹4–9 LPA</div>
+          <div class="l">typical starting range in India</div>
+        </div>
+      </div>
+      <p class="oc-note">Indicative 2026 starting ranges in India — actual pay varies widely by city, company, and skill. Salary is an outcome of skill and a strong project portfolio, not a guarantee.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">The Roadmap</span>
+        <h2 class="h-xl reveal reveal-d1">Four phases, step by step</h2>
+      </div>
+      <div class="roadmap-phase reveal"><div class="phase-top"><span class="phase-num">0</span><div><h3 style="margin:0">Design Foundations</h3><span class="phase-dates">Weeks 1–4</span></div></div><p class="phase-goal">The visual and UX principles behind good design.</p><div class="week-grid"><div class="week"><span class="wk-date">Week 1</span><h4>Design principles</h4><p>Hierarchy, contrast, alignment, balance.</p></div><div class="week"><span class="wk-date">Week 2</span><h4>Color & typography</h4><p>Palettes, type scales, readability.</p></div><div class="week"><span class="wk-date">Week 3</span><h4>Layout & spacing</h4><p>Grids, whitespace, visual rhythm.</p></div><div class="week"><span class="wk-date">Week 4</span><h4>UX fundamentals</h4><p>User-centered thinking, information architecture.</p></div></div></div>
+      <div class="roadmap-phase reveal"><div class="phase-top"><span class="phase-num">1</span><div><h3 style="margin:0">Tools & Process</h3><span class="phase-dates">Weeks 5–10</span></div></div><p class="phase-goal">Master Figma and the end-to-end design flow.</p><div class="week-grid"><div class="week"><span class="wk-date">Week 5</span><h4>Figma basics</h4><p>Frames, shapes, components, auto-layout.</p></div><div class="week"><span class="wk-date">Week 6</span><h4>Wireframing</h4><p>Low-fidelity structure before visuals.</p></div><div class="week"><span class="wk-date">Week 7</span><h4>Prototyping</h4><p>Clickable flows and interactions.</p></div><div class="week"><span class="wk-date">Week 8</span><h4>Design systems</h4><p>Reusable components and design tokens.</p></div><div class="week"><span class="wk-date">Week 9</span><h4>User research</h4><p>Interviews, surveys, personas.</p></div><div class="week is-project"><span class="wk-date">Week 10 · Project ▶</span><h4>App redesign</h4><p>Redesign a real app and justify every choice.</p></div></div></div>
+      <div class="roadmap-phase reveal"><div class="phase-top"><span class="phase-num">2</span><div><h3 style="margin:0">Applied Design</h3><span class="phase-dates">Weeks 11–16</span></div></div><p class="phase-goal">Design for real platforms and real users.</p><div class="week-grid"><div class="week"><span class="wk-date">Week 11</span><h4>Mobile patterns</h4><p>Native iOS/Android conventions.</p></div><div class="week"><span class="wk-date">Week 12</span><h4>Responsive web</h4><p>Designing across screen sizes.</p></div><div class="week"><span class="wk-date">Week 13</span><h4>Usability testing</h4><p>Watch real users, find friction.</p></div><div class="week"><span class="wk-date">Week 14</span><h4>Accessibility</h4><p>Contrast, sizing, inclusive design.</p></div><div class="week"><span class="wk-date">Week 15</span><h4>Developer handoff</h4><p>Specs, assets, and clean delivery.</p></div><div class="week is-project"><span class="wk-date">Week 16 · Project ▶</span><h4>Full product design</h4><p>An end-to-end product from research to UI.</p></div></div></div>
+      <div class="roadmap-phase reveal"><div class="phase-top"><span class="phase-num">3</span><div><h3 style="margin:0">Portfolio & Career</h3><span class="phase-dates">Weeks 17–20</span></div></div><p class="phase-goal">Package your work to land the job.</p><div class="week-grid"><div class="week"><span class="wk-date">Week 17</span><h4>Case study writing</h4><p>Tell the story: problem, process, outcome.</p></div><div class="week"><span class="wk-date">Week 18</span><h4>Portfolio site</h4><p>Present 3 strong pieces cleanly.</p></div><div class="week"><span class="wk-date">Week 19</span><h4>Critique & iteration</h4><p>Refine based on real feedback.</p></div><div class="week is-project"><span class="wk-date">Week 20 · Capstone ▶</span><h4>Polished portfolio</h4><p>Three complete case studies, ready to share.</p></div></div></div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">Build a Portfolio</span>
+        <h2 class="h-xl reveal reveal-d1">Five projects that get you hired</h2>
+        <p class="lead reveal reveal-d2">Projects beat certificates. Do them in order — each builds on the last. Put every one on GitHub with a clear README.</p>
+      </div>
+      <div class="proj-list reveal"><div class="proj"><span class="tag">Start here</span><h4>1 · Redesign an App Screen</h4><p>Pick an app you use and redesign one screen — explain why.</p></div><div class="proj"><span class="tag">Figma</span><h4>2 · Mobile App Prototype</h4><p>A clickable multi-screen prototype in Figma.</p></div><div class="proj"><span class="tag">Systems</span><h4>3 · Design System / UI Kit</h4><p>Reusable components, colors, and type — like a pro team.</p></div><div class="proj"><span class="tag">In demand</span><h4>4 · End-to-End Case Study</h4><p>Research → wireframes → UI → usability test, documented.</p></div><div class="proj"><span class="tag">Capstone</span><h4>5 · Portfolio with 3 Case Studies</h4><p>A published portfolio that gets you interviews.</p></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">Do This Today</span>
+        <h2 class="h-xl reveal reveal-d1">Your first step (takes 30 minutes)</h2>
+      </div>
+      <div class="cards cols-3"><div class="card reveal"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h3>1. Create a Figma account</h3><p>figma.com — the industry-standard design tool, free to start.</p></div><div class="card reveal reveal-d1"><div class="card-icon is-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 1.5 5 1.5 5 1.5c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 8.5c0 3.5 3 5.5 6 5.5a4.8 4.8 0 0 0-1 3.5V22"/></svg></div><h3>2. Pick an app to redesign</h3><p>Choose an app you find frustrating — that's your first project.</p></div><div class="card reveal reveal-d2"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><h3>3. Draw one frame</h3><p>Recreate one screen in Figma today. You're designing now.</p></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-band reveal">
+        <h2 class="h-xl">Not sure which path is right for you?</h2>
+        <p>PathAhead helps you choose the career that fits you — with guidance built for Intermediate students. Explore every roadmap in one place.</p>
+        <div class="cta-actions">
+          <a href="roadmaps.html" class="btn btn-primary btn-lg">See All Roadmaps</a>
+          <a href="for-students.html#register" class="btn btn-outline btn-lg" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)">Register Your Interest</a>
+        </div>
+      </div>
+      <p class="disclaimer">This roadmap is a free educational resource. Timelines are a guide — everyone learns at a different pace. Referenced resources (Figma (Learn), Refactoring UI, Laws of UX, Nielsen Norman Group, Google UX Design (Coursera)) are for learning only and are not affiliated with PathAhead.</p>
+    </div>
+  </section>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

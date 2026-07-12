@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Cloud / DevOps Engineer Roadmap</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:#1e293b; font-size:10.5pt; line-height:1.5; margin:0; }
+  h1,h2,h3,h4 { color:#0f172a; margin:0; }
+  .cover { height:247mm; display:flex; flex-direction:column; justify-content:center; background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%); color:#fff; border-radius:14px; padding:0 20mm; break-after:page; }
+  .cover .kicker { font-size:12pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.85; }
+  .cover h1 { color:#fff; font-size:34pt; font-weight:900; line-height:1.08; margin:14px 0 18px; }
+  .cover p { font-size:12.5pt; max-width:150mm; opacity:.95; line-height:1.5; }
+  .cover .stats { display:flex; gap:26px; margin-top:36px; flex-wrap:wrap; }
+  .cover .stat .n { font-size:28pt; font-weight:900; line-height:1; }
+  .cover .stat .l { font-size:9.5pt; opacity:.9; margin-top:4px; }
+  .cover .foot { margin-top:42px; font-size:10pt; opacity:.8; }
+  .sec-kick { font-size:9pt; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#2563eb; }
+  h2.sec { font-size:19pt; font-weight:800; margin:4px 0 4px; }
+  .rule { height:3px; width:54px; background:#2563eb; border-radius:2px; margin:8px 0 14px; }
+  .lead { color:#475569; font-size:10.5pt; margin-bottom:16px; }
+  .phase { border:1px solid #e2e8f0; border-radius:12px; padding:15px 17px; margin-bottom:13px; break-inside:avoid; }
+  .phase-head { display:flex; align-items:center; gap:12px; margin-bottom:9px; }
+  .pnum { width:32px; height:32px; flex:0 0 32px; border-radius:9px; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:12pt; background:linear-gradient(135deg,#2563eb,#7c3aed); }
+  .phase-head h3 { font-size:12.5pt; } .phase-head .dates { font-size:8.5pt; color:#64748b; font-weight:600; }
+  .goal { color:#64748b; font-size:9pt; margin:0 0 11px; }
+  .weeks { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+  .wk { border:1px solid #e8edf3; border-radius:8px; padding:7px 10px; background:#f8fafc; }
+  .wk.proj { border-color:#2563eb; background:#eff4ff; }
+  .wk .d { font-size:7pt; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#2563eb; }
+  .wk h4 { font-size:9pt; margin:2px 0 2px; } .wk p { font-size:8pt; color:#64748b; margin:0; line-height:1.35; }
+  .projects { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  .proj { border:1px solid #e2e8f0; border-radius:10px; padding:11px 13px; break-inside:avoid; }
+  .proj .tag { display:inline-block; font-size:7pt; font-weight:700; color:#2563eb; background:#eef2ff; padding:2px 8px; border-radius:999px; margin-bottom:5px; }
+  .proj h4 { font-size:10pt; margin:0 0 3px; } .proj p { font-size:8.5pt; color:#475569; margin:0; line-height:1.4; }
+  .steps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:11px; margin-top:8px; }
+  .step { border:1px solid #e2e8f0; border-radius:10px; padding:13px; break-inside:avoid; }
+  .step .n { width:24px; height:24px; border-radius:50%; background:#2563eb; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:9.5pt; margin-bottom:7px; }
+  .step h4 { font-size:9.5pt; margin:0 0 3px; } .step p { font-size:8.3pt; color:#64748b; margin:0; line-height:1.4; }
+  .callout { border-left:4px solid #2563eb; background:#f8fafc; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9.5pt; }
+  .note-print { border-left:4px solid #d97706; background:#fffbeb; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9pt; color:#7c2d12; }
+  .pc-outcomes { display:grid; grid-template-columns:1.6fr 1fr; gap:10px; margin:14px 0; break-inside:avoid; }
+  .pc-roles, .pc-salary { border:1px solid #e2e8f0; border-radius:10px; padding:11px 14px; background:#f8fafc; font-size:9pt; }
+  .pc-roles .k, .pc-salary .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:3px; }
+  .pc-salary { background:linear-gradient(135deg,#eef2ff,#f8fafc); text-align:center; }
+  .pc-salary .v { font-size:15pt; font-weight:900; color:#2563eb; }
+  .footer { margin-top:20px; padding-top:11px; border-top:1px solid #e2e8f0; font-size:8pt; color:#94a3b8; }
+  .spacer { break-after:page; }
+</style></head><body>
+  <div class="cover">
+    <div class="kicker">PathAhead · Free Roadmap</div>
+    <h1>Become a<br>Cloud / DevOps Engineer<br>from Scratch</h1>
+    <p>The engineers who ship and run software at scale. Go from zero to job-ready in about five months — with real pipelines, containers, and cloud deployments.</p>
+    <div class="stats"><div class="stat"><div class="n">22</div><div class="l">weeks · ~10–12 hrs/wk</div></div><div class="stat"><div class="n">5</div><div class="l">hands-on projects</div></div><div class="stat"><div class="n">4</div><div class="l">phases · to production</div></div><div class="stat"><div class="n">₹0</div><div class="l">free tiers only</div></div></div>
+    <div class="foot">A free PathAhead learning resource · adjust the pace to your life — the order matters more than the dates.</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The One Rule</div>
+    <h2 class="sec">Automate → containerize → deploy</h2><div class="rule"></div>
+    <p class="lead">DevOps is learned by building pipelines, not reading about them. Everything below runs on free cloud tiers and ends in something deployed and automated.</p>
+    
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The Roadmap</div>
+    <h2 class="sec">Four phases, step by step</h2><div class="rule"></div>
+    <div class="phase"><div class="phase-head"><span class="pnum">0</span><div><h3>Foundations</h3><span class="dates">Weeks 1–5</span></div></div><p class="goal">The Linux, Git, and scripting base everything sits on.</p><div class="weeks"><div class="wk"><div class="d">Week 1</div><h4>Linux & CLI</h4><p>Shell, files, permissions, processes.</p></div><div class="wk"><div class="d">Week 2</div><h4>Networking basics</h4><p>DNS, HTTP, ports, load balancing.</p></div><div class="wk"><div class="d">Week 3</div><h4>Git workflows</h4><p>Branches, PRs, merge strategies.</p></div><div class="wk"><div class="d">Week 4</div><h4>Scripting</h4><p>Bash and Python for automation.</p></div><div class="wk"><div class="d">Week 5</div><h4>Programming refresher</h4><p>Enough code to build tooling.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">1</span><div><h3>Containers & CI/CD</h3><span class="dates">Weeks 6–11</span></div></div><p class="goal">Package apps and ship them automatically.</p><div class="weeks"><div class="wk"><div class="d">Week 6</div><h4>Docker</h4><p>Images, containers, Dockerfiles.</p></div><div class="wk"><div class="d">Week 7</div><h4>Docker Compose</h4><p>Multi-service local environments.</p></div><div class="wk"><div class="d">Week 8</div><h4>CI/CD concepts</h4><p>Pipelines with GitHub Actions.</p></div><div class="wk"><div class="d">Week 9</div><h4>Build & deploy</h4><p>Automated test-and-deploy workflows.</p></div><div class="wk"><div class="d">Week 10</div><h4>Registries</h4><p>Push and pull container images.</p></div><div class="wk proj"><div class="d">Week 11 · Project ▶</div><h4>Containerized pipeline</h4><p>Dockerize an app and auto-deploy it.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">2</span><div><h3>Cloud & Orchestration</h3><span class="dates">Weeks 12–17</span></div></div><p class="goal">Run workloads on AWS and Kubernetes.</p><div class="weeks"><div class="wk"><div class="d">Week 12</div><h4>Cloud fundamentals</h4><p>AWS core: EC2, S3, IAM.</p></div><div class="wk"><div class="d">Week 13</div><h4>Cloud networking</h4><p>VPCs, subnets, security groups.</p></div><div class="wk"><div class="d">Week 14</div><h4>Kubernetes basics</h4><p>Pods, deployments, services.</p></div><div class="wk"><div class="d">Week 15</div><h4>K8s scaling</h4><p>Replicas, autoscaling, config.</p></div><div class="wk"><div class="d">Week 16</div><h4>Infrastructure as Code</h4><p>Terraform to define infrastructure.</p></div><div class="wk proj"><div class="d">Week 17 · Project ▶</div><h4>Deploy to Kubernetes</h4><p>Run your app on a K8s cluster.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">3</span><div><h3>Monitoring & SRE</h3><span class="dates">Weeks 18–22</span></div></div><p class="goal">Keep production healthy and secure.</p><div class="weeks"><div class="wk"><div class="d">Week 18</div><h4>Monitoring</h4><p>Prometheus and Grafana dashboards.</p></div><div class="wk"><div class="d">Week 19</div><h4>Logging</h4><p>Centralized logs with the ELK stack.</p></div><div class="wk"><div class="d">Week 20</div><h4>Security & secrets</h4><p>Secrets management, least privilege.</p></div><div class="wk"><div class="d">Week 21</div><h4>Cert prep</h4><p>AWS Cloud Practitioner study.</p></div><div class="wk proj"><div class="d">Week 22 · Capstone ▶</div><h4>Full platform</h4><p>CI/CD + IaC + K8s + monitoring, end to end.</p></div></div></div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="section">
+    <div class="sec-kick">Build a Portfolio</div>
+    <h2 class="sec">Five projects that get you hired</h2><div class="rule"></div>
+    <p class="lead">Projects beat certificates. Do them in order — each builds on the last. Put every one on GitHub with a clear README: problem → approach → result.</p>
+    <div class="projects"><div class="proj"><span class="tag">Start here</span><h4>1 · Dockerize an App</h4><p>Take any app and package it into a container that runs anywhere.</p></div><div class="proj"><span class="tag">CI/CD</span><h4>2 · CI/CD Pipeline</h4><p>GitHub Actions that test and deploy on every push.</p></div><div class="proj"><span class="tag">Cloud</span><h4>3 · Deploy to AWS</h4><p>Host an app on EC2/S3 with proper IAM and networking.</p></div><div class="proj"><span class="tag">In demand</span><h4>4 · Kubernetes Deployment</h4><p>Run a multi-service app on a cluster with scaling.</p></div><div class="proj"><span class="tag">Capstone</span><h4>5 · IaC + K8s + Monitoring</h4><p>A fully automated, monitored platform defined in Terraform.</p></div></div>
+    <div class="pc-outcomes">
+      <div class="pc-roles"><span class="k">Roles you can apply for</span>DevOps Engineer · Cloud Engineer · Site Reliability Engineer · Platform Engineer</div>
+      <div class="pc-salary"><span class="k">Typical starting salary · India</span><span class="v">₹6–14 LPA</span></div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top:20px">
+    <div class="sec-kick">Do This Today</div>
+    <h2 class="sec">Your first step (takes 30 minutes)</h2><div class="rule"></div>
+    <div class="steps"><div class="step"><div class="n">1</div><h4>Install Docker Desktop</h4><p>Free — your local container playground.</p></div><div class="step"><div class="n">2</div><h4>Open an AWS free-tier account</h4><p>aws.amazon.com/free — enough to learn the core services.</p></div><div class="step"><div class="n">3</div><h4>Run one container</h4><p>docker run hello-world, then containerize a small app. Started.</p></div></div>
+    <div class="callout"><strong>Job-ready checklist:</strong> 3–5 solid projects on GitHub (≥1 deployed or documented) · can explain your work in an interview · comfortable with the core tools of the field · a portfolio or profile recruiters can find.</div>
+    <div class="footer">PathAhead — India's premium career guidance platform. This roadmap is a free educational resource; timelines are a guide and everyone learns at a different pace. Referenced third-party resources (KodeKloud, freeCodeCamp, AWS Skill Builder, TechWorld with Nana (YouTube), Docker docs) are for learning only and are not affiliated with PathAhead.</div>
+  </div>
+</body></html>

@@ -6,6 +6,16 @@
   <url><loc>https://pathahead.example/programs.html</loc><priority>0.9</priority></url>
   <url><loc>https://pathahead.example/for-colleges.html</loc><priority>0.9</priority></url>
   <url><loc>https://pathahead.example/for-students.html</loc><priority>0.8</priority></url>
+  <url><loc>https://pathahead.example/roadmaps.html</loc><priority>0.9</priority></url>
+  <url><loc>https://pathahead.example/career-roadmap.html</loc><priority>0.9</priority></url>
+  <url><loc>https://pathahead.example/ai-ml-roadmap.html</loc><priority>0.8</priority></url>
+  <url><loc>https://pathahead.example/web-development-roadmap.html</loc><priority>0.8</priority></url>
+  <url><loc>https://pathahead.example/data-science-roadmap.html</loc><priority>0.8</priority></url>
+  <url><loc>https://pathahead.example/cybersecurity-roadmap.html</loc><priority>0.8</priority></url>
+  <url><loc>https://pathahead.example/cloud-devops-roadmap.html</loc><priority>0.8</priority></url>
+  <url><loc>https://pathahead.example/mobile-development-roadmap.html</loc><priority>0.8</priority></url>
+  <url><loc>https://pathahead.example/ui-ux-design-roadmap.html</loc><priority>0.8</priority></url>
+  <url><loc>https://pathahead.example/data-engineering-roadmap.html</loc><priority>0.8</priority></url>
   <url><loc>https://pathahead.example/gallery.html</loc><priority>0.6</priority></url>
   <url><loc>https://pathahead.example/testimonials.html</loc><priority>0.7</priority></url>
   <url><loc>https://pathahead.example/faq.html</loc><priority>0.6</priority></url>

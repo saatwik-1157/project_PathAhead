@@ -57,6 +57,8 @@
     { label: "Programs",     href: "programs.html" },
     { label: "For Colleges", href: "for-colleges.html" },
     { label: "For Students", href: "for-students.html" },
+    { label: "Roadmaps",     href: "roadmaps.html" },
+    { label: "Career Builder", href: "career-roadmap.html" },
     { label: "Gallery",      href: "gallery.html" },
     { label: "Testimonials", href: "testimonials.html" },
     { label: "FAQ",          href: "faq.html" },
