@@ -19,6 +19,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="canonical" href="https://saatwik-1157.github.io/project_PathAhead/career-roadmap.html" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"PathAhead Career Roadmap Builder","applicationCategory":"EducationApplication","operatingSystem":"Web","description":"Build a personalised engineering career roadmap by branch, year, target domain, state and goal — with a semester timeline, projects, internships, placements and clickable learning resources.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"provider":{"@type":"Organization","name":"PathAhead"}}
+  </script>
   <style>
     .builder{border:1px solid var(--border);border-radius:20px;padding:26px;background:var(--surface);max-width:960px;margin:0 auto}
     .builder-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
@@ -65,7 +69,34 @@
     .checklist li.on span{color:var(--muted);text-decoration:line-through}
     .empty-hint{text-align:center;color:var(--muted);padding:40px 20px}
     @media(max-width:720px){.cols,.sem-grid,.two-col{grid-template-columns:1fr}}
-    @media print{.nav,.footer,.builder,.wa-float,.back-to-top{display:none!important}.rm-block{break-inside:avoid}}
+    /* Visual semester timeline */
+    .timeline{margin:6px 0 18px;overflow-x:auto}
+    .tl-track{display:flex;align-items:flex-start;min-width:520px;position:relative}
+    .tl-node{flex:1;text-align:center;position:relative;padding-top:20px}
+    .tl-node::before{content:"";position:absolute;top:6px;left:50%;width:100%;height:3px;background:var(--border)}
+    .tl-node:last-child::before{display:none}
+    .tl-dot{position:absolute;top:0;left:50%;transform:translateX(-50%);width:15px;height:15px;border-radius:50%;background:var(--border);border:2px solid var(--surface);z-index:1}
+    .tl-node.done .tl-dot{background:var(--primary)}
+    .tl-node.now .tl-dot{background:var(--primary);box-shadow:0 0 0 4px var(--primary-soft)}
+    .tl-node.now .tl-lbl{color:var(--primary);font-weight:800}
+    .tl-lbl{font-size:.78rem;font-weight:600;color:var(--muted);display:block}
+    .tl-yr{font-size:.68rem;color:var(--muted);display:block;margin-top:2px}
+    /* Comparison table */
+    .cmp{width:100%;border-collapse:collapse;margin-top:8px;font-size:.9rem}
+    .cmp th,.cmp td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top}
+    .cmp th{background:var(--primary-soft);color:var(--text)}
+    .cmp td:first-child{font-weight:700;color:var(--muted);width:130px;background:var(--bg)}
+    .cmp .wrap{display:flex;flex-wrap:wrap;gap:6px}
+    .print-head{display:none}
+    @media(max-width:720px){.cols,.sem-grid,.two-col{grid-template-columns:1fr}.cmp{font-size:.82rem}}
+    @media print{
+      .nav,.footer,.builder,.wa-float,.back-to-top,.page-hero,.section-alt,#btn-copy,#btn-print{display:none!important}
+      .rm-block{break-inside:avoid;border-color:#ccc}
+      .print-head{display:block;margin-bottom:16px;border-bottom:2px solid #2563eb;padding-bottom:10px}
+      .print-head h2{font-size:18pt;margin:0}
+      .print-head p{margin:4px 0 0;color:#555;font-size:10pt}
+      a{color:#2563eb!important;text-decoration:none}
+    }
   </style>
 </head>
 <body>
@@ -98,11 +129,12 @@
             <option value="government">Government / PSU</option>
             <option value="international">International Career</option>
           </select></div>
+          <div class="fld"><label for="sel-compare">Compare with (optional)</label><select id="sel-compare"><option value="">No comparison</option></select></div>
         </div>
         <div class="builder-actions">
           <button id="btn-build" class="btn btn-primary btn-lg">Generate my roadmap</button>
           <button id="btn-copy" class="btn btn-outline" style="display:none">Copy shareable link</button>
-          <button id="btn-print" class="btn btn-outline" style="display:none">Print / Save PDF</button>
+          <button id="btn-print" class="btn btn-outline" style="display:none">Download PDF</button>
           <a href="roadmaps.html" class="btn btn-ghost">Browse domain roadmaps</a>
         </div>
         <p class="build-note">This roadmap is assembled from structured guidance and is meant as a practical starting point. College names, industries and hubs are real; salary ranges are broad, indicative India figures — not guarantees. Always cross-check current specifics for your college and companies.</p>
