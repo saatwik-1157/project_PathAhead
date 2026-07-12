@@ -42,6 +42,14 @@
     .proj p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
     .note-band{border-left:4px solid var(--primary);background:var(--primary-soft);padding:14px 18px;border-radius:0 12px 12px 0;margin:8px auto 0;max-width:820px;font-size:.9rem;color:var(--text)}
     .disclaimer{font-size:.82rem;color:var(--muted);max-width:760px;margin:14px auto 0;text-align:center}
+    .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+    .res-grid .col h5{margin:0 0 8px;font-size:.95rem;color:var(--primary)}
+    .res-grid .col ul{padding-left:18px;margin:0}
+    .res-grid .col ul li{margin:6px 0;font-size:.9rem;line-height:1.5}
+    .res-grid a{color:var(--primary);text-decoration:none;border-bottom:1px solid transparent}
+    .res-grid a:hover{border-bottom-color:currentColor}
+    .res-universal{font-size:.85rem;color:var(--muted);margin-top:18px;border-top:1px solid var(--border);padding-top:14px}
+    .res-universal a{color:var(--primary);text-decoration:none}.res-universal a:hover{text-decoration:underline}
     .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
     .outcomes{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;align-items:stretch}
     .oc-card{border:1px solid var(--border);border-radius:16px;padding:22px 24px;background:var(--surface)}
@@ -132,6 +140,13 @@
   </section>
 
   <section class="section">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow reveal">Learn It</span><h2 class="h-xl reveal reveal-d1">Learning resources</h2><p class="lead reveal reveal-d2">Click any resource to open it — free and well-known first, then build something with it.</p></div>
+      <div class="res-grid reveal"><div class="col"><h5>Books</h5><ul><li><a href="https://www.google.com/search?q=Python%20for%20Data%20Analysis%20by%20Wes%20McKinney" target="_blank" rel="noopener noreferrer">Python for Data Analysis by Wes McKinney</a></li><li><a href="https://www.google.com/search?q=An%20Introduction%20to%20Statistical%20Learning%20by%20James%2C%20Witten%2C%20Hastie%20and%20Tibshirani" target="_blank" rel="noopener noreferrer">An Introduction to Statistical Learning by James, Witten, Hastie and Tibshirani</a></li><li><a href="https://www.google.com/search?q=The%20Art%20of%20Statistics%20by%20David%20Spiegelhalter" target="_blank" rel="noopener noreferrer">The Art of Statistics by David Spiegelhalter</a></li></ul></div><div class="col"><h5>Courses</h5><ul><li><a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">Data Analysis with Python by freeCodeCamp (free)</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">IBM Data Science Professional Certificate by Coursera</a></li><li><a href="https://nptel.ac.in/" target="_blank" rel="noopener noreferrer">Data Science by NPTEL (free)</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Google Data Analytics Certificate by Coursera</a></li></ul></div><div class="col"><h5>YouTube</h5><ul><li><a href="https://www.youtube.com/results?search_query=Ken%20Jee" target="_blank" rel="noopener noreferrer">Ken Jee</a></li><li><a href="https://www.youtube.com/@statquest" target="_blank" rel="noopener noreferrer">StatQuest with Josh Starmer</a></li><li><a href="https://www.youtube.com/results?search_query=Data%20School" target="_blank" rel="noopener noreferrer">Data School</a></li></ul></div><div class="col"><h5>Practice</h5><ul><li><a href="https://www.kaggle.com/learn" target="_blank" rel="noopener noreferrer">Kaggle</a></li><li><a href="https://www.datacamp.com/" target="_blank" rel="noopener noreferrer">DataCamp</a></li><li><a href="https://www.hackerrank.com/" target="_blank" rel="noopener noreferrer">HackerRank</a></li></ul></div></div><p class="res-universal">Universal (any field): <a href="https://roadmap.sh/" target="_blank" rel="noopener noreferrer">roadmap.sh</a> · <a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">freeCodeCamp</a> · <a href="https://education.github.com/pack" target="_blank" rel="noopener noreferrer">GitHub Student Pack</a> · <a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Coursera</a></p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow reveal">Do This Today</span>

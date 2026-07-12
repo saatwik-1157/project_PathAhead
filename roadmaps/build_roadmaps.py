@@ -15,9 +15,119 @@ Output:
 """
 
 import os
+import re
+import json
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUILD = os.path.join(ROOT, "roadmaps")
+
+# ----------------------------------------------------------------------
+# Learning resources — reuse career-data/resources.js as the single source
+# of truth, and turn each item into a real clickable link (same resolver as
+# the Career Builder). Known platforms -> real URL; else a smart search.
+# ----------------------------------------------------------------------
+def load_resources():
+    try:
+        txt = open(os.path.join(ROOT, "career-data", "resources.js"), encoding="utf-8").read()
+        txt = txt[txt.index("{"):txt.rindex("}") + 1]
+        txt = re.sub(r'\b(books|courses|youtube|practice)\s*:', r'"\1":', txt)
+        return json.loads(txt)
+    except Exception as e:
+        print("WARN: could not parse resources.js:", e)
+        return {}
+
+RES = load_resources()
+# generator page-slug -> resources.js slug (only cybersecurity differs)
+RESOURCE_SLUG = {"cybersecurity": "cyber-security"}
+
+LINKS = {
+    "the odin project": "https://www.theodinproject.com/", "odin project": "https://www.theodinproject.com/",
+    "full stack open": "https://fullstackopen.com/", "fullstackopen": "https://fullstackopen.com/",
+    "javascript.info": "https://javascript.info/", "freecodecamp": "https://www.freecodecamp.org/learn/",
+    "frontend mentor": "https://www.frontendmentor.io/", "the net ninja": "https://www.youtube.com/@NetNinja",
+    "programming with mosh": "https://www.youtube.com/@programmingwithmosh", "traversy": "https://www.youtube.com/@TraversyMedia",
+    "corey schafer": "https://www.youtube.com/@coreyms", "fireship": "https://www.youtube.com/@Fireship",
+    "techworld with nana": "https://www.youtube.com/@TechWorldwithNana", "tech world with nana": "https://www.youtube.com/@TechWorldwithNana",
+    "statquest": "https://www.youtube.com/@statquest", "3blue1brown": "https://www.youtube.com/@3blue1brown",
+    "sentdex": "https://www.youtube.com/@sentdex", "mdn": "https://developer.mozilla.org/",
+    "w3schools": "https://www.w3schools.com/", "geeksforgeeks": "https://www.geeksforgeeks.org/",
+    "codecademy": "https://www.codecademy.com/", "cs50": "https://cs50.harvard.edu/x/",
+    "fast.ai": "https://course.fast.ai/", "khan academy": "https://www.khanacademy.org/",
+    "nptel": "https://nptel.ac.in/", "leetcode": "https://leetcode.com/", "hackerrank": "https://www.hackerrank.com/",
+    "codewars": "https://www.codewars.com/", "codeforces": "https://codeforces.com/",
+    "kaggle": "https://www.kaggle.com/learn", "tryhackme": "https://tryhackme.com/",
+    "hackthebox": "https://www.hackthebox.com/", "hack the box": "https://www.hackthebox.com/",
+    "owasp": "https://owasp.org/www-project-top-ten/", "professor messer": "https://www.professormesser.com/",
+    "aws skill builder": "https://skillbuilder.aws/", "aws": "https://aws.amazon.com/training/",
+    "microsoft learn": "https://learn.microsoft.com/training/", "azure": "https://learn.microsoft.com/training/azure/",
+    "google cloud": "https://cloud.google.com/learn", "kodekloud": "https://kodekloud.com/",
+    "docker": "https://docs.docker.com/get-started/", "kubernetes": "https://kubernetes.io/docs/tutorials/",
+    "terraform": "https://developer.hashicorp.com/terraform/tutorials", "flutter": "https://docs.flutter.dev/get-started",
+    "firebase": "https://firebase.google.com/docs", "react native": "https://reactnative.dev/docs/getting-started",
+    "android": "https://developer.android.com/courses", "google codelabs": "https://codelabs.developers.google.com/",
+    "figma": "https://www.figma.com/resources/learn-design/", "refactoring ui": "https://www.refactoringui.com/",
+    "laws of ux": "https://lawsofux.com/", "nielsen norman": "https://www.nngroup.com/articles/",
+    "google ux": "https://www.coursera.org/professional-certificates/google-ux-design",
+    "dbt": "https://learn.getdbt.com/", "data engineering zoomcamp": "https://github.com/DataTalksClub/data-engineering-zoomcamp",
+    "datacamp": "https://www.datacamp.com/", "mode": "https://mode.com/sql-tutorial/",
+    "unity learn": "https://learn.unity.com/", "unreal": "https://dev.epicgames.com/community/unreal-engine/learning",
+    "godot": "https://docs.godotengine.org/", "blender": "https://www.blender.org/support/tutorials/",
+    "gamedev.tv": "https://www.gamedev.tv/", "alchemy": "https://university.alchemy.com/",
+    "cyfrin": "https://updraft.cyfrin.io/", "solidity": "https://docs.soliditylang.org/",
+    "coursera": "https://www.coursera.org/", "edx": "https://www.edx.org/", "udemy": "https://www.udemy.com/",
+    "udacity": "https://www.udacity.com/", "github": "https://github.com/", "roadmap.sh": "https://roadmap.sh/",
+}
+
+def _res_url(text, kind):
+    import urllib.parse as up
+    low = text.lower()
+    for key, url in LINKS.items():
+        if key in low:
+            return url
+    if kind == "youtube":
+        return "https://www.youtube.com/results?search_query=" + up.quote(text)
+    return "https://www.google.com/search?q=" + up.quote(text)
+
+def _res_links(arr, kind):
+    if not arr:
+        return ""
+    lis = "".join('<li><a href="%s" target="_blank" rel="noopener noreferrer">%s</a></li>' % (_res_url(x, kind), x) for x in arr)
+    return "<ul>" + lis + "</ul>"
+
+UNIVERSAL = ('<p class="res-universal">Universal (any field): '
+    '<a href="https://roadmap.sh/" target="_blank" rel="noopener noreferrer">roadmap.sh</a> · '
+    '<a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">freeCodeCamp</a> · '
+    '<a href="https://education.github.com/pack" target="_blank" rel="noopener noreferrer">GitHub Student Pack</a> · '
+    '<a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Coursera</a></p>')
+
+def resources_section_web(page_slug):
+    r = RES.get(RESOURCE_SLUG.get(page_slug, page_slug))
+    if not r:
+        return ""
+    def col(t, arr, kind):
+        return '<div class="col"><h5>%s</h5>%s</div>' % (t, _res_links(arr, kind))
+    return ('<section class="section">\n    <div class="container">\n'
+        '      <div class="section-head"><span class="eyebrow reveal">Learn It</span>'
+        '<h2 class="h-xl reveal reveal-d1">Learning resources</h2>'
+        '<p class="lead reveal reveal-d2">Click any resource to open it — free and well-known first, then build something with it.</p></div>\n'
+        '      <div class="res-grid reveal">'
+        + col("Books", r.get("books"), "book") + col("Courses", r.get("courses"), "course")
+        + col("YouTube", r.get("youtube"), "youtube") + col("Practice", r.get("practice"), "practice")
+        + '</div>' + UNIVERSAL + '\n    </div>\n  </section>')
+
+def resources_block_print(page_slug):
+    r = RES.get(RESOURCE_SLUG.get(page_slug, page_slug))
+    if not r:
+        return ""
+    def col(t, arr, kind):
+        return '<div class="rcol"><span class="k">%s</span>%s</div>' % (t, _res_links(arr, kind))
+    return ('<div class="section" style="margin-top:16px"><div class="sec-kick">Learn It</div>'
+        '<h2 class="sec">Learning resources</h2><div class="rule"></div>'
+        '<p class="lead">Every item links to the real source (clickable in this PDF).</p>'
+        '<div class="res-print">'
+        + col("Books", r.get("books"), "book") + col("Courses", r.get("courses"), "course")
+        + col("YouTube", r.get("youtube"), "youtube") + col("Practice", r.get("practice"), "practice")
+        + '</div></div>')
 
 # ----------------------------------------------------------------------
 # DATA — every domain's curriculum. AI/ML already has a hand-built page,
@@ -489,6 +599,14 @@ PAGE_STYLE = """  <style>
     .proj p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
     .note-band{border-left:4px solid var(--primary);background:var(--primary-soft);padding:14px 18px;border-radius:0 12px 12px 0;margin:8px auto 0;max-width:820px;font-size:.9rem;color:var(--text)}
     .disclaimer{font-size:.82rem;color:var(--muted);max-width:760px;margin:14px auto 0;text-align:center}
+    .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+    .res-grid .col h5{margin:0 0 8px;font-size:.95rem;color:var(--primary)}
+    .res-grid .col ul{padding-left:18px;margin:0}
+    .res-grid .col ul li{margin:6px 0;font-size:.9rem;line-height:1.5}
+    .res-grid a{color:var(--primary);text-decoration:none;border-bottom:1px solid transparent}
+    .res-grid a:hover{border-bottom-color:currentColor}
+    .res-universal{font-size:.85rem;color:var(--muted);margin-top:18px;border-top:1px solid var(--border);padding-top:14px}
+    .res-universal a{color:var(--primary);text-decoration:none}.res-universal a:hover{text-decoration:underline}
     .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
     .outcomes{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;align-items:stretch}
     .oc-card{border:1px solid var(--border);border-radius:16px;padding:22px 24px;background:var(--surface)}
@@ -646,7 +764,9 @@ def build_page(d):
     </div>
   </section>
 
-  <section class="section">
+  %%RESOURCES_SECTION%%
+
+  <section class="section section-alt">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow reveal">Do This Today</span>
@@ -689,6 +809,7 @@ def build_page(d):
         "%%RULETITLE%%": d["rule_title"], "%%RULELEAD%%": d["rule_lead"], "%%NOTE%%": note_html,
         "%%PHASES%%": render_phases_web(d["phases"]),
         "%%PROJECTS%%": render_projects_web(d["projects"]),
+        "%%RESOURCES_SECTION%%": resources_section_web(d["slug"]),
         "%%STEPS%%": render_steps_web(d["steps"]),
         "%%RESOURCES%%": d["resources"],
     }
@@ -736,6 +857,11 @@ PRINT_CSS = """  @page { size: A4; margin: 16mm 15mm; }
   .step h4 { font-size:9.5pt; margin:0 0 3px; } .step p { font-size:8.3pt; color:#64748b; margin:0; line-height:1.4; }
   .callout { border-left:4px solid #2563eb; background:#f8fafc; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9.5pt; }
   .note-print { border-left:4px solid #d97706; background:#fffbeb; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9pt; color:#7c2d12; }
+  .res-print { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .rcol { border:1px solid #e2e8f0; border-radius:10px; padding:10px 13px; break-inside:avoid; }
+  .rcol .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:4px; }
+  .rcol ul { padding-left:15px; margin:0; } .rcol ul li { font-size:8.3pt; margin:3px 0; line-height:1.35; }
+  .rcol a { color:#2563eb; text-decoration:none; }
   .pc-outcomes { display:grid; grid-template-columns:1.6fr 1fr; gap:10px; margin:14px 0; break-inside:avoid; }
   .pc-roles, .pc-salary { border:1px solid #e2e8f0; border-radius:10px; padding:11px 14px; background:#f8fafc; font-size:9pt; }
   .pc-roles .k, .pc-salary .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:3px; }
@@ -810,6 +936,8 @@ def build_print(d):
     </div>
   </div>
 
+  %%RESOURCES_PRINT%%
+
   <div class="section" style="margin-top:20px">
     <div class="sec-kick">Do This Today</div>
     <h2 class="sec">Your first step (takes 30 minutes)</h2><div class="rule"></div>
@@ -826,6 +954,7 @@ def build_print(d):
         "%%RULETITLE%%": d["rule_title"], "%%RULELEAD%%": d["rule_lead"], "%%NOTE%%": note_html,
         "%%PHASES%%": render_phases_print(d["phases"]),
         "%%PROJECTS%%": render_projects_print(d["projects"]),
+        "%%RESOURCES_PRINT%%": resources_block_print(d["slug"]),
         "%%STEPS%%": render_steps_print(d["steps"]), "%%RESOURCES%%": d["resources"],
         "%%ROLES%%": roles, "%%SALARY%%": oc["salary"],
     }
