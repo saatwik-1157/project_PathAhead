@@ -50,6 +50,16 @@
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .salary-big{font-size:1.8rem;font-weight:900;color:var(--primary)}
     .disc{font-size:.8rem;color:var(--muted);border-left:3px solid var(--primary);padding-left:12px;margin-top:10px}
+    .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px;margin-top:10px}
+    .res-grid .col h5{margin:0 0 6px;font-size:.9rem;color:var(--primary)}
+    .res-grid .col ul{padding-left:18px;margin:0}
+    .res-grid .col ul li{font-size:.86rem;margin:4px 0;color:var(--muted);line-height:1.45}
+    .chk-bar{font-size:.8rem;font-weight:700;color:var(--primary);margin:4px 0 2px}
+    .checklist{list-style:none;padding-left:0;margin:6px 0 0}
+    .checklist li{margin:7px 0}
+    .checklist label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;line-height:1.5}
+    .checklist input{margin-top:3px;width:16px;height:16px;accent-color:var(--primary);flex:0 0 auto;cursor:pointer}
+    .checklist li.on span{color:var(--muted);text-decoration:line-through}
     .empty-hint{text-align:center;color:var(--muted);padding:40px 20px}
     @media(max-width:720px){.cols,.sem-grid,.two-col{grid-template-columns:1fr}}
     @media print{.nav,.footer,.builder,.wa-float,.back-to-top{display:none!important}.rm-block{break-inside:avoid}}
@@ -88,6 +98,7 @@
         </div>
         <div class="builder-actions">
           <button id="btn-build" class="btn btn-primary btn-lg">Generate my roadmap</button>
+          <button id="btn-copy" class="btn btn-outline" style="display:none">Copy shareable link</button>
           <button id="btn-print" class="btn btn-outline" style="display:none">Print / Save PDF</button>
           <a href="roadmaps.html" class="btn btn-ghost">Browse domain roadmaps</a>
         </div>
@@ -118,6 +129,7 @@
   <script src="career-data/domains.js"></script>
   <script src="career-data/states.js"></script>
   <script src="career-data/years.js"></script>
+  <script src="career-data/resources.js"></script>
   <script src="career-data/builder.js"></script>
   <script src="js/main.js"></script>
 </body>
