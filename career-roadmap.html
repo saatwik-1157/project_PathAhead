@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Roadmap Builder — PathAhead | Personalised Engineering Roadmaps</title>
+  <meta name="description" content="Build a personalised engineering career roadmap: pick your branch, year, domain, state and goal to get a tailored plan — skills, semester plan, projects, internships, placements and more." />
+  <meta name="theme-color" content="#2563EB" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PathAhead" />
+  <meta property="og:title" content="Career Roadmap Builder — PathAhead" />
+  <meta property="og:description" content="Pick your branch, year, domain and state to generate a personalised engineering career roadmap." />
+  <meta property="og:image" content="assets/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="assets/og-image.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .builder{border:1px solid var(--border);border-radius:20px;padding:26px;background:var(--surface);max-width:960px;margin:0 auto}
+    .builder-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+    .fld label{display:block;font-weight:700;font-size:.82rem;margin-bottom:6px;color:var(--text)}
+    .fld select{width:100%;padding:12px 14px;border:1px solid var(--border-strong,var(--border));border-radius:10px;background:var(--bg);color:var(--text);font-size:.95rem;font-family:inherit}
+    .builder-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;align-items:center}
+    .build-note{font-size:.82rem;color:var(--muted);margin-top:14px}
+    .rm-out{margin-top:8px}
+    .rm-block{border:1px solid var(--border);border-radius:16px;padding:22px 24px;margin-bottom:16px;background:var(--surface)}
+    .rm-block h3{margin:0 0 4px;font-size:1.15rem;display:flex;align-items:center;gap:10px}
+    .rm-block .rm-num{width:30px;height:30px;flex:0 0 30px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:.85rem;background:linear-gradient(135deg,var(--primary),#7c3aed)}
+    .rm-block p{color:var(--muted);line-height:1.6;margin:8px 0}
+    .rm-block ul{margin:8px 0 0;padding-left:20px;color:var(--text)}
+    .rm-block ul li{margin:5px 0;line-height:1.5}
+    .chips{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
+    .chip{background:var(--primary-soft);color:var(--primary);font-weight:600;font-size:.82rem;padding:5px 12px;border-radius:999px}
+    .chip.alt{background:var(--surface-2,var(--bg));color:var(--text);border:1px solid var(--border)}
+    .cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:10px}
+    .col h5{margin:0 0 6px;font-size:.9rem;color:var(--primary)}
+    .col ul{padding-left:18px;margin:0}
+    .col ul li{font-size:.88rem;margin:4px 0;color:var(--muted)}
+    .sem-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+    .sem{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--bg)}
+    .sem.now{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary) inset}
+    .sem h5{margin:0 0 6px;font-size:.92rem}
+    .sem .tag-now{font-size:.68rem;font-weight:800;color:#fff;background:var(--primary);padding:2px 8px;border-radius:999px;margin-left:8px;text-transform:uppercase}
+    .sem p{margin:4px 0;font-size:.84rem}
+    .sem .lbl{font-weight:700;color:var(--text);font-size:.78rem;text-transform:uppercase;letter-spacing:.03em}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .salary-big{font-size:1.8rem;font-weight:900;color:var(--primary)}
+    .disc{font-size:.8rem;color:var(--muted);border-left:3px solid var(--primary);padding-left:12px;margin-top:10px}
+    .empty-hint{text-align:center;color:var(--muted);padding:40px 20px}
+    @media(max-width:720px){.cols,.sem-grid,.two-col{grid-template-columns:1fr}}
+    @media print{.nav,.footer,.builder,.wa-float,.back-to-top{display:none!important}.rm-block{break-inside:avoid}}
+  </style>
+</head>
+<body>
+
+  <section class="page-hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <span class="eyebrow reveal">Personalised Roadmap</span>
+      <h1 class="h-xl reveal reveal-d1">Build <span class="text-accent">your</span> engineering career roadmap</h1>
+      <p class="lead reveal reveal-d2">Pick your branch, year, target domain, state and goal — and get a tailored plan covering skills, a semester-by-semester schedule, projects, internships, placements, and your next steps. Free, and yours to follow.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="builder reveal">
+        <div class="builder-grid">
+          <div class="fld"><label for="sel-branch">Branch</label><select id="sel-branch"><option value="">Select branch…</option></select></div>
+          <div class="fld"><label for="sel-year">Year of study</label><select id="sel-year">
+            <option value="1">1st Year</option><option value="2">2nd Year</option>
+            <option value="3">3rd Year</option><option value="4">Final Year</option>
+            <option value="0">Diploma / Other</option>
+          </select></div>
+          <div class="fld"><label for="sel-domain">Target domain</label><select id="sel-domain"><option value="">Select branch first…</option></select></div>
+          <div class="fld"><label for="sel-state">State / UT</label><select id="sel-state"><option value="">Select state…</option></select></div>
+          <div class="fld"><label for="sel-goal">Career goal</label><select id="sel-goal">
+            <option value="placement">Placement (job)</option>
+            <option value="higher">Higher Studies</option>
+            <option value="entrepreneur">Entrepreneurship</option>
+            <option value="government">Government / PSU</option>
+            <option value="international">International Career</option>
+          </select></div>
+        </div>
+        <div class="builder-actions">
+          <button id="btn-build" class="btn btn-primary btn-lg">Generate my roadmap</button>
+          <button id="btn-print" class="btn btn-outline" style="display:none">Print / Save PDF</button>
+          <a href="roadmaps.html" class="btn btn-ghost">Browse domain roadmaps</a>
+        </div>
+        <p class="build-note">This roadmap is assembled from structured guidance and is meant as a practical starting point. College names, industries and hubs are real; salary ranges are broad, indicative India figures — not guarantees. Always cross-check current specifics for your college and companies.</p>
+      </div>
+
+      <div id="rm-output" class="rm-out" style="margin-top:26px">
+        <div class="empty-hint">Fill in the boxes above and hit <strong>Generate my roadmap</strong> to see your personalised plan.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="cta-band reveal">
+        <h2 class="h-xl">Want the deep-dive versions?</h2>
+        <p>Explore full week-by-week roadmaps for individual domains — with downloadable PDFs.</p>
+        <div class="cta-actions">
+          <a href="roadmaps.html" class="btn btn-primary btn-lg">See All Roadmaps</a>
+          <a href="for-students.html#register" class="btn btn-outline btn-lg" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)">Register Your Interest</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/config.js"></script>
+  <script src="career-data/branches.js"></script>
+  <script src="career-data/domains.js"></script>
+  <script src="career-data/states.js"></script>
+  <script src="career-data/years.js"></script>
+  <script src="career-data/builder.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

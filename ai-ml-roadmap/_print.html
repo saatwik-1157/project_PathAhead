@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI/ML Engineer Roadmap</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b; font-size: 10.5pt; line-height: 1.5; margin: 0;
+  }
+  h1,h2,h3,h4 { color: #0f172a; margin: 0; }
+  a { color: #2563eb; text-decoration: none; }
+  .accent { color: #2563eb; }
+  .muted { color: #64748b; }
+  .avoid-break { break-inside: avoid; }
+
+  /* COVER */
+  .cover {
+    height: 247mm; display: flex; flex-direction: column; justify-content: center;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    color: #fff; border-radius: 14px; padding: 0 20mm; break-after: page;
+    -webkit-print-color-adjust: exact;
+  }
+  .cover .kicker { font-size: 12pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
+  .cover h1 { color: #fff; font-size: 40pt; font-weight: 900; line-height: 1.05; margin: 14px 0 18px; }
+  .cover p { font-size: 13pt; max-width: 150mm; opacity: .95; line-height: 1.5; }
+  .cover .stats { display: flex; gap: 26px; margin-top: 40px; flex-wrap: wrap; }
+  .cover .stat .n { font-size: 30pt; font-weight: 900; line-height: 1; }
+  .cover .stat .l { font-size: 9.5pt; opacity: .9; margin-top: 4px; }
+  .cover .foot { margin-top: 46px; font-size: 10pt; opacity: .8; }
+
+  /* SECTIONS */
+  .section { break-inside: auto; }
+  h2.sec { font-size: 20pt; font-weight: 800; margin: 4px 0 4px; }
+  .sec-kick { font-size: 9pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #2563eb; }
+  .rule { height: 3px; width: 54px; background: #2563eb; border-radius: 2px; margin: 8px 0 16px; }
+  .lead { color: #475569; font-size: 11pt; margin-bottom: 18px; }
+
+  /* PHASE */
+  .phase { border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; break-inside: avoid; }
+  .phase-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .pnum { width: 34px; height: 34px; flex: 0 0 34px; border-radius: 9px; color: #fff; font-weight: 800;
+          display: flex; align-items: center; justify-content: center; font-size: 13pt;
+          background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-print-color-adjust: exact; }
+  .phase-head h3 { font-size: 13pt; }
+  .phase-head .dates { font-size: 9pt; color: #64748b; font-weight: 600; }
+  .goal { color: #64748b; font-size: 9.5pt; margin: 0 0 12px; }
+  .weeks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .wk { border: 1px solid #e8edf3; border-radius: 8px; padding: 8px 11px; background: #f8fafc; }
+  .wk.proj { border-color: #2563eb; background: #eff4ff; }
+  .wk .d { font-size: 7.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #2563eb; }
+  .wk h4 { font-size: 9.5pt; margin: 3px 0 2px; }
+  .wk p { font-size: 8.5pt; color: #64748b; margin: 0; line-height: 1.4; }
+
+  /* PROJECTS */
+  .projects { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .proj { border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px; break-inside: avoid; }
+  .proj .tag { display: inline-block; font-size: 7.5pt; font-weight: 700; color: #2563eb;
+               background: #eef2ff; padding: 2px 8px; border-radius: 999px; margin-bottom: 6px; }
+  .proj h4 { font-size: 10.5pt; margin: 0 0 4px; }
+  .proj p { font-size: 9pt; color: #475569; margin: 0; line-height: 1.45; }
+
+  /* STEPS */
+  .steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .step { border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; break-inside: avoid; }
+  .step .n { width: 26px; height: 26px; border-radius: 50%; background: #2563eb; color: #fff; font-weight: 800;
+             display: flex; align-items: center; justify-content: center; font-size: 10pt; margin-bottom: 8px;
+             -webkit-print-color-adjust: exact; }
+  .step h4 { font-size: 10pt; margin: 0 0 4px; }
+  .step p { font-size: 8.7pt; color: #64748b; margin: 0; line-height: 1.45; }
+
+  .callout { border-left: 4px solid #2563eb; background: #f8fafc; padding: 12px 16px; border-radius: 0 8px 8px 0;
+             margin: 14px 0; font-size: 10pt; }
+  .pc-outcomes { display:grid; grid-template-columns:1.6fr 1fr; gap:10px; margin:14px 0; break-inside:avoid; }
+  .pc-roles, .pc-salary { border:1px solid #e2e8f0; border-radius:10px; padding:11px 14px; background:#f8fafc; font-size:9pt; }
+  .pc-roles .k, .pc-salary .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:3px; }
+  .pc-salary { background:linear-gradient(135deg,#eef2ff,#f8fafc); text-align:center; }
+  .pc-salary .v { font-size:15pt; font-weight:900; color:#2563eb; }
+  .footer { margin-top: 22px; padding-top: 12px; border-top: 1px solid #e2e8f0; font-size: 8pt; color: #94a3b8; }
+  .spacer { break-after: page; }
+</style>
+</head>
+<body>
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="kicker">PathAhead · Free Roadmap</div>
+    <h1>Become an AI/ML Engineer<br>from Scratch</h1>
+    <p>A practical, week-by-week plan that takes you from zero to job-ready in about six months — built around real projects, not just theory.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">24</div><div class="l">weeks · ~10–12 hrs/wk</div></div>
+      <div class="stat"><div class="n">5</div><div class="l">portfolio projects</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">phases · zero to deploy</div></div>
+      <div class="stat"><div class="n">₹0</div><div class="l">free resources only</div></div>
+    </div>
+    <div class="foot">Start: 14 Jul 2026 &nbsp;·&nbsp; Finish: 28 Dec 2026 &nbsp;·&nbsp; Adjust the pace to your life — the order matters more than the dates.</div>
+  </div>
+
+  <!-- THE RULE -->
+  <div class="section">
+    <div class="sec-kick">The One Rule</div>
+    <h2 class="sec">Learn → code it → build something</h2>
+    <div class="rule"></div>
+    <p class="lead">Watching tutorials without writing code is wasted time. Every concept below is paired with something you build. Ship small things often, and put every project on GitHub.</p>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="section">
+    <div class="sec-kick">The Roadmap</div>
+    <h2 class="sec">Four phases, twenty-four weeks</h2>
+    <div class="rule"></div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="pnum">0</span><div><h3>Foundations</h3><span class="dates">Weeks 1–4 · 14 Jul – 10 Aug</span></div></div>
+      <p class="goal">Get comfortable with Python and just enough math.</p>
+      <div class="weeks">
+        <div class="wk"><div class="d">Week 1 · 14–20 Jul</div><h4>Python basics</h4><p>Variables, loops, functions, lists &amp; dicts, files, error handling.</p></div>
+        <div class="wk"><div class="d">Week 2 · 21–27 Jul</div><h4>Python for data</h4><p>NumPy, pandas, matplotlib. Clean a real CSV, plot charts.</p></div>
+        <div class="wk"><div class="d">Week 3 · 28 Jul–3 Aug</div><h4>Linear algebra</h4><p>Vectors, matrices, dot products, gradients — intuition, not proofs.</p></div>
+        <div class="wk"><div class="d">Week 4 · 4–10 Aug</div><h4>Probability &amp; stats</h4><p>Mean, variance, distributions, Bayes, correlation vs causation.</p></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="pnum">1</span><div><h3>Core Machine Learning</h3><span class="dates">Weeks 5–12 · 11 Aug – 5 Oct</span></div></div>
+      <p class="goal">Understand and apply classic ML with scikit-learn. (Andrew Ng's ML Specialization.)</p>
+      <div class="weeks">
+        <div class="wk proj"><div class="d">Week 5 · Project ▶</div><h4>Linear regression</h4><p>Gradient descent, train/test split. Start the House Price Predictor.</p></div>
+        <div class="wk"><div class="d">Week 6</div><h4>Classification</h4><p>Logistic regression, accuracy, precision, recall, F1, confusion matrix.</p></div>
+        <div class="wk"><div class="d">Week 7</div><h4>Tuning models</h4><p>Overfitting, bias-variance, regularization, cross-validation, scaling.</p></div>
+        <div class="wk"><div class="d">Week 8</div><h4>Trees &amp; ensembles</h4><p>Decision trees, random forests, gradient boosting, feature importance.</p></div>
+        <div class="wk"><div class="d">Week 9</div><h4>More algorithms</h4><p>KNN, SVM, Naive Bayes, and GridSearch hyperparameter tuning.</p></div>
+        <div class="wk"><div class="d">Week 10</div><h4>Unsupervised</h4><p>K-means clustering and PCA for dimensionality reduction.</p></div>
+        <div class="wk"><div class="d">Week 11</div><h4>Feature engineering</h4><p>Missing data, outliers, encoding, full sklearn pipelines.</p></div>
+        <div class="wk proj"><div class="d">Week 12 · Project ▶</div><h4>Ship project #1</h4><p>Finish the predictor end-to-end with a clean GitHub README.</p></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="pnum">2</span><div><h3>Deep Learning</h3><span class="dates">Weeks 13–20 · 6 Oct – 30 Nov</span></div></div>
+      <p class="goal">Build neural networks with PyTorch — from MNIST to Transformers.</p>
+      <div class="weeks">
+        <div class="wk"><div class="d">Week 13</div><h4>Neural net basics</h4><p>Neurons, activations, loss, backpropagation, optimizers.</p></div>
+        <div class="wk"><div class="d">Week 14</div><h4>PyTorch</h4><p>Tensors, autograd, your first trained network on MNIST digits.</p></div>
+        <div class="wk proj"><div class="d">Week 15 · Project ▶</div><h4>CNNs part 1</h4><p>Convolution &amp; pooling. Start the Image Classifier.</p></div>
+        <div class="wk"><div class="d">Week 16</div><h4>CNNs part 2</h4><p>Train on a real image dataset, plot learning curves.</p></div>
+        <div class="wk"><div class="d">Week 17</div><h4>Regularizing</h4><p>Dropout, batch norm, augmentation, and transfer learning.</p></div>
+        <div class="wk"><div class="d">Week 18</div><h4>Sequences &amp; NLP</h4><p>Embeddings, RNN/LSTM basics, text preprocessing.</p></div>
+        <div class="wk"><div class="d">Week 19</div><h4>Transformers</h4><p>Attention — the foundation of ChatGPT. Use Hugging Face.</p></div>
+        <div class="wk proj"><div class="d">Week 20 · Project ▶</div><h4>Ship project #2</h4><p>Finish &amp; deploy a demo on Hugging Face Spaces or Streamlit.</p></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="pnum">3</span><div><h3>Engineering, Deployment &amp; GenAI</h3><span class="dates">Weeks 21–24 · 1–28 Dec</span></div></div>
+      <p class="goal">Ship models like an engineer — the part that turns "learner" into "hireable".</p>
+      <div class="weeks">
+        <div class="wk"><div class="d">Week 21</div><h4>Engineering</h4><p>Git, clean project structure, virtual envs, modular code.</p></div>
+        <div class="wk"><div class="d">Week 22</div><h4>Deployment</h4><p>Serve a model with FastAPI, Docker basics, deploy to a free host.</p></div>
+        <div class="wk proj"><div class="d">Week 23 · Project ▶</div><h4>LLMs &amp; RAG</h4><p>Call an LLM API, build document Q&amp;A with embeddings + vector search.</p></div>
+        <div class="wk proj"><div class="d">Week 24 · Capstone ▶</div><h4>Capstone + job prep</h4><p>One polished end-to-end app. Portfolio, resume, start applying.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <!-- PROJECTS -->
+  <div class="section">
+    <div class="sec-kick">Build a Portfolio</div>
+    <h2 class="sec">Five projects that get you hired</h2>
+    <div class="rule"></div>
+    <p class="lead">Projects beat certificates. Do them in order — each builds skills for the next. Put every one on GitHub with a clear README: problem → approach → results → screenshots.</p>
+    <div class="projects">
+      <div class="proj"><span class="tag">Start here</span><h4>1 · House Price Predictor</h4><p>Regression with pandas &amp; scikit-learn. Compare Linear Regression vs Random Forest. RMSE and R². (Starter code included in your project folder.)</p></div>
+      <div class="proj"><span class="tag">Classification</span><h4>2 · Spam / Sentiment Classifier</h4><p>Text features (TF-IDF), logistic regression, precision/recall. Pick spam detection, movie-review sentiment, or Titanic survival.</p></div>
+      <div class="proj"><span class="tag">Deep learning</span><h4>3 · Image Classifier</h4><p>A CNN in PyTorch. Start with MNIST, then a real dataset. Use transfer learning; deploy an upload-an-image demo.</p></div>
+      <div class="proj"><span class="tag">In demand</span><h4>4 · Document Q&amp;A (RAG)</h4><p>Upload a PDF, ask questions. Embeddings + vector search + an LLM, wrapped in a Streamlit UI. One of the most requested AI skills today.</p></div>
+      <div class="proj"><span class="tag">Capstone</span><h4>5 · Deployed ML App</h4><p>Take any earlier project to production: model served via FastAPI, containerized with Docker, live on a free host. The one you talk about in interviews.</p></div>
+    </div>
+    <div class="pc-outcomes">
+      <div class="pc-roles"><span class="k">Roles you can apply for</span>ML Engineer · AI Engineer · Data Scientist · ML Researcher</div>
+      <div class="pc-salary"><span class="k">Typical starting salary · India</span><span class="v">₹6–15 LPA</span></div>
+    </div>
+  </div>
+
+  <!-- FIRST STEP -->
+  <div class="section" style="margin-top:22px">
+    <div class="sec-kick">Do This Today</div>
+    <h2 class="sec">Your first step (takes 30 minutes)</h2>
+    <div class="rule"></div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h4>Open Google Colab</h4><p>colab.research.google.com — free, in your browser, every library pre-installed. Zero setup.</p></div>
+      <div class="step"><div class="n">2</div><h4>Get a GitHub account</h4><p>Create a free account at github.com. This is where your projects live and where recruiters look.</p></div>
+      <div class="step"><div class="n">3</div><h4>Run Project 1</h4><p>Load the California Housing dataset, plot a few charts, train your first model. That's it — you've started.</p></div>
+    </div>
+    <div class="callout"><strong>Job-ready checklist:</strong> 3–5 solid projects on GitHub (≥1 deployed and live) · can explain your models and tradeoffs in an interview · comfortable with Python, scikit-learn, PyTorch, Git, and one deployment path · a few Kaggle competitions done.</div>
+    <div class="footer">PathAhead — India's premium career guidance platform. This roadmap is a free educational resource; timelines are a guide and everyone learns at a different pace. Third-party resources (Coursera, fast.ai, freeCodeCamp, 3Blue1Brown, Khan Academy, Hugging Face) are referenced for learning only and are not affiliated with PathAhead.</div>
+  </div>
+
+</body>
+</html>

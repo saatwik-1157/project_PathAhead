@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Data Scientist / Analyst Roadmap</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:#1e293b; font-size:10.5pt; line-height:1.5; margin:0; }
+  h1,h2,h3,h4 { color:#0f172a; margin:0; }
+  .cover { height:247mm; display:flex; flex-direction:column; justify-content:center; background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%); color:#fff; border-radius:14px; padding:0 20mm; break-after:page; }
+  .cover .kicker { font-size:12pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.85; }
+  .cover h1 { color:#fff; font-size:34pt; font-weight:900; line-height:1.08; margin:14px 0 18px; }
+  .cover p { font-size:12.5pt; max-width:150mm; opacity:.95; line-height:1.5; }
+  .cover .stats { display:flex; gap:26px; margin-top:36px; flex-wrap:wrap; }
+  .cover .stat .n { font-size:28pt; font-weight:900; line-height:1; }
+  .cover .stat .l { font-size:9.5pt; opacity:.9; margin-top:4px; }
+  .cover .foot { margin-top:42px; font-size:10pt; opacity:.8; }
+  .sec-kick { font-size:9pt; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#2563eb; }
+  h2.sec { font-size:19pt; font-weight:800; margin:4px 0 4px; }
+  .rule { height:3px; width:54px; background:#2563eb; border-radius:2px; margin:8px 0 14px; }
+  .lead { color:#475569; font-size:10.5pt; margin-bottom:16px; }
+  .phase { border:1px solid #e2e8f0; border-radius:12px; padding:15px 17px; margin-bottom:13px; break-inside:avoid; }
+  .phase-head { display:flex; align-items:center; gap:12px; margin-bottom:9px; }
+  .pnum { width:32px; height:32px; flex:0 0 32px; border-radius:9px; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:12pt; background:linear-gradient(135deg,#2563eb,#7c3aed); }
+  .phase-head h3 { font-size:12.5pt; } .phase-head .dates { font-size:8.5pt; color:#64748b; font-weight:600; }
+  .goal { color:#64748b; font-size:9pt; margin:0 0 11px; }
+  .weeks { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+  .wk { border:1px solid #e8edf3; border-radius:8px; padding:7px 10px; background:#f8fafc; }
+  .wk.proj { border-color:#2563eb; background:#eff4ff; }
+  .wk .d { font-size:7pt; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#2563eb; }
+  .wk h4 { font-size:9pt; margin:2px 0 2px; } .wk p { font-size:8pt; color:#64748b; margin:0; line-height:1.35; }
+  .projects { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  .proj { border:1px solid #e2e8f0; border-radius:10px; padding:11px 13px; break-inside:avoid; }
+  .proj .tag { display:inline-block; font-size:7pt; font-weight:700; color:#2563eb; background:#eef2ff; padding:2px 8px; border-radius:999px; margin-bottom:5px; }
+  .proj h4 { font-size:10pt; margin:0 0 3px; } .proj p { font-size:8.5pt; color:#475569; margin:0; line-height:1.4; }
+  .steps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:11px; margin-top:8px; }
+  .step { border:1px solid #e2e8f0; border-radius:10px; padding:13px; break-inside:avoid; }
+  .step .n { width:24px; height:24px; border-radius:50%; background:#2563eb; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:9.5pt; margin-bottom:7px; }
+  .step h4 { font-size:9.5pt; margin:0 0 3px; } .step p { font-size:8.3pt; color:#64748b; margin:0; line-height:1.4; }
+  .callout { border-left:4px solid #2563eb; background:#f8fafc; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9.5pt; }
+  .note-print { border-left:4px solid #d97706; background:#fffbeb; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9pt; color:#7c2d12; }
+  .pc-outcomes { display:grid; grid-template-columns:1.6fr 1fr; gap:10px; margin:14px 0; break-inside:avoid; }
+  .pc-roles, .pc-salary { border:1px solid #e2e8f0; border-radius:10px; padding:11px 14px; background:#f8fafc; font-size:9pt; }
+  .pc-roles .k, .pc-salary .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:3px; }
+  .pc-salary { background:linear-gradient(135deg,#eef2ff,#f8fafc); text-align:center; }
+  .pc-salary .v { font-size:15pt; font-weight:900; color:#2563eb; }
+  .footer { margin-top:20px; padding-top:11px; border-top:1px solid #e2e8f0; font-size:8pt; color:#94a3b8; }
+  .spacer { break-after:page; }
+</style></head><body>
+  <div class="cover">
+    <div class="kicker">PathAhead · Free Roadmap</div>
+    <h1>Become a<br>Data Scientist / Analyst<br>from Scratch</h1>
+    <p>Turn raw numbers into decisions. Go from zero to job-ready analytics in about five months — built around real datasets and portfolio-worthy reports.</p>
+    <div class="stats"><div class="stat"><div class="n">20</div><div class="l">weeks · ~10–12 hrs/wk</div></div><div class="stat"><div class="n">5</div><div class="l">portfolio projects</div></div><div class="stat"><div class="n">4</div><div class="l">phases · data to insight</div></div><div class="stat"><div class="n">₹0</div><div class="l">free resources only</div></div></div>
+    <div class="foot">A free PathAhead learning resource · adjust the pace to your life — the order matters more than the dates.</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The One Rule</div>
+    <h2 class="sec">Analyze → visualize → explain</h2><div class="rule"></div>
+    <p class="lead">Anyone can run a chart. The skill is explaining what it means. Every project below ends in a clear insight you could present to a manager.</p>
+    
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The Roadmap</div>
+    <h2 class="sec">Four phases, step by step</h2><div class="rule"></div>
+    <div class="phase"><div class="phase-head"><span class="pnum">0</span><div><h3>Foundations</h3><span class="dates">Weeks 1–4</span></div></div><p class="goal">The core toolkit: Python, stats, and SQL.</p><div class="weeks"><div class="wk"><div class="d">Week 1</div><h4>Python basics</h4><p>Variables, loops, functions, working with files.</p></div><div class="wk"><div class="d">Week 2</div><h4>pandas & NumPy</h4><p>DataFrames, cleaning, filtering, groupby.</p></div><div class="wk"><div class="d">Week 3</div><h4>Statistics</h4><p>Descriptive stats, distributions, probability.</p></div><div class="wk"><div class="d">Week 4</div><h4>SQL</h4><p>SELECT, joins, aggregation, grouping.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">1</span><div><h3>Analysis & Visualization</h3><span class="dates">Weeks 5–9</span></div></div><p class="goal">Explore data and tell its story with charts.</p><div class="weeks"><div class="wk"><div class="d">Week 5</div><h4>EDA</h4><p>Explore, clean, and handle missing data.</p></div><div class="wk"><div class="d">Week 6</div><h4>Visualization</h4><p>matplotlib and seaborn for clear charts.</p></div><div class="wk"><div class="d">Week 7</div><h4>Dashboards</h4><p>Plotly, Power BI, or Tableau basics.</p></div><div class="wk"><div class="d">Week 8</div><h4>Data storytelling</h4><p>Turning findings into a clear narrative.</p></div><div class="wk proj"><div class="d">Week 9 · Project ▶</div><h4>Analytics report</h4><p>A full EDA writeup on a real dataset.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">2</span><div><h3>Statistics & ML</h3><span class="dates">Weeks 10–15</span></div></div><p class="goal">Test hypotheses and build predictive models.</p><div class="weeks"><div class="wk"><div class="d">Week 10</div><h4>Hypothesis testing</h4><p>A/B tests, p-values, significance.</p></div><div class="wk"><div class="d">Week 11</div><h4>Regression</h4><p>Linear and logistic regression.</p></div><div class="wk"><div class="d">Week 12</div><h4>Classification</h4><p>Decision trees and random forests.</p></div><div class="wk"><div class="d">Week 13</div><h4>Clustering</h4><p>K-means and customer segmentation.</p></div><div class="wk"><div class="d">Week 14</div><h4>Model evaluation</h4><p>Metrics, cross-validation, avoiding overfit.</p></div><div class="wk proj"><div class="d">Week 15 · Project ▶</div><h4>Predictive model</h4><p>Predict churn or price and evaluate it.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">3</span><div><h3>Tools & Delivery</h3><span class="dates">Weeks 16–20</span></div></div><p class="goal">The workflow that makes you hireable.</p><div class="weeks"><div class="wk"><div class="d">Week 16</div><h4>Advanced SQL</h4><p>Window functions, CTEs, subqueries.</p></div><div class="wk"><div class="d">Week 17</div><h4>Spreadsheet mastery</h4><p>Pivot tables, lookups, dashboards in Excel/Sheets.</p></div><div class="wk"><div class="d">Week 18</div><h4>Git & notebooks</h4><p>Reproducible, version-controlled analysis.</p></div><div class="wk"><div class="d">Week 19</div><h4>Communicating results</h4><p>Reports and decks for non-technical people.</p></div><div class="wk proj"><div class="d">Week 20 · Capstone ▶</div><h4>End-to-end analysis</h4><p>A full case study from raw data to recommendation.</p></div></div></div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="section">
+    <div class="sec-kick">Build a Portfolio</div>
+    <h2 class="sec">Five projects that get you hired</h2><div class="rule"></div>
+    <p class="lead">Projects beat certificates. Do them in order — each builds on the last. Put every one on GitHub with a clear README: problem → approach → result.</p>
+    <div class="projects"><div class="proj"><span class="tag">Start here</span><h4>1 · Exploratory Data Analysis</h4><p>Pick any Kaggle dataset. Clean it, chart it, find 3 insights.</p></div><div class="proj"><span class="tag">Dashboards</span><h4>2 · Interactive Dashboard</h4><p>Sales, sports, or COVID data in Power BI / Tableau / Plotly.</p></div><div class="proj"><span class="tag">Statistics</span><h4>3 · A/B Test Analysis</h4><p>Analyze an experiment and state whether the result is significant.</p></div><div class="proj"><span class="tag">In demand</span><h4>4 · Predictive Model</h4><p>Predict churn or house prices; explain accuracy and drivers.</p></div><div class="proj"><span class="tag">Capstone</span><h4>5 · End-to-End Case Study</h4><p>Raw data → analysis → model → written recommendation.</p></div></div>
+    <div class="pc-outcomes">
+      <div class="pc-roles"><span class="k">Roles you can apply for</span>Data Analyst · Data Scientist · Business Analyst · BI Analyst</div>
+      <div class="pc-salary"><span class="k">Typical starting salary · India</span><span class="v">₹4–12 LPA</span></div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top:20px">
+    <div class="sec-kick">Do This Today</div>
+    <h2 class="sec">Your first step (takes 30 minutes)</h2><div class="rule"></div>
+    <div class="steps"><div class="step"><div class="n">1</div><h4>Open Google Colab</h4><p>colab.research.google.com — free, browser-based, every library ready.</p></div><div class="step"><div class="n">2</div><h4>Get a Kaggle account</h4><p>kaggle.com — thousands of free datasets and community notebooks.</p></div><div class="step"><div class="n">3</div><h4>Do one EDA</h4><p>Load a dataset, run .describe(), plot 3 charts. You've started.</p></div></div>
+    <div class="callout"><strong>Job-ready checklist:</strong> 3–5 solid projects on GitHub (≥1 deployed or documented) · can explain your work in an interview · comfortable with the core tools of the field · a portfolio or profile recruiters can find.</div>
+    <div class="footer">PathAhead — India's premium career guidance platform. This roadmap is a free educational resource; timelines are a guide and everyone learns at a different pace. Referenced third-party resources (Kaggle Learn, freeCodeCamp, Khan Academy, Mode SQL Tutorial, StatQuest (YouTube)) are for learning only and are not affiliated with PathAhead.</div>
+  </div>
+</body></html>
