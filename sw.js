@@ -1,12 +1,12 @@
 /* PathAhead — Service Worker (offline support, always-fresh when online) */
-const CACHE = "pathahead-v3";
+const CACHE = "pathahead-v4";
 const CORE = [
   "index.html", "about.html", "programs.html", "for-colleges.html", "for-students.html",
   "gallery.html", "testimonials.html", "faq.html", "contact.html",
   "roadmaps.html", "career-roadmap.html",
   "css/styles.css", "js/main.js",
   "career-data/branches.js", "career-data/domains.js", "career-data/states.js",
-  "career-data/years.js", "career-data/builder.js",
+  "career-data/years.js", "career-data/resources.js", "career-data/builder.js",
   "assets/favicon.svg", "assets/icon.svg", "assets/og-image.svg",
   "manifest.webmanifest"
 ];

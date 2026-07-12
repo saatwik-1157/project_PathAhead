@@ -7,7 +7,7 @@ window.BRANCHES = [
     "coreSubjects": ["Data Structures & Algorithms", "Operating Systems", "Database Management Systems", "Computer Networks", "Theory of Computation", "Discrete Mathematics", "Compiler Design", "Software Engineering"],
     "coreSkills": ["Programming", "Problem solving", "System design", "Version control", "Debugging", "Data modeling", "Algorithmic thinking"],
     "tools": ["Git", "VS Code", "Docker", "Linux", "SQL", "Python", "Java"],
-    "topDomains": ["software-development", "web-development", "ai-ml", "data-science", "cloud-devops", "cyber-security"],
+    "topDomains": ["software-development", "web-development", "ai-ml", "data-science", "cloud-devops", "cyber-security", "blockchain-web3", "game-development", "ar-vr"],
     "higherStudies": ["M.Tech", "MS abroad", "MBA", "GATE CSE", "PhD"],
     "govExams": ["GATE", "ISRO", "BARC", "DRDO", "UPSC IES"]
   },

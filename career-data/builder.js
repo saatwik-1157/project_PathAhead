@@ -102,6 +102,21 @@
   function list(arr){ if(!arr||!arr.length) return ""; return '<ul>'+arr.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>'; }
   function bySlug(arr, slug){ arr=arr||[]; for(var i=0;i<arr.length;i++){ if(arr[i].slug===slug) return arr[i]; } return null; }
 
+  // ---- Progress tracker (saved in the browser) ----------------------------
+  var PKEY = "pa-progress";
+  function loadProg(){ try { return JSON.parse(localStorage.getItem(PKEY) || "{}") || {}; } catch (e) { return {}; } }
+  function saveProg(p){ try { localStorage.setItem(PKEY, JSON.stringify(p)); } catch (e) {} }
+  var PROG = loadProg();
+  function checklist(section, arr){
+    if(!arr || !arr.length) return "";
+    var done = 0;
+    var items = arr.map(function(x){
+      var k = section + "::" + x, on = !!PROG[k]; if(on) done++;
+      return '<li class="'+(on?"on":"")+'"><label><input type="checkbox" data-k="'+esc(k)+'"'+(on?" checked":"")+'> <span>'+esc(x)+'</span></label></li>';
+    }).join("");
+    return '<div class="chk-bar"><span class="chk-count">'+done+'</span> / '+arr.length+' done</div><ul class="checklist">'+items+'</ul>';
+  }
+
   var NUM = 0;
   function block(title, inner){ NUM++; return '<div class="rm-block reveal"><h3><span class="rm-num">'+NUM+'</span>'+esc(title)+'</h3>'+inner+'</div>'; }
 
@@ -204,8 +219,21 @@
     certs=certs.concat((branch.higherStudies||[]).map(function(h){return "Higher study option: "+h;}));
     html+=block("Certifications & Credentials", '<p>Free and well-known options first — a certificate only matters if you can back it with a project.</p>'+list(certs));
 
+    // 6b. Learning Resources (if we have curated ones for this domain)
+    var rsrc = (domain && window.RESOURCES) ? window.RESOURCES[domain.slug] : null;
+    if(rsrc){
+      html+=block("Learning Resources ("+esc(domain.name)+")",
+        '<p>Free and well-known first. Prefer building over binge-watching.</p>'+
+        '<div class="res-grid">'+
+        '<div class="col"><h5>Books</h5>'+list(rsrc.books)+'</div>'+
+        '<div class="col"><h5>Courses</h5>'+list(rsrc.courses)+'</div>'+
+        '<div class="col"><h5>YouTube</h5>'+list(rsrc.youtube)+'</div>'+
+        '<div class="col"><h5>Practice</h5>'+list(rsrc.practice)+'</div>'+
+        '</div>');
+    }
+
     // 7. Internships
-    html+=block("Internship Roadmap", list(INTERNSHIP_STEPS));
+    html+=block("Internship Roadmap", checklist("Internship", INTERNSHIP_STEPS));
 
     // 8. Placements
     var empl = state && state.notableEmployers ? '<p><strong>Employers with presence in '+esc(state.name)+':</strong></p>'+chips(state.notableEmployers,true) : '';
@@ -213,11 +241,11 @@
       '<p><strong>Typical selection process</strong></p>'+list(PLACEMENT_PROCESS)+empl+
       (domain?'<p style="margin-top:10px"><strong>Indicative starting salary ('+esc(domain.name)+'):</strong> ₹'+esc((domain.salaryINR||"").replace(/^₹/,''))+' — broad range, varies by company, city and skill.</p>':''));
 
-    // 9-12 Checklists
-    html+=block("Resume Checklist", list(RESUME));
-    html+=block("GitHub Checklist", list(GITHUB));
-    html+=block("LinkedIn Checklist", list(LINKEDIN));
-    html+=block("Interview Preparation", list(INTERVIEW));
+    // 9-12 Checklists (interactive — progress saved in your browser)
+    html+=block("Resume Checklist", checklist("Resume", RESUME));
+    html+=block("GitHub Checklist", checklist("GitHub", GITHUB));
+    html+=block("LinkedIn Checklist", checklist("LinkedIn", LINKEDIN));
+    html+=block("Interview Preparation", checklist("Interview", INTERVIEW));
 
     // 13. Salary
     html+=block("Salary Expectations",
@@ -244,7 +272,7 @@
     }
 
     // 17. Goal-specific + Higher studies
-    html+=block("Path for your goal — "+esc(goal.label), list(goal.steps)+
+    html+=block("Path for your goal — "+esc(goal.label), checklist("Goal-"+goalKey, goal.steps)+
       (branch.govExams&&(goalKey==="government")?'<p style="margin-top:8px"><strong>Relevant exams/PSUs for '+esc(branch.name)+':</strong></p>'+chips(branch.govExams,true):''));
 
     // 18. Personalised Next Steps
@@ -255,7 +283,7 @@
     else if(year===4){ next=["Grind DSA + mock interviews","Apply on- and off-campus aggressively","Finish a standout capstone project","Finalise: job vs higher studies vs startup"]; }
     else { next=["Map your current skills to a target domain","Fast-track projects to prove ability","Fix resume/GitHub/LinkedIn","Apply widely and prepare for interviews"]; }
     if(domain&&domain.page){ next.push("Follow the full "+domain.name+" roadmap: open its page from Projects above"); }
-    html+=block("Your Personalised Next Steps", '<p>Start here — this week.</p>'+list(next));
+    html+=block("Your Personalised Next Steps", '<p>Start here — this week. Tick items off as you go; your progress is saved on this device.</p>'+checklist("NextSteps", next));
 
     out.innerHTML=html;
     // The site's scroll-reveal observer only watches elements present at page
@@ -263,8 +291,37 @@
     // Force them visible immediately.
     var rev=out.querySelectorAll(".reveal");
     for(var r=0;r<rev.length;r++){ rev[r].classList.add("in"); }
+    // Save the selection to the URL so this exact roadmap can be shared/bookmarked.
+    updateURL(branch, year, domain, state, goalKey);
     document.getElementById("btn-print").style.display="";
+    document.getElementById("btn-copy").style.display="";
     out.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  // ---- Shareable URL state ------------------------------------------------
+  function updateURL(branch, year, domain, state, goalKey){
+    var p=new URLSearchParams();
+    p.set("b", branch.slug);
+    p.set("y", String(year));
+    if(domain) p.set("d", domain.slug);
+    if(state && state.code) p.set("s", state.code);
+    p.set("g", goalKey);
+    try { history.replaceState(null, "", location.pathname + "?" + p.toString()); } catch(e) {}
+  }
+  function applyURL(){
+    var p=new URLSearchParams(location.search);
+    if(!p.get("b")) return false;
+    var bsel=document.getElementById("sel-branch");
+    if(!bySlug(window.BRANCHES, p.get("b"))) return false;
+    bsel.value=p.get("b"); fillDomains(bsel.value);
+    if(p.get("y")) document.getElementById("sel-year").value=p.get("y");
+    if(p.get("d")){ var d=document.getElementById("sel-domain"); if(bySlug(window.DOMAINS_DATA,p.get("d"))) d.value=p.get("d"); }
+    if(p.get("s")){
+      var idx=-1; (window.STATES||[]).forEach(function(st,i){ if(st.code===p.get("s")) idx=i; });
+      if(idx>=0) document.getElementById("sel-state").value=String(idx);
+    }
+    if(p.get("g") && GOALS[p.get("g")]) document.getElementById("sel-goal").value=p.get("g");
+    return true;
   }
 
   // ---- Wire up ------------------------------------------------------------
@@ -278,6 +335,32 @@
     document.getElementById("sel-branch").addEventListener("change",function(){ fillDomains(this.value); });
     document.getElementById("btn-build").addEventListener("click",build);
     document.getElementById("btn-print").addEventListener("click",function(){ window.print(); });
+
+    // Copy shareable link
+    document.getElementById("btn-copy").addEventListener("click",function(){
+      var btn=this, orig=btn.textContent;
+      function done(){ btn.textContent="✓ Link copied"; setTimeout(function(){ btn.textContent=orig; },1800); }
+      try {
+        if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(location.href).then(done, fallback); }
+        else fallback();
+      } catch(e){ fallback(); }
+      function fallback(){ var t=document.createElement("textarea"); t.value=location.href; document.body.appendChild(t); t.select();
+        try{ document.execCommand("copy"); }catch(e){} document.body.removeChild(t); done(); }
+    });
+
+    // Delegated: persist checklist ticks + update the "x / y done" counter
+    document.getElementById("rm-output").addEventListener("change",function(e){
+      var cb=e.target; if(!cb || cb.tagName!=="INPUT" || cb.getAttribute("data-k")==null) return;
+      var k=cb.getAttribute("data-k");
+      if(cb.checked) PROG[k]=1; else delete PROG[k];
+      saveProg(PROG);
+      var li=cb.closest("li"); if(li) li.classList.toggle("on", cb.checked);
+      var ul=cb.closest("ul"); var bar=ul && ul.previousElementSibling;
+      if(bar && bar.className==="chk-bar"){ var c=bar.querySelector(".chk-count"); if(c) c.textContent=ul.querySelectorAll("input:checked").length; }
+    });
+
+    // Auto-generate from a shared/bookmarked link
+    if(applyURL()) build();
   }
 
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();

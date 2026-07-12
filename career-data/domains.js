@@ -328,5 +328,50 @@ window.DOMAINS_DATA = [
     },
     salaryINR: "3-9 LPA",
     page: null
+  },
+  {
+    slug: "blockchain-web3",
+    name: "Blockchain and Web3",
+    roles: ["Blockchain Developer", "Smart Contract Developer", "Web3 Developer", "Solidity Developer"],
+    skills: ["Blockchain fundamentals", "Cryptography basics", "Solidity", "Smart contracts", "Ethereum and the EVM", "ethers.js or web3.js", "DApp development", "Security and auditing"],
+    tools: ["Solidity", "Hardhat", "Remix", "MetaMask", "ethers.js", "IPFS"],
+    certs: ["freeCodeCamp", "Alchemy University", "Cyfrin Updraft", "Coursera Blockchain Specialization"],
+    projects: {
+      beginner: ["A simple token on a testnet", "Wallet connect demo page", "Read data from a public blockchain", "Basic Solidity storage contract", "Voting smart contract", "Send test ETH between wallets"],
+      intermediate: ["ERC-20 token with a frontend", "NFT minting DApp", "Crowdfunding smart contract", "Decentralised to-do list", "Multi-sig wallet", "Staking contract demo"],
+      advanced: ["Full DeFi lending demo", "NFT marketplace", "DAO with governance voting", "Audited and tested contract suite", "Cross-chain bridge demo", "On-chain game or prediction market"]
+    },
+    salaryINR: "5-14 LPA",
+    page: null
+  },
+  {
+    slug: "game-development",
+    name: "Game Development",
+    roles: ["Game Developer", "Unity Developer", "Gameplay Programmer", "Game Designer"],
+    skills: ["Programming (C# or C++)", "Game loops and physics", "Unity or Unreal basics", "2D game development", "3D game development", "Animation and assets", "Game UI and audio", "Performance optimization"],
+    tools: ["Unity", "Unreal Engine", "Godot", "Blender", "C#", "Visual Studio"],
+    certs: ["Unity Learn", "freeCodeCamp", "CS50 Introduction to Game Development", "GameDev.tv courses"],
+    projects: {
+      beginner: ["Flappy-bird style 2D game", "Pong clone", "Simple platformer", "Whack-a-mole", "Memory card game", "2D top-down shooter"],
+      intermediate: ["Endless runner with score", "Tower defense game", "2D RPG with inventory", "Physics puzzle game", "Local multiplayer game", "Simple 3D collectathon"],
+      advanced: ["3D first-person prototype", "Procedurally generated levels", "Multiplayer networked game", "Mobile game published to a store", "Game with save/load + AI enemies", "Polished vertical-slice demo"]
+    },
+    salaryINR: "3-10 LPA",
+    page: null
+  },
+  {
+    slug: "ar-vr",
+    name: "AR / VR and Immersive Tech",
+    roles: ["AR/VR Developer", "Unity XR Developer", "Immersive Experience Developer", "3D Interaction Designer"],
+    skills: ["3D fundamentals", "Unity or Unreal", "C# scripting", "AR foundations (ARCore/ARKit)", "VR interactions", "3D modelling basics", "Spatial UX", "Optimization for headsets"],
+    tools: ["Unity", "Unreal Engine", "ARCore", "ARKit", "Blender", "Meta XR SDK"],
+    certs: ["Unity Learn XR", "Coursera AR/VR courses", "Meta Spark tutorials", "freeCodeCamp"],
+    projects: {
+      beginner: ["Place a 3D object in AR", "AR business card", "360-degree photo viewer in VR", "Simple VR scene to look around", "AR face filter", "Marker-based AR demo"],
+      intermediate: ["AR measuring-tape app", "VR room with grab interactions", "AR product preview in a room", "VR gallery walkthrough", "Hand-tracking demo", "AR navigation arrows"],
+      advanced: ["Multiplayer VR experience", "AR game with world tracking", "VR training simulation", "Mixed-reality passthrough app", "Physics-based VR interactions", "Published headset or mobile AR app"]
+    },
+    salaryINR: "4-12 LPA",
+    page: null
   }
 ];
