@@ -23,7 +23,7 @@
        Leave blank to run in safe "demo mode" (saves to browser only).
        Full step-by-step setup lives in SETUP.md
        ============================================================ */
-    siteUrl: "https://pathahead.example",   // your live domain (used for canonical + sitemap)
+    siteUrl: "https://saatwik-1157.github.io/project_PathAhead",   // live domain (used for canonical + sitemap)
 
     // 🔑 Integration keys live in js/config.js (git-ignored) so they aren't committed.
     //    Copy js/config.example.js → js/config.js and fill them in.
