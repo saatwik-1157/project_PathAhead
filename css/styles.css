@@ -100,7 +100,7 @@ h1, h2, h3, h4 { line-height: 1.15; color: var(--ink); font-weight: 800; letter-
 .eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
-  color: var(--primary); background: var(--primary-soft);
+  color: #1D4ED8; background: #E7EEFE; /* solid, AA-contrast on any section (incl. dark heroes) */
   padding: 7px 14px; border-radius: var(--r-pill);
 }
 .eyebrow.is-orange { color: var(--secondary-dark); background: var(--secondary-soft); }
@@ -126,8 +126,8 @@ h1, h2, h3, h4 { line-height: 1.15; color: var(--ink); font-weight: 800; letter-
 .btn svg { width: 18px; height: 18px; }
 .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 8px 22px rgba(37,99,235,.28); }
 .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(37,99,235,.34); }
-.btn-secondary { background: var(--secondary); color: #fff; box-shadow: 0 8px 22px rgba(249,115,22,.28); }
-.btn-secondary:hover { background: var(--secondary-dark); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(249,115,22,.34); }
+.btn-secondary { background: #C2410C; color: #fff; box-shadow: 0 8px 22px rgba(249,115,22,.28); } /* orange-700: white text passes WCAG AA (4.9:1) */
+.btn-secondary:hover { background: #9A3510; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(249,115,22,.34); }
 .btn-outline { background: #fff; color: var(--ink); border-color: var(--border-strong); }
 .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow); }
 .btn-ghost { background: var(--surface-2); color: var(--ink); }
@@ -445,7 +445,7 @@ body.drawer-open { overflow: hidden; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 40px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.1); }
 .footer .brand { color: #fff; margin-bottom: 16px; }
 .footer-about { color: #94A3B8; font-size: .95rem; max-width: 300px; }
-.footer h3 { color: #fff; font-size: .95rem; margin-bottom: 18px; letter-spacing: .02em; }
+.footer h2 { color: #fff; font-size: .95rem; margin-bottom: 18px; letter-spacing: .02em; }
 .footer-col a { display: block; color: #94A3B8; padding: 6px 0; font-size: .95rem; transition: color .2s; }
 .footer-col a:hover { color: #fff; }
 /* Buttons inside the footer keep their own (white) text — the generic footer link
