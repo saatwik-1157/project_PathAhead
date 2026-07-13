@@ -225,9 +225,9 @@
               '<a href="https://wa.me/' + CONFIG.phoneHref.replace("+", "") + '" aria-label="WhatsApp">' + SOCIAL.whatsapp + "</a>" +
             "</div>" +
           "</div>" +
-          '<div class="footer-col"><h3>Quick Links</h3>' + quick + "</div>" +
-          '<div class="footer-col"><h3>Programs</h3>' + progs + "</div>" +
-          '<div class="footer-col"><h3>Get in Touch</h3>' +
+          '<div class="footer-col"><h2>Quick Links</h2>' + quick + "</div>" +
+          '<div class="footer-col"><h2>Programs</h2>' + progs + "</div>" +
+          '<div class="footer-col"><h2>Get in Touch</h2>' +
             '<ul class="footer-contact">' +
               '<li>' + I.phone + '<a href="tel:' + CONFIG.phoneHref + '">' + CONFIG.phone + "</a></li>" +
               '<li>' + I.phone + '<a href="tel:' + CONFIG.phone2Href + '">' + CONFIG.phone2 + "</a></li>" +
