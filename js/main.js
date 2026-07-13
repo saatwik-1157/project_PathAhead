@@ -179,6 +179,24 @@
   }
 
   /* ============================================================
+     BUILD: Skip-to-content link (a11y — first focusable element)
+     ============================================================ */
+  function buildSkipLink() {
+    var skip = document.createElement("a");
+    skip.className = "skip-link";
+    skip.href = "#main-content";
+    skip.textContent = "Skip to content";
+    // Tag the first real content region so the link has a target on every page.
+    var main = document.querySelector("main, section");
+    if (main) {
+      if (!main.id) main.id = "main-content";
+      main.setAttribute("tabindex", "-1");
+      skip.href = "#" + main.id;
+    }
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
+
+  /* ============================================================
      BUILD: Footer
      ============================================================ */
   function buildFooter() {
@@ -205,9 +223,9 @@
               '<a href="https://wa.me/' + CONFIG.phoneHref.replace("+", "") + '" aria-label="WhatsApp">' + SOCIAL.whatsapp + "</a>" +
             "</div>" +
           "</div>" +
-          '<div class="footer-col"><h4>Quick Links</h4>' + quick + "</div>" +
-          '<div class="footer-col"><h4>Programs</h4>' + progs + "</div>" +
-          '<div class="footer-col"><h4>Get in Touch</h4>' +
+          '<div class="footer-col"><h3>Quick Links</h3>' + quick + "</div>" +
+          '<div class="footer-col"><h3>Programs</h3>' + progs + "</div>" +
+          '<div class="footer-col"><h3>Get in Touch</h3>' +
             '<ul class="footer-contact">' +
               '<li>' + I.phone + '<a href="tel:' + CONFIG.phoneHref + '">' + CONFIG.phone + "</a></li>" +
               '<li>' + I.phone + '<a href="tel:' + CONFIG.phone2Href + '">' + CONFIG.phone2 + "</a></li>" +
@@ -215,7 +233,7 @@
               '<li>' + I.mail + '<a href="mailto:' + CONFIG.email2 + '">' + CONFIG.email2 + "</a></li>" +
               '<li>' + I.map + "India</li>" +
             "</ul>" +
-            '<a href="contact.html" class="btn btn-secondary" style="margin-top:14px">Book a Workshop</a>' +
+            '<a href="contact.html" class="btn btn-primary" style="margin-top:14px">Book a Workshop</a>' +
           "</div>" +
         "</div>" +
         '<div class="footer-bottom">' +
@@ -669,6 +687,7 @@
     injectHead();
     injectAnalytics();
     buildNav();
+    buildSkipLink();
     initTheme();
     buildFooter();
     buildToTop();

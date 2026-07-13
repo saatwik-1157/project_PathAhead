@@ -3,6 +3,27 @@
    Premium, modern, responsive. Palette + tokens + components.
    ============================================================ */
 
+/* ---------- Accessibility: skip-to-content link ---------- */
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: -60px;
+  z-index: 10000;
+  background: var(--primary, #2563EB);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+  transition: top .18s ease;
+}
+.skip-link:focus {
+  top: 16px;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
 /* ---------- Design Tokens ---------- */
 :root {
   /* Brand palette (from brief) */
@@ -424,9 +445,12 @@ body.drawer-open { overflow: hidden; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 40px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.1); }
 .footer .brand { color: #fff; margin-bottom: 16px; }
 .footer-about { color: #94A3B8; font-size: .95rem; max-width: 300px; }
-.footer h4 { color: #fff; font-size: .95rem; margin-bottom: 18px; letter-spacing: .02em; }
+.footer h3 { color: #fff; font-size: .95rem; margin-bottom: 18px; letter-spacing: .02em; }
 .footer-col a { display: block; color: #94A3B8; padding: 6px 0; font-size: .95rem; transition: color .2s; }
 .footer-col a:hover { color: #fff; }
+/* Buttons inside the footer keep their own (white) text — the generic footer link
+   color above would otherwise win by specificity and fail contrast on orange. */
+.footer-col a.btn { color: #fff; display: inline-flex; }
 .footer-contact li { display: flex; gap: 10px; align-items: center; color: #94A3B8; padding: 6px 0; font-size: .95rem; }
 .footer-contact svg { width: 18px; height: 18px; color: var(--primary); flex: none; }
 .socials { display: flex; gap: 12px; margin-top: 18px; }
@@ -435,7 +459,7 @@ body.drawer-open { overflow: hidden; }
 .socials svg { width: 20px; height: 20px; }
 .footer-bottom { padding-top: 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; color: #94A3B8; font-size: .9rem; }
 .footer-bottom .made { display: inline-flex; gap: 6px; align-items: center; }
-.footer-admin { display: inline-flex; align-items: center; gap: 6px; color: #64748B; font-size: .85rem; font-weight: 600; transition: color .2s; }
+.footer-admin { display: inline-flex; align-items: center; gap: 6px; color: #94A3B8; font-size: .85rem; font-weight: 600; transition: color .2s; }
 .footer-admin:hover { color: #fff; }
 .footer-admin svg { opacity: .85; }
 
