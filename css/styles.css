@@ -35,14 +35,15 @@
   --secondary-dark: #EA580C;
   --secondary-soft: #FFF3EA;
 
-  /* Neutrals */
+  /* Neutrals — light surfaces are nudged very slightly warm so the page reads
+     friendly rather than clinical. Text/ink are untouched (contrast-critical). */
   --bg: #FFFFFF;
   --text: #1E293B;
   --muted: #64748B;
   --muted-2: #94A3B8;
-  --surface: #F8FAFC;
-  --surface-2: #F1F5F9;
-  --border: #E2E8F0;
+  --surface: #F7F9FC;
+  --surface-2: #F0F4FA;
+  --border: #E3E9F2;
   --border-strong: #CBD5E1;
   --ink: #0F172A;
 
@@ -57,13 +58,82 @@
   --r-sm: 10px;
   --r: 16px;
   --r-lg: 24px;
+  --r-xl: 32px;
   --r-pill: 999px;
 
   /* Layout */
   --container: 1200px;
   --nav-h: 76px;
+  --nav-h-sm: 62px;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---------- Premium layer ---------- */
+
+  /* Gradient system. Cyan enters ONLY as a gradient midpoint — never as text,
+     never as a fill — turning blue→orange from "sunset" into "spectrum". */
+  --accent: #06B6D4;
+  --accent-deep: #0891B2;
+  --primary-deep: #1E3A8A;
+
+  --grad-brand: linear-gradient(135deg, #2563EB 0%, #4F46E5 45%, #06B6D4 100%);
+  --grad-warm: linear-gradient(135deg, #2563EB 0%, #7C3AED 50%, #F97316 100%);
+  --grad-rail: linear-gradient(90deg, #2563EB, #06B6D4 55%, #F97316);
+  --grad-border: linear-gradient(140deg, rgba(37,99,235,.55), rgba(6,182,212,.35) 45%, rgba(249,115,22,.30));
+
+  /* Ambient aurora — low alpha by design. Light in the room, not neon. */
+  --aurora-1: rgba(37, 99, 235, .16);
+  --aurora-2: rgba(6, 182, 212, .12);
+  --aurora-3: rgba(249, 115, 22, .10);
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, .72);
+  --glass-brd: rgba(255, 255, 255, .85);
+  --glass-blur: 16px;
+
+  /* Three-tier elevation — replaces the flat single shadow on every surface */
+  --elev-1: 0 1px 2px rgba(15,23,42,.05), 0 1px 1px rgba(15,23,42,.03);
+  --elev-2: 0 2px 4px rgba(15,23,42,.04), 0 12px 28px -8px rgba(15,23,42,.10);
+  --elev-3: 0 4px 8px rgba(15,23,42,.05), 0 24px 56px -12px rgba(15,23,42,.16);
+  --elev-inset: inset 0 2px 10px rgba(15,23,42,.06), inset 0 1px 2px rgba(15,23,42,.04);
+  --glow-primary: 0 8px 32px -8px rgba(37, 99, 235, .45);
+  --glow-warm: 0 8px 32px -8px rgba(194, 65, 12, .40);
+
+  /* WCAG-AA literals from commit 18b1f45, tokenised at their EXISTING values.
+     These are frozen — alias them freely, never re-value them. */
+  --secondary-aa: #C2410C;        /* white text on this = 4.9:1 */
+  --secondary-aa-hover: #9A3510;
+  --eyebrow-fg: #1D4ED8;          /* on --eyebrow-bg = 5.7:1 */
+  --eyebrow-bg: #E7EEFE;
+  /* Orange as TEXT needs the darkened ramp: --secondary (#F97316) on white is
+     only 2.8:1. #C2410C is 5.2:1 on white, and dark mode flips to #FDBA74. */
+  --orange-text: #C2410C;
+
+  /* Fluid type scale. Middle terms are rem+vw (not pure vw) so the scale
+     still responds to user zoom. */
+  --fs-display: clamp(2.75rem, 1.60rem + 5.2vw, 4.75rem);   /* 44 → 76px */
+  --fs-h1: clamp(2.25rem, 1.50rem + 3.4vw, 3.50rem);        /* 36 → 56px */
+  --fs-h2: clamp(1.75rem, 1.30rem + 2.1vw, 2.50rem);        /* 28 → 40px */
+  --fs-h3: clamp(1.25rem, 1.10rem + 0.7vw, 1.50rem);        /* 20 → 24px */
+  --fs-lead: clamp(1.0625rem, 1.00rem + 0.5vw, 1.3125rem);  /* 17 → 21px */
+
+  /* Vertical rhythm */
+  --sp-section-sm: 72px;
+  --sp-section: 104px;
+  --sp-section-lg: 136px;
+  --gutter: 28px;
+
+  /* Motion system. --ease is untouched: ~40 existing transitions reference it. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 420ms;
+  --dur-4: 720ms;
+  --dur-slow: 900ms;
+  --stagger: 70ms;
+  --reveal-y: 28px;
 }
 
 /* ---------- Reset ---------- */
@@ -85,12 +155,25 @@ a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 ul { list-style: none; padding: 0; }
 h1, h2, h3, h4 { line-height: 1.15; color: var(--ink); font-weight: 800; letter-spacing: -0.02em; }
-:focus-visible { outline: none; box-shadow: var(--ring); border-radius: 6px; }
+h1, h2, h3, h4 { text-wrap: balance; }
+p, .lead { text-wrap: pretty; }
+
+/* Focus must use `outline`, not `box-shadow`. .btn-primary/.btn-secondary carry
+   their own box-shadow at equal specificity and were silently clobbering the
+   focus ring — those two buttons had NO visible keyboard focus at all.
+   `outline` cannot be overridden by a component's shadow, and it is not
+   clipped by the `.hero { overflow: hidden }` ancestor. */
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
 
 /* ---------- Layout helpers ---------- */
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: 24px; }
-.section { padding: 96px 0; }
-.section-sm { padding: 64px 0; }
+.section { padding: var(--sp-section) 0; }
+.section-sm { padding: var(--sp-section-sm) 0; }
+.section-lg { padding: var(--sp-section-lg) 0; }
 .section-alt { background: var(--surface); }
 .center { text-align: center; }
 .grid { display: grid; gap: 24px; }
@@ -100,16 +183,18 @@ h1, h2, h3, h4 { line-height: 1.15; color: var(--ink); font-weight: 800; letter-
 .eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
-  color: #1D4ED8; background: #E7EEFE; /* solid, AA-contrast on any section (incl. dark heroes) */
+  color: var(--eyebrow-fg); background: var(--eyebrow-bg); /* solid, AA-contrast on any section (incl. dark heroes) */
   padding: 7px 14px; border-radius: var(--r-pill);
 }
-.eyebrow.is-orange { color: var(--secondary-dark); background: var(--secondary-soft); }
-.h-xxl { font-size: clamp(2.6rem, 6vw, 4.5rem); }
-.h-xl  { font-size: clamp(2rem, 4vw, 3rem); }
-.h-lg  { font-size: clamp(1.6rem, 3vw, 2.2rem); }
-.lead { font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--muted); }
+.eyebrow.is-orange { color: var(--orange-text); background: var(--secondary-soft); }
+.h-xxl { font-size: var(--fs-display); letter-spacing: -0.03em;  line-height: 1.04; }
+.h-xl  { font-size: var(--fs-h1);      letter-spacing: -0.025em; line-height: 1.08; }
+.h-lg  { font-size: var(--fs-h2);      letter-spacing: -0.02em;  line-height: 1.14; }
+.lead  { font-size: var(--fs-lead); color: var(--muted); line-height: 1.62; }
+/* Tabular figures stop animated counters from jittering as digits change width */
+.num, .stat .num, .fc-k { font-variant-numeric: tabular-nums; }
 .text-accent { color: var(--primary); }
-.text-orange { color: var(--secondary); }
+.text-orange { color: var(--orange-text); }
 .muted { color: var(--muted); }
 
 .section-head { max-width: 720px; margin: 0 auto 56px; text-align: center; }
@@ -126,8 +211,8 @@ h1, h2, h3, h4 { line-height: 1.15; color: var(--ink); font-weight: 800; letter-
 .btn svg { width: 18px; height: 18px; }
 .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 8px 22px rgba(37,99,235,.28); }
 .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(37,99,235,.34); }
-.btn-secondary { background: #C2410C; color: #fff; box-shadow: 0 8px 22px rgba(249,115,22,.28); } /* orange-700: white text passes WCAG AA (4.9:1) */
-.btn-secondary:hover { background: #9A3510; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(249,115,22,.34); }
+.btn-secondary { background: var(--secondary-aa); color: #fff; box-shadow: 0 8px 22px rgba(249,115,22,.28); } /* orange-700: white text passes WCAG AA (4.9:1) */
+.btn-secondary:hover { background: var(--secondary-aa-hover); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(249,115,22,.34); }
 .btn-outline { background: #fff; color: var(--ink); border-color: var(--border-strong); }
 .btn-outline:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow); }
 .btn-ghost { background: var(--surface-2); color: var(--ink); }
@@ -232,12 +317,12 @@ body.drawer-open { overflow: hidden; }
   padding: 32px; box-shadow: var(--shadow-sm);
   transition: transform .28s var(--ease), box-shadow .28s var(--ease), border-color .28s var(--ease);
 }
-.card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: #dbe4f0; }
+.card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
 .card-icon {
   width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center;
   background: var(--primary-soft); color: var(--primary); margin-bottom: 20px;
 }
-.card-icon.is-orange { background: var(--secondary-soft); color: var(--secondary); }
+.card-icon.is-orange { background: var(--secondary-soft); color: var(--orange-text); }
 .card-icon svg { width: 26px; height: 26px; }
 .card h3 { font-size: 1.25rem; margin-bottom: 10px; }
 .card p { color: var(--muted); font-size: 0.98rem; }
@@ -246,7 +331,7 @@ body.drawer-open { overflow: hidden; }
 .check-list { display: grid; gap: 14px; }
 .check-list li { display: flex; gap: 12px; align-items: flex-start; color: var(--text); }
 .check-list li svg { width: 22px; height: 22px; flex: none; margin-top: 1px; color: var(--primary); }
-.check-list.orange li svg { color: var(--secondary); }
+.check-list.orange li svg { color: var(--orange-text); }
 
 /* ============================================================
    PROGRAM CARDS
@@ -265,7 +350,7 @@ body.drawer-open { overflow: hidden; }
   align-self: flex-start; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: var(--r-pill);
   background: var(--primary-soft); color: var(--primary); text-transform: uppercase; letter-spacing: .03em;
 }
-.program-card.orange .program-tag { background: var(--secondary-soft); color: var(--secondary-dark); }
+.program-card.orange .program-tag { background: var(--secondary-soft); color: var(--orange-text); }
 .program-body h3 { font-size: 1.75rem; margin: 18px 0 8px; }
 .program-meta { display: flex; gap: 20px; flex-wrap: wrap; color: var(--muted); font-size: .9rem; margin-bottom: 18px; }
 .program-meta span { display: inline-flex; gap: 7px; align-items: center; }
@@ -309,7 +394,7 @@ body.drawer-open { overflow: hidden; }
   transition: transform .28s var(--ease), box-shadow .28s var(--ease);
 }
 .tcard:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
-.tcard .stars { color: var(--secondary); display: flex; gap: 3px; margin-bottom: 16px; }
+.tcard .stars { color: var(--orange-text); display: flex; gap: 3px; margin-bottom: 16px; }
 .tcard .stars svg { width: 18px; height: 18px; }
 .tcard blockquote { color: var(--text); font-size: 1.02rem; line-height: 1.65; flex: 1; }
 .tcard .person { display: flex; align-items: center; gap: 14px; margin-top: 22px; }
@@ -331,7 +416,7 @@ body.drawer-open { overflow: hidden; }
    ============================================================ */
 .accordion { max-width: 820px; margin: 0 auto; display: grid; gap: 14px; }
 .acc-item { border: 1px solid var(--border); border-radius: var(--r); background: #fff; overflow: hidden; transition: box-shadow .2s, border-color .2s; }
-.acc-item.open { box-shadow: var(--shadow); border-color: #dbe4f0; }
+.acc-item.open { box-shadow: var(--shadow); border-color: var(--border-strong); }
 .acc-q {
   width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
   padding: 22px 24px; font-size: 1.05rem; font-weight: 600; color: var(--ink); text-align: left;
@@ -393,7 +478,7 @@ body.drawer-open { overflow: hidden; }
 .field { display: flex; flex-direction: column; gap: 7px; }
 .field.full { grid-column: 1 / -1; }
 .field label { font-weight: 600; font-size: .9rem; color: var(--ink); }
-.field label .req { color: var(--secondary); }
+.field label .req { color: var(--orange-text); }
 .field input, .field select, .field textarea {
   font-family: inherit; font-size: 1rem; color: var(--text);
   padding: 13px 15px; border: 1.5px solid var(--border); border-radius: var(--r-sm); background: #fff;
@@ -425,7 +510,7 @@ body.drawer-open { overflow: hidden; }
 .info-card { display: flex; gap: 16px; align-items: center; background: #fff; border: 1px solid var(--border); border-radius: var(--r); padding: 20px 22px; box-shadow: var(--shadow-sm); transition: transform .2s, box-shadow .2s; }
 .info-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .info-card .ic { width: 48px; height: 48px; border-radius: 13px; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center; flex: none; }
-.info-card.orange .ic { background: var(--secondary-soft); color: var(--secondary); }
+.info-card.orange .ic { background: var(--secondary-soft); color: var(--orange-text); }
 .info-card svg { width: 22px; height: 22px; }
 .info-card .k { font-size: .8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
 .info-card .v { font-size: 1.08rem; font-weight: 700; color: var(--ink); word-break: break-word; }
@@ -500,8 +585,19 @@ body.drawer-open { overflow: hidden; }
 /* ============================================================
    SCROLL REVEAL
    ============================================================ */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-y));
+  transition: opacity var(--dur-4) var(--ease-out),
+              transform var(--dur-4) var(--ease-out),
+              filter var(--dur-4) var(--ease-out);
+  /* --i is stamped per element by main.js (position among its .reveal siblings).
+     It defaults to 0, so anything injected at runtime without a stamp behaves
+     exactly as before. The cap keeps a long grid from taking a full second. */
+  transition-delay: calc(min(var(--i, 0), 8) * var(--stagger));
+}
+.reveal.in { opacity: 1; transform: none; filter: none; }
+/* Hand-placed delays still win — they come later at equal specificity. */
 .reveal-d1 { transition-delay: .08s; }
 .reveal-d2 { transition-delay: .16s; }
 .reveal-d3 { transition-delay: .24s; }
@@ -533,7 +629,15 @@ body.drawer-open { overflow: hidden; }
   .split { gap: 36px; }
 }
 @media (max-width: 820px) {
-  .section { padding: 72px 0; }
+  /* Retune the rhythm + motion tokens rather than overriding each rule.
+     Shorter reveal distance and tighter stagger keep small screens snappy. */
+  :root {
+    --sp-section: 76px;
+    --sp-section-sm: 56px;
+    --sp-section-lg: 92px;
+    --reveal-y: 16px;
+    --stagger: 50ms;
+  }
   .cols-3, .cols-2 { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .split { grid-template-columns: 1fr; }
@@ -559,10 +663,13 @@ body.drawer-open { overflow: hidden; }
    ============================================================ */
 
 /* Scroll progress bar */
+/* Driven by transform:scaleX from main.js — animating `width` forced a layout
+   on every scroll frame. transform-origin must stay `left`. */
 .scroll-progress {
-  position: fixed; top: 0; left: 0; height: 3px; width: 0%; z-index: 200;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  pointer-events: none; will-change: width;
+  position: fixed; top: 0; left: 0; height: 3px; width: 100%; z-index: 200;
+  background: var(--grad-rail);
+  transform: scaleX(0); transform-origin: left center;
+  pointer-events: none; will-change: transform;
 }
 
 /* Hero grid texture */
@@ -637,12 +744,12 @@ body.drawer-open { overflow: hidden; }
 .chooser-btns button { padding: 16px 26px; border-radius: var(--r); border: 1.5px solid var(--border); background: #fff; font-weight: 700; font-size: 1rem; color: var(--ink); transition: all .2s; }
 .chooser-btns button:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow); }
 .chooser-btns button.active { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: 0 8px 22px rgba(37,99,235,.28); }
-.chooser-btns button.active.orange { background: var(--secondary); border-color: var(--secondary); box-shadow: 0 8px 22px rgba(249,115,22,.28); }
+.chooser-btns button.active.orange { background: var(--secondary-aa); border-color: var(--secondary-aa); box-shadow: 0 8px 22px rgba(249,115,22,.28); }
 .chooser-result { display: none; margin-top: 12px; padding: 26px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--border); text-align: left; }
 .chooser-result.show { display: block; animation: fadeUp .4s var(--ease); }
 .chooser-result h4 { font-size: 1.3rem; margin-bottom: 6px; }
 .chooser-result .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: var(--r-pill); background: var(--primary-soft); color: var(--primary); margin-bottom: 12px; }
-.chooser-result .tag.orange { background: var(--secondary-soft); color: var(--secondary-dark); }
+.chooser-result .tag.orange { background: var(--secondary-soft); color: var(--orange-text); }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ---- Domains explorer ---- */
@@ -691,6 +798,25 @@ body.drawer-open { overflow: hidden; }
   --shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
   --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.6);
+
+  /* Dark twins of the premium layer. Every glass/aurora/elevation surface reads
+     these, so getting them right here is what keeps dark mode from turning into
+     a set of white smears. */
+  --glass-bg: rgba(19, 28, 48, .66);
+  --glass-brd: rgba(255, 255, 255, .10);
+  --aurora-1: rgba(59, 130, 246, .20);
+  --aurora-2: rgba(6, 182, 212, .14);
+  --aurora-3: rgba(249, 115, 22, .12);
+  --elev-1: 0 1px 2px rgba(0,0,0,.40);
+  --elev-2: 0 2px 4px rgba(0,0,0,.30), 0 12px 28px -8px rgba(0,0,0,.55);
+  --elev-3: 0 4px 8px rgba(0,0,0,.35), 0 24px 56px -12px rgba(0,0,0,.65);
+  --elev-inset: inset 0 2px 12px rgba(0,0,0,.45), inset 0 1px 2px rgba(0,0,0,.30);
+  --glow-primary: 0 8px 36px -8px rgba(59, 130, 246, .55);
+  --glow-warm: 0 8px 36px -8px rgba(249, 115, 22, .40);
+  --grad-border: linear-gradient(140deg, rgba(96,165,250,.45), rgba(34,211,238,.30) 45%, rgba(251,146,60,.25));
+  --eyebrow-fg: #BFD4FF;
+  --eyebrow-bg: rgba(37, 99, 235, .20);
+  --orange-text: #FDBA74;
 }
 
 /* Surfaces that hardcode white → theme surface */
@@ -760,9 +886,20 @@ body.drawer-open { overflow: hidden; }
 .deck-embed { position: relative; width: 100%; max-width: 1000px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.14); background: #0B1120; }
 .deck-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-/* Reduced motion */
+/* Reduced motion
+   ---------------------------------------------------------------------------
+   RULE A: content visibility must NEVER depend on a @keyframes animation,
+   because the wildcard below kills all of them. Only the .reveal → .in
+   *transition* may gate visibility, and every new hidden-by-default class
+   must be reset here in the same change that introduces it.
+   RULE B: this CSS does NOT stop requestAnimationFrame. Every JS effect must
+   also early-return on PATHAHEAD.motion.reduced. */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition-duration: .01ms !important; }
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; }
+  .reveal, .reveal-scale, .reveal-blur, .reveal-left, .reveal-right {
+    opacity: 1 !important; transform: none !important; filter: none !important;
+  }
+  .aurora, .hero-particles, .noise-layer { display: none !important; }
+  .magnetic, .tilt { transform: none !important; }
 }
