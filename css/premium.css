@@ -24,7 +24,7 @@
 
 :root {
   /* Marker — lets a smoke test confirm this sheet actually loaded. */
-  --premium-layer: 1;
+  --premium-layer: 2;
 
   /* Button gradient. Deliberately stops at indigo rather than running to
      cyan: white on cyan fails WCAG AA, and this carries button labels. */
@@ -579,6 +579,148 @@ html.is-scrolled .brand-logo { width: 36px; height: 36px; }
 }
 
 /* ============================================================
+   REFINEMENT PASS
+   The details that separate "designed" from "expensive": display
+   typography, cross-document page transitions, hue-carrying shadows,
+   and a scroll-linked hero park-off.
+   ============================================================ */
+
+:root {
+  /* Shadows carrying a trace of navy instead of neutral grey. Grey shadows
+     read as "drop shadow"; hue-matched ones read as light in a room. */
+  --elev-2: 0 2px 4px rgba(30,58,138,.05), 0 12px 28px -8px rgba(30,58,138,.14);
+  --elev-3: 0 4px 8px rgba(30,58,138,.06), 0 24px 56px -12px rgba(30,58,138,.20);
+
+  /* Display gradient. Cyan is deliberately absent: it sits at 2.4:1 on white
+     and this is the largest text on the page. Every stop stays inside the
+     blue ramp, so the headline clears AA on its own. */
+  --grad-display: linear-gradient(115deg, #2563EB 0%, #4F46E5 42%, #1E3A8A 100%);
+
+  --focus-ring: var(--primary);
+  --focus-halo: rgba(255,255,255,.9);
+}
+
+[data-theme="dark"] {
+  --grad-display: linear-gradient(115deg, #93C5FD 0%, #C7D2FE 45%, #A5B4FC 100%);
+  --focus-ring: #93C5FD;
+  --focus-halo: rgba(2,6,23,.85);
+  /* Dark elevation reads through lightness, not shadow — a black shadow on a
+     near-black surface is invisible. Higher tiers sit lighter. */
+  --surface-raised: #17223A;
+  --surface-raised-2: #1C2942;
+}
+
+/* Focus stays legible on the dark bands too: a #2563EB ring on #0B1220 is
+   near-invisible, and a focus indicator that cannot be seen is not one. */
+.footer, #domains, .cta-band, .deck-section { --focus-ring: #BFDBFE; }
+:focus-visible { outline-color: var(--focus-ring); }
+
+/* ---- Display typography ---- */
+body {
+  font-optical-sizing: auto;
+  font-variant-ligatures: common-ligatures contextual;
+}
+
+.hero h1 .text-accent { color: var(--primary); }
+@supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  .hero h1 .text-accent {
+    background-image: var(--grad-display);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: display-shimmer 9s var(--ease-inout) infinite alternate;
+  }
+}
+@keyframes display-shimmer {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+/* Clipping text to a gradient makes the glyphs transparent, which in forced
+   -colors mode means an invisible headline. Hand the fill back. */
+@media (forced-colors: active) {
+  .hero h1 .text-accent {
+    -webkit-text-fill-color: currentColor;
+    background: none;
+    color: CanvasText;
+  }
+}
+
+::selection { background: rgba(37,99,235,.20); color: var(--ink); }
+[data-theme="dark"] ::selection { background: rgba(96,165,250,.32); color: #fff; }
+input, textarea, select { caret-color: var(--primary); }
+
+/* Thin, quiet scrollbar — pointer devices only, so it never competes with
+   a touch UI that has no persistent scrollbar anyway. */
+@media (min-width: 821px) and (hover: hover) {
+  html { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+  ::-webkit-scrollbar { width: 12px; height: 12px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: var(--r-pill);
+    border: 3px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+}
+
+/* ---- Dark elevation by lightness ---- */
+[data-theme="dark"] .program-card,
+[data-theme="dark"] .chooser,
+[data-theme="dark"] .domain-card { background: var(--surface-raised); }
+[data-theme="dark"] .form-wrap { background: var(--surface-raised-2); }
+
+/* ---- Grain on the large gradient fields ----
+   Wide, soft gradients band visibly on 8-bit panels. A little noise breaks
+   the ramp up and reads as texture rather than as a defect.
+
+   Both targets already use ::before for their cyan bloom, so the grain goes
+   on ::after — and defines its own `content` and box, since neither pseudo
+   exists yet. .cta-band is deliberately skipped: both of its pseudos are
+   occupied by blobs that already break up the ramp. */
+#domains::after,
+.p-index .stats::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.05'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* ---- Cross-document page transitions ----
+   One at-rule buys a real transition between the 21 pages. Browsers without
+   support simply navigate as before. */
+@view-transition { navigation: auto; }
+
+::view-transition-old(root) { animation: vt-out 170ms var(--ease-inout) both; }
+::view-transition-new(root) { animation: vt-in 280ms var(--ease-out) both; }
+@keyframes vt-out { to   { opacity: 0; transform: translateY(-6px); } }
+@keyframes vt-in  { from { opacity: 0; transform: translateY(12px); } }
+
+/* Naming the nav holds it still while the page beneath it changes, instead
+   of cross-fading a header that is identical on both sides. */
+.nav { view-transition-name: site-nav; }
+
+/* ---- Scroll-linked hero park-off ----
+   The hero recedes as it leaves rather than merely scrolling away. Range
+   starts at `exit`, so progress is 0 while the hero is in view — the LCP
+   heading is never held back by this. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .hero-inner {
+      animation: hero-park linear both;
+      animation-timeline: view();
+      animation-range: exit -10% exit 95%;
+    }
+    @keyframes hero-park {
+      to { opacity: .2; transform: translateY(-40px) scale(.985); }
+    }
+  }
+}
+
+/* ============================================================
    FALLBACKS
    ============================================================ */
 
@@ -609,4 +751,8 @@ html.is-scrolled .brand-logo { width: 36px; height: 36px; }
   /* The step connector is revealed by :has(.reveal.in). Reduced motion makes
      .reveal visible WITHOUT adding .in, so the rail would never draw. */
   #how .cards::before { transform: none !important; }
+  /* The `*` rule above matches elements, not view-transition pseudos —
+     these have to be named explicitly or navigation still animates. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none !important; }
 }
