@@ -16,9 +16,10 @@
   <meta name="twitter:image" content="assets/og-image.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" rel="stylesheet" />
   <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/premium.css" />
 </head>
 <body>
 
@@ -101,7 +102,7 @@
         <p class="lead reveal reveal-d2">Fill in the form and our team will get back within 1–2 working days.</p>
       </div>
       <div class="form-wrap reveal" style="max-width:820px;margin:0 auto">
-        <div class="form-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> <span>Thank you! Your inquiry has been received. Our team will contact you shortly.</span></div>
+        <div class="form-success" role="status" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> <span>Thank you! Your inquiry has been received. Our team will contact you shortly.</span></div>
         <form data-form="college_inquiry" novalidate>
           <div class="form-grid">
             <div class="field"><label>Contact Person <span class="req">*</span></label><input type="text" name="name" placeholder="Your full name" required /><span class="err">Please enter your name.</span></div>
@@ -141,5 +142,6 @@
 
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/motion.js"></script>
 </body>
 </html>

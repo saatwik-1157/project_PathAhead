@@ -16,13 +16,17 @@
   <meta name="twitter:image" content="assets/og-image.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" rel="stylesheet" />
   <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/premium.css" />
   <style>
     .rm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-    .rm-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:16px;padding:24px 22px 20px;background:var(--surface);color:inherit;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
-    .rm-card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(37,99,235,.14);border-color:var(--primary)}
+    .rm-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);border-radius:16px;padding:24px 22px 20px;background:var(--surface);color:inherit;box-shadow:var(--elev-1);transition:transform var(--dur-3) var(--ease-out),box-shadow var(--dur-3) var(--ease-out),border-color var(--dur-3) var(--ease-out)}
+    .rm-card:hover{transform:translateY(-5px);box-shadow:var(--elev-3);border-color:var(--primary)}
+    /* Masked gradient ring on hover — matches the card treatment site-wide. */
+    .rm-card::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:var(--grad-border);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity var(--dur-3) var(--ease-out);pointer-events:none}
+    .rm-card:hover::after{opacity:1}
     .rm-badge{position:absolute;top:16px;right:16px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--primary);background:var(--primary-soft);padding:3px 10px;border-radius:999px}
     .rm-card h3{margin:4px 0 8px;font-size:1.18rem;max-width:80%}
     .rm-card p{margin:0 0 16px;color:var(--muted);font-size:.92rem;line-height:1.55}
@@ -76,7 +80,7 @@
         <p>That's exactly what PathAhead is for. Get personalised career guidance built for Intermediate students.</p>
         <div class="cta-actions">
           <a href="for-students.html#register" class="btn btn-primary btn-lg">Register Your Interest</a>
-          <a href="programs.html" class="btn btn-outline btn-lg" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)">Explore Programs</a>
+          <a href="programs.html" class="btn btn-outline btn-lg">Explore Programs</a>
         </div>
       </div>
     </div>
@@ -84,5 +88,6 @@
 
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/motion.js"></script>
 </body>
 </html>

@@ -1,13 +1,21 @@
 /* PathAhead — Service Worker (offline support, always-fresh when online) */
-const CACHE = "pathahead-v6";
+const CACHE = "pathahead-v7";
+// NOTE: caches.addAll() below is ATOMIC — if any single entry 404s, the whole
+// install fails and the site silently loses offline support. Every path here
+// must resolve to a real 200, and every path must stay RELATIVE (no leading
+// slash) or it resolves against the GitHub Pages org root instead of the repo
+// subpath. Do not add js/config.js: it is git-ignored and absent in production.
 const CORE = [
   "index.html", "about.html", "programs.html", "for-colleges.html", "for-students.html",
-  "gallery.html", "testimonials.html", "faq.html", "contact.html",
+  "gallery.html", "testimonials.html", "faq.html", "contact.html", "404.html",
   "roadmaps.html", "career-roadmap.html",
-  "css/styles.css", "js/main.js",
+  "ai-ml-roadmap.html", "web-development-roadmap.html", "data-science-roadmap.html",
+  "cybersecurity-roadmap.html", "cloud-devops-roadmap.html", "mobile-development-roadmap.html",
+  "ui-ux-design-roadmap.html", "data-engineering-roadmap.html",
+  "css/styles.css", "css/premium.css", "js/main.js", "js/motion.js",
   "career-data/branches.js", "career-data/domains.js", "career-data/states.js",
   "career-data/years.js", "career-data/resources.js", "career-data/builder.js",
-  "assets/favicon.svg", "assets/icon.svg", "assets/og-image.svg",
+  "assets/favicon.svg", "assets/icon.svg", "assets/og-image.svg", "assets/logo-mark.svg",
   "manifest.webmanifest"
 ];
 

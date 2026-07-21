@@ -16,9 +16,10 @@
   <meta name="twitter:image" content="assets/og-image.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" rel="stylesheet" />
   <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/premium.css" />
 </head>
 <body>
 
@@ -78,7 +79,7 @@
         <p class="lead reveal reveal-d2">Not sure if your college has booked a workshop? Register and we’ll keep you updated.</p>
       </div>
       <div class="form-wrap reveal" style="max-width:760px;margin:0 auto">
-        <div class="form-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> <span>You’re registered! We’ll be in touch with updates and resources.</span></div>
+        <div class="form-success" role="status" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> <span>You’re registered! We’ll be in touch with updates and resources.</span></div>
         <form data-form="student_registration" novalidate>
           <div class="form-grid">
             <div class="field"><label>Full Name <span class="req">*</span></label><input type="text" name="name" placeholder="Your name" required /><span class="err">Please enter your name.</span></div>
@@ -106,7 +107,7 @@
         <p>Ask your college to book a PathAhead workshop — or register your interest today.</p>
         <div class="cta-actions">
           <a href="#register" class="btn btn-primary btn-lg">Register Now</a>
-          <a href="programs.html" class="btn btn-outline btn-lg" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)">Explore Programs</a>
+          <a href="programs.html" class="btn btn-outline btn-lg">Explore Programs</a>
         </div>
       </div>
     </div>
@@ -114,5 +115,6 @@
 
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/motion.js"></script>
 </body>
 </html>
