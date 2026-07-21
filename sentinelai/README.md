@@ -8,7 +8,7 @@ This folder is the complete submission package built from the concept document
 
 | Requirement | File | Status |
 |---|---|---|
-| Concept-to-prototype execution plan deck | `SentinelAI_Execution_Plan.pptx` (15 slides) + `SentinelAI_Execution_Plan.pdf` | ✅ ready — fill 3 placeholders (below) |
+| Concept-to-prototype execution plan deck | `SentinelAI_Execution_Plan.pptx` (15 slides) + `SentinelAI_Execution_Plan.pdf` | ✅ ready — only the demo-video link pending |
 | Demonstration evidence (demo video link) | `demo/index.html` — record it, then paste the link into slide 12 | ⬜ record & upload |
 | Team details and profiles | `TEAM.md` + `SentinelAI_Team_Profiles.pdf` | ✅ complete (advisor names pending) |
 | Other supporting documents | `SentinelAI_Concept_Document.pdf` (formatted concept, author: Nirisha Chowdary; source: `concept.html`) | ✅ |
@@ -60,7 +60,8 @@ A self-contained, no-install browser simulation of a 9-node SentinelAI mesh:
    submission form.
 
 The manual scenario buttons are still there if you'd rather pace it yourself
-or talk over each step.
+or talk over each step — the speaker notes on slides 3–5 work well as a
+narration script.
 
 ## 2b. Validation kit — `validation/`
 
@@ -77,8 +78,6 @@ weekend task:
 
 Even partial results (one interview, 20 survey responses) are worth attaching
 and quoting on the problem slide.
-
-Optionally narrate over it using the speaker notes from slides 3–5.
 
 ## 3. Suggested submission order
 
