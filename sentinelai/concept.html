@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SentinelAI — Concept Document</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Calibri, "Segoe UI", Arial, sans-serif; color: #1a2433; font-size: 11pt; line-height: 1.5; }
+  .cover { text-align: center; padding: 40px 0 26px; border-bottom: 3px solid #ffb300; margin-bottom: 26px; }
+  .cover .dot { width: 22px; height: 22px; border-radius: 50%; background: #ffb300; margin: 0 auto 14px; box-shadow: 0 0 0 6px rgba(255,179,0,.18); }
+  h1 { font-size: 30pt; color: #12233c; letter-spacing: .5px; }
+  .tagline { font-style: italic; color: #b8860b; font-size: 13pt; margin-top: 6px; }
+  .subtitle { color: #4a5a72; font-size: 11.5pt; margin-top: 4px; }
+  .meta { color: #7a8699; font-size: 9.5pt; margin-top: 12px; }
+  h2 { font-size: 14.5pt; color: #12233c; margin: 22px 0 8px; padding-top: 6px; }
+  h3 { font-size: 11.5pt; color: #b8860b; margin: 12px 0 4px; }
+  p { margin: 6px 0; }
+  ul, ol { margin: 6px 0 6px 22px; }
+  li { margin: 2.5px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 10pt; }
+  th, td { border: 1px solid #ccd4e0; padding: 5px 9px; text-align: left; vertical-align: top; }
+  th { background: #eef2f8; color: #12233c; }
+  .flow { background: #f4f7fb; border: 1px solid #dde4ee; border-radius: 6px; padding: 10px 14px; font-size: 10pt; margin: 8px 0; }
+  .flow b { color: #12233c; }
+  .note { background: #fff8e6; border: 1px solid #f0dfae; border-radius: 6px; padding: 10px 14px; font-size: 10pt; margin: 10px 0; }
+  .cols { display: flex; gap: 18px; }
+  .cols > div { flex: 1; }
+  .pagebreak { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="dot"></div>
+  <h1>SentinelAI</h1>
+  <div class="tagline">Transforming Every Streetlight into a Silent Guardian</div>
+  <div class="subtitle">AI-Driven Distributed Public Safety Mesh for Smart Cities — Concept Document</div>
+  <div class="meta">Concept author: Nirisha Chowdary &nbsp;·&nbsp; Team SentinelAI (Saatwik · Nirisha Chowdary) &nbsp;·&nbsp; July 2026</div>
+</div>
+
+<h2>1. Vision &amp; Mission</h2>
+<p><b>Vision.</b> Build an AI-powered public safety infrastructure that transforms existing streetlights and public spaces into intelligent emergency response systems — reducing emergency response time, improving women's safety, and saving lives.</p>
+<p><b>Mission.</b> Leverage Artificial Intelligence, Edge Computing and IoT to create a scalable, affordable, privacy-conscious public safety platform for India, and eventually the world.</p>
+
+<h2>2. Problem Statement</h2>
+<p>Every year, thousands of people lose their lives in road accidents because emergency response arrives too late. Women and vulnerable individuals face safety threats in isolated public spaces where immediate help is unavailable. Current solutions fall short:</p>
+<ul>
+  <li>CCTV cameras only <i>record</i> incidents — nobody responds in real time.</li>
+  <li>Emergency apps require a conscious victim to manually request help.</li>
+  <li>Public infrastructure is passive rather than intelligent.</li>
+  <li>Emergency services receive delayed, incomplete, unverified information.</li>
+</ul>
+<p>India needs a system that can <b>detect, verify and respond</b> to emergencies automatically.</p>
+
+<h2>3. Solution</h2>
+<p>SentinelAI transforms existing streetlights, bus stops and public infrastructure into AI-powered emergency response nodes. Each smart node continuously monitors its surroundings using on-device AI and multiple sensors. Instead of waiting for someone to report an incident, SentinelAI automatically <b>detects</b> accidents and distress situations, <b>verifies</b> emergencies through multi-sensor fusion, <b>alerts</b> authorities and family with exact GPS location, <b>guides</b> emergency responders along the safest route, and <b>records</b> evidence securely.</p>
+
+<h2>4. Core Features</h2>
+<h3>AI Accident Detection</h3>
+<p>Detects vehicle, bike and pedestrian accidents by fusing the AI camera, microphone and vibration sensor.</p>
+<h3>Women's Safety</h3>
+<p>Triggered by an SOS press, a scream, or AI-detected suspicious activity. SentinelAI alerts police and family, increases street lighting, activates nearby cameras, and records evidence.</p>
+<h3>Safe Corridor</h3>
+<p>Nearby smart poles communicate as a network. During an emergency, poles along the route brighten, cameras hand off tracking, responders receive the safest route, and units know exactly where to go.</p>
+<h3>Edge AI</h3>
+<p>Data is processed locally on the pole instead of streaming to the cloud — faster response, lower bandwidth, better privacy.</p>
+<h3>Predictive AI</h3>
+<p>Beyond detection, SentinelAI predicts accident-prone roads, unsafe locations, repeated crime hotspots and infrastructure failures.</p>
+
+<h2>5. System Components</h2>
+<div class="cols">
+  <div>
+    <h3>Hardware (per node)</h3>
+    <ul>
+      <li>AI camera</li><li>Microphone</li><li>Vibration sensor</li><li>GPS module</li>
+      <li>SOS button</li><li>Emergency LED light</li><li>Speaker</li>
+      <li>Edge AI processor</li><li>IoT communication module</li><li>Backup battery</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Software</h3>
+    <ul>
+      <li><b>AI:</b> YOLO, OpenCV, TensorFlow, Edge Impulse</li>
+      <li><b>Frontend:</b> React, Tailwind CSS</li>
+      <li><b>Backend:</b> Node.js, Express</li>
+      <li><b>Database:</b> MongoDB</li>
+      <li><b>Cloud:</b> AWS</li>
+      <li><b>Notifications:</b> Firebase, SMS gateway</li>
+      <li><b>Maps:</b> Google Maps</li>
+    </ul>
+  </div>
+</div>
+
+<h2>6. System Architecture</h2>
+<div class="flow">
+  <b>Sensors</b> (camera · microphone · vibration · GPS · SOS button) &nbsp;→&nbsp;
+  <b>Edge AI Processor</b> &nbsp;→&nbsp; <b>Emergency Validation Engine</b> &nbsp;→&nbsp;
+  <b>Response fan-out:</b> Police · Ambulance · Family · Cloud Dashboard · Smart Streetlights
+</div>
+
+<h2>7. User Flows</h2>
+<div class="cols">
+  <div class="flow">
+    <b>Accident.</b> Vehicle crash → AI detects impact → microphone confirms sound → vibration confirms collision → AI verifies emergency → GPS locks location → police notified → ambulance notified → streetlights brighten → evidence stored.
+  </div>
+  <div class="flow">
+    <b>Women's safety.</b> SOS pressed → AI activates → nearby cameras start recording → emergency lights ON → police receive live location → family notified.
+  </div>
+</div>
+
+<div class="pagebreak"></div>
+
+<h2>8. Target Users &amp; Market</h2>
+<table>
+  <tr><th>Primary beneficiaries</th><td>Women, senior citizens, daily commuters, highway travellers, students</td></tr>
+  <tr><th>Customers</th><td>Police departments, Smart City SPVs, municipal corporations, transport authorities, universities, industrial parks</td></tr>
+  <tr><th>India market</th><td>100+ Smart Cities, municipal corporations, state governments, NHAI, metro rail, airports, private townships</td></tr>
+  <tr><th>Future markets</th><td>Middle East, Southeast Asia, Europe</td></tr>
+</table>
+
+<h2>9. Business Model &amp; Revenue Streams</h2>
+<ul>
+  <li><b>Hardware</b> — smart-node sale and installation (one-time, per node)</li>
+  <li><b>SaaS</b> — annual dashboard subscription per city / campus</li>
+  <li><b>Maintenance</b> — annual maintenance contracts (AMC)</li>
+  <li><b>AI analytics</b> — monthly hotspot and infrastructure reports</li>
+  <li><b>API licensing</b> — incident data feed for maps, insurers, fleets</li>
+  <li><b>Smart City integration</b> — government project contracts</li>
+</ul>
+
+<h2>10. Innovation</h2>
+<p>Unlike traditional CCTV, SentinelAI <b>detects, understands, verifies and responds</b> instead of simply recording. The Safe Corridor feature lets multiple smart poles coordinate an emergency response as a network rather than acting independently.</p>
+<h3>Patent opportunities</h3>
+<ul>
+  <li>Multi-sensor emergency validation algorithm</li>
+  <li>Distributed AI communication between smart poles</li>
+  <li>AI-driven Safe Corridor activation</li>
+  <li>Edge-based emergency detection framework</li>
+</ul>
+<p class="note">Patentability depends on detailed prior-art searches and the specific technical implementation — a formal search is a Phase 1 deliverable.</p>
+
+<h2>11. Roadmap &amp; Prototype Cost</h2>
+<table>
+  <tr><th>Phase 1</th><td>Research &amp; validation — stakeholder interviews, requirements, prior-art search</td></tr>
+  <tr><th>Phase 2</th><td>Prototype — single working node: sensor fusion, edge AI, dashboard, alerts</td></tr>
+  <tr><th>Phase 3</th><td>Campus pilot — small mesh, Safe Corridor demo, false-alarm tuning</td></tr>
+  <tr><th>Phase 4</th><td>City pilot — deployment with a municipal partner</td></tr>
+  <tr><th>Phase 5</th><td>Commercial product — Smart City tenders, SaaS, manufacturing partners</td></tr>
+</table>
+<p><b>Prototype estimate: ₹18–20 lakh</b> — covering AI cameras and sensors, edge processors, cloud and dashboard build, mobile alerts, and field testing.</p>
+
+<h2>12. Risks &amp; Safeguards</h2>
+<p>Privacy concerns, false alarms, weather effects on sensors, hardware maintenance, government approvals and installation costs are addressed through privacy-by-design (edge-first processing), multi-sensor fusion, local AI, maintenance planning, and partnerships with public authorities.</p>
+
+<h2>13. SDG Alignment</h2>
+<p>Supports SDG 3 (Good Health), SDG 5 (Gender Equality), SDG 9 (Industry &amp; Innovation), SDG 11 (Sustainable Cities), SDG 16 (Peace &amp; Justice).</p>
+
+<h2>14. Future Enhancements</h2>
+<p>Fire detection · flood alerts · air-quality monitoring · road-damage detection · crowd management · disaster response · gunshot detection · missing-person assistance · smart traffic management.</p>
+
+<h2>15. Why SentinelAI Matters</h2>
+<p>SentinelAI isn't another surveillance system. It makes public infrastructure <b>aware, responsive and connected</b> — enabling faster emergency response and safer public spaces. By combining AI, edge computing and IoT with infrastructure cities already own, it seeks to reduce preventable deaths and support India's vision of smarter, more resilient cities.</p>
+
+<h2>16. Immediate Next Step: Validation</h2>
+<p class="note">Before building, the concept will be validated with the people who would use it: police personnel, ambulance operators, municipal officials and potential users. Their feedback will refine the problem definition, surface implementation challenges, and reveal which features are truly valuable — this validation is Phase 1 of the execution plan.</p>
+
+</body>
+</html>

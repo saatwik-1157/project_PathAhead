@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SentinelAI — Live Mesh Simulation</title>
+<style>
+  :root {
+    --bg: #0b1626;
+    --card: #16294a;
+    --card2: #1b3155;
+    --amber: #ffb300;
+    --ice: #a8c6e8;
+    --mut: #7e97b8;
+    --red: #ff6b6b;
+    --green: #6bcb77;
+    --line: #22385c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: #fff;
+    font-family: "Segoe UI", Calibri, Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .logo-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 14px 5px rgba(255, 179, 0, .45);
+  }
+  header h1 { font-size: 19px; font-weight: 700; letter-spacing: .5px; }
+  header h1 span { color: var(--amber); }
+  header .sub { color: var(--mut); font-size: 12.5px; margin-left: 4px; }
+  .clock { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ice); font-size: 14px; }
+  .status-pill {
+    padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
+    letter-spacing: 1.5px; background: rgba(107, 203, 119, .12); color: var(--green);
+    border: 1px solid rgba(107, 203, 119, .4);
+  }
+  .status-pill.alert { background: rgba(255, 107, 107, .12); color: var(--red); border-color: rgba(255, 107, 107, .5); animation: blink 1s infinite; }
+  @keyframes blink { 50% { opacity: .55; } }
+
+  main { flex: 1; display: flex; min-height: 0; }
+  .map-wrap { flex: 1.6; position: relative; padding: 14px; min-width: 0; }
+  .map-wrap svg { width: 100%; height: 100%; display: block; border-radius: 12px; background: #0d1a2e; }
+
+  .side { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 14px 14px 14px 0; min-width: 330px; max-width: 430px; }
+  .panel { background: var(--card); border-radius: 12px; padding: 14px 16px; }
+  .panel h2 { font-size: 11.5px; letter-spacing: 2px; color: var(--mut); font-weight: 700; margin-bottom: 10px; }
+
+  .sensors { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .sensor { background: var(--card2); border-radius: 9px; padding: 9px 11px; }
+  .sensor .name { font-size: 10.5px; color: var(--mut); letter-spacing: 1px; }
+  .sensor .val { font-size: 15px; font-weight: 700; margin-top: 3px; color: var(--ice); }
+  .sensor .bar { height: 4px; border-radius: 2px; background: #0d1a2e; margin-top: 7px; overflow: hidden; }
+  .sensor .bar i { display: block; height: 100%; width: 8%; background: var(--green); border-radius: 2px; transition: width .5s, background .5s; }
+  .sensor.hot .val { color: var(--red); }
+  .sensor.hot .bar i { background: var(--red); }
+  .sensor.ok .bar i { background: var(--amber); }
+
+  .gate { display: flex; align-items: center; gap: 8px; margin-top: 12px; background: var(--card2); border-radius: 9px; padding: 10px 12px; }
+  .gate .chk { width: 22px; height: 22px; border-radius: 50%; background: #0d1a2e; border: 1.5px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--mut); transition: all .3s; }
+  .gate .chk.on { background: rgba(107, 203, 119, .18); border-color: var(--green); color: var(--green); }
+  .gate .lbl { font-size: 11.5px; color: var(--mut); }
+  .gate .verdict { margin-left: auto; font-size: 12px; font-weight: 800; letter-spacing: 1px; color: var(--mut); }
+  .gate .verdict.verified { color: var(--green); }
+
+  #log { flex: 1; overflow-y: auto; display: flex; flex-direction: column-reverse; min-height: 90px; }
+  .entry { display: flex; gap: 10px; padding: 6px 2px; font-size: 12.5px; border-bottom: 1px solid rgba(34, 56, 92, .5); animation: slidein .25s ease-out; }
+  @keyframes slidein { from { opacity: 0; transform: translateY(6px); } }
+  .entry .t { color: var(--mut); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .entry .tag { flex-shrink: 0; font-weight: 800; font-size: 10px; letter-spacing: 1px; padding: 2px 7px; border-radius: 4px; align-self: center; }
+  .tag.sys { background: rgba(168, 198, 232, .12); color: var(--ice); }
+  .tag.ai { background: rgba(255, 179, 0, .14); color: var(--amber); }
+  .tag.disp { background: rgba(255, 107, 107, .14); color: var(--red); }
+  .tag.mesh { background: rgba(107, 203, 119, .14); color: var(--green); }
+  .entry .msg { color: #e7eefb; }
+
+  footer { display: flex; gap: 12px; padding: 12px 22px 16px; border-top: 1px solid var(--line); flex-shrink: 0; align-items: center; }
+  button {
+    font: inherit; font-weight: 700; font-size: 14px;
+    padding: 11px 22px; border-radius: 10px; border: none; cursor: pointer;
+    background: var(--card2); color: #fff; transition: transform .1s, box-shadow .2s;
+  }
+  button:hover { transform: translateY(-1px); }
+  button:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+  button.primary { background: var(--amber); color: #0b1626; box-shadow: 0 0 18px rgba(255, 179, 0, .25); }
+  button.danger { background: #a03a3a; }
+  footer .hint { margin-left: auto; color: var(--mut); font-size: 12px; font-style: italic; }
+
+  /* SVG element styles */
+  .road { stroke: #1c3050; stroke-width: 26; stroke-linecap: round; }
+  .road-dash { stroke: #2c4468; stroke-width: 1.6; stroke-dasharray: 10 12; }
+  .pole-halo { fill: #ffb300; opacity: .07; transition: opacity .6s, r .6s; }
+  .pole-halo.bright { opacity: .28; }
+  .pole-halo.emergency { opacity: .38; fill: #ff6b6b; animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: .12; } }
+  .pole-core { fill: #ffb300; stroke: #0b1626; stroke-width: 2; }
+  .pole-core.emergency { fill: #ff6b6b; }
+  .pole-label { fill: #7e97b8; font-size: 11px; text-anchor: middle; font-family: inherit; }
+  .corridor { stroke: #ffb300; stroke-width: 3; stroke-dasharray: 8 8; opacity: 0; transition: opacity .8s; }
+  .corridor.on { opacity: .85; animation: march 1.2s linear infinite; }
+  @keyframes march { to { stroke-dashoffset: -16; } }
+  .incident-ring { fill: none; stroke: #ff6b6b; stroke-width: 2; opacity: 0; }
+  .incident-ring.on { animation: ring 1.6s ease-out infinite; }
+  @keyframes ring { 0% { r: 10; opacity: .9; } 100% { r: 46; opacity: 0; } }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo-dot"></div>
+    <h1>Sentinel<span>AI</span></h1>
+    <span class="sub">Live Mesh Simulation — Sector 4, MG Road Block</span>
+    <span class="clock" id="clock">22:14:05</span>
+    <span class="status-pill" id="status">ALL NODES NOMINAL</span>
+  </header>
+
+  <main>
+    <div class="map-wrap">
+      <svg id="map" viewBox="0 0 640 480" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="side">
+      <div class="panel">
+        <h2 id="sensorTitle">NODE SN-05 · SENSOR FUSION</h2>
+        <div class="sensors">
+          <div class="sensor" id="s-vib">
+            <div class="name">VIBRATION</div>
+            <div class="val" id="v-vib">0.02 g</div>
+            <div class="bar"><i id="b-vib"></i></div>
+          </div>
+          <div class="sensor" id="s-aud">
+            <div class="name">AUDIO AI</div>
+            <div class="val" id="v-aud">ambient</div>
+            <div class="bar"><i id="b-aud"></i></div>
+          </div>
+          <div class="sensor" id="s-cam">
+            <div class="name">VISION AI</div>
+            <div class="val" id="v-cam">clear</div>
+            <div class="bar"><i id="b-cam"></i></div>
+          </div>
+        </div>
+        <div class="gate">
+          <span class="chk" id="g1">✓</span>
+          <span class="chk" id="g2">✓</span>
+          <span class="chk" id="g3">✓</span>
+          <span class="lbl">EMERGENCY VALIDATION ENGINE</span>
+          <span class="verdict" id="verdict">MONITORING</span>
+        </div>
+      </div>
+
+      <div class="panel" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+        <h2>DISPATCH CONSOLE</h2>
+        <div id="log"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <button class="primary" id="btnAuto">▶ Run Full Demo (auto)</button>
+    <button id="btnCrash">🚗 Simulate Vehicle Crash</button>
+    <button id="btnSos">🆘 Simulate Women's-Safety SOS</button>
+    <button id="btnReset">Reset</button>
+    <span class="hint">Software simulation — sensor values are synthetic. Record this screen for the demo video.</span>
+  </footer>
+
+<script>
+"use strict";
+// ---------- map & nodes ----------
+const svg = document.getElementById("map");
+const NS = "http://www.w3.org/2000/svg";
+const cols = [110, 320, 530], rows = [90, 240, 390];
+const nodes = []; // {id,x,y,halo,core,ring}
+
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  (parent || svg).appendChild(e);
+  return e;
+}
+
+// roads
+rows.forEach(y => { el("line", { x1: 30, y1: y, x2: 610, y2: y, class: "road" }); });
+cols.forEach(x => { el("line", { x1: x, y1: 40, x2: x, y2: 440, class: "road" }); });
+rows.forEach(y => { el("line", { x1: 30, y1: y, x2: 610, y2: y, class: "road-dash" }); });
+cols.forEach(x => { el("line", { x1: x, y1: 40, x2: x, y2: 440, class: "road-dash" }); });
+
+// corridor edges between adjacent intersections (drawn under poles)
+const corridors = {};
+function corridorKey(a, b) { return a < b ? a + "-" + b : b + "-" + a; }
+for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
+  const i = r * 3 + c;
+  if (c < 2) corridors[corridorKey(i, i + 1)] = el("line", { x1: cols[c], y1: rows[r], x2: cols[c + 1], y2: rows[r], class: "corridor" });
+  if (r < 2) corridors[corridorKey(i, i + 3)] = el("line", { x1: cols[c], y1: rows[r], x2: cols[c], y2: rows[r + 1], class: "corridor" });
+}
+
+// poles
+for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
+  const i = r * 3 + c, x = cols[c], y = rows[r];
+  const halo = el("circle", { cx: x, cy: y, r: 30, class: "pole-halo" });
+  const ring = el("circle", { cx: x, cy: y, r: 10, class: "incident-ring" });
+  const core = el("circle", { cx: x, cy: y, r: 7, class: "pole-core" });
+  el("text", { x, y: y - 16, class: "pole-label" }).textContent = "SN-0" + (i + 1);
+  nodes.push({ id: i, x, y, halo, core, ring });
+}
+
+// hospital + station markers
+el("text", { x: 596, y: 62, class: "pole-label", "text-anchor": "end" }).textContent = "→ City Hospital 1.2 km";
+el("text", { x: 596, y: 430, class: "pole-label", "text-anchor": "end" }).textContent = "→ Police Stn 0.8 km";
+
+// ---------- clock ----------
+let simSeconds = 22 * 3600 + 14 * 60 + 5;
+setInterval(() => {
+  simSeconds++;
+  document.getElementById("clock").textContent = fmtClock(simSeconds);
+}, 1000);
+function fmtClock(s) {
+  const h = Math.floor(s / 3600) % 24, m = Math.floor(s / 60) % 60, sec = s % 60;
+  return [h, m, sec].map(v => String(v).padStart(2, "0")).join(":");
+}
+
+// ---------- console log ----------
+const logBox = document.getElementById("log");
+function log(tag, msg) {
+  const e = document.createElement("div");
+  e.className = "entry";
+  e.innerHTML = '<span class="t">' + fmtClock(simSeconds) + '</span><span class="tag ' + tag + '">' +
+    ({ sys: "SYSTEM", ai: "EDGE AI", disp: "DISPATCH", mesh: "MESH" })[tag] + "</span><span class='msg'>" + msg + "</span>";
+  logBox.prepend(e);
+}
+
+// ---------- sensor panel ----------
+const S = {
+  vib: { card: document.getElementById("s-vib"), val: document.getElementById("v-vib"), bar: document.getElementById("b-vib") },
+  aud: { card: document.getElementById("s-aud"), val: document.getElementById("v-aud"), bar: document.getElementById("b-aud") },
+  cam: { card: document.getElementById("s-cam"), val: document.getElementById("v-cam"), bar: document.getElementById("b-cam") },
+};
+function setSensor(key, text, pct, state) {
+  S[key].val.textContent = text;
+  S[key].bar.style.width = pct + "%";
+  S[key].card.className = "sensor" + (state ? " " + state : "");
+}
+function setGate(n, verdictText, verified) {
+  for (let i = 1; i <= 3; i++) document.getElementById("g" + i).className = "chk" + (i <= n ? " on" : "");
+  const v = document.getElementById("verdict");
+  v.textContent = verdictText;
+  v.className = "verdict" + (verified ? " verified" : "");
+}
+
+// idle jitter so it looks alive
+let idleTimer = setInterval(idleJitter, 1400);
+function idleJitter() {
+  setSensor("vib", (0.01 + Math.random() * 0.04).toFixed(2) + " g", 4 + Math.random() * 8, "");
+  setSensor("aud", "ambient " + (32 + Math.random() * 6 | 0) + " dB", 6 + Math.random() * 10, "");
+  setSensor("cam", "clear · " + (2 + Math.random() * 4 | 0) + " objects", 5 + Math.random() * 9, "");
+}
+
+// ---------- scenario engine ----------
+const btns = [document.getElementById("btnCrash"), document.getElementById("btnSos"), document.getElementById("btnReset")];
+let running = false, timeouts = [];
+function step(delay, fn) { timeouts.push(setTimeout(fn, delay)); }
+function setStatus(text, alert) {
+  const p = document.getElementById("status");
+  p.textContent = text;
+  p.className = "status-pill" + (alert ? " alert" : "");
+}
+function corridorOn(pairs, on) {
+  pairs.forEach(([a, b]) => { const c = corridors[corridorKey(a, b)]; if (c) c.setAttribute("class", "corridor" + (on ? " on" : "")); });
+}
+function haloBright(ids, cls) {
+  ids.forEach(i => nodes[i].halo.setAttribute("class", "pole-halo" + (cls ? " " + cls : "")));
+}
+
+function begin(title) {
+  if (running) return false;
+  running = true;
+  clearInterval(idleTimer);
+  btns[0].disabled = btns[1].disabled = true;
+  log("sys", "— " + title + " —");
+  return true;
+}
+function finish() {
+  step(0, () => {
+    btns[0].disabled = btns[1].disabled = false;
+    running = false;
+  });
+}
+
+// --- Scenario 1: vehicle crash at SN-05 (center node, index 4) ---
+document.getElementById("btnCrash").addEventListener("click", () => {
+  if (!begin("SCENARIO: VEHICLE CRASH — NODE SN-05")) return;
+  const n = nodes[4];
+  document.getElementById("sensorTitle").textContent = "NODE SN-05 · SENSOR FUSION";
+
+  step(400, () => {
+    setSensor("vib", "6.4 g IMPACT", 96, "hot");
+    setGate(1, "SIGNAL 1/3", false);
+    n.core.setAttribute("class", "pole-core emergency");
+    n.ring.setAttribute("class", "incident-ring on");
+    setStatus("IMPACT SIGNATURE — VERIFYING", true);
+    log("ai", "SN-05 vibration spike 6.4 g — impact signature detected");
+  });
+  step(1600, () => {
+    setSensor("aud", "crash 94%", 94, "hot");
+    setGate(2, "SIGNAL 2/3", false);
+    log("ai", "Audio classifier: metal-impact / glass-break 94% confidence");
+  });
+  step(2900, () => {
+    setSensor("cam", "collision 91%", 91, "hot");
+    setGate(3, "VERIFIED", true);
+    log("ai", "Vision: two-wheeler collision, rider down (YOLO conf 0.91)");
+    log("sys", "VALIDATION ENGINE: 3/3 sensors agree — EMERGENCY CONFIRMED");
+  });
+  step(4300, () => {
+    setStatus("EMERGENCY CONFIRMED — DISPATCHING", true);
+    log("disp", "GPS lock 12.9716° N, 77.5946° E — accuracy 2.1 m");
+    log("disp", "🚔 Police (112) notified — unit 7 min out");
+  });
+  step(5200, () => {
+    log("disp", "🚑 Ambulance (108) notified — City Hospital ETA 6 min");
+    log("disp", "Evidence capture started — encrypted, on-node vault");
+  });
+  step(6200, () => {
+    haloBright([1, 3, 4, 5, 7], "bright");
+    n.halo.setAttribute("class", "pole-halo emergency");
+    corridorOn([[4, 1], [4, 3], [4, 5], [4, 7], [1, 2], [5, 2]], true);
+    log("mesh", "SAFE CORRIDOR: SN-02/04/06/08 at 100% brightness, cameras tracking");
+    log("mesh", "Responder route pushed: fastest clear path via SN-06 → SN-03");
+  });
+  step(7600, () => {
+    setStatus("RESPONDERS EN ROUTE", true);
+    log("sys", "Live feed relayed to police control room + city dashboard");
+    finish();
+  });
+});
+
+// --- Scenario 2: SOS at SN-07 (bottom-left, index 6) ---
+document.getElementById("btnSos").addEventListener("click", () => {
+  if (!begin("SCENARIO: WOMEN'S-SAFETY SOS — NODE SN-07")) return;
+  const n = nodes[6];
+  document.getElementById("sensorTitle").textContent = "NODE SN-07 · SENSOR FUSION";
+
+  step(400, () => {
+    setSensor("vib", "SOS pressed", 60, "ok");
+    setGate(1, "SIGNAL 1/3", false);
+    n.core.setAttribute("class", "pole-core emergency");
+    n.ring.setAttribute("class", "incident-ring on");
+    setStatus("SOS RECEIVED — VERIFYING", true);
+    log("ai", "SN-07 physical SOS button pressed");
+  });
+  step(1500, () => {
+    setSensor("aud", "distress 89%", 89, "hot");
+    setGate(2, "SIGNAL 2/3", false);
+    log("ai", "Audio classifier: scream / distress vocal pattern 89%");
+  });
+  step(2700, () => {
+    setSensor("cam", "1 person, follower", 84, "hot");
+    setGate(3, "VERIFIED", true);
+    log("ai", "Vision: lone person + rapid approach by second figure");
+    log("sys", "VALIDATION ENGINE: SOS + audio + vision — EMERGENCY CONFIRMED");
+  });
+  step(3900, () => {
+    haloBright([3, 6, 7], "bright");
+    n.halo.setAttribute("class", "pole-halo emergency");
+    log("mesh", "Floodlight ON at SN-07 — deterrence announcement playing");
+  });
+  step(4900, () => {
+    setStatus("EMERGENCY CONFIRMED — DISPATCHING", true);
+    log("disp", "🚔 Police (112) notified with live location + camera feed");
+    log("disp", "📱 Family contacts alerted — live tracking link shared");
+  });
+  step(6100, () => {
+    corridorOn([[6, 3], [6, 7], [3, 0], [7, 8]], true);
+    haloBright([0, 8], "bright");
+    log("mesh", "SAFE CORRIDOR: walking route to Police Stn lit end-to-end");
+    log("mesh", "Camera handoff active — subject tracked across SN-07 → SN-08");
+  });
+  step(7400, () => {
+    setStatus("POLICE EN ROUTE — CORRIDOR ACTIVE", true);
+    log("sys", "Encrypted evidence stored; incident #2041 open on dashboard");
+    finish();
+  });
+});
+
+// --- reset ---
+function resetSim() {
+  timeouts.forEach(clearTimeout); timeouts = [];
+  running = false;
+  btns[0].disabled = btns[1].disabled = false;
+  nodes.forEach(n => {
+    n.core.setAttribute("class", "pole-core");
+    n.halo.setAttribute("class", "pole-halo");
+    n.ring.setAttribute("class", "incident-ring");
+  });
+  Object.values(corridors).forEach(c => c.setAttribute("class", "corridor"));
+  setGate(0, "MONITORING", false);
+  setStatus("ALL NODES NOMINAL", false);
+  document.getElementById("sensorTitle").textContent = "NODE SN-05 · SENSOR FUSION";
+  clearInterval(idleTimer);
+  idleTimer = setInterval(idleJitter, 1400);
+  idleJitter();
+  log("sys", "Simulation reset — all nodes nominal");
+}
+document.getElementById("btnReset").addEventListener("click", () => {
+  // manual reset also cancels a running auto-demo
+  autoTimeouts.forEach(clearTimeout); autoTimeouts = [];
+  btnAuto.disabled = false;
+  resetSim();
+});
+
+// --- auto-run full demo (for one-take video recording) ---
+const btnAuto = document.getElementById("btnAuto");
+let autoTimeouts = [];
+btnAuto.addEventListener("click", () => {
+  if (running) return;
+  btnAuto.disabled = true;
+  resetSim();
+  log("sys", "AUTO DEMO: full sequence — vehicle crash, then women's-safety SOS");
+  const plan = [
+    [2500, () => document.getElementById("btnCrash").click()],
+    [14000, () => resetSim()],
+    [16500, () => document.getElementById("btnSos").click()],
+    [27000, () => {
+      log("sys", "AUTO DEMO complete — SentinelAI: detect, verify, respond, protect");
+      btnAuto.disabled = false;
+    }],
+  ];
+  plan.forEach(([d, fn]) => autoTimeouts.push(setTimeout(fn, d)));
+});
+
+// boot
+idleJitter();
+log("sys", "SentinelAI mesh online — 9 nodes reporting, all sensors nominal");
+log("sys", "Pick a scenario below to run the end-to-end response flow");
+</script>
+</body>
+</html>
