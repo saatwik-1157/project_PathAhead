@@ -10,7 +10,7 @@ This folder is the complete submission package built from the concept document
 |---|---|---|
 | Concept-to-prototype execution plan deck | `SentinelAI_Execution_Plan.pptx` (15 slides) + `SentinelAI_Execution_Plan.pdf` | ✅ ready — fill 3 placeholders (below) |
 | Demonstration evidence (demo video link) | `demo/index.html` — record it, then paste the link into slide 12 | ⬜ record & upload |
-| Team details and profiles | `TEAM.md` | ✅ ready — fill `[bracketed]` fields |
+| Team details and profiles | `TEAM.md` + `SentinelAI_Team_Profiles.pdf` | ✅ complete (advisor names pending) |
 | Other supporting documents | `SentinelAI_Concept_Document.pdf` (formatted concept, author: Nirisha Chowdary; source: `concept.html`) | ✅ |
 | Validation evidence (strongly recommended) | `validation/survey.md` + `validation/interview-guides.md` — run them, attach the results | ⬜ collect responses |
 
@@ -26,14 +26,16 @@ unit economics (indicative per-node BOM & pricing) → market & business
 model → demonstration evidence → team → risks & mitigation → impact &
 ask. Speaker notes are on every slide.
 
-**Before submitting, fill these placeholders (all marked in brackets on the slides):**
+**Before submitting:**
 
-1. **Slide 12** — paste the demo video link into the dashed box.
-2. **Slide 13** — degree/branch/college/year for both members; advisor names
-   as they're confirmed.
-3. **Slide 1 / 15** — adjust the date and contact email if needed.
-4. **Slide 10** — the unit-economics figures are indicative public-market
+1. **Slide 12** — paste the demo video link into the dashed box (the only
+   remaining placeholder).
+2. **Slide 10** — the unit-economics figures are indicative public-market
    pricing; swap in real vendor quotes when you have them.
+
+Team details, college and contact emails are already filled in (slides 1, 13,
+15, `TEAM.md` and `SentinelAI_Team_Profiles.pdf`); advisor names get added as
+they're confirmed.
 
 ## 2. The demo — `demo/index.html`
 
@@ -82,13 +84,12 @@ Optionally narrate over it using the speaker notes from slides 3–5.
 
 1. Run the survey + at least one stakeholder interview (`validation/`) →
    save results as PDFs in `validation/`.
-2. Fill `TEAM.md` brackets → export to PDF.
-3. Record + upload the demo video → paste link into slide 12.
-4. Fill slide 13 team details; quote survey numbers on slide 2 if strong.
-5. Re-export the deck PDF so it matches the filled PPTX.
-6. Attach: deck (PPTX or PDF), demo video link, team PDF,
-   `SentinelAI_Concept_Document.pdf`, and validation results as
-   "other supporting material".
+2. Record + upload the demo video → paste link into slide 12 → re-export the
+   deck PDF so it matches the PPTX.
+3. Quote survey numbers on slide 2 if they're strong.
+4. Attach: deck (PPTX or PDF), demo video link,
+   `SentinelAI_Team_Profiles.pdf`, `SentinelAI_Concept_Document.pdf`, and
+   validation results as "other supporting material".
 
 ## Honesty note
 

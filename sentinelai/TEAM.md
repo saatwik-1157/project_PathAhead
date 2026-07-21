@@ -1,8 +1,9 @@
 # SentinelAI — Team Details & Profiles
 
 > Submission attachment: Team Details and Profiles.
-> Fill every `[bracketed]` field before submitting, then export this file to PDF
-> (or copy it into the submission portal's team section).
+> Export this file to PDF (or copy it into the submission portal's team
+> section). Phone numbers are left out — add them directly in the portal if
+> required.
 
 ## Team Name
 
@@ -10,16 +11,15 @@
 
 ## Members
 
-### 1. Saatwik — Co-Founder, Product & Engineering
+### 1. Saatwik Sairaam Vasamsetti — Co-Founder, Product & Engineering
 
 | Field | Detail |
 |---|---|
-| Full name | [Add full name as on college ID] |
-| Degree / Branch | [Add: e.g. B.Tech CSE] |
-| College & Year | [Add: college name, current year] |
-| Email | adithya001v@gmail.com |
+| Full name | Saatwik Sairaam Vasamsetti |
+| Degree / Branch | Integrated M.Tech — Computer Science & Engineering (5-year) |
+| College & Batch | VIT-AP University, Batch 2024–2029 |
+| Email | saathwik.13@gmail.com |
 | GitHub | https://github.com/saatwik-1157 |
-| Phone | [Add] |
 
 **Profile.** Full-stack developer with multiple shipped projects: PathAhead (a
 career-guidance platform with generated learning roadmaps, PWA and
@@ -30,16 +30,14 @@ Comfortable across Python ML tooling, Node.js, and vanilla-JS frontends.
 **Role in SentinelAI.** Owns the technical build: edge AI models (YOLO/TinyML),
 multi-sensor fusion logic, the React dashboard, and the alert pipeline.
 
-### 2. Nirisha Chowdary — Co-Founder, Research & Strategy
+### 2. Sai Nirisha Chowdary Pavuluri — Co-Founder, Research & Strategy
 
 | Field | Detail |
 |---|---|
-| Full name | P. Sai Nirisha Chowdary |
-| Degree / Branch | [Add] |
-| College & Year | [Add] |
-| Email | [Add] |
-| GitHub / LinkedIn | [Add] |
-| Phone | [Add] |
+| Full name | Sai Nirisha Chowdary Pavuluri |
+| Degree / Branch | Integrated M.Tech — Computer Science & Engineering (5-year) |
+| College & Batch | VIT-AP University, Batch 2024–2029 |
+| Email | nirishapavuluri@gmail.com |
 
 **Profile.** Originator of the SentinelAI concept — authored the full vision
 document covering problem framing, system design, market analysis, business
