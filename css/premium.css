@@ -1,0 +1,612 @@
+/* ============================================================
+   PathAhead — Premium layer
+   ------------------------------------------------------------
+   Loaded AFTER css/styles.css, so at equal specificity this file
+   wins. Everything here is ADDITIVE: deleting this file returns
+   the site to its previous appearance with no other change.
+
+   Rules of the house:
+     1. Never write a literal #fff / rgba(255,255,255,…) as a
+        background. Use var(--glass-bg) / var(--bg) / var(--surface)
+        so dark mode is handled by the token, not by a second rule.
+     2. ::before on .card / .tcard / .program-card is ALREADY USED by
+        the cursor spotlight in styles.css. Use ::after here.
+     3. Anything that starts hidden must be reset in the
+        prefers-reduced-motion block at the bottom of this file.
+     4. Never rename a class the JS toggles: .scrolled .open .active
+        .in .show .invalid .nomark .drawer-open .field .form-wrap
+        .form-success .msg .chk-bar .acc-a
+     5. White text may sit on --primary (5.2:1) and on the
+        blue→indigo --grad-cta (>=5.2:1), but NEVER on --accent
+        (cyan is ~2.4:1). Cyan is a gradient midpoint and a hairline
+        colour only.
+   ============================================================ */
+
+:root {
+  /* Marker — lets a smoke test confirm this sheet actually loaded. */
+  --premium-layer: 1;
+
+  /* Button gradient. Deliberately stops at indigo rather than running to
+     cyan: white on cyan fails WCAG AA, and this carries button labels. */
+  --grad-cta: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+  --grad-cta-hover: linear-gradient(135deg, #1D4ED8 0%, #4338CA 100%);
+}
+
+/* ============================================================
+   NAVIGATION — glass, shrink-on-scroll, animated underline
+   ============================================================ */
+
+/* The scroll state lives on <html>, set by main.js at y > 120.
+   Overriding --nav-h here (rather than .nav's height) is deliberate:
+   .nav-drawer is a SIBLING of .nav and reads --nav-h for its own inset,
+   so scoping the shrink to .nav would leave the drawer 14px out of sync. */
+html.is-scrolled { --nav-h: var(--nav-h-sm); }
+
+.nav {
+  background: var(--glass-bg);
+  backdrop-filter: saturate(180%) blur(var(--glass-blur));
+  -webkit-backdrop-filter: saturate(180%) blur(var(--glass-blur));
+  transition: box-shadow var(--dur-3) var(--ease-out),
+              border-color var(--dur-3) var(--ease-out),
+              background var(--dur-3) var(--ease-out);
+}
+.nav-inner { transition: height var(--dur-3) var(--ease-out); }
+
+html.is-scrolled .nav { box-shadow: var(--elev-2); }
+
+/* Gradient hairline that fades in once the page has moved. */
+.nav::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: var(--grad-rail);
+  opacity: 0;
+  transition: opacity var(--dur-3) var(--ease-out);
+  pointer-events: none;
+}
+html.is-scrolled .nav::after { opacity: .5; }
+
+.brand-logo { transition: width var(--dur-3) var(--ease-out), height var(--dur-3) var(--ease-out); }
+html.is-scrolled .brand-logo { width: 36px; height: 36px; }
+
+/* Underline that grows from the centre on hover, and stays put when active. */
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: "";
+  position: absolute; left: 14px; right: 14px; bottom: 5px; height: 2px;
+  border-radius: 2px; background: var(--grad-rail);
+  transform: scaleX(0); transform-origin: center;
+  transition: transform var(--dur-2) var(--ease-out);
+}
+.nav-links a:hover::after,
+.nav-links a.active::after { transform: scaleX(1); }
+
+.nav-drawer { transition: transform var(--dur-3) var(--ease-out); }
+.nav-drawer a { transition: background var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out), padding-left var(--dur-2) var(--ease-out); }
+.nav-drawer a:hover { background: var(--surface); padding-left: 24px; }
+
+.theme-toggle { transition: background var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-spring); }
+.theme-toggle:hover { transform: rotate(-12deg) scale(1.06); }
+
+/* ============================================================
+   BUTTONS — gradient, glow, magnetic pull, press
+   ============================================================ */
+
+.btn {
+  transition: transform var(--dur-2) var(--ease-spring),
+              box-shadow var(--dur-2) var(--ease-out),
+              background var(--dur-2) var(--ease-out),
+              background-position var(--dur-3) var(--ease-out),
+              color var(--dur-2) var(--ease-out),
+              border-color var(--dur-2) var(--ease-out);
+}
+
+/* Magnetic pull. JS writes --mag-x / --mag-y; the hover lift is folded into
+   the same transform so the two effects compose instead of overwriting. */
+.btn { transform: translate3d(var(--mag-x, 0px), var(--mag-y, 0px), 0); }
+.btn-primary:hover, .btn-secondary:hover, .btn-outline:hover, .btn-dark:hover {
+  transform: translate3d(var(--mag-x, 0px), calc(var(--mag-y, 0px) - 2px), 0);
+}
+.btn:active { transform: translate3d(var(--mag-x, 0px), var(--mag-y, 0px), 0) scale(.97); }
+
+.btn-primary {
+  background: var(--grad-cta);
+  background-size: 160% 160%;
+  background-position: 0% 50%;
+  box-shadow: var(--glow-primary);
+}
+.btn-primary:hover {
+  background: var(--grad-cta-hover);
+  background-size: 160% 160%;
+  background-position: 100% 50%;
+  box-shadow: var(--glow-primary), var(--elev-2);
+}
+.btn-secondary { box-shadow: var(--glow-warm); }
+.btn-secondary:hover { box-shadow: var(--glow-warm), var(--elev-2); }
+
+.btn-outline {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.btn-outline:hover { border-color: var(--primary); box-shadow: var(--elev-2); }
+
+/* Ripple, injected by js/motion.js on click. */
+.btn { position: relative; overflow: hidden; }
+.ripple {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: currentColor; opacity: .28;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple-out 620ms var(--ease-out) forwards;
+}
+@keyframes ripple-out {
+  to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+/* ============================================================
+   SURFACES — elevation, pointer tilt, gradient borders
+   ============================================================ */
+
+/* Tilt and lift share one transform so neither clobbers the other.
+   --tilt-x / --tilt-y are written by js/motion.js; both default to 0deg,
+   so with JS disabled these behave exactly like the old hover lift. */
+.card, .tcard, .program-card, .info-card, .domain-card {
+  --lift: 0px;
+  transform: perspective(900px)
+             rotateX(var(--tilt-x, 0deg))
+             rotateY(var(--tilt-y, 0deg))
+             translateY(var(--lift));
+  transform-style: preserve-3d;
+  transition: transform var(--dur-3) var(--ease-out),
+              box-shadow var(--dur-3) var(--ease-out),
+              border-color var(--dur-3) var(--ease-out);
+}
+.card:hover, .tcard:hover, .info-card:hover { --lift: -6px; }
+.program-card:hover { --lift: -8px; }
+.domain-card:hover { --lift: -4px; }
+
+.card, .tcard, .info-card, .acc-item { box-shadow: var(--elev-1); }
+.card:hover, .tcard:hover, .info-card:hover { box-shadow: var(--elev-2); }
+.program-card, .chooser, .domain-card { box-shadow: var(--elev-2); }
+.program-card:hover { box-shadow: var(--elev-3); }
+.form-wrap { box-shadow: var(--elev-3); }
+.acc-item.open { box-shadow: var(--elev-2); }
+
+/* Masked gradient border. ::before is taken by the cursor spotlight, so this
+   rides on ::after. `padding:1px` + mask-composite paints the ring only. */
+.card::after, .tcard::after, .program-card::after, .compare-col.good::after {
+  content: "";
+  position: absolute; inset: 0; border-radius: inherit;
+  padding: 1px; background: var(--grad-border);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--dur-3) var(--ease-out);
+  pointer-events: none;
+}
+/* ::after is absolutely positioned, so each host needs to be a containing
+   block. .card and .compare-col set no position of their own in styles.css. */
+.card, .tcard, .compare-col, .info-card, .domain-card { position: relative; }
+.card:hover::after, .tcard:hover::after, .program-card:hover::after { opacity: 1; }
+.compare-col.good::after { opacity: .8; }
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+
+.field input, .field select, .field textarea, .newsletter input {
+  border-radius: 12px;
+  transition: border-color var(--dur-2) var(--ease-out),
+              box-shadow var(--dur-2) var(--ease-out),
+              background var(--dur-2) var(--ease-out);
+}
+.field input:focus, .field select:focus, .field textarea:focus, .newsletter input:focus {
+  box-shadow: var(--ring), var(--elev-1);
+}
+/* Label lifts to the brand colour while its field is engaged. */
+.field:focus-within label { color: var(--primary); }
+
+/* ============================================================
+   FLOATING CHROME
+   ============================================================ */
+
+.scroll-progress { box-shadow: 0 0 12px rgba(37, 99, 235, .45); }
+
+.to-top {
+  background: var(--grad-cta);
+  border-radius: 16px;
+  box-shadow: var(--glow-primary), var(--elev-2);
+  transition: opacity var(--dur-3) var(--ease-out),
+              visibility var(--dur-3) var(--ease-out),
+              transform var(--dur-3) var(--ease-spring),
+              box-shadow var(--dur-3) var(--ease-out);
+}
+.to-top:hover { background: var(--grad-cta-hover); transform: translateY(-4px); box-shadow: var(--glow-primary), var(--elev-3); }
+
+.wa-btn { box-shadow: 0 8px 32px -6px rgba(37, 211, 102, .55); }
+.wa-btn:hover { box-shadow: 0 12px 40px -6px rgba(37, 211, 102, .7); }
+
+/* ============================================================
+   REVEAL VARIANTS
+   Modifiers — always used ALONGSIDE .reveal, never instead of it.
+   main.js only ever queries ".reveal", so a variant on its own would
+   never be observed and would stay invisible forever.
+   .reveal.in already resets transform + filter.
+   ============================================================ */
+
+.reveal-scale { transform: translateY(var(--reveal-y)) scale(.985); }
+.reveal-blur { filter: blur(8px); }
+.reveal-left { transform: translateX(calc(var(--reveal-y) * -1.4)); }
+.reveal-right { transform: translateX(calc(var(--reveal-y) * 1.4)); }
+
+/* ============================================================
+   AMBIENT — aurora + noise
+   .hero-bg exists on all 20 non-admin pages, so restyling it here
+   upgrades every hero with zero markup changes.
+
+   The two blobs animate `transform` only (compositor-driven). The cyan
+   accent and the noise are static background layers on the element
+   itself, which costs nothing per frame.
+   ============================================================ */
+
+.hero-bg {
+  background-image:
+    radial-gradient(42% 38% at 78% 20%, var(--aurora-2), transparent 68%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  background-repeat: no-repeat, repeat;
+  background-size: auto, 160px 160px;
+}
+
+.hero-bg::before {
+  width: min(760px, 92vw);
+  height: min(760px, 92vw);
+  background: radial-gradient(circle, var(--aurora-1), transparent 64%);
+  animation: aurora-a 26s var(--ease-inout) infinite alternate;
+}
+.hero-bg::after {
+  width: min(560px, 72vw);
+  height: min(560px, 72vw);
+  background: radial-gradient(circle, var(--aurora-3), transparent 62%);
+  animation: aurora-b 32s var(--ease-inout) infinite alternate;
+}
+
+/* ::before keeps its translateX(-50%) centring as the first term — dropping
+   it would shove the blob half a width off centre. */
+@keyframes aurora-a {
+  from { transform: translateX(-50%) translate3d(0, 0, 0) scale(1); }
+  to   { transform: translateX(-50%) translate3d(6%, 5%, 0) scale(1.16); }
+}
+@keyframes aurora-b {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(-8%, -6%, 0) scale(1.22); }
+}
+
+/* Particle field — homepage hero only, mounted by js/motion.js.
+   Lives INSIDE .hero-bg (never as its own <section>): main.js stamps
+   role="main" onto the first <section> it finds, so a decorative section
+   here would silently move the main landmark onto a background layer. */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-out);
+}
+.hero-particles.is-on { opacity: 1; }
+
+/* ============================================================
+   HOMEPAGE — sixteen sections, sixteen identities
+   ------------------------------------------------------------
+   The page previously used exactly TWO backgrounds, strictly
+   alternating, and every raised surface was the same
+   radius-24 + 1px border + flat shadow. Below, each section gets a
+   distinct surface treatment, ordered so no two neighbours match:
+
+     aurora → hairline → cards → mesh → split → elevated → timeline
+     → DARK → mesh panel → document → gradient → editorial
+     → floating → flat → recessed → loudest
+
+   All selectors are scoped so inner pages are unaffected.
+   ============================================================ */
+
+/* --- 2. Trust marquee: hairline band, the quietest thing on the page --- */
+.p-index .section-sm:has(.marquee) { position: relative; }
+.p-index .section-sm:has(.marquee)::before,
+.p-index .section-sm:has(.marquee)::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px;
+  background: var(--grad-rail); opacity: .22;
+}
+.p-index .section-sm:has(.marquee)::before { top: 0; }
+.p-index .section-sm:has(.marquee)::after { bottom: 0; }
+
+/* --- 3. Career builder: a lit workbench; the gradient border does the talking --- */
+#career-builder {
+  background: radial-gradient(55% 42% at 86% 6%, var(--aurora-2), transparent 62%), var(--bg);
+}
+#career-builder .card { box-shadow: var(--elev-2); }
+
+/* --- 4. Why: tinted mesh surface + oversized ghost numerals --- */
+#why {
+  background:
+    radial-gradient(60% 45% at 12% 0%, var(--aurora-1), transparent 62%),
+    radial-gradient(50% 40% at 88% 100%, var(--aurora-3), transparent 62%),
+    var(--surface);
+}
+#why .cards { counter-reset: whycard; }
+#why .card { counter-increment: whycard; overflow: hidden; }
+/* The numeral rides on .card-icon::after because .card::after is already the
+   gradient border and .card::before is the cursor spotlight. */
+#why .card-icon::after {
+  content: counter(whycard);
+  position: absolute; top: 10px; right: 20px;
+  font-size: 4.5rem; font-weight: 900; line-height: .8; letter-spacing: -.05em;
+  color: var(--ink); opacity: .06; pointer-events: none;
+}
+
+/* --- 5. Difference: split-tone. The contrast IS the argument. --- */
+#difference .compare-col.bad {
+  background: var(--surface);
+  border-style: dashed;
+  box-shadow: none;
+  filter: saturate(.55);
+}
+#difference .compare-col.good {
+  box-shadow: var(--elev-3), var(--glow-primary);
+}
+
+/* --- 6. Programs: the most raised surfaces on the page, lit from above --- */
+#programs {
+  background: radial-gradient(78% 46% at 50% 0%, var(--aurora-1), transparent 62%), var(--bg);
+}
+#programs .program-card { box-shadow: var(--elev-3); }
+#programs .program-card .bar { height: 6px; background: var(--grad-rail); }
+#programs .program-card.orange .bar { background: linear-gradient(90deg, var(--secondary-aa), #F97316 70%, #FBBF24); }
+
+/* --- 7. How it works: a connector rail behind the four steps --- */
+#how .cards { position: relative; }
+#how .cards::before {
+  content: ""; position: absolute; left: 26px; right: 26px; top: 26px; height: 2px;
+  background: var(--grad-rail); opacity: .3;
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform 1.4s var(--ease-out) .2s;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+#how .cards:has(.reveal.in)::before { transform: scaleX(1); }
+@media (max-width: 820px) { #how .cards::before { display: none; } }
+
+/* --- 8. Domains: the dark inversion band. The page's mid-point reset,
+       and the one section that goes dark even in light mode. --- */
+#domains {
+  background: linear-gradient(160deg, #0B1120 0%, #152046 55%, #211B4D 100%);
+  position: relative; overflow: hidden;
+}
+#domains::before {
+  content: ""; position: absolute; width: 520px; height: 520px; border-radius: 50%;
+  top: -200px; right: -120px;
+  background: radial-gradient(circle, rgba(6, 182, 212, .22), transparent 66%);
+  pointer-events: none;
+}
+#domains .container { position: relative; z-index: 1; }
+#domains h2, #domains h3 { color: #FFFFFF; }
+#domains p, #domains .lead { color: #C7D3EE; }
+#domains .eyebrow { background: rgba(255, 255, 255, .12); color: #BFD4FF; }
+#domains .domain-tab {
+  background: rgba(255, 255, 255, .06);
+  border-color: rgba(255, 255, 255, .16);
+  color: #C7D3EE;
+}
+#domains .domain-tab:hover { border-color: #BFD4FF; color: #FFFFFF; }
+#domains .domain-tab.active { background: #FFFFFF; border-color: #FFFFFF; color: #0B1120; }
+#domains .domain-card {
+  background: rgba(255, 255, 255, .055);
+  border-color: rgba(255, 255, 255, .13);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: var(--elev-3);
+}
+#domains .domain-card .d-tags span { background: rgba(255, 255, 255, .11); color: #E2E8F0; }
+
+/* --- 9. Benefits: layered mesh panel --- */
+#benefits .panel {
+  background:
+    radial-gradient(70% 60% at 20% 12%, var(--aurora-1), transparent 66%),
+    radial-gradient(62% 55% at 86% 88%, var(--aurora-2), transparent 66%),
+    var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--elev-2);
+}
+#benefits .pill-list .pill {
+  transition: transform var(--dur-2) var(--ease-spring), box-shadow var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out);
+}
+#benefits .pill-list .pill:hover { transform: translateY(-3px); box-shadow: var(--elev-2); border-color: var(--primary); }
+
+/* --- 10. Colleges: document tone. Squarer, flatter, B2B. --- */
+#colleges { background: var(--surface); }
+#colleges .card { border-radius: var(--r); padding: 28px; box-shadow: var(--elev-1); }
+#colleges .card:hover { --lift: -3px; box-shadow: var(--elev-2); }
+#colleges .card::after { display: none; }   /* a prospectus, not a landing page */
+
+/* --- 11. Stats: gradient mesh band --- */
+.p-index .stats {
+  background: linear-gradient(135deg, #1E40AF 0%, #2563EB 45%, #4F46E5 100%);
+  position: relative; overflow: hidden;
+  box-shadow: var(--elev-3);
+}
+.p-index .stats::before {
+  content: ""; position: absolute; width: 420px; height: 420px; border-radius: 50%;
+  top: -170px; right: -90px;
+  background: radial-gradient(circle, rgba(6, 182, 212, .26), transparent 66%);
+  pointer-events: none;
+}
+.p-index .stats .cards { position: relative; z-index: 1; }
+
+/* --- 12. Quote: editorial. No card at all — pure typography. --- */
+.p-index section:has(.quote-band) { background: var(--bg); }
+.p-index .quote-band::before {
+  content: ""; display: block; width: 84px; height: 1px; margin: 0 auto 30px;
+  background: var(--grad-rail); opacity: .55;
+}
+.p-index .quote-band .qmark { font-size: 5.5rem; opacity: .14; }
+
+/* --- 11b. The stats band sits in its own pool of light --- */
+.p-index section:has(> .container > .stats) {
+  background: radial-gradient(58% 52% at 50% 50%, var(--aurora-1), transparent 72%);
+}
+
+/* --- 13. Testimonials: offset floating grid, three different depths --- */
+#testimonials {
+  background: radial-gradient(52% 42% at 8% 100%, var(--aurora-3), transparent 62%), var(--bg);
+}
+#testimonials .tcard:nth-child(2) { box-shadow: var(--elev-3); }
+#testimonials .tcard:nth-child(3) { box-shadow: var(--elev-2); }
+@media (min-width: 821px) {
+  #testimonials .cards > :nth-child(2) { margin-top: 26px; }
+  #testimonials .cards > :nth-child(3) { margin-top: 13px; }
+}
+
+/* --- 14. FAQ: flat list. Deliberately calm after the testimonial grid.
+       The .acc-a max-height mechanism in main.js is untouched. --- */
+#faq { background: var(--surface); }
+#faq .acc-item {
+  background: transparent;
+  border: 0; border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
+}
+#faq .acc-item.open { box-shadow: none; border-color: var(--border-strong); }
+#faq .acc-q { padding: 26px 6px; }
+#faq .acc-a-inner { padding: 0 6px 26px; }
+
+/* --- 15. Newsletter: recessed well. The only concave surface here. --- */
+.p-index .newsletter {
+  background: var(--surface-2);
+  border-color: var(--border);
+  box-shadow: var(--elev-inset);
+}
+
+/* --- 16. CTA band: the loudest thing on the page --- */
+.p-index .cta-band { box-shadow: var(--elev-3); }
+/* aurora-b/-c only, never aurora-a: that one bakes in the translateX(-50%)
+   that centres the hero blob, and would shove these half a width sideways. */
+.p-index .cta-band::before { animation: aurora-b 24s var(--ease-inout) infinite alternate; }
+.p-index .cta-band::after { animation: aurora-c 28s var(--ease-inout) infinite alternate; }
+
+@keyframes aurora-c {
+  from { transform: translate3d(0, 0, 0) scale(1.04); }
+  to   { transform: translate3d(7%, 5%, 0) scale(1.2); }
+}
+
+/* ============================================================
+   INNER PAGES
+   .page-hero already inherits the aurora because it contains
+   .hero-bg, so these are the differences that remain.
+   ============================================================ */
+
+.page-hero { position: relative; }
+.page-hero h1 { margin-bottom: 6px; }
+.page-hero .eyebrow { margin-bottom: 20px; }
+
+/* Outline buttons sitting on a dark CTA band. Previously repeated as an
+   inline style="background:transparent;color:#fff;…" on every page. */
+.cta-band .btn-outline {
+  background: transparent;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, .4);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.cta-band .btn-outline:hover {
+  background: rgba(255, 255, 255, .12);
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+/* Deck section: keep it the darkest surface, but let it breathe. */
+.deck-section .deck-embed { box-shadow: var(--elev-3), 0 0 80px -30px rgba(37, 99, 235, .6); }
+
+/* Timeline (about page): the rail becomes a gradient. */
+.timeline::before { background: var(--grad-rail); opacity: .35; }
+.tl-item::before { box-shadow: 0 0 0 4px var(--primary-soft), var(--elev-1); }
+
+/* Gallery: keep the existing scale-on-hover, add depth. */
+.g-item { transition: transform var(--dur-3) var(--ease-out), box-shadow var(--dur-3) var(--ease-out); }
+.g-item:hover { box-shadow: var(--elev-3); }
+
+/* Filter chips + program chooser get the spring. */
+.chip, .chooser-btns button, .domain-tab {
+  transition: background var(--dur-2) var(--ease-out),
+              border-color var(--dur-2) var(--ease-out),
+              color var(--dur-2) var(--ease-out),
+              transform var(--dur-2) var(--ease-spring),
+              box-shadow var(--dur-2) var(--ease-out);
+}
+.chip:hover { transform: translateY(-2px); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.footer {
+  position: relative;
+  background:
+    radial-gradient(70% 100% at 50% 0%, rgba(37, 99, 235, .16), transparent 62%),
+    var(--ink);
+}
+/* Gradient hairline along the very top edge. */
+.footer::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--grad-rail); opacity: .55;
+}
+.footer-col a { transition: color var(--dur-2) var(--ease-out), padding-left var(--dur-2) var(--ease-out); }
+.footer-col a:not(.btn):hover { padding-left: 6px; }
+.socials a {
+  transition: background var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out),
+              transform var(--dur-2) var(--ease-spring), box-shadow var(--dur-2) var(--ease-out);
+}
+.socials a:hover { box-shadow: var(--glow-primary); }
+
+/* Hero float cards get the real glass recipe rather than a flat white panel. */
+.float-card {
+  background: var(--glass-bg);
+  border-color: var(--glass-brd);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  box-shadow: var(--elev-3);
+}
+
+/* ============================================================
+   FALLBACKS
+   ============================================================ */
+
+/* Glass over a busy background with no blur support is a real contrast
+   failure, not just a cosmetic one — go opaque instead. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav { background: var(--bg); }
+  .btn-outline { background: var(--bg); }
+  .float-card { background: var(--surface); }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   Rule A: visibility must never depend on a @keyframes animation.
+   Rule B: this does NOT stop requestAnimationFrame — js/motion.js
+   early-returns on PATHAHEAD.motion.reduced as well.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-scale, .reveal-blur, .reveal-left, .reveal-right {
+    opacity: 1 !important; transform: none !important; filter: none !important;
+  }
+  .card, .tcard, .program-card, .info-card, .domain-card, .btn {
+    transform: none !important;
+  }
+  .ripple { display: none !important; }
+  .nav-links a::after { transition: none !important; }
+  /* The step connector is revealed by :has(.reveal.in). Reduced motion makes
+     .reveal visible WITHOUT adding .in, so the rail would never draw. */
+  #how .cards::before { transform: none !important; }
+}
