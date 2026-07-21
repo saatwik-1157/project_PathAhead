@@ -380,9 +380,16 @@
     out.innerHTML=html;
     // The site's scroll-reveal observer only watches elements present at page
     // load, so dynamically-inserted .reveal blocks would stay at opacity:0.
-    // Force them visible immediately.
-    var rev=out.querySelectorAll(".reveal");
-    for(var r=0;r<rev.length;r++){ rev[r].classList.add("in"); }
+    // Hand them to the shared scanner so they animate in properly; if it is
+    // unavailable for any reason, fall back to forcing them visible.
+    var M=window.PATHAHEAD&&window.PATHAHEAD.motion;
+    if(M&&typeof M.revealScan==="function"){
+      M.revealScan(out);
+      if(typeof M.remeasure==="function") M.remeasure();
+    } else {
+      var rev=out.querySelectorAll(".reveal");
+      for(var r=0;r<rev.length;r++){ rev[r].classList.add("in"); }
+    }
     // Save the selection to the URL so this exact roadmap can be shared/bookmarked.
     updateURL(branch, year, domain, state, goalKey, compare);
     document.getElementById("btn-print").style.display="";

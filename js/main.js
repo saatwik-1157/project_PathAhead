@@ -100,6 +100,96 @@
     } catch (e) {}
   })();
 
+  /* ============================================================
+     Motion gate — the contract js/motion.js and career-data/builder.js
+     read before running any effect.
+
+     IMPORTANT: the global `* { animation: none !important }` rule in the
+     reduced-motion CSS does NOT stop requestAnimationFrame. Anything that
+     drives a rAF loop must check `PATHAHEAD.motion.reduced` itself.
+     ============================================================ */
+  var PA = (window.PATHAHEAD = window.PATHAHEAD || {});
+  var mqReduce = window.matchMedia ? matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var mqFine = window.matchMedia ? matchMedia("(hover: hover)") : null;
+
+  var motion = {
+    reduced: !!(mqReduce && mqReduce.matches),
+    fine: !!(mqFine && mqFine.matches),
+    revealScan: function () {},
+    remeasure: function () {}
+  };
+  PA.motion = motion;
+
+  // Honour a mid-session change of the OS setting.
+  if (mqReduce && mqReduce.addEventListener) {
+    mqReduce.addEventListener("change", function (e) { motion.reduced = e.matches; });
+  }
+  if (mqFine && mqFine.addEventListener) {
+    mqFine.addEventListener("change", function (e) { motion.fine = e.matches; });
+  }
+
+  /* ============================================================
+     Unified scroll bus — one passive listener, one rAF tick.
+     Replaces three independent scroll listeners that each did their
+     own layout read. `docMax` is cached and only recomputed on
+     resize / content change, so the scroll path never forces layout.
+     ============================================================ */
+  var scrollSubs = [];
+  var scrollQueued = false;
+  var docMax = 0;
+
+  function measureDoc() {
+    docMax = document.documentElement.scrollHeight - window.innerHeight;
+    if (docMax < 0) docMax = 0;
+  }
+  function runScroll() {
+    scrollQueued = false;
+    var y = window.scrollY || window.pageYOffset || 0;
+    for (var i = 0; i < scrollSubs.length; i++) {
+      try { scrollSubs[i](y, docMax); } catch (e) { /* one bad sub must not stall the rest */ }
+    }
+  }
+  function queueScroll() {
+    if (scrollQueued) return;
+    scrollQueued = true;
+    requestAnimationFrame(runScroll);
+  }
+  function onScroll(fn) {
+    scrollSubs.push(fn);
+    try { fn(window.scrollY || 0, docMax); } catch (e) {}
+  }
+  motion.remeasure = function () { measureDoc(); queueScroll(); };
+
+  function initScrollBus() {
+    measureDoc();
+    window.addEventListener("scroll", queueScroll, { passive: true });
+    window.addEventListener("resize", motion.remeasure, { passive: true });
+    window.addEventListener("load", motion.remeasure);
+    // Content injected later (career builder, images finishing) changes the
+    // scrollable height; keep the cached value honest without polling.
+    if (window.ResizeObserver) {
+      try { new ResizeObserver(motion.remeasure).observe(document.body); } catch (e) {}
+    }
+    // Root-level scroll state, used by the nav shrink. This lives on <html>,
+    // NOT on .nav: .nav-drawer is a *sibling* of .nav and reads --nav-h for its
+    // own inset, so a scoped override on .nav would desync the drawer.
+    onScroll(function (y) {
+      document.documentElement.classList.toggle("is-scrolled", y > 120);
+    });
+  }
+
+  // Current sticky-nav height, measured rather than hardcoded, so anchor
+  // offsets stay correct once the nav shrinks on scroll.
+  function navOffset() {
+    var nav = document.querySelector(".nav");
+    var h = nav ? nav.getBoundingClientRect().height : 76;
+    return h + 14;
+  }
+
+  function scrollToY(y) {
+    window.scrollTo({ top: y, behavior: motion.reduced ? "auto" : "smooth" });
+  }
+
   function initTheme() {
     var btn = document.getElementById("themeToggle");
     if (!btn) return;
@@ -159,10 +249,8 @@
     document.body.insertBefore(el, document.body.firstChild);
     document.body.insertBefore(drawer, el.nextSibling);
 
-    // Sticky shadow on scroll
-    function onScroll() { el.classList.toggle("scrolled", window.scrollY > 8); }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    // Sticky shadow on scroll (shares the rAF-batched scroll bus)
+    onScroll(function (y) { el.classList.toggle("scrolled", y > 8); });
 
     // Mobile toggle
     var toggle = document.getElementById("navToggle");
@@ -257,27 +345,94 @@
     b.className = "to-top";
     b.setAttribute("aria-label", "Back to top");
     b.innerHTML = I.up;
-    b.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+    b.addEventListener("click", function () { scrollToY(0); });
     document.body.appendChild(b);
-    window.addEventListener("scroll", function () { b.classList.toggle("show", window.scrollY > 500); }, { passive: true });
+    onScroll(function (y) { b.classList.toggle("show", y > 500); });
   }
 
   /* ============================================================
      Scroll reveal
      ============================================================ */
-  function initReveal() {
-    var items = document.querySelectorAll(".reveal");
-    if (!("IntersectionObserver" in window) || !items.length) {
+  var revealObserver = null;
+  var revealAlive = false;
+
+  // Position within the element's own group of siblings, so a grid of cards
+  // cascades instead of arriving all at once. The CSS caps the multiplier, so
+  // a long list never waits on a runaway delay.
+  function stampRevealIndex(el) {
+    var i = 0, sib = el.previousElementSibling;
+    while (sib) {
+      if (sib.classList && sib.classList.contains("reveal")) i++;
+      sib = sib.previousElementSibling;
+    }
+    el.style.setProperty("--i", i);
+  }
+
+  // Failsafe. If IntersectionObserver never delivers a callback, every .reveal
+  // sits at opacity:0 forever and the page reads as blank. Marketing copy must
+  // never be invisible, so past a short grace period we stop trusting the
+  // observer and just show everything.
+  //
+  // Armed only once the document is actually visible: a hidden document
+  // legitimately never fires IntersectionObserver, and arming it eagerly would
+  // mean every link opened in a background tab lost its entrance animation.
+  //
+  // Applied per scanned batch, so runtime-injected content (the career builder
+  // adds ~17 blocks) is covered too, not just what existed at page load.
+  function armRevealFailsafe(items) {
+    if (!items.length) return;
+    function arm() {
+      setTimeout(function () {
+        if (revealAlive) return;
+        for (var i = 0; i < items.length; i++) items[i].classList.add("in");
+      }, 2500);
+    }
+    if (document.visibilityState === "hidden") {
+      document.addEventListener("visibilitychange", function onVis() {
+        if (document.visibilityState === "hidden") return;
+        document.removeEventListener("visibilitychange", onVis);
+        arm();
+      });
+    } else {
+      arm();
+    }
+  }
+
+  // Exposed as PATHAHEAD.motion.revealScan so career-data/builder.js can call it
+  // after injecting its roadmap blocks — otherwise that content stays at
+  // opacity:0 forever, which has shipped as a bug on this page once before.
+  function revealScan(root) {
+    var items = (root || document).querySelectorAll(".reveal");
+    if (!items.length) return;
+
+    if (!("IntersectionObserver" in window)) {
       items.forEach(function (n) { n.classList.add("in"); });
       return;
     }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-    items.forEach(function (n) { io.observe(n); });
+    if (!revealObserver) {
+      revealObserver = new IntersectionObserver(function (entries) {
+        revealAlive = true;
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add("in");
+            revealObserver.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    }
+    items.forEach(function (n) {
+      if (n.classList.contains("in") || n.getAttribute("data-revealed")) return;
+      n.setAttribute("data-revealed", "1");
+      stampRevealIndex(n);
+      revealObserver.observe(n);
+    });
+    armRevealFailsafe(items);
   }
+  motion.revealScan = revealScan;
+
+  // revealScan arms the visibility failsafe for whichever batch it scans, so
+  // page-load content and runtime-injected content are both covered.
+  function initReveal() { revealScan(document); }
 
   /* ============================================================
      Counters
@@ -289,14 +444,28 @@
       var target = parseFloat(el.getAttribute("data-count"));
       var suffix = el.getAttribute("data-suffix") || "";
       var decimals = (target % 1 !== 0) ? 1 : 0;
+
+      // Build the DOM once, then mutate a single text node per frame. The old
+      // version reassigned innerHTML ~60x/second, which re-parsed HTML on every
+      // frame and destroyed anything a caller had placed inside the element.
+      el.textContent = "";
+      var textNode = document.createTextNode("0");
+      el.appendChild(textNode);
+      if (suffix) {
+        var sfx = document.createElement("span");
+        sfx.className = "suffix";
+        sfx.textContent = suffix;
+        el.appendChild(sfx);
+      }
+
+      if (motion.reduced) { textNode.nodeValue = target.toFixed(decimals); return; }
+
       var start = 0, dur = 1600, t0 = null;
       function step(ts) {
         if (!t0) t0 = ts;
         var p = Math.min((ts - t0) / dur, 1);
         var eased = 1 - Math.pow(1 - p, 3);
-        var val = (start + (target - start) * eased).toFixed(decimals);
-        el.firstChild ? (el.childNodes[0].nodeValue = val) : (el.textContent = val);
-        el.innerHTML = val + '<span class="suffix">' + suffix + "</span>";
+        textNode.nodeValue = (start + (target - start) * eased).toFixed(decimals);
         if (p < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
@@ -440,12 +609,15 @@
     if (!box) {
       box = document.createElement("div");
       box.className = "form-error";
+      // Announced to screen readers: this is the only signal that a submission
+      // failed, and it appears above the form rather than at the focus point.
+      box.setAttribute("role", "alert");
       box.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
         '<span>We couldn’t send that automatically. Please call <a href="tel:' + CONFIG.phoneHref + '">' + CONFIG.phone + '</a> or email <a href="mailto:' + CONFIG.email + '">' + CONFIG.email + '</a> — your details are saved.</span>';
       form.parentNode.insertBefore(box, form);
     }
     box.classList.add("show");
-    box.scrollIntoView({ behavior: "smooth", block: "center" });
+    box.scrollIntoView({ behavior: motion.reduced ? "auto" : "smooth", block: "center" });
   }
   function hideFormError(scope) {
     var box = scope.querySelector(".form-error");
@@ -489,7 +661,7 @@
         sendSubmission(kind, data).then(function (result) {
           if (btn) { btn.disabled = false; btn.textContent = orig; }
           if (result.delivered) {
-            if (success) { success.classList.add("show"); success.scrollIntoView({ behavior: "smooth", block: "center" }); }
+            if (success) { success.classList.add("show"); success.scrollIntoView({ behavior: motion.reduced ? "auto" : "smooth", block: "center" }); }
             form.reset();
             setTimeout(function () { if (success) success.classList.remove("show"); }, 6000);
           } else {
@@ -534,8 +706,10 @@
       var target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      var y = target.getBoundingClientRect().top + window.scrollY - 90;
-      window.scrollTo({ top: y, behavior: "smooth" });
+      // Measured, not hardcoded: the nav shrinks on scroll, so a fixed 90px
+      // offset would drop anchors underneath it.
+      var y = target.getBoundingClientRect().top + window.scrollY - navOffset();
+      scrollToY(y);
     });
   }
 
@@ -546,14 +720,13 @@
     var bar = document.createElement("div");
     bar.className = "scroll-progress";
     document.body.appendChild(bar);
-    function update() {
-      var h = document.documentElement.scrollHeight - window.innerHeight;
-      var p = h > 0 ? (window.scrollY / h) * 100 : 0;
-      bar.style.width = p + "%";
-    }
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    // transform:scaleX is compositor-driven; animating `width` forced a layout
+    // on every scroll frame. The height is cached by the bus, not read here.
+    onScroll(function (y, max) {
+      var p = max > 0 ? y / max : 0;
+      if (p < 0) p = 0; else if (p > 1) p = 1;
+      bar.style.transform = "scaleX(" + p + ")";
+    });
   }
 
   /* ============================================================
@@ -686,25 +859,25 @@
   ready(function () {
     // Admin page reuses this file only for CONFIG + Supabase helpers — skip marketing chrome.
     if (document.body.getAttribute("data-page") === "admin") return;
-    injectHead();
-    injectAnalytics();
-    buildNav();
-    buildSkipLink();
-    initTheme();
-    buildFooter();
-    buildToTop();
-    buildWhatsApp();
-    registerSW();
-    initScrollProgress();
-    initReveal();
-    initCounters();
-    initAccordion();
-    initFilters();
-    initForms();
-    initNewsletter();
-    initAnchors();
-    initSpotlight();
-    initChooser();
-    initDomains();
+
+    // Per-page hook, so premium.css can target one page without touching its HTML.
+    document.body.classList.add("p-" + here.replace(/\.html$/, ""));
+
+    // Each init is isolated. This callback has no error boundary of its own, so
+    // a single throw used to abort every builder after it — and because the
+    // reveal observer is one of them, the visible result was a blank page.
+    [
+      injectHead, injectAnalytics, initScrollBus,
+      buildNav, buildSkipLink, initTheme, buildFooter, buildToTop, buildWhatsApp,
+      registerSW, initScrollProgress, initReveal, initCounters, initAccordion,
+      initFilters, initForms, initNewsletter, initAnchors, initSpotlight,
+      initChooser, initDomains
+    ].forEach(function (fn) {
+      try {
+        fn();
+      } catch (err) {
+        if (window.console) console.error("[PathAhead] " + (fn.name || "init") + " failed:", err);
+      }
+    });
   });
 })();
