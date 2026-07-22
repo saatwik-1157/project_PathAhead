@@ -20,6 +20,8 @@
 | College & Batch | VIT-AP University, Batch 2024–2029 |
 | Email | saathwik.13@gmail.com |
 | GitHub | https://github.com/saatwik-1157 |
+| LinkedIn | https://www.linkedin.com/in/saatwiksairaamvasamsetti |
+| Portfolio | https://saatwik-1157.github.io |
 
 **Profile.** Full-stack developer with multiple shipped projects: PathAhead (a
 career-guidance platform with generated learning roadmaps, PWA and
@@ -38,6 +40,8 @@ multi-sensor fusion logic, the React dashboard, and the alert pipeline.
 | Degree / Branch | Integrated M.Tech — Computer Science & Engineering (5-year) |
 | College & Batch | VIT-AP University, Batch 2024–2029 |
 | Email | nirishapavuluri@gmail.com |
+| GitHub | https://github.com/Nirisha22 |
+| LinkedIn | https://www.linkedin.com/in/nirisha-chowdary-368335248 |
 
 **Profile.** Originator of the SentinelAI concept — authored the full vision
 document covering problem framing, system design, market analysis, business
