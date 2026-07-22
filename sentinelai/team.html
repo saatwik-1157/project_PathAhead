@@ -24,6 +24,16 @@
   th, td { border: 1px solid #ccd4e0; padding: 5px 10px; text-align: left; vertical-align: top; }
   th { background: #eef2f8; color: #12233c; width: 32%; }
   a { color: #1a5fb4; text-decoration: none; }
+
+  /* --- print pagination: never split a block, never strand a heading --- */
+  @media print {
+    p, li { orphans: 3; widows: 3; }
+    h1, h2, h3 { break-after: avoid-page; page-break-after: avoid;
+                 break-inside: avoid; page-break-inside: avoid; }
+    table, tr, .cover { break-inside: avoid; page-break-inside: avoid; }
+    h2 + h3, h3 + table, h2 + table, h2 + p, h3 + p, table + p, p + p {
+      break-before: avoid-page; page-break-before: avoid; }
+  }
 </style>
 </head>
 <body>

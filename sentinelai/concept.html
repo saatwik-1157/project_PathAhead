@@ -30,7 +30,18 @@
   .note { background: #fff8e6; border: 1px solid #f0dfae; border-radius: 6px; padding: 10px 14px; font-size: 10pt; margin: 10px 0; }
   .cols { display: flex; gap: 18px; }
   .cols > div { flex: 1; }
-  .pagebreak { page-break-before: always; }
+
+  /* --- print pagination: never split a block, never strand a heading --- */
+  @media print {
+    p, li { orphans: 3; widows: 3; }
+    h1, h2, h3 { break-after: avoid-page; page-break-after: avoid;
+                 break-inside: avoid; page-break-inside: avoid; }
+    .flow, .note, .cols, .cols > div, table, tr, .cover {
+      break-inside: avoid; page-break-inside: avoid; }
+    /* a heading plus its first block travel together */
+    h2 + p, h2 + .flow, h2 + .cols, h2 + table, h2 + ul, h2 + ol,
+    h3 + p, h3 + .flow, h3 + ul { break-before: avoid-page; page-break-before: avoid; }
+  }
 </style>
 </head>
 <body>
@@ -112,8 +123,6 @@
     <b>Women's safety.</b> SOS pressed → AI activates → nearby cameras start recording → emergency lights ON → police receive live location → family notified.
   </div>
 </div>
-
-<div class="pagebreak"></div>
 
 <h2>8. Target Users &amp; Market</h2>
 <table>
