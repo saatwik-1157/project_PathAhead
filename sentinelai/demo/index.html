@@ -240,6 +240,7 @@
   #endCard .credits > div { display: flex; flex-direction: column; align-items: center; gap: 2px; }
   #endCard .credits b { font-size: 12.5px; color: var(--ice); font-weight: 700; }
   #endCard .credits span { font-size: 10.5px; color: var(--mut); }
+  #endCard .credits span:first-of-type { color: var(--amber); font-weight: 700; margin-bottom: 1px; }
   #vignette { position: absolute; inset: 0; pointer-events: none; z-index: 5;
     background: radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(4,8,16,.55) 100%); }
 </style>
@@ -316,10 +317,10 @@
   <div class="dot"></div>
   <h2>SentinelAI</h2>
   <div class="m">DETECT · VERIFY · RESPOND · PROTECT</div>
-  <div class="s">Software simulation — synthetic sensor data · Team SentinelAI, VIT-AP University</div>
+  <div class="s">Scripted simulation — synthetic sensor data, not a trained model · Team SentinelAI, VIT-AP University</div>
   <div class="credits">
-    <div><b>Saatwik Sairaam Vasamsetti</b><span>github.com/saatwik-1157</span><span>linkedin.com/in/saatwiksairaamvasamsetti</span></div>
-    <div><b>Sai Nirisha Chowdary Pavuluri</b><span>github.com/Nirisha22</span><span>linkedin.com/in/nirisha-chowdary</span></div>
+    <div><b>Sai Nirisha Chowdary Pavuluri</b><span>Founder</span><span>github.com/Nirisha22</span><span>linkedin.com/in/nirisha-chowdary-368335248</span></div>
+    <div><b>Saatwik Sairaam Vasamsetti</b><span>Co-Founder &amp; Tech Lead</span><span>github.com/saatwik-1157</span><span>linkedin.com/in/saatwiksairaamvasamsetti</span></div>
   </div>
 </div>
 
@@ -329,7 +330,7 @@
   <button id="btnSos">🆘 Simulate Women's-Safety SOS</button>
   <button id="btnHeat">🔥 Risk Heatmap</button>
   <button id="btnReset">Reset</button>
-  <span class="hint">Software simulation — sensor values are synthetic. Record this screen for the demo video. Click any pole to inspect it.</span>
+  <span class="hint">Scripted simulation — sensor values are synthetic, no trained model or hardware. Click any pole to inspect it.</span>
 </div>
 
 <script>
@@ -816,7 +817,7 @@ function runCrash() {                              /* total ≈ 21 s */
     log("sys", "Units en route — police 0.9 km · ambulance 1.4 km");
   });
   sched(12600, () => {
-    log("ok", "Units on scene · door-to-door response 3 m 41 s (city avg 14 m)");
+    log("ok", "Units on scene · door-to-door response 3 m 41 s (scripted scenario value)");
     $("stResp").textContent = "3m41s";
   });
   sched(14200, () => {

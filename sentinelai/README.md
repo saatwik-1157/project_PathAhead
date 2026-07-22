@@ -9,8 +9,8 @@ This folder is the complete submission package built from the concept document
 | Requirement | File | Status |
 |---|---|---|
 | Concept-to-prototype execution plan deck | `SentinelAI_Execution_Plan.pptx` (15 slides) + `SentinelAI_Execution_Plan.pdf` | ✅ ready — only the demo-video link pending |
-| Demonstration evidence (demo video) | `demo/SentinelAI_Demo.mp4` (~70 s, recorded) + `demo/index.html` (live, interactive) | ✅ recorded — ⬜ upload & paste link into slide 12 |
-| Team details and profiles | `TEAM.md` + `SentinelAI_Team_Profiles.pdf` | ✅ complete (advisor names pending) |
+| Demonstration evidence (demo video) | `demo/SentinelAI_Demo.mp4` (~64 s, recorded) + `demo/index.html` (live, interactive) | ✅ recorded — ⬜ upload & paste link into slide 12 |
+| Team details and profiles | `TEAM.md` + `SentinelAI_Team_Profiles.pdf` (source: `team.html`) | ✅ complete (advisor names pending) |
 | Other supporting documents | `SentinelAI_Concept_Document.pdf` (formatted concept, author: Nirisha Chowdary; source: `concept.html`) | ✅ |
 | Validation evidence (strongly recommended) | `validation/survey.md` + `validation/interview-guides.md` — run them, attach the results | ⬜ collect responses |
 
@@ -59,7 +59,7 @@ HTML/CSS/JS in one file — no dependencies, no internet needed.
 
 ### The recorded video — `demo/SentinelAI_Demo.mp4`
 
-**A finished ~70-second recording of the full auto sequence is already in this
+**A finished ~64-second recording of the full auto sequence is already in this
 folder.** Upload it as *YouTube unlisted* (or Google Drive with link-sharing)
 and paste the link into slide 12 of the deck and the submission form. No
 recording work needed unless you want your own narrated take.

@@ -60,6 +60,6 @@ location — while brightening the street and recording evidence."
 
 1. Screenshot the Google Forms summary charts for Q4, Q6, Q8, Q9, Q10.
 2. Save as `validation/survey-results.pdf` and add one paragraph of takeaways.
-3. Quote the strongest numbers on deck slide 2 or 13 (e.g. "84% of 42
+3. Quote the strongest numbers on deck slide 2 — THE PROBLEM (e.g. "84% of 42
    respondents said they'd feel safer after dark") — real numbers from even a
    small sample beat any market-report citation.
