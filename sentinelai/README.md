@@ -9,7 +9,7 @@ This folder is the complete submission package built from the concept document
 | Requirement | File | Status |
 |---|---|---|
 | Concept-to-prototype execution plan deck | `SentinelAI_Execution_Plan.pptx` (15 slides) + `SentinelAI_Execution_Plan.pdf` | ✅ ready — only the demo-video link pending |
-| Demonstration evidence (demo video link) | `demo/index.html` — record it, then paste the link into slide 12 | ⬜ record & upload |
+| Demonstration evidence (demo video) | `demo/SentinelAI_Demo.mp4` (~70 s, recorded) + `demo/index.html` (live, interactive) | ✅ recorded — ⬜ upload & paste link into slide 12 |
 | Team details and profiles | `TEAM.md` + `SentinelAI_Team_Profiles.pdf` | ✅ complete (advisor names pending) |
 | Other supporting documents | `SentinelAI_Concept_Document.pdf` (formatted concept, author: Nirisha Chowdary; source: `concept.html`) | ✅ |
 | Validation evidence (strongly recommended) | `validation/survey.md` + `validation/interview-guides.md` — run them, attach the results | ⬜ collect responses |
@@ -39,25 +39,43 @@ they're confirmed.
 
 ## 2. The demo — `demo/index.html`
 
-A self-contained, no-install browser simulation of a 9-node SentinelAI mesh:
+A self-contained, no-install browser simulation of a 9-node SentinelAI mesh,
+rendered as a live isometric 3D city block: extruded buildings, moving traffic
+and pedestrians, glowing smart poles, animated mesh packets, a simulated IR
+camera feed with AI detection boxes, and live sensor sparklines. Pure
+HTML/CSS/JS in one file — no dependencies, no internet needed.
 
-- **🚗 Simulate Vehicle Crash** — vibration → audio → vision confirmation,
-  3/3 validation gate, GPS dispatch to 112/108, Safe Corridor lighting,
-  evidence capture.
+- **🚗 Simulate Vehicle Crash** — two vehicles collide; vibration → audio →
+  vision confirmation, 3/3 validation gate, GPS dispatch to 112/108, Safe
+  Corridor lighting, responder units arriving, sealed evidence pack.
 - **🆘 Simulate Women's-Safety SOS** — SOS press → distress-audio + vision
-  verification, floodlight deterrence, police + family alerts, lit walking
-  corridor to the police station with camera handoff.
+  verification, floodlight deterrence (the follower retreats), police + family
+  alerts, lit walking corridor with camera handoff between poles.
+- **🔥 Risk Heatmap** — the predictive layer: a 30-day risk-forecast overlay
+  built from mesh history. It's the closing scene of the auto demo.
+- **Click any pole** to inspect it — the sensor-fusion panel and camera feed
+  retarget to that node and the camera glides over. Useful for pointing at
+  specific nodes while narrating.
 
-### Recording the demo video (≈2 minutes, one take)
+### The recorded video — `demo/SentinelAI_Demo.mp4`
+
+**A finished ~70-second recording of the full auto sequence is already in this
+folder.** Upload it as *YouTube unlisted* (or Google Drive with link-sharing)
+and paste the link into slide 12 of the deck and the submission form. No
+recording work needed unless you want your own narrated take.
+
+### Re-recording it yourself (optional, one take)
 
 1. Open `demo/index.html` in any browser, full-screen it (F11).
 2. Start a screen recording (Win+Alt+R with Xbox Game Bar, or OBS).
-3. Click **▶ Run Full Demo (auto)** — it plays the whole sequence hands-free:
-   idle mesh → vehicle-crash flow → reset → women's-safety SOS flow (~30 s).
-   Keep the tab in the foreground so the animation timing stays smooth.
-4. Stop recording, upload as **YouTube unlisted** (or Google Drive with
-   link-sharing on), and paste the link into slide 12 of the deck and the
-   submission form.
+3. Click **▶ Run Full Demo (auto)** — it plays the whole sequence hands-free
+   (~62 s): establishing shot → vehicle-crash flow → reset → women's-safety
+   SOS flow → predictive risk-heatmap finale → end card. Keep the tab in the
+   foreground so the animation timing stays smooth.
+   > Tip: for a click-free take, open `demo/index.html#auto` instead — the full
+   > demo starts by itself ~1 s after load. `#crash`, `#sos` and `#heat` do the
+   > same for individual scenes.
+4. Stop recording and upload.
 
 The manual scenario buttons are still there if you'd rather pace it yourself
 or talk over each step — the speaker notes on slides 3–5 work well as a
@@ -83,8 +101,8 @@ and quoting on the problem slide.
 
 1. Run the survey + at least one stakeholder interview (`validation/`) →
    save results as PDFs in `validation/`.
-2. Record + upload the demo video → paste link into slide 12 → re-export the
-   deck PDF so it matches the PPTX.
+2. Upload `demo/SentinelAI_Demo.mp4` (YouTube unlisted / Drive) → paste the
+   link into slide 12 → re-export the deck PDF so it matches the PPTX.
 3. Quote survey numbers on slide 2 if they're strong.
 4. Attach: deck (PPTX or PDF), demo video link,
    `SentinelAI_Team_Profiles.pdf`, `SentinelAI_Concept_Document.pdf`, and

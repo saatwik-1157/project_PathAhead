@@ -7,442 +7,1005 @@
 <style>
   :root {
     --bg: #0b1626;
-    --card: #16294a;
+    --bg2: #081020;
+    --card: rgba(22, 41, 74, .82);
     --card2: #1b3155;
     --amber: #ffb300;
     --ice: #a8c6e8;
     --mut: #7e97b8;
     --red: #ff6b6b;
     --green: #6bcb77;
+    --blue: #4da3ff;
     --line: #22385c;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
   body {
-    background: var(--bg);
+    background: radial-gradient(1400px 900px at 50% 30%, #10223e 0%, var(--bg) 55%, var(--bg2) 100%);
     color: #fff;
     font-family: "Segoe UI", Calibri, Arial, sans-serif;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+    user-select: none;
+  }
+
+  /* ============ 3D STAGE ============ */
+  #stage {
+    position: absolute; inset: 0;
+    perspective: 1500px;
+    perspective-origin: 50% 42%;
     overflow: hidden;
   }
-  header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 22px;
-    border-bottom: 1px solid var(--line);
-    flex-shrink: 0;
+  #stage.shake { animation: shake .5s linear; }
+  @keyframes shake {
+    0%,100% { transform: translate(0,0); }
+    15% { transform: translate(-7px,4px); } 30% { transform: translate(6px,-5px); }
+    45% { transform: translate(-5px,-3px); } 60% { transform: translate(4px,3px); }
+    75% { transform: translate(-2px,2px); } 90% { transform: translate(2px,-1px); }
   }
-  .logo-dot {
-    width: 16px; height: 16px; border-radius: 50%;
-    background: var(--amber);
-    box-shadow: 0 0 14px 5px rgba(255, 179, 0, .45);
+  #rig {
+    position: absolute; left: 50%; top: 50%;
+    transform-style: preserve-3d;
+    transition: transform 2.4s cubic-bezier(.35, 0, .18, 1);
   }
-  header h1 { font-size: 19px; font-weight: 700; letter-spacing: .5px; }
-  header h1 span { color: var(--amber); }
-  header .sub { color: var(--mut); font-size: 12.5px; margin-left: 4px; }
-  .clock { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ice); font-size: 14px; }
-  .status-pill {
-    padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
-    letter-spacing: 1.5px; background: rgba(107, 203, 119, .12); color: var(--green);
-    border: 1px solid rgba(107, 203, 119, .4);
+  #city {
+    position: absolute; left: -600px; top: -640px;
+    width: 1200px; height: 1200px;
+    transform: rotateX(55deg) rotateZ(45deg);
+    transform-style: preserve-3d;
   }
-  .status-pill.alert { background: rgba(255, 107, 107, .12); color: var(--red); border-color: rgba(255, 107, 107, .5); animation: blink 1s infinite; }
-  @keyframes blink { 50% { opacity: .55; } }
+  #city > * { position: absolute; }
+  #poles, #traffic, #fx { transform-style: preserve-3d; }
 
-  main { flex: 1; display: flex; min-height: 0; }
-  .map-wrap { flex: 1.6; position: relative; padding: 14px; min-width: 0; }
-  .map-wrap svg { width: 100%; height: 100%; display: block; border-radius: 12px; background: #0d1a2e; }
-
-  .side { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 14px 14px 14px 0; min-width: 330px; max-width: 430px; }
-  .panel { background: var(--card); border-radius: 12px; padding: 14px 16px; }
-  .panel h2 { font-size: 11.5px; letter-spacing: 2px; color: var(--mut); font-weight: 700; margin-bottom: 10px; }
-
-  .sensors { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-  .sensor { background: var(--card2); border-radius: 9px; padding: 9px 11px; }
-  .sensor .name { font-size: 10.5px; color: var(--mut); letter-spacing: 1px; }
-  .sensor .val { font-size: 15px; font-weight: 700; margin-top: 3px; color: var(--ice); }
-  .sensor .bar { height: 4px; border-radius: 2px; background: #0d1a2e; margin-top: 7px; overflow: hidden; }
-  .sensor .bar i { display: block; height: 100%; width: 8%; background: var(--green); border-radius: 2px; transition: width .5s, background .5s; }
-  .sensor.hot .val { color: var(--red); }
-  .sensor.hot .bar i { background: var(--red); }
-  .sensor.ok .bar i { background: var(--amber); }
-
-  .gate { display: flex; align-items: center; gap: 8px; margin-top: 12px; background: var(--card2); border-radius: 9px; padding: 10px 12px; }
-  .gate .chk { width: 22px; height: 22px; border-radius: 50%; background: #0d1a2e; border: 1.5px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--mut); transition: all .3s; }
-  .gate .chk.on { background: rgba(107, 203, 119, .18); border-color: var(--green); color: var(--green); }
-  .gate .lbl { font-size: 11.5px; color: var(--mut); }
-  .gate .verdict { margin-left: auto; font-size: 12px; font-weight: 800; letter-spacing: 1px; color: var(--mut); }
-  .gate .verdict.verified { color: var(--green); }
-
-  #log { flex: 1; overflow-y: auto; display: flex; flex-direction: column-reverse; min-height: 90px; }
-  .entry { display: flex; gap: 10px; padding: 6px 2px; font-size: 12.5px; border-bottom: 1px solid rgba(34, 56, 92, .5); animation: slidein .25s ease-out; }
-  @keyframes slidein { from { opacity: 0; transform: translateY(6px); } }
-  .entry .t { color: var(--mut); font-variant-numeric: tabular-nums; flex-shrink: 0; }
-  .entry .tag { flex-shrink: 0; font-weight: 800; font-size: 10px; letter-spacing: 1px; padding: 2px 7px; border-radius: 4px; align-self: center; }
-  .tag.sys { background: rgba(168, 198, 232, .12); color: var(--ice); }
-  .tag.ai { background: rgba(255, 179, 0, .14); color: var(--amber); }
-  .tag.disp { background: rgba(255, 107, 107, .14); color: var(--red); }
-  .tag.mesh { background: rgba(107, 203, 119, .14); color: var(--green); }
-  .entry .msg { color: #e7eefb; }
-
-  footer { display: flex; gap: 12px; padding: 12px 22px 16px; border-top: 1px solid var(--line); flex-shrink: 0; align-items: center; }
-  button {
-    font: inherit; font-weight: 700; font-size: 14px;
-    padding: 11px 22px; border-radius: 10px; border: none; cursor: pointer;
-    background: var(--card2); color: #fff; transition: transform .1s, box-shadow .2s;
+  #ground {
+    left: -220px; top: -220px; width: 1640px; height: 1640px;
+    background:
+      radial-gradient(900px 900px at 50% 50%, #14263f 0%, #0e1c31 55%, rgba(11,22,38,0) 78%);
+    border-radius: 60px;
   }
-  button:hover { transform: translateY(-1px); }
-  button:disabled { opacity: .4; cursor: not-allowed; transform: none; }
-  button.primary { background: var(--amber); color: #0b1626; box-shadow: 0 0 18px rgba(255, 179, 0, .25); }
-  button.danger { background: #a03a3a; }
-  footer .hint { margin-left: auto; color: var(--mut); font-size: 12px; font-style: italic; }
+  .road { background: #182a44; box-shadow: inset 0 0 0 2px #1d3252; }
+  .road.h { left: 0; width: 1200px; height: 80px; }
+  .road.v { top: 0; height: 1200px; width: 80px; }
+  .lane { position: absolute; background: repeating-linear-gradient(90deg, #31507f 0 26px, transparent 26px 54px); height: 2px; width: 1200px; opacity: .55; }
+  .lane.v { background: repeating-linear-gradient(180deg, #31507f 0 26px, transparent 26px 54px); width: 2px; height: 1200px; }
+  .cross { position: absolute; width: 80px; height: 80px; background: #1c3050; }
 
-  /* SVG element styles */
-  .road { stroke: #1c3050; stroke-width: 26; stroke-linecap: round; }
-  .road-dash { stroke: #2c4468; stroke-width: 1.6; stroke-dasharray: 10 12; }
-  .pole-halo { fill: #ffb300; opacity: .07; transition: opacity .6s, r .6s; }
-  .pole-halo.bright { opacity: .28; }
-  .pole-halo.emergency { opacity: .38; fill: #ff6b6b; animation: pulse 1s infinite; }
-  @keyframes pulse { 50% { opacity: .12; } }
-  .pole-core { fill: #ffb300; stroke: #0b1626; stroke-width: 2; }
-  .pole-core.emergency { fill: #ff6b6b; }
-  .pole-label { fill: #7e97b8; font-size: 11px; text-anchor: middle; font-family: inherit; }
-  .corridor { stroke: #ffb300; stroke-width: 3; stroke-dasharray: 8 8; opacity: 0; transition: opacity .8s; }
-  .corridor.on { opacity: .85; animation: march 1.2s linear infinite; }
-  @keyframes march { to { stroke-dashoffset: -16; } }
-  .incident-ring { fill: none; stroke: #ff6b6b; stroke-width: 2; opacity: 0; }
-  .incident-ring.on { animation: ring 1.6s ease-out infinite; }
-  @keyframes ring { 0% { r: 10; opacity: .9; } 100% { r: 46; opacity: 0; } }
+  /* buildings */
+  .face { position: absolute; transform-origin: 0 0; }
+  .btop { border-radius: 3px; box-shadow: inset 0 0 0 1.5px rgba(120,160,220,.13); }
+  .win { position: absolute; inset: 0; opacity: .5;
+    background-image: repeating-linear-gradient(90deg, rgba(255,200,90,.16) 0 3px, transparent 3px 12px),
+                      repeating-linear-gradient(0deg, rgba(255,200,90,.14) 0 3px, transparent 3px 14px); }
+
+  /* mesh svg + heat overlay live on the city plane */
+  #meshsvg { left: 0; top: 0; width: 1200px; height: 1200px; overflow: visible; }
+  .mlink { stroke: #2a4a78; stroke-width: 1.6; stroke-dasharray: 5 7; opacity: .55; }
+  .mlink.hot { stroke: var(--amber); stroke-width: 2.6; opacity: .95; filter: drop-shadow(0 0 4px rgba(255,179,0,.8)); }
+  .pkt { fill: #6fb7ff; filter: drop-shadow(0 0 3px #6fb7ff); }
+  .pkt.hot { fill: var(--amber); filter: drop-shadow(0 0 5px var(--amber)); }
+  #heat { left: 0; top: 0; width: 1200px; height: 1200px; opacity: 0; transition: opacity 1.2s; pointer-events: none; }
+  #heat.on { opacity: 1; }
+  .blob { position: absolute; border-radius: 50%; }
+
+  /* poles */
+  .pole { transform-style: preserve-3d; width: 0; height: 0; cursor: pointer; }
+  .pmast { position: absolute; transform-origin: 0 0; width: 4px; height: 64px; left: -2px; top: 0;
+    background: linear-gradient(180deg, #55749f, #2c4468); }
+  .bb { transform-style: preserve-3d; } /* billboard wrapper: counter-rotated to face camera */
+  .phead { position: absolute; left: -11px; top: -11px; width: 22px; height: 22px; border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #ffe9b0, var(--amber) 60%, #a87400);
+    box-shadow: 0 0 20px 8px rgba(255,179,0,.65); transition: box-shadow .5s, background .5s; }
+  .pole.alert .phead { background: radial-gradient(circle at 40% 35%, #ffd2d2, var(--red) 60%, #8d2f2f);
+    box-shadow: 0 0 22px 9px rgba(255,90,90,.75); animation: headpulse 1s infinite; }
+  .pole.lit .phead { box-shadow: 0 0 30px 13px rgba(255,190,40,.85); }
+  @keyframes headpulse { 50% { box-shadow: 0 0 34px 15px rgba(255,90,90,.95); } }
+  .plabel { position: absolute; left: -27px; top: -42px; width: 54px; text-align: center;
+    font-size: 12px; font-weight: 800; letter-spacing: 1.2px; color: #dcE9fb;
+    background: rgba(10,20,38,.85); border: 1px solid #35547f; border-radius: 5px; padding: 2.5px 0; }
+  .pole.alert .plabel { color: #fff; border-color: var(--red); }
+  .ppool { position: absolute; border-radius: 50%; left: -65px; top: -65px; width: 130px; height: 130px;
+    background: radial-gradient(circle, rgba(255,185,40,.28) 0%, rgba(255,185,40,.10) 45%, transparent 70%);
+    opacity: .45; transition: opacity .8s, transform .8s; }
+  .pole.lit .ppool { opacity: 1; transform: scale(1.55); }
+  .pole.alert .ppool { background: radial-gradient(circle, rgba(255,90,90,.34) 0%, rgba(255,90,90,.12) 45%, transparent 70%); opacity: 1; transform: scale(1.7); }
+  .pring { position: absolute; left: -14px; top: -14px; width: 28px; height: 28px; border-radius: 50%;
+    border: 2.5px solid var(--red); opacity: 0; }
+  .pring.go { animation: ringout 1.15s ease-out infinite; }
+  @keyframes ringout { 0% { transform: scale(.6); opacity: .95; } 100% { transform: scale(5.2); opacity: 0; } }
+  .beam { position: absolute; left: -46px; top: 0; width: 92px; height: 84px; opacity: 0; transition: opacity .6s;
+    background: linear-gradient(180deg, rgba(255,220,120,.5), rgba(255,220,120,0) 85%);
+    clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%); }
+  .pole.flood .beam { opacity: 1; }
+  .vcone { position: absolute; left: 0; top: 0; width: 150px; height: 100px; opacity: 0; transform-origin: 0 0;
+    background: linear-gradient(90deg, rgba(90,170,255,.4), rgba(90,170,255,0) 88%);
+    clip-path: polygon(0 44%, 0 56%, 100% 100%, 100% 0); transition: opacity .5s; }
+
+  /* vehicles & pedestrians */
+  .car { position: absolute; width: 30px; height: 15px; border-radius: 4px; margin: -7.5px 0 0 -15px;
+    box-shadow: 0 0 8px rgba(0,0,0,.5); }
+  .car::after { content: ""; position: absolute; left: 5px; top: 2.5px; right: 9px; bottom: 2.5px;
+    background: rgba(10,18,32,.45); border-radius: 2px; }
+  .car .hl { position: absolute; right: -7px; top: 2px; width: 12px; height: 3.5px; border-radius: 2px;
+    background: linear-gradient(90deg, rgba(255,240,190,.85), transparent); }
+  .car .hl.b { top: auto; bottom: 2px; }
+  .car.hazard { animation: hz .5s steps(2) infinite; }
+  @keyframes hz { 50% { box-shadow: 0 0 14px 3px rgba(255,170,60,.9); } }
+  .car.police { background: #dfe9f5; }
+  .car.police::after { background: #16294a; }
+  .car.ambulance { background: #f2f5f9; }
+  .car.strobe::before { content: ""; position: absolute; left: 10px; top: -3px; width: 9px; height: 4px; border-radius: 2px;
+    animation: strobe .34s steps(2) infinite; }
+  @keyframes strobe { 0% { background: #4da3ff; box-shadow: 0 0 10px 3px #4da3ff; }
+                      100% { background: #ff5b5b; box-shadow: 0 0 10px 3px #ff5b5b; } }
+  .skid { position: absolute; height: 3px; background: rgba(8,14,24,.75); border-radius: 2px; transform-origin: 0 50%; }
+  .ped { position: absolute; width: 7px; height: 7px; border-radius: 50%; margin: -3.5px 0 0 -3.5px;
+    background: #b9cbe6; box-shadow: 0 0 5px rgba(160,190,235,.6); }
+  .ped.walker { background: #ffd166; box-shadow: 0 0 9px 2px rgba(255,209,102,.8); width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; }
+  .ped.follower { background: #ff7b7b; box-shadow: 0 0 8px 2px rgba(255,110,110,.75); }
+  .fxdot { position: absolute; border-radius: 50%; pointer-events: none; }
+
+  /* ============ HUD ============ */
+  .hud { position: absolute; z-index: 10; }
+  #topbar {
+    left: 0; right: 0; top: 0; display: flex; align-items: center; gap: 16px;
+    padding: 12px 20px; background: linear-gradient(180deg, rgba(8,15,28,.92), rgba(8,15,28,.55) 70%, transparent);
+  }
+  .logo-dot { width: 15px; height: 15px; border-radius: 50%; background: var(--amber);
+    box-shadow: 0 0 14px 5px rgba(255,179,0,.45); flex-shrink: 0; }
+  #topbar h1 { font-size: 17px; letter-spacing: .4px; white-space: nowrap; }
+  #topbar h1 span { color: var(--amber); }
+  .sub { font-size: 10.5px; color: var(--mut); letter-spacing: 2.2px; margin-top: 1px; white-space: nowrap; }
+  #stats { display: flex; gap: 22px; margin-left: auto; }
+  .stat { text-align: right; }
+  .stat b { display: block; font-size: 15px; color: #fff; font-variant-numeric: tabular-nums; }
+  .stat i { font-style: normal; font-size: 9px; color: var(--mut); letter-spacing: 1.6px; }
+  #statusPill { display: flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--line);
+    padding: 7px 14px; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: 1.2px; white-space: nowrap; }
+  #statusDot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
+  #statusPill.alert #statusDot { background: var(--red); box-shadow: 0 0 10px var(--red); animation: blink .6s steps(2) infinite; }
+  #statusPill.alert { border-color: rgba(255,107,107,.6); }
+  #statusPill.corridor #statusDot { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
+  @keyframes blink { 50% { opacity: .35; } }
+
+  #side { right: 14px; top: 66px; bottom: 78px; width: 314px; display: flex; flex-direction: column; gap: 10px; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
+    backdrop-filter: blur(6px); }
+  .ptitle { font-size: 10px; letter-spacing: 2.2px; color: var(--mut); font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px; }
+  .ptitle .rec { width: 7px; height: 7px; border-radius: 50%; background: var(--red); animation: blink 1.1s steps(2) infinite; margin-left: auto; }
+  #camCanvas { width: 100%; border-radius: 7px; display: block; background: #05101e; }
+  .srow { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .srow label { width: 74px; font-size: 8.5px; letter-spacing: .9px; color: var(--mut); font-weight: 700; white-space: nowrap; overflow: hidden; }
+  .srow canvas { flex: 1; height: 34px; border-radius: 5px; background: rgba(8,16,30,.6); }
+  .srow output { width: 52px; text-align: right; font-size: 11.5px; font-variant-numeric: tabular-nums; color: var(--ice); }
+  #gate { display: flex; gap: 6px; margin-top: 8px; }
+  .chip { flex: 1; text-align: center; font-size: 9.5px; font-weight: 700; letter-spacing: 1px; padding: 5px 0;
+    border-radius: 6px; background: rgba(126,151,184,.12); color: var(--mut); border: 1px solid transparent; transition: all .3s; }
+  .chip.hit { background: rgba(255,179,0,.16); color: var(--amber); border-color: rgba(255,179,0,.5); }
+  #gateStatus { margin-top: 8px; text-align: center; font-size: 11px; font-weight: 800; letter-spacing: 1.6px;
+    padding: 7px 0; border-radius: 7px; background: rgba(107,203,119,.1); color: var(--green); transition: all .3s; }
+  #gateStatus.analyzing { background: rgba(255,179,0,.12); color: var(--amber); }
+  #gateStatus.verified { background: rgba(255,107,107,.15); color: var(--red); animation: blink 1s steps(2) infinite; }
+  #log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; min-height: 60px;
+    -webkit-mask-image: linear-gradient(#000 calc(100% - 16px), transparent);
+    mask-image: linear-gradient(#000 calc(100% - 16px), transparent); }
+  #log::-webkit-scrollbar { width: 4px; } #log::-webkit-scrollbar-thumb { background: var(--mut); }
+  .entry { display: flex; gap: 8px; font-size: 11px; line-height: 1.35; animation: fadein .3s; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(-4px); } }
+  .entry time { color: var(--mut); font-variant-numeric: tabular-nums; flex-shrink: 0; font-size: 10px; padding-top: 1px; }
+  .entry .msg { color: var(--ice); }
+  .entry.sys .msg { color: var(--mut); font-style: italic; }
+  .entry.warn .msg { color: var(--amber); }
+  .entry.crit .msg { color: var(--red); font-weight: 600; }
+  .entry.ok .msg { color: var(--green); }
+  #incident { display: none; border-color: rgba(255,179,0,.55); }
+  #incident.show { display: block; animation: fadein .4s; }
+  #incident table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+  #incident td { padding: 2.5px 0; color: var(--ice); }
+  #incident td:first-child { color: var(--mut); width: 40%; letter-spacing: .6px; }
+
+  #bottombar { left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 10px;
+    padding: 14px 20px; background: linear-gradient(0deg, rgba(8,15,28,.95), rgba(8,15,28,.6) 65%, transparent); flex-wrap: wrap; }
+  button { font-family: inherit; font-size: 12.5px; font-weight: 700; letter-spacing: .3px; color: #fff;
+    background: var(--card2); border: 1px solid var(--line); padding: 10px 16px; border-radius: 9px; cursor: pointer;
+    transition: all .2s; }
+  button:hover:not(:disabled) { border-color: var(--amber); transform: translateY(-1px); }
+  button:disabled { cursor: default; color: rgba(255,255,255,.4); background: #12213a; border-color: rgba(34,56,92,.6); }
+  button.primary { background: var(--amber); color: #0b1626; border-color: var(--amber); }
+  button.primary:hover:not(:disabled) { box-shadow: 0 0 18px rgba(255,179,0,.45); }
+  button.toggled { border-color: var(--amber); color: var(--amber); }
+  .hint { font-size: 10.5px; color: var(--mut); margin-left: auto; max-width: 330px; text-align: right; line-height: 1.4; }
+
+  /* cinematic overlays */
+  #sceneTitle { left: 24px; bottom: 92px; max-width: 560px; opacity: 0; transform: translateY(14px);
+    transition: all .7s cubic-bezier(.2,.7,.3,1); pointer-events: none; }
+  #sceneTitle.show { opacity: 1; transform: translateY(0); }
+  #sceneTitle .k { font-size: 11px; letter-spacing: 3.5px; color: var(--amber); font-weight: 800; }
+  #sceneTitle .t { font-size: 26px; font-weight: 800; letter-spacing: .4px; margin-top: 3px; text-shadow: 0 3px 18px rgba(0,0,0,.7); }
+  #toasts { right: 344px; top: 74px; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; pointer-events: none; }
+  .toast { background: rgba(12,24,44,.94); border: 1px solid var(--line); border-left: 3px solid var(--amber);
+    border-radius: 9px; padding: 9px 13px; font-size: 12px; max-width: 300px; animation: toastin .4s; box-shadow: 0 6px 22px rgba(0,0,0,.45); }
+  .toast b { display: block; font-size: 12px; }
+  .toast span { color: var(--mut); font-size: 10.5px; }
+  .toast.red { border-left-color: var(--red); }
+  .toast.green { border-left-color: var(--green); }
+  .toast.blue { border-left-color: var(--blue); }
+  @keyframes toastin { from { opacity: 0; transform: translateX(24px); } }
+  #endCard { inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+    background: rgba(6,12,24,.88); opacity: 0; pointer-events: none; transition: opacity 1s; z-index: 20; }
+  #endCard.show { opacity: 1; }
+  #endCard .dot { width: 26px; height: 26px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 30px 12px rgba(255,179,0,.5); }
+  #endCard h2 { font-size: 40px; letter-spacing: 1px; }
+  #endCard .m { font-size: 15px; letter-spacing: 5px; color: var(--amber); font-weight: 700; }
+  #endCard .s { font-size: 12px; color: var(--mut); }
+  #vignette { position: absolute; inset: 0; pointer-events: none; z-index: 5;
+    background: radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(4,8,16,.55) 100%); }
 </style>
 </head>
 <body>
-  <header>
-    <div class="logo-dot"></div>
+
+<div id="stage">
+  <div id="rig">
+    <div id="city">
+      <div id="ground"></div>
+      <!-- roads / buildings / poles / traffic injected by JS -->
+      <svg id="meshsvg" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div id="heat"></div>
+      <div id="fx"></div>
+      <div id="traffic"></div>
+      <div id="poles"></div>
+    </div>
+  </div>
+</div>
+<div id="vignette"></div>
+
+<div class="hud" id="topbar">
+  <div class="logo-dot"></div>
+  <div>
     <h1>Sentinel<span>AI</span></h1>
-    <span class="sub">Live Mesh Simulation — Sector 4, MG Road Block</span>
-    <span class="clock" id="clock">22:14:05</span>
-    <span class="status-pill" id="status">ALL NODES NOMINAL</span>
-  </header>
+    <div class="sub">LIVE MESH SIMULATION · CITY BLOCK 7</div>
+  </div>
+  <div id="statusPill"><div id="statusDot"></div><span id="statusText">ALL NODES NOMINAL</span></div>
+  <div id="stats">
+    <div class="stat"><b id="stNodes">9/9</b><i>NODES ONLINE</i></div>
+    <div class="stat"><b id="stMesh">12 ms</b><i>MESH LATENCY</i></div>
+    <div class="stat"><b id="stAI">31/s</b><i>AI INFERENCES</i></div>
+    <div class="stat"><b id="stResp">42 s</b><i>AVG RESPONSE</i></div>
+  </div>
+</div>
 
-  <main>
-    <div class="map-wrap">
-      <svg id="map" viewBox="0 0 640 480" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="hud" id="side">
+  <div class="panel">
+    <div class="ptitle"><span id="camTitle">SN-05 · CAM-A · IR NIGHT VISION</span><span class="rec"></span></div>
+    <canvas id="camCanvas" width="284" height="150"></canvas>
+  </div>
+  <div class="panel">
+    <div class="ptitle"><span id="fusionTitle">NODE SN-05 · SENSOR FUSION</span></div>
+    <div class="srow"><label id="lbVib">VIBRATION g</label><canvas id="spVib" width="150" height="34"></canvas><output id="ovVib">0.02</output></div>
+    <div class="srow"><label>AUDIO dB</label><canvas id="spAud" width="150" height="34"></canvas><output id="ovAud">38</output></div>
+    <div class="srow"><label>AI CONF %</label><canvas id="spAI" width="150" height="34"></canvas><output id="ovAI">4</output></div>
+    <div id="gate">
+      <div class="chip" id="chVib">VIBRATION</div>
+      <div class="chip" id="chAud">AUDIO</div>
+      <div class="chip" id="chVis">VISION</div>
     </div>
+    <div id="gateStatus">MONITORING</div>
+  </div>
+  <div class="panel" id="incident">
+    <div class="ptitle">INCIDENT REPORT</div>
+    <table>
+      <tr><td>INCIDENT ID</td><td id="incId">—</td></tr>
+      <tr><td>TYPE</td><td id="incType">—</td></tr>
+      <tr><td>LOCATION</td><td id="incLoc">—</td></tr>
+      <tr><td>SENSOR GATE</td><td id="incGate">—</td></tr>
+      <tr><td>DISPATCH</td><td id="incDisp">—</td></tr>
+      <tr><td>EVIDENCE</td><td id="incEv">—</td></tr>
+    </table>
+  </div>
+  <div class="panel" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+    <div class="ptitle">EVENT LOG</div>
+    <div id="log"></div>
+  </div>
+</div>
 
-    <div class="side">
-      <div class="panel">
-        <h2 id="sensorTitle">NODE SN-05 · SENSOR FUSION</h2>
-        <div class="sensors">
-          <div class="sensor" id="s-vib">
-            <div class="name">VIBRATION</div>
-            <div class="val" id="v-vib">0.02 g</div>
-            <div class="bar"><i id="b-vib"></i></div>
-          </div>
-          <div class="sensor" id="s-aud">
-            <div class="name">AUDIO AI</div>
-            <div class="val" id="v-aud">ambient</div>
-            <div class="bar"><i id="b-aud"></i></div>
-          </div>
-          <div class="sensor" id="s-cam">
-            <div class="name">VISION AI</div>
-            <div class="val" id="v-cam">clear</div>
-            <div class="bar"><i id="b-cam"></i></div>
-          </div>
-        </div>
-        <div class="gate">
-          <span class="chk" id="g1">✓</span>
-          <span class="chk" id="g2">✓</span>
-          <span class="chk" id="g3">✓</span>
-          <span class="lbl">EMERGENCY VALIDATION ENGINE</span>
-          <span class="verdict" id="verdict">MONITORING</span>
-        </div>
-      </div>
+<div class="hud" id="sceneTitle"><div class="k" id="stK"></div><div class="t" id="stT"></div></div>
+<div class="hud" id="toasts"></div>
+<div class="hud" id="endCard">
+  <div class="dot"></div>
+  <h2>SentinelAI</h2>
+  <div class="m">DETECT · VERIFY · RESPOND · PROTECT</div>
+  <div class="s">Software simulation — synthetic sensor data · Team SentinelAI, VIT-AP University</div>
+</div>
 
-      <div class="panel" style="flex:1; display:flex; flex-direction:column; min-height:0;">
-        <h2>DISPATCH CONSOLE</h2>
-        <div id="log"></div>
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <button class="primary" id="btnAuto">▶ Run Full Demo (auto)</button>
-    <button id="btnCrash">🚗 Simulate Vehicle Crash</button>
-    <button id="btnSos">🆘 Simulate Women's-Safety SOS</button>
-    <button id="btnReset">Reset</button>
-    <span class="hint">Software simulation — sensor values are synthetic. Record this screen for the demo video.</span>
-  </footer>
+<div class="hud" id="bottombar">
+  <button class="primary" id="btnAuto">▶ Run Full Demo (auto)</button>
+  <button id="btnCrash">🚗 Simulate Vehicle Crash</button>
+  <button id="btnSos">🆘 Simulate Women's-Safety SOS</button>
+  <button id="btnHeat">🔥 Risk Heatmap</button>
+  <button id="btnReset">Reset</button>
+  <span class="hint">Software simulation — sensor values are synthetic. Record this screen for the demo video. Click any pole to inspect it.</span>
+</div>
 
 <script>
 "use strict";
-// ---------- map & nodes ----------
-const svg = document.getElementById("map");
-const NS = "http://www.w3.org/2000/svg";
-const cols = [110, 320, 530], rows = [90, 240, 390];
-const nodes = []; // {id,x,y,halo,core,ring}
+/* ================= WORLD ================= */
+const CITY = document.getElementById("city");
+const BB = "rotateZ(-45deg) rotateX(-55deg)"; // billboard: inverse of the city plane rotation
+const AX = [200, 600, 1000];
+const nodes = []; // SN-01..SN-09 row-major
+for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++)
+  nodes.push({ id: r * 3 + c + 1, name: "SN-0" + (r * 3 + c + 1), x: AX[c] + 48, y: AX[r] + 48, ix: AX[c], iy: AX[r], el: null });
 
-function el(tag, attrs, parent) {
-  const e = document.createElementNS(NS, tag);
-  for (const k in attrs) e.setAttribute(k, attrs[k]);
-  (parent || svg).appendChild(e);
-  return e;
+/* ---- roads ---- */
+(function buildRoads() {
+  const frag = document.createDocumentFragment();
+  for (const a of AX) {
+    const h = document.createElement("div"); h.className = "road h"; h.style.top = (a - 40) + "px"; frag.appendChild(h);
+    const lh = document.createElement("div"); lh.className = "lane"; lh.style.top = (a - 1) + "px"; frag.appendChild(lh);
+    const v = document.createElement("div"); v.className = "road v"; v.style.left = (a - 40) + "px"; frag.appendChild(v);
+    const lv = document.createElement("div"); lv.className = "lane v"; lv.style.left = (a - 1) + "px"; frag.appendChild(lv);
+  }
+  for (const a of AX) for (const b of AX) {
+    const c = document.createElement("div"); c.className = "cross"; c.style.left = (a - 40) + "px"; c.style.top = (b - 40) + "px"; frag.appendChild(c);
+  }
+  CITY.insertBefore(frag, document.getElementById("meshsvg"));
+})();
+
+/* ---- buildings (extruded boxes) ---- */
+function wall(x, y, len, h, zrot, color) {
+  const d = document.createElement("div");
+  d.className = "face";
+  d.style.cssText = `left:${x}px; top:${y}px; width:${len}px; height:${h}px; background:${color};
+    transform: rotateZ(${zrot}deg) rotateX(90deg);`;
+  return d;
+}
+function makeBox(x, y, w, d, h, base, windows, label, accent) {
+  const g = document.createElement("div");
+  g.style.cssText = "position:absolute; transform-style:preserve-3d;";
+  const shade = (c, f) => `rgba(${c[0] * f | 0},${c[1] * f | 0},${c[2] * f | 0},1)`;
+  g.appendChild(wall(x, y, w, h, 0, shade(base, .52)));          // north
+  g.appendChild(wall(x, y + d, w, h, 0, shade(base, .88)));      // south (camera-facing)
+  g.appendChild(wall(x, y, d, h, 90, shade(base, .48)));         // west
+  g.appendChild(wall(x + w, y, d, h, 90, shade(base, .70)));     // east
+  const top = document.createElement("div");
+  top.className = "face btop";
+  top.style.cssText = `left:${x}px; top:${y}px; width:${w}px; height:${d}px; background:${shade(base, 1.05)}; transform: translateZ(${h}px);`;
+  g.appendChild(top);
+  if (windows) {
+    const s = wall(x, y + d, w, h, 0, "transparent"); s.appendChild(Object.assign(document.createElement("div"), { className: "win" })); g.appendChild(s);
+    const e = wall(x + w, y, d, h, 90, "transparent"); e.appendChild(Object.assign(document.createElement("div"), { className: "win" })); g.appendChild(e);
+  }
+  if (label) {
+    const holder = document.createElement("div");
+    holder.style.cssText = `position:absolute; left:${x + w / 2}px; top:${y + d / 2}px; transform: translateZ(${h + 26}px); transform-style:preserve-3d;`;
+    const chip = document.createElement("div");
+    chip.style.cssText = `position:absolute; transform:${BB}; left:-46px; top:-11px; width:92px; text-align:center;
+      font-size:11px; font-weight:800; letter-spacing:1.5px; color:#fff; padding:3px 0; border-radius:5px;
+      background:${accent}; box-shadow:0 0 12px ${accent};`;
+    chip.textContent = label;
+    holder.appendChild(chip); g.appendChild(holder);
+  }
+  CITY.insertBefore(g, document.getElementById("meshsvg"));
+}
+(function buildCity() {
+  const navy = [42, 66, 104], slate = [52, 78, 118], steel = [36, 58, 94];
+  const B = [ // x, y, w, d, h, palette
+    [40, 40, 100, 90, 76, navy], [255, 55, 120, 85, 52, steel], [430, 40, 110, 100, 96, slate],
+    [660, 50, 120, 90, 64, navy], [820, 40, 120, 100, 118, slate], [1050, 45, 105, 95, 70, steel],
+    [45, 260, 95, 120, 60, steel], [50, 430, 95, 105, 88, navy],
+    [255, 265, 130, 110, 56, slate], [420, 300, 115, 120, 66, navy], [270, 440, 120, 95, 50, steel],
+    [660, 265, 120, 115, 84, navy], [830, 300, 120, 110, 132, slate], [1050, 265, 100, 120, 58, navy],
+    [1055, 440, 95, 100, 78, steel],
+    [45, 660, 100, 110, 72, navy], [50, 830, 95, 100, 54, steel],
+    [260, 665, 125, 110, 96, slate], [430, 700, 110, 110, 62, navy], [270, 840, 115, 90, 108, navy],
+    [660, 665, 115, 100, 58, steel], [835, 700, 115, 105, 90, navy],
+    [45, 1050, 110, 95, 64, slate], [260, 1055, 120, 90, 82, navy], [435, 1050, 100, 95, 50, steel],
+    [665, 1050, 115, 95, 74, navy], [1050, 660, 100, 105, 68, slate],
+  ];
+  for (const [x, y, w, d, h, p] of B) makeBox(x, y, w, d, h, p, true);
+  makeBox(660, 430, 130, 105, 46, [38, 72, 128], false, "POLICE", "#2f6fd0");   // near SN-05/SN-02 corridor
+  makeBox(835, 1045, 150, 110, 56, [128, 48, 60], false, "HOSPITAL", "#d04a55"); // SE, near SN-09
+  const park = document.createElement("div");
+  park.style.cssText = "position:absolute; left:430px; top:430px; width:110px; height:110px; border-radius:14px; background:radial-gradient(circle at 45% 45%, #1c3b33, #142c28); box-shadow: inset 0 0 0 2px #24503f;";
+  CITY.insertBefore(park, document.getElementById("meshsvg"));
+})();
+
+/* ---- mesh links + packets ---- */
+const SVG = document.getElementById("meshsvg"), SVGNS = "http://www.w3.org/2000/svg";
+const links = [], linkEls = [];
+(function buildMesh() {
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
+    const i = r * 3 + c;
+    if (c < 2) links.push([i, i + 1]);
+    if (r < 2) links.push([i, i + 3]);
+  }
+  for (const [a, b] of links) {
+    const L = document.createElementNS(SVGNS, "line");
+    L.setAttribute("x1", nodes[a].x); L.setAttribute("y1", nodes[a].y);
+    L.setAttribute("x2", nodes[b].x); L.setAttribute("y2", nodes[b].y);
+    L.setAttribute("class", "mlink"); SVG.appendChild(L);
+    linkEls.push(L);
+  }
+})();
+const packets = [];
+function spawnPacket(li, hot) {
+  const [a, b] = links[li];
+  const c = document.createElementNS(SVGNS, "circle");
+  c.setAttribute("r", hot ? 3.4 : 2.4); c.setAttribute("class", "pkt" + (hot ? " hot" : ""));
+  SVG.appendChild(c);
+  packets.push({ el: c, a: nodes[a], b: nodes[b], t: 0, sp: hot ? 2.2 : 1.1 });
 }
 
-// roads
-rows.forEach(y => { el("line", { x1: 30, y1: y, x2: 610, y2: y, class: "road" }); });
-cols.forEach(x => { el("line", { x1: x, y1: 40, x2: x, y2: 440, class: "road" }); });
-rows.forEach(y => { el("line", { x1: 30, y1: y, x2: 610, y2: y, class: "road-dash" }); });
-cols.forEach(x => { el("line", { x1: x, y1: 40, x2: x, y2: 440, class: "road-dash" }); });
+/* ---- heatmap ---- */
+(function buildHeat() {
+  const H = document.getElementById("heat");
+  const blobs = [
+    [600, 600, 340, "255,80,80,.34"], [1000, 200, 250, "255,150,60,.30"],
+    [200, 1000, 210, "255,190,60,.26"], [600, 200, 190, "255,210,80,.20"],
+  ];
+  for (const [x, y, r, c] of blobs) {
+    const b = document.createElement("div");
+    b.className = "blob";
+    b.style.cssText = `left:${x - r}px; top:${y - r}px; width:${r * 2}px; height:${r * 2}px;
+      background: radial-gradient(circle, rgba(${c}) 0%, transparent 68%);`;
+    H.appendChild(b);
+  }
+})();
 
-// corridor edges between adjacent intersections (drawn under poles)
-const corridors = {};
-function corridorKey(a, b) { return a < b ? a + "-" + b : b + "-" + a; }
-for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
-  const i = r * 3 + c;
-  if (c < 2) corridors[corridorKey(i, i + 1)] = el("line", { x1: cols[c], y1: rows[r], x2: cols[c + 1], y2: rows[r], class: "corridor" });
-  if (r < 2) corridors[corridorKey(i, i + 3)] = el("line", { x1: cols[c], y1: rows[r], x2: cols[c], y2: rows[r + 1], class: "corridor" });
+/* ---- poles ---- */
+(function buildPoles() {
+  const holder = document.getElementById("poles");
+  for (const n of nodes) {
+    const p = document.createElement("div");
+    p.className = "pole"; p.dataset.id = n.id;
+    p.style.cssText = `left:${n.x}px; top:${n.y}px; position:absolute; transform-style:preserve-3d;`;
+    p.innerHTML = `
+      <div class="ppool"></div><div class="pring"></div>
+      <div class="pmast" style="transform: rotateZ(0deg) rotateX(90deg)"></div>
+      <div class="pmast" style="transform: rotateZ(90deg) rotateX(90deg)"></div>
+      <div class="bb" style="position:absolute; transform: translateZ(64px); transform-style:preserve-3d;">
+        <div style="position:absolute; transform:${BB}; transform-style:preserve-3d;">
+          <div class="phead"></div>
+          <div class="plabel">${n.name}</div>
+          <div class="beam" style="top:6px;"></div>
+        </div>
+      </div>
+      <div class="vcone"></div>`;
+    holder.appendChild(p);
+    n.el = p;
+    p.addEventListener("click", () => { if (!running && !autoMode) selectNode(n.id, true); });
+  }
+})();
+
+/* ---- ambient traffic ---- */
+const TR = document.getElementById("traffic");
+const cars = [], peds = [];
+const CARCOLORS = ["#5f7fae", "#7a8fb4", "#4e6d9c", "#8fa3c4", "#66759a", "#586e96"];
+(function buildTraffic() {
+  for (let i = 0; i < 9; i++) {
+    const horiz = i % 2 === 0, road = AX[i % 3], dir = i % 4 < 2 ? 1 : -1;
+    const el = document.createElement("div");
+    el.className = "car";
+    el.style.background = CARCOLORS[i % CARCOLORS.length];
+    el.innerHTML = '<div class="hl"></div><div class="hl b"></div>';
+    TR.appendChild(el);
+    cars.push({ el, horiz, road, dir, lane: dir * 18, pos: Math.random() * 1200, sp: 55 + Math.random() * 60, halt: false, scripted: false });
+  }
+  for (let i = 0; i < 10; i++) {
+    const el = document.createElement("div");
+    el.className = "ped"; TR.appendChild(el);
+    const horiz = Math.random() < .5, road = AX[(Math.random() * 3) | 0];
+    peds.push({ el, horiz, road, off: (Math.random() < .5 ? -52 : 52), pos: Math.random() * 1200, sp: 9 + Math.random() * 12, dir: Math.random() < .5 ? 1 : -1 });
+  }
+})();
+function carXY(c) { return c.horiz ? [c.pos, c.road + c.lane] : [c.road - c.lane, c.pos]; }
+function carRot(c) { return c.horiz ? (c.dir > 0 ? 0 : 180) : (c.dir > 0 ? 90 : -90); }
+
+/* ================= STATE / SCHEDULING ================= */
+const $ = id => document.getElementById(id);
+let running = false, timers = [], autoTimers = [], autoMode = false;
+let crashActive = false, focusId = 5;
+const env = { vib: 0, aud: 0, ai: 0 };           // event envelopes for sparklines
+const buf = { vib: [], aud: [], ai: [] };
+let camMode = "idle";                              // idle | impact | collision | distress
+let waypointCars = [], fxEls = [], scriptedPeds = [];
+function sched(d, fn) { timers.push(setTimeout(fn, d)); }
+function aSched(d, fn) { autoTimers.push(setTimeout(fn, d)); }
+
+/* ---- camera ---- */
+const RIG = $("rig");
+const C45 = Math.SQRT1_2, C55 = Math.cos(55 * Math.PI / 180);
+const HUDX = 165;                                  // half the right HUD width: keeps focus in the clear area
+function focusCam(px, py, s, dur) {
+  const dx = 600 - px, dy = 640 - py;             // city div is offset -600/-640
+  const sx = (dx - dy) * C45, sy = (dx + dy) * C45 * C55;
+  RIG.style.transitionDuration = (dur || 2.4) + "s";
+  RIG.style.transform = `translate(${sx * s - HUDX}px, ${sy * s}px) scale(${s})`;
+}
+function camHome(dur) { focusCam(600, 640, .9, dur || 2.4); }   // .9 keeps the whole block clear of both edges
+
+/* ---- UI helpers ---- */
+function log(type, msg) {
+  const box = $("log"), e = document.createElement("div");
+  e.className = "entry " + type;
+  const t = new Date();
+  e.innerHTML = `<time>${String(t.getHours()).padStart(2, "0")}:${String(t.getMinutes()).padStart(2, "0")}:${String(t.getSeconds()).padStart(2, "0")}</time><span class="msg"></span>`;
+  e.querySelector(".msg").textContent = msg;
+  box.prepend(e);
+  while (box.children.length > 40) box.lastChild.remove();
+}
+function setStatus(txt, mode) {
+  $("statusText").textContent = txt;
+  $("statusPill").className = mode ? mode : "";
+  $("statusPill").id = "statusPill";
+}
+function setGate(n, label, cls) {
+  ["chVib", "chAud", "chVis"].forEach((id, i) => $(id).classList.toggle("hit", i < n));
+  const g = $("gateStatus"); g.textContent = label; g.className = cls || "";
+}
+function toast(cls, title, sub, ttl) {
+  const t = document.createElement("div");
+  t.className = "toast " + (cls || "");
+  t.innerHTML = "<b></b><span></span>";
+  t.querySelector("b").textContent = title; t.querySelector("span").textContent = sub;
+  $("toasts").appendChild(t);
+  setTimeout(() => { t.style.transition = "opacity .6s"; t.style.opacity = 0; setTimeout(() => t.remove(), 650); }, ttl || 5200);
+}
+let titleTimer;
+function showTitle(k, t, hold) {
+  $("stK").textContent = k; $("stT").textContent = t;
+  $("sceneTitle").classList.add("show");
+  clearTimeout(titleTimer);                        // never let a stale hide kill the next scene's title
+  titleTimer = setTimeout(() => $("sceneTitle").classList.remove("show"), hold || 4200);
+}
+function selectNode(id, glide) {
+  focusId = id;
+  const n = nodes[id - 1];
+  $("fusionTitle").textContent = `NODE ${n.name} · SENSOR FUSION`;
+  $("camTitle").textContent = `${n.name} · CAM-A · IR NIGHT VISION`;
+  if (glide && !running) focusCam(n.x, n.y, 1.35, 1.6);
 }
 
-// poles
-for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
-  const i = r * 3 + c, x = cols[c], y = rows[r];
-  const halo = el("circle", { cx: x, cy: y, r: 30, class: "pole-halo" });
-  const ring = el("circle", { cx: x, cy: y, r: 10, class: "incident-ring" });
-  const core = el("circle", { cx: x, cy: y, r: 7, class: "pole-core" });
-  el("text", { x, y: y - 16, class: "pole-label" }).textContent = "SN-0" + (i + 1);
-  nodes.push({ id: i, x, y, halo, core, ring });
+/* ================= AMBIENT LOOP ================= */
+let last = performance.now(), statTick = 0, pktTick = 0;
+function frame(now) {
+  const dt = Math.min(.05, (now - last) / 1000); last = now;
+
+  // cars
+  for (const c of cars) {
+    if (c.scripted) continue;
+    let blocked = false;
+    if (crashActive) {
+      const [x, y] = carXY(c);
+      const nx = c.horiz ? c.pos + c.dir * 120 : x, ny = c.horiz ? y : c.pos + c.dir * 120;
+      if (Math.hypot(nx - 600, ny - 600) < 130 && Math.hypot(x - 600, y - 600) < 260) blocked = true;
+    }
+    if (!blocked) { c.pos += c.dir * c.sp * dt; if (c.pos > 1260) c.pos = -60; if (c.pos < -60) c.pos = 1260; }
+    const [x, y] = carXY(c);
+    c.el.style.transform = `translate(${x}px, ${y}px) rotateZ(${carRot(c)}deg)`;
+  }
+  // waypoint vehicles
+  for (const w of waypointCars) {
+    if (w.done) continue;
+    const seg = w.path[w.seg], nxt = w.path[w.seg + 1];
+    if (!nxt) { w.done = true; continue; }
+    const dx = nxt.x - seg.x, dy = nxt.y - seg.y, len = Math.hypot(dx, dy);
+    w.t += w.sp * dt / len;
+    if (w.t >= 1) { w.t = 0; w.seg++; if (!w.path[w.seg + 1]) { w.done = true; const p = w.path[w.seg]; w.el.style.transform = `translate(${p.x}px, ${p.y}px) rotateZ(${w.rot}deg)`; continue; } }
+    const s2 = w.path[w.seg], n2 = w.path[w.seg + 1];
+    const x = s2.x + (n2.x - s2.x) * w.t, y = s2.y + (n2.y - s2.y) * w.t;
+    w.rot = Math.atan2(n2.y - s2.y, n2.x - s2.x) * 180 / Math.PI;
+    w.el.style.transform = `translate(${x}px, ${y}px) rotateZ(${w.rot}deg)`;
+  }
+  // pedestrians
+  for (const p of peds) {
+    p.pos += p.dir * p.sp * dt;
+    if (p.pos > 1210 || p.pos < -10) p.dir *= -1;
+    const [x, y] = p.horiz ? [p.pos, p.road + p.off] : [p.road + p.off, p.pos];
+    p.el.style.transform = `translate(${x}px, ${y}px)`;
+  }
+  for (const p of scriptedPeds) if (p.upd) p.upd(dt);
+
+  // packets
+  pktTick -= dt;
+  if (pktTick <= 0) { spawnPacket((Math.random() * links.length) | 0, false); pktTick = crashActive ? .25 : 1.3; }
+  for (let i = packets.length - 1; i >= 0; i--) {
+    const k = packets[i]; k.t += k.sp * dt;
+    if (k.t >= 1) { k.el.remove(); packets.splice(i, 1); continue; }
+    k.el.setAttribute("cx", k.a.x + (k.b.x - k.a.x) * k.t);
+    k.el.setAttribute("cy", k.a.y + (k.b.y - k.a.y) * k.t);
+  }
+
+  // envelopes decay
+  env.vib *= Math.pow(.03, dt); env.aud *= Math.pow(.08, dt); env.ai *= Math.pow(.25, dt);
+
+  // sparklines
+  pushSpark(buf.vib, .02 + Math.random() * .015 + env.vib * (0.85 + Math.random() * .3));
+  pushSpark(buf.aud, 37 + Math.random() * 4 + env.aud * (78 + Math.random() * 14));
+  pushSpark(buf.ai, 3 + Math.random() * 4 + env.ai * (90 + Math.random() * 6));
+  drawSpark($("spVib"), buf.vib, 0, 3.2); $("ovVib").textContent = buf.vib[buf.vib.length - 1].toFixed(2);
+  drawSpark($("spAud"), buf.aud, 30, 130); $("ovAud").textContent = Math.round(buf.aud[buf.aud.length - 1]);
+  drawSpark($("spAI"), buf.ai, 0, 100); $("ovAI").textContent = Math.round(buf.ai[buf.ai.length - 1]);
+
+  // stats
+  statTick -= dt;
+  if (statTick <= 0) {
+    statTick = 2;
+    $("stMesh").textContent = (10 + Math.random() * 7 | 0) + " ms";
+    $("stAI").textContent = (27 + Math.random() * 12 | 0) + "/s";
+  }
+
+  drawCam(now);
+  requestAnimationFrame(frame);
+}
+function pushSpark(b, v) { b.push(v); if (b.length > 90) b.shift(); }
+function drawSpark(cv, b, min, max) {
+  const g = cv.getContext("2d"), W = cv.width, H = cv.height;
+  g.clearRect(0, 0, W, H);
+  g.strokeStyle = "rgba(255,179,0,.9)"; g.lineWidth = 1.6; g.beginPath();
+  for (let i = 0; i < b.length; i++) {
+    const x = i / 89 * W, y = H - 4 - (Math.min(max, b[i]) - min) / (max - min) * (H - 8);
+    i ? g.lineTo(x, y) : g.moveTo(x, y);
+  }
+  g.stroke();
 }
 
-// hospital + station markers
-el("text", { x: 596, y: 62, class: "pole-label", "text-anchor": "end" }).textContent = "→ City Hospital 1.2 km";
-el("text", { x: 596, y: 430, class: "pole-label", "text-anchor": "end" }).textContent = "→ Police Stn 0.8 km";
-
-// ---------- clock ----------
-let simSeconds = 22 * 3600 + 14 * 60 + 5;
-setInterval(() => {
-  simSeconds++;
-  document.getElementById("clock").textContent = fmtClock(simSeconds);
-}, 1000);
-function fmtClock(s) {
-  const h = Math.floor(s / 3600) % 24, m = Math.floor(s / 60) % 60, sec = s % 60;
-  return [h, m, sec].map(v => String(v).padStart(2, "0")).join(":");
+/* ---- AI camera feed ---- */
+const CAM = $("camCanvas"), CG = CAM.getContext("2d");
+let camBoxes = [];
+function drawCam(now) {
+  const W = CAM.width, H = CAM.height;
+  CG.fillStyle = "#04101e"; CG.fillRect(0, 0, W, H);
+  // wireframe street
+  CG.strokeStyle = "rgba(80,140,110,.35)"; CG.lineWidth = 1;
+  CG.beginPath();
+  CG.moveTo(0, H * .82); CG.lineTo(W, H * .82);
+  CG.moveTo(W * .5, H * .82); CG.lineTo(W * .34, H); CG.moveTo(W * .5, H * .82); CG.lineTo(W * .66, H);
+  CG.moveTo(0, H * .6); CG.lineTo(W * .38, H * .6); CG.moveTo(W * .62, H * .6); CG.lineTo(W, H * .6);
+  CG.stroke();
+  // noise
+  CG.fillStyle = "rgba(140,220,180,.05)";
+  for (let i = 0; i < 26; i++) CG.fillRect(Math.random() * W, Math.random() * H, 1.6, 1.6);
+  // scanline
+  const sy = (now / 18) % H;
+  CG.fillStyle = "rgba(120,255,190,.05)"; CG.fillRect(0, sy, W, 3);
+  // idle wander boxes
+  if (camMode === "idle" && Math.random() < .012) {
+    camBoxes = [{ x: 30 + Math.random() * (W - 110), y: H * .45 + Math.random() * 30, w: 34, h: 46, c: "rgba(120,220,160,.95)", lb: "PEDESTRIAN " + (55 + Math.random() * 25 | 0) / 100, ttl: now + 2600 }];
+  }
+  camBoxes = camBoxes.filter(b => !b.ttl || b.ttl > now);
+  for (const b of camBoxes) {
+    const jx = Math.sin(now / 160 + b.x) * 1.6, jy = Math.cos(now / 200) * 1.2;
+    CG.strokeStyle = b.c; CG.lineWidth = 1.6;
+    CG.strokeRect(b.x + jx, b.y + jy, b.w, b.h);
+    CG.fillStyle = b.c; CG.font = "9px Consolas, monospace";
+    CG.fillText(b.lb, b.x + jx, b.y + jy - 4);
+  }
+  // crosshair + header
+  CG.strokeStyle = "rgba(160,200,240,.25)";
+  CG.strokeRect(6.5, 6.5, W - 13, H - 13);
+  CG.fillStyle = "rgba(170,210,250,.75)"; CG.font = "9px Consolas, monospace";
+  const t = new Date();
+  CG.fillText(t.toLocaleTimeString("en-GB") + " · EDGE-INFER 14 ms", 12, H - 12);
+}
+function camSet(mode) {
+  camMode = mode;
+  const W = CAM.width, H = CAM.height;
+  if (mode === "impact") camBoxes = [{ x: W * .36, y: H * .5, w: 84, h: 40, c: "rgba(255,190,80,.95)", lb: "IMPACT SOUND SRC 0.88" }];
+  if (mode === "collision") camBoxes = [
+    { x: W * .26, y: H * .48, w: 62, h: 40, c: "rgba(255,100,100,.98)", lb: "VEH-A COLLISION 0.97" },
+    { x: W * .64, y: H * .42, w: 52, h: 48, c: "rgba(255,100,100,.98)", lb: "VEH-B 0.94" }];
+  if (mode === "distress") camBoxes = [
+    { x: W * .30, y: H * .42, w: 30, h: 52, c: "rgba(255,209,102,.98)", lb: "SOS SUBJ 0.96" },
+    { x: W * .63, y: H * .44, w: 30, h: 50, c: "rgba(255,110,110,.98)", lb: "FOLLOWER 0.91" }];
+  if (mode === "idle") camBoxes = [];
 }
 
-// ---------- console log ----------
-const logBox = document.getElementById("log");
-function log(tag, msg) {
-  const e = document.createElement("div");
-  e.className = "entry";
-  e.innerHTML = '<span class="t">' + fmtClock(simSeconds) + '</span><span class="tag ' + tag + '">' +
-    ({ sys: "SYSTEM", ai: "EDGE AI", disp: "DISPATCH", mesh: "MESH" })[tag] + "</span><span class='msg'>" + msg + "</span>";
-  logBox.prepend(e);
+/* ================= FX ================= */
+const FX = $("fx");
+function fxAdd(el) { FX.appendChild(el); fxEls.push(el); return el; }
+function particles(x, y) {
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement("div");
+    p.className = "fxdot";
+    const sz = 2 + Math.random() * 5, hot = Math.random() < .5;
+    p.style.cssText = `left:${x}px; top:${y}px; width:${sz}px; height:${sz}px;
+      background:${hot ? "#ffcf6a" : "#ff8c5a"}; box-shadow:0 0 8px ${hot ? "#ffcf6a" : "#ff8c5a"};`;
+    fxAdd(p);
+    const a = Math.random() * Math.PI * 2, v = 40 + Math.random() * 130;
+    p.animate([
+      { transform: "translate(0,0)", opacity: 1 },
+      { transform: `translate(${Math.cos(a) * v}px, ${Math.sin(a) * v}px)`, opacity: 0 }
+    ], { duration: 600 + Math.random() * 700, easing: "cubic-bezier(.1,.6,.4,1)", fill: "forwards" });
+  }
+  const flash = document.createElement("div");
+  flash.style.cssText = `position:absolute; left:${x - 60}px; top:${y - 60}px; width:120px; height:120px; border-radius:50%;
+    background: radial-gradient(circle, rgba(255,230,160,.9), rgba(255,140,60,.4) 45%, transparent 70%);`;
+  fxAdd(flash);
+  flash.animate([{ opacity: 1, transform: "scale(.4)" }, { opacity: 0, transform: "scale(1.6)" }], { duration: 650, fill: "forwards" });
+}
+function skid(x, y, len, rot) {
+  for (const off of [-6, 6]) {
+    const s = document.createElement("div");
+    s.className = "skid";
+    s.style.cssText = `left:${x}px; top:${y + off}px; width:${len}px; transform: rotateZ(${rot}deg);`;
+    fxAdd(s);
+  }
+}
+function corridorLinks(pairs, on) {
+  for (const [a, b] of pairs) {
+    const idx = links.findIndex(([p, q]) => (p === a && q === b) || (p === b && q === a));
+    if (idx >= 0) linkEls[idx].classList.toggle("hot", on);
+    if (on && idx >= 0) { spawnPacket(idx, true); spawnPacket(idx, true); }
+  }
 }
 
-// ---------- sensor panel ----------
-const S = {
-  vib: { card: document.getElementById("s-vib"), val: document.getElementById("v-vib"), bar: document.getElementById("b-vib") },
-  aud: { card: document.getElementById("s-aud"), val: document.getElementById("v-aud"), bar: document.getElementById("b-aud") },
-  cam: { card: document.getElementById("s-cam"), val: document.getElementById("v-cam"), bar: document.getElementById("b-cam") },
-};
-function setSensor(key, text, pct, state) {
-  S[key].val.textContent = text;
-  S[key].bar.style.width = pct + "%";
-  S[key].card.className = "sensor" + (state ? " " + state : "");
-}
-function setGate(n, verdictText, verified) {
-  for (let i = 1; i <= 3; i++) document.getElementById("g" + i).className = "chk" + (i <= n ? " on" : "");
-  const v = document.getElementById("verdict");
-  v.textContent = verdictText;
-  v.className = "verdict" + (verified ? " verified" : "");
+/* ================= SCENARIOS ================= */
+const btns = ["btnAuto", "btnCrash", "btnSos", "btnHeat", "btnReset"].map($);
+function lockButtons(lock) { ["btnCrash", "btnSos", "btnHeat"].forEach(id => $(id).disabled = lock); if (!autoMode) $("btnAuto").disabled = lock; }
+
+function runCrash() {                              /* total ≈ 21 s */
+  running = true; lockButtons(true);
+  selectNode(5, false);
+  showTitle("SCENE 01", "ACCIDENT DETECTION & DISPATCH", 4600);
+  log("sys", "Scenario start: vehicle collision — junction SN-05");
+  camHome(2);
+
+  // scripted cars
+  const A = { el: document.createElement("div"), x: -60, y: 618, sp: 235 }; // eastbound
+  const B = { el: document.createElement("div"), x: 582, y: 1260, sp: 213 }; // northbound
+  A.el.className = "car"; A.el.style.background = "#c8553d"; A.el.innerHTML = '<div class="hl"></div><div class="hl b"></div>';
+  B.el.className = "car"; B.el.style.background = "#3d6dc8"; B.el.innerHTML = '<div class="hl"></div><div class="hl b"></div>';
+  fxAdd(A.el); fxAdd(B.el);
+  const t0 = performance.now();
+  let live = true;
+  (function drive(now) {
+    if (!live || !A.el.isConnected) return;        // reset detaches the car → orphaned loop exits
+    const dt = (now - t0) / 1000;
+    A.cx = Math.min(586, -60 + A.sp * dt); B.cy = Math.max(646, 1260 - B.sp * dt);
+    A.el.style.transform = `translate(${A.cx}px, ${A.y}px)` + (A.cx >= 586 ? " rotateZ(24deg)" : "");
+    B.el.style.transform = `translate(${B.x}px, ${B.cy}px) rotateZ(${B.cy <= 646 ? -64 : -90}deg)`;
+    if (A.cx < 586 || B.cy > 646) requestAnimationFrame(drive);
+  })(t0);
+
+  sched(2750, () => {                              // IMPACT
+    live = false; crashActive = true;
+    A.el.classList.add("hazard"); B.el.classList.add("hazard");
+    particles(600, 622); skid(455, 618, 128, 0); skid(582, 780, 128, -90);
+    $("stage").classList.add("shake"); sched(600, () => $("stage").classList.remove("shake"));
+    env.vib = 2.9;
+    nodes[4].el.querySelector(".pring").classList.add("go");
+    setGate(1, "ANALYZING — 1/3 VIBRATION", "analyzing");
+    log("warn", "SN-05 vibration spike 2.9 g — impact signature");
+  });
+  sched(3650, () => {
+    env.aud = 1;
+    camSet("impact");
+    setGate(2, "ANALYZING — 2/3 AUDIO", "analyzing");
+    log("warn", "Acoustic match: glass + metal crash profile (112 dB)");
+  });
+  sched(4600, () => {
+    focusCam(600, 610, 1.6, 2.2);
+    env.ai = 1; camSet("collision");
+    setGate(3, "EMERGENCY VERIFIED — 3/3", "verified");
+    log("crit", "Vision confirm: 2-vehicle collision, prob 0.97 — GATE PASSED");
+  });
+  sched(5600, () => {
+    nodes[4].el.classList.add("alert");
+    setStatus("EMERGENCY — JUNCTION SN-05", "alert");
+    log("crit", "GPS lock 16.4971° N, 80.5003° E → dispatch payload built");
+    toast("red", "🚨 Verified collision — SN-05", "112 Police + 108 Ambulance auto-notified · GPS attached");
+  });
+  sched(6800, () => {
+    corridorLinks([[1, 4], [4, 7]], true);         // SN-02↔SN-05↔SN-08 spine
+    [1, 4, 7].forEach(i => nodes[i].el.classList.add("lit"));
+    log("ok", "SAFE CORRIDOR: response route lit, signals pre-empted");
+    setStatus("EMERGENCY — CORRIDOR ACTIVE", "alert");
+  });
+  sched(7600, () => {                              // responders
+    const P = document.createElement("div"); P.className = "car police strobe"; fxAdd(P);
+    waypointCars.push({ el: P, path: [{ x: 582, y: -60 }, { x: 582, y: 520 }], t: 0, seg: 0, sp: 200, rot: 90 });
+    const M = document.createElement("div"); M.className = "car ambulance strobe"; fxAdd(M);
+    waypointCars.push({ el: M, path: [{ x: 1260, y: 1018 }, { x: 682, y: 1018 }, { x: 618, y: 950 }, { x: 618, y: 700 }], t: 0, seg: 0, sp: 205, rot: -90 });
+    log("sys", "Units en route — police 0.9 km · ambulance 1.4 km");
+  });
+  sched(12600, () => {
+    log("ok", "Units on scene · door-to-door response 3 m 41 s (city avg 14 m)");
+    $("stResp").textContent = "3m41s";
+  });
+  sched(14200, () => {
+    toast("green", "🔐 Evidence pack sealed", "40 s pre/post footage + sensor traces → encrypted cloud vault");
+    $("incId").textContent = "INC-2041-C"; $("incType").textContent = "Vehicle collision (2)";
+    $("incLoc").textContent = "Junction SN-05 · 16.4971 N"; $("incGate").textContent = "3/3 vib+audio+vision";
+    $("incDisp").textContent = "112 + 108 · 3 m 41 s"; $("incEv").textContent = "Sealed · SHA-256 ✓";
+    $("incident").classList.add("show");
+    log("sys", "Incident report INC-2041-C opened on city dashboard");
+  });
+  sched(17200, () => {
+    camHome(2.6);
+    showTitle("RESULT", "VERIFIED IN 2 s · DISPATCHED IN 3 s · NO HUMAN CALL NEEDED", 4400);
+    setStatus("INCIDENT STABILIZED — CORRIDOR ACTIVE", "corridor");
+  });
+  sched(20500, () => { crashActive = false; if (!autoMode) { running = false; lockButtons(false); } });
+  return 21000;
 }
 
-// idle jitter so it looks alive
-let idleTimer = setInterval(idleJitter, 1400);
-function idleJitter() {
-  setSensor("vib", (0.01 + Math.random() * 0.04).toFixed(2) + " g", 4 + Math.random() * 8, "");
-  setSensor("aud", "ambient " + (32 + Math.random() * 6 | 0) + " dB", 6 + Math.random() * 10, "");
-  setSensor("cam", "clear · " + (2 + Math.random() * 4 | 0) + " objects", 5 + Math.random() * 9, "");
+function runSos() {                              /* total ≈ 21 s */
+  running = true; lockButtons(true);
+  selectNode(3, false);
+  $("chVib").textContent = "SOS BTN"; $("lbVib").textContent = "SOS CHANNEL";
+  showTitle("SCENE 02", "WOMEN'S SAFETY — SOS + AI DISTRESS DETECT", 4600);
+  log("sys", "Scenario start: lone commuter, follower — segment SN-03");
+  focusCam(1060, 320, 1.4, 2.6);
+
+  // walker + follower on sidewalk y = 252, heading east
+  const W = { el: document.createElement("div"), x: 700, stop: 1020 };
+  const F = { el: document.createElement("div"), x: 610, fled: false };
+  W.el.className = "ped walker"; F.el.className = "ped follower";
+  fxAdd(W.el); fxAdd(F.el);
+  let phase = 0;
+  scriptedPeds.push({
+    upd(dt) {
+      if (phase === 0) { W.x = Math.min(W.stop, W.x + 26 * dt); F.x += 27.5 * dt; }
+      if (phase === 2 && !F.fled) { F.x -= 150 * dt; if (F.x < 380) { F.fled = true; F.el.style.opacity = 0; } }
+      if (phase === 3) { W.x = Math.max(640, W.x - 30 * dt); }
+      W.el.style.transform = `translate(${W.x}px, 252px)`;
+      F.el.style.transform = `translate(${F.x}px, 252px)`;
+    }
+  });
+
+  sched(3300, () => {
+    phase = 1;
+    nodes[2].el.querySelector(".pring").classList.add("go");
+    setGate(1, "SOS PRESSED — SN-03", "analyzing");
+    log("crit", "Physical SOS pressed at SN-03 — priority channel open");
+    toast("red", "🆘 SOS — node SN-03", "Live audio + video streaming to 112 control room");
+  });
+  sched(4200, () => {
+    env.aud = .8; env.ai = .85; camSet("distress");
+    setGate(2, "ANALYZING — AUDIO DISTRESS", "analyzing");
+    log("warn", "Distress vocal signature 0.92 + follower gait flag 0.91");
+  });
+  sched(5200, () => {
+    setGate(3, "EMERGENCY VERIFIED — 3/3", "verified");
+    nodes[2].el.classList.add("alert");
+    setStatus("SOS ACTIVE — SEGMENT SN-03", "alert");
+    log("crit", "Verified — SOS + audio + vision agree");
+  });
+  sched(6000, () => {
+    phase = 2;                                     // floodlight + deterrence
+    [2, 1].forEach(i => nodes[i].el.classList.add("flood", "lit"));
+    log("ok", "Floodlights 100% + PA warning — follower retreating");
+    toast("blue", "👮 112 patrol re-routed", "ETA 80 s · live location shared");
+  });
+  sched(7600, () => {
+    corridorLinks([[1, 2], [0, 1]], true);         // SN-03→SN-02→SN-01 walking corridor
+    [0, 1].forEach(i => nodes[i].el.classList.add("lit"));
+    phase = 3;
+    log("ok", "SAFE CORRIDOR: walking route to police outpost lit end-to-end");
+    setStatus("SAFE CORRIDOR ACTIVE", "corridor");
+  });
+  sched(8600, () => toast("green", "📱 Family notified", "Live tracking link active until safe arrival"));
+  sched(9400, () => {                              // camera handoff cones
+    const cone3 = nodes[2].el.querySelector(".vcone"), cone2 = nodes[1].el.querySelector(".vcone");
+    cone3.style.transform = "rotateZ(175deg)"; cone3.style.opacity = .85;
+    sched(2600, () => { cone3.style.opacity = 0; cone2.style.transform = "rotateZ(160deg)"; cone2.style.opacity = .85; });
+    sched(5200, () => cone2.style.opacity = 0);
+    log("sys", "Camera handoff SN-03 → SN-02 — subject tracked, zero blind gap");
+    focusCam(760, 230, 1.4, 3.2);
+  });
+  sched(12400, () => {                             // patrol arrives along y=182 westbound lane
+    const P = document.createElement("div"); P.className = "car police strobe"; fxAdd(P);
+    waypointCars.push({ el: P, path: [{ x: -60, y: 182 }, { x: 560, y: 182 }], t: 0, seg: 0, sp: 195, rot: 0 });
+  });
+  sched(15600, () => {
+    log("ok", "Patrol on segment — subject met · incident closed safe");
+    $("incId").textContent = "INC-2042-S"; $("incType").textContent = "SOS + distress (resolved)";
+    $("incLoc").textContent = "Segment SN-03 → SN-01"; $("incGate").textContent = "3/3 SOS+audio+vision";
+    $("incDisp").textContent = "112 patrol · 78 s"; $("incEv").textContent = "Sealed · SHA-256 ✓";
+    $("incident").classList.add("show");
+  });
+  sched(17400, () => {
+    camHome(2.6);
+    showTitle("RESULT", "DETERRENCE + LIT CORRIDOR + TRACKED HANDOFF — HELP IN 78 s", 4400);
+  });
+  sched(20500, () => { if (!autoMode) { running = false; lockButtons(false); } });
+  return 21000;
 }
 
-// ---------- scenario engine ----------
-const btns = [document.getElementById("btnCrash"), document.getElementById("btnSos"), document.getElementById("btnReset")];
-let running = false, timeouts = [];
-function step(delay, fn) { timeouts.push(setTimeout(fn, delay)); }
-function setStatus(text, alert) {
-  const p = document.getElementById("status");
-  p.textContent = text;
-  p.className = "status-pill" + (alert ? " alert" : "");
-}
-function corridorOn(pairs, on) {
-  pairs.forEach(([a, b]) => { const c = corridors[corridorKey(a, b)]; if (c) c.setAttribute("class", "corridor" + (on ? " on" : "")); });
-}
-function haloBright(ids, cls) {
-  ids.forEach(i => nodes[i].halo.setAttribute("class", "pole-halo" + (cls ? " " + cls : "")));
-}
-
-function begin(title) {
-  if (running) return false;
-  running = true;
-  clearInterval(idleTimer);
-  btns[0].disabled = btns[1].disabled = true;
-  log("sys", "— " + title + " —");
-  return true;
-}
-function finish() {
-  step(0, () => {
-    btns[0].disabled = btns[1].disabled = false;
-    running = false;
-  });
-}
-
-// --- Scenario 1: vehicle crash at SN-05 (center node, index 4) ---
-document.getElementById("btnCrash").addEventListener("click", () => {
-  if (!begin("SCENARIO: VEHICLE CRASH — NODE SN-05")) return;
-  const n = nodes[4];
-  document.getElementById("sensorTitle").textContent = "NODE SN-05 · SENSOR FUSION";
-
-  step(400, () => {
-    setSensor("vib", "6.4 g IMPACT", 96, "hot");
-    setGate(1, "SIGNAL 1/3", false);
-    n.core.setAttribute("class", "pole-core emergency");
-    n.ring.setAttribute("class", "incident-ring on");
-    setStatus("IMPACT SIGNATURE — VERIFYING", true);
-    log("ai", "SN-05 vibration spike 6.4 g — impact signature detected");
-  });
-  step(1600, () => {
-    setSensor("aud", "crash 94%", 94, "hot");
-    setGate(2, "SIGNAL 2/3", false);
-    log("ai", "Audio classifier: metal-impact / glass-break 94% confidence");
-  });
-  step(2900, () => {
-    setSensor("cam", "collision 91%", 91, "hot");
-    setGate(3, "VERIFIED", true);
-    log("ai", "Vision: two-wheeler collision, rider down (YOLO conf 0.91)");
-    log("sys", "VALIDATION ENGINE: 3/3 sensors agree — EMERGENCY CONFIRMED");
-  });
-  step(4300, () => {
-    setStatus("EMERGENCY CONFIRMED — DISPATCHING", true);
-    log("disp", "GPS lock 12.9716° N, 77.5946° E — accuracy 2.1 m");
-    log("disp", "🚔 Police (112) notified — unit 7 min out");
-  });
-  step(5200, () => {
-    log("disp", "🚑 Ambulance (108) notified — City Hospital ETA 6 min");
-    log("disp", "Evidence capture started — encrypted, on-node vault");
-  });
-  step(6200, () => {
-    haloBright([1, 3, 4, 5, 7], "bright");
-    n.halo.setAttribute("class", "pole-halo emergency");
-    corridorOn([[4, 1], [4, 3], [4, 5], [4, 7], [1, 2], [5, 2]], true);
-    log("mesh", "SAFE CORRIDOR: SN-02/04/06/08 at 100% brightness, cameras tracking");
-    log("mesh", "Responder route pushed: fastest clear path via SN-06 → SN-03");
-  });
-  step(7600, () => {
-    setStatus("RESPONDERS EN ROUTE", true);
-    log("sys", "Live feed relayed to police control room + city dashboard");
-    finish();
-  });
-});
-
-// --- Scenario 2: SOS at SN-07 (bottom-left, index 6) ---
-document.getElementById("btnSos").addEventListener("click", () => {
-  if (!begin("SCENARIO: WOMEN'S-SAFETY SOS — NODE SN-07")) return;
-  const n = nodes[6];
-  document.getElementById("sensorTitle").textContent = "NODE SN-07 · SENSOR FUSION";
-
-  step(400, () => {
-    setSensor("vib", "SOS pressed", 60, "ok");
-    setGate(1, "SIGNAL 1/3", false);
-    n.core.setAttribute("class", "pole-core emergency");
-    n.ring.setAttribute("class", "incident-ring on");
-    setStatus("SOS RECEIVED — VERIFYING", true);
-    log("ai", "SN-07 physical SOS button pressed");
-  });
-  step(1500, () => {
-    setSensor("aud", "distress 89%", 89, "hot");
-    setGate(2, "SIGNAL 2/3", false);
-    log("ai", "Audio classifier: scream / distress vocal pattern 89%");
-  });
-  step(2700, () => {
-    setSensor("cam", "1 person, follower", 84, "hot");
-    setGate(3, "VERIFIED", true);
-    log("ai", "Vision: lone person + rapid approach by second figure");
-    log("sys", "VALIDATION ENGINE: SOS + audio + vision — EMERGENCY CONFIRMED");
-  });
-  step(3900, () => {
-    haloBright([3, 6, 7], "bright");
-    n.halo.setAttribute("class", "pole-halo emergency");
-    log("mesh", "Floodlight ON at SN-07 — deterrence announcement playing");
-  });
-  step(4900, () => {
-    setStatus("EMERGENCY CONFIRMED — DISPATCHING", true);
-    log("disp", "🚔 Police (112) notified with live location + camera feed");
-    log("disp", "📱 Family contacts alerted — live tracking link shared");
-  });
-  step(6100, () => {
-    corridorOn([[6, 3], [6, 7], [3, 0], [7, 8]], true);
-    haloBright([0, 8], "bright");
-    log("mesh", "SAFE CORRIDOR: walking route to Police Stn lit end-to-end");
-    log("mesh", "Camera handoff active — subject tracked across SN-07 → SN-08");
-  });
-  step(7400, () => {
-    setStatus("POLICE EN ROUTE — CORRIDOR ACTIVE", true);
-    log("sys", "Encrypted evidence stored; incident #2041 open on dashboard");
-    finish();
-  });
-});
-
-// --- reset ---
-function resetSim() {
-  timeouts.forEach(clearTimeout); timeouts = [];
-  running = false;
-  btns[0].disabled = btns[1].disabled = false;
+/* ================= RESET ================= */
+function softReset() {                             // clears incident artifacts, keeps log + ambient
+  timers.forEach(clearTimeout); timers = [];
+  running = false; crashActive = false;
+  fxEls.forEach(e => e.remove()); fxEls = [];
+  waypointCars = []; scriptedPeds.length = 0;
   nodes.forEach(n => {
-    n.core.setAttribute("class", "pole-core");
-    n.halo.setAttribute("class", "pole-halo");
-    n.ring.setAttribute("class", "incident-ring");
+    n.el.classList.remove("alert", "lit", "flood");
+    n.el.querySelector(".pring").classList.remove("go");
+    n.el.querySelector(".vcone").style.opacity = 0;
   });
-  Object.values(corridors).forEach(c => c.setAttribute("class", "corridor"));
-  setGate(0, "MONITORING", false);
-  setStatus("ALL NODES NOMINAL", false);
-  document.getElementById("sensorTitle").textContent = "NODE SN-05 · SENSOR FUSION";
-  clearInterval(idleTimer);
-  idleTimer = setInterval(idleJitter, 1400);
-  idleJitter();
+  linkEls.forEach(l => l.classList.remove("hot"));
+  env.vib = env.aud = env.ai = 0;
+  camSet("idle");
+  $("chVib").textContent = "VIBRATION"; $("lbVib").textContent = "VIBRATION g";
+  $("stResp").textContent = "42 s";
+  clearTimeout(titleTimer);
+  setGate(0, "MONITORING", "");
+  $("incident").classList.remove("show");
+  setStatus("ALL NODES NOMINAL", "");
+  $("sceneTitle").classList.remove("show");
+  selectNode(5, false);
+}
+function fullReset() {
+  autoTimers.forEach(clearTimeout); autoTimers = [];
+  autoMode = false;
+  softReset();
+  $("endCard").classList.remove("show");
+  $("heat").classList.remove("on"); $("btnHeat").classList.remove("toggled");
+  $("toasts").innerHTML = "";
+  camHome(1.8);
+  lockButtons(false); $("btnAuto").disabled = false;
   log("sys", "Simulation reset — all nodes nominal");
 }
-document.getElementById("btnReset").addEventListener("click", () => {
-  // manual reset also cancels a running auto-demo
-  autoTimeouts.forEach(clearTimeout); autoTimeouts = [];
-  btnAuto.disabled = false;
-  resetSim();
-});
 
-// --- auto-run full demo (for one-take video recording) ---
-const btnAuto = document.getElementById("btnAuto");
-let autoTimeouts = [];
-btnAuto.addEventListener("click", () => {
-  if (running) return;
-  btnAuto.disabled = true;
-  resetSim();
-  log("sys", "AUTO DEMO: full sequence — vehicle crash, then women's-safety SOS");
-  const plan = [
-    [2500, () => document.getElementById("btnCrash").click()],
-    [14000, () => resetSim()],
-    [16500, () => document.getElementById("btnSos").click()],
-    [27000, () => {
-      log("sys", "AUTO DEMO complete — SentinelAI: detect, verify, respond, protect");
-      btnAuto.disabled = false;
-    }],
-  ];
-  plan.forEach(([d, fn]) => autoTimeouts.push(setTimeout(fn, d)));
+/* ================= WIRING ================= */
+$("btnCrash").addEventListener("click", () => { if (!running) { softReset(); runCrash(); } });
+$("btnSos").addEventListener("click", () => { if (!running) { softReset(); runSos(); } });
+$("btnReset").addEventListener("click", fullReset);
+$("btnHeat").addEventListener("click", () => {
+  const on = $("heat").classList.toggle("on");
+  $("btnHeat").classList.toggle("toggled", on);
+  if (on) { log("sys", "Predictive layer: 30-day risk forecast overlay ON"); focusCam(600, 640, .92, 2.2); }
+  else camHome(2.2);
 });
+$("btnAuto").addEventListener("click", () => {
+  if (running || autoMode) return;
+  autoMode = true;
+  $("btnAuto").disabled = true; lockButtons(true);
+  fullResetKeepAuto();
+  log("sys", "AUTO DEMO: cinematic sequence — establish, crash, SOS, predictive");
+  showTitle("SENTINELAI", "9 EDGE-AI NODES · ONE GUARDIAN MESH", 4400);
+  focusCam(600, 640, .82, 3.2);
+  aSched(4600, () => { focusCam(600, 640, .98, 2.4); });
+  aSched(5300, runCrash);
+  aSched(27000, () => { softReset(); camHome(2); });
+  aSched(29000, runSos);
+  aSched(50800, () => {
+    softReset();
+    $("heat").classList.add("on"); $("btnHeat").classList.add("toggled");
+    focusCam(600, 640, .92, 2.4);
+    showTitle("PREDICTIVE AI", "30-DAY RISK FORECAST — DEPLOY BEFORE THE INCIDENT", 4600);
+    log("sys", "Predictive layer: hotspot forecast from mesh history");
+  });
+  aSched(56200, () => {
+    $("heat").classList.remove("on"); $("btnHeat").classList.remove("toggled");
+    $("endCard").classList.add("show");
+    log("ok", "AUTO DEMO complete — detect · verify · respond · protect");
+  });
+  aSched(61500, () => {
+    $("endCard").classList.remove("show");
+    autoMode = false; running = false;
+    lockButtons(false); $("btnAuto").disabled = false;
+    camHome(2.4);
+  });
+});
+function fullResetKeepAuto() {                     // full visual reset without killing auto timers
+  softReset();
+  $("endCard").classList.remove("show");
+  $("heat").classList.remove("on"); $("btnHeat").classList.remove("toggled");
+  $("toasts").innerHTML = "";
+}
 
-// boot
-idleJitter();
-log("sys", "SentinelAI mesh online — 9 nodes reporting, all sensors nominal");
-log("sys", "Pick a scenario below to run the end-to-end response flow");
+/* ================= BOOT ================= */
+selectNode(5, false);
+camHome(0.1);
+log("sys", "SentinelAI mesh online — 9 nodes, 12 links, edge AI active");
+log("sys", "Click a pole to inspect it · run a scenario below");
+requestAnimationFrame(frame);
+// deep links: open with #auto / #crash / #sos / #heat to start hands-free (handy for recording)
+const boot = (location.hash || "").slice(1);
+if (boot === "crash") setTimeout(() => $("btnCrash").click(), 900);
+else if (boot === "sos") setTimeout(() => $("btnSos").click(), 900);
+else if (boot === "heat") setTimeout(() => $("btnHeat").click(), 900);
+else if (boot === "auto") setTimeout(() => $("btnAuto").click(), 900);
 </script>
 </body>
 </html>
