@@ -37,8 +37,8 @@ def load_resources():
         return {}
 
 RES = load_resources()
-# generator page-slug -> resources.js slug (only cybersecurity differs)
-RESOURCE_SLUG = {"cybersecurity": "cyber-security"}
+# generator page-slug -> resources.js slug (where they differ)
+RESOURCE_SLUG = {"cybersecurity": "cyber-security", "iot-robotics": "embedded-iot"}
 
 LINKS = {
     "the odin project": "https://www.theodinproject.com/", "odin project": "https://www.theodinproject.com/",
@@ -75,7 +75,37 @@ LINKS = {
     "gamedev.tv": "https://www.gamedev.tv/", "alchemy": "https://university.alchemy.com/",
     "cyfrin": "https://updraft.cyfrin.io/", "solidity": "https://docs.soliditylang.org/",
     "coursera": "https://www.coursera.org/", "edx": "https://www.edx.org/", "udemy": "https://www.udemy.com/",
-    "udacity": "https://www.udacity.com/", "github": "https://github.com/", "roadmap.sh": "https://roadmap.sh/",
+    "udacity": "https://www.udacity.com/", "roadmap.sh": "https://roadmap.sh/",
+    # GenAI / prompt engineering
+    "deeplearning.ai": "https://www.deeplearning.ai/short-courses/",
+    "anthropic prompt engineering": "https://github.com/anthropics/prompt-eng-interactive-tutorial",
+    "anthropic console": "https://console.anthropic.com/",
+    "anthropic": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+    "openai playground": "https://platform.openai.com/playground",
+    "google ai studio": "https://aistudio.google.com/",
+    "hugging face spaces": "https://huggingface.co/spaces",
+    "hugging face": "https://huggingface.co/",
+    "ai explained": "https://www.youtube.com/@aiexplained-official",
+    "matt wolfe": "https://www.youtube.com/@mreflow",
+    # Blockchain / Web3
+    "cryptozombies": "https://cryptozombies.io/",
+    "ethernaut": "https://ethernaut.openzeppelin.com/",
+    "remix": "https://remix.ethereum.org/",
+    "speedrunethereum": "https://speedrunethereum.com/",
+    "patrick collins": "https://www.youtube.com/@PatrickAlphaC",
+    "dapp university": "https://www.youtube.com/@DappUniversity",
+    "whiteboard crypto": "https://www.youtube.com/@WhiteboardCrypto",
+    # AR/VR + IoT
+    "meta quest": "https://developers.meta.com/horizon/",
+    "valem": "https://www.youtube.com/@ValemTutorials",
+    "dilmer": "https://www.youtube.com/@dilmerv",
+    "brackeys": "https://www.youtube.com/@Brackeys",
+    "wokwi": "https://wokwi.com/",
+    "arduino": "https://docs.arduino.cc/",
+    "random nerd": "https://randomnerdtutorials.com/",
+    "paul mcwhorter": "https://www.youtube.com/@paulmcwhorter",
+    "ros 2": "https://docs.ros.org/",
+    "github": "https://github.com/",
 }
 
 def _res_url(text, kind):
@@ -539,6 +569,232 @@ DOMAINS = [
     "resources": "Data Engineering Zoomcamp, dbt Learn, DataCamp, freeCodeCamp, Mode SQL Tutorial",
     "note": "",
   },
+
+  {
+    "slug": "prompt-engineering",
+    "name": "Prompt Engineer / GenAI Specialist",
+    "accent": "Prompt Engineer",
+    "h1_pre": "Become a ", "h1_post": " from scratch",
+    "meta": "A 16-week roadmap to master prompt engineering and generative AI from scratch — how LLMs work, advanced prompting, AI APIs, RAG, agents, and real AI-powered projects.",
+    "lead": "The newest skill in tech — talk to AI so well it does real work. Go from casual ChatGPT user to building AI-powered tools in about four months, no degree required.",
+    "stats": [("16", "weeks · ~8–10 hrs/wk"), ("5", "portfolio projects"), ("4", "phases · user to builder"), ("₹0", "free AI tools only")],
+    "rule_title": "Prompt → test → iterate",
+    "rule_lead": "Prompting is an experimental skill, not a magic-words game. Keep a prompt journal: write a prompt, score the output, change one thing, run it again. Every project below ships with the prompts that power it.",
+    "phases": [
+      (0, "Foundations", "Weeks 1–3", "Understand what LLMs actually are — and how to steer them.", [
+        ("Week 1", "How LLMs work", "Tokens, context windows, temperature, why models hallucinate.", False),
+        ("Week 2", "The core patterns", "Zero-shot, few-shot examples, role prompting, output formats.", False),
+        ("Week 3", "The model landscape", "ChatGPT, Claude, Gemini — strengths, limits, free tiers.", False),
+      ]),
+      (1, "Advanced Prompting", "Weeks 4–7", "The techniques that separate pros from casual users.", [
+        ("Week 4", "Reasoning prompts", "Chain-of-thought, step decomposition, self-critique.", False),
+        ("Week 5", "Structured output", "Force clean JSON, tables, and schemas from any model.", False),
+        ("Week 6", "System prompts & personas", "Build reliable assistants with tone and guardrails.", False),
+        ("Week 7 · Project ▶", "Prompt library", "A tested, documented library of 25+ reusable prompts.", True),
+      ]),
+      (2, "Building with AI", "Weeks 8–12", "Go beyond the chat box — call models from code and tools.", [
+        ("Week 8", "Playgrounds & APIs", "OpenAI Playground, Google AI Studio, API keys and params.", False),
+        ("Week 9", "Python for AI calls", "Just enough Python to call an LLM API and parse results.", False),
+        ("Week 10", "RAG basics", "Embeddings and retrieval — make AI answer from YOUR data.", False),
+        ("Week 11", "Agents & tool use", "Function calling, multi-step AI workflows, automation.", False),
+        ("Week 12 · Project ▶", "AI assistant", "A custom assistant that answers from documents you give it.", True),
+      ]),
+      (3, "Applied GenAI", "Weeks 13–16", "Multimodal AI, ethics, and a portfolio that proves it.", [
+        ("Week 13", "Images & multimodal", "Image generation and vision prompts done professionally.", False),
+        ("Week 14", "Evaluation & safety", "Test prompts systematically; bias, misuse, and limits.", False),
+        ("Week 15", "Domain playbooks", "Apply GenAI to study, content, code, and research workflows.", False),
+        ("Week 16 · Capstone ▶", "AI-powered product", "Ship a complete AI tool with documented prompt design.", True),
+      ]),
+    ],
+    "projects": [
+      ("Start here", "1 · Prompt Library", "25+ tested prompts for study, writing, and coding — with before/after outputs."),
+      ("Personas", "2 · Custom AI Study Buddy", "A system-prompted assistant that teaches your syllabus, step by step."),
+      ("Structured", "3 · Data Extractor", "Turn messy text into clean JSON/tables reliably — the #1 business use case."),
+      ("In demand", "4 · RAG Document Assistant", "An assistant that answers questions from your own notes or PDFs."),
+      ("Capstone", "5 · AI-Powered Tool", "A complete working AI product — prompts, code, and a writeup of the design."),
+    ],
+    "steps": [
+      ("Create free AI accounts", "ChatGPT, Claude, and Google AI Studio — three free tiers, three different brains."),
+      ("Do one guided tutorial", "Anthropic's free interactive prompt-engineering tutorial teaches the real patterns."),
+      ("Rewrite one prompt 5 times", "Take a prompt you use, improve it five times, note what changed. You've started."),
+    ],
+    "resources": "DeepLearning.AI short courses, Anthropic prompt tutorial, Google Prompting Essentials, OpenAI Playground, Hugging Face",
+    "note": "Prompt engineering is strongest as a multiplier: pair it with a domain you care about — coding, content, data, research — and you become the person who gets 10× more out of AI than everyone around you.",
+  },
+
+  {
+    "slug": "blockchain-web3",
+    "name": "Blockchain / Web3 Developer",
+    "accent": "Blockchain Developer",
+    "h1_pre": "Become a ", "h1_post": " from scratch",
+    "meta": "A 22-week roadmap to become a blockchain / Web3 developer from scratch — how blockchains work, Solidity smart contracts, testing, dApps, security, and a deployed capstone.",
+    "lead": "Build the systems where code enforces the rules. Go from zero to deploying smart contracts and full dApps in about five months — everything on free testnets.",
+    "stats": [("22", "weeks · ~10–12 hrs/wk"), ("5", "on-chain projects"), ("4", "phases · to deployed dApp"), ("₹0", "free testnets only")],
+    "rule_title": "Build on testnets → verify on-chain → document",
+    "rule_lead": "Web3 is learned by shipping contracts, not watching charts. Everything below is deployed to free test networks, verified publicly, and written up on GitHub — real proof anyone can check on-chain.",
+    "phases": [
+      (0, "Foundations", "Weeks 1–5", "How blockchains actually work, before any code.", [
+        ("Week 1", "Blockchain mechanics", "Blocks, hashing, consensus, why it can't be quietly edited.", False),
+        ("Week 2", "Ethereum & wallets", "Accounts, gas, transactions; set up MetaMask on a testnet.", False),
+        ("Week 3", "Cryptography basics", "Public/private keys, signatures, hashes in practice.", False),
+        ("Week 4", "JavaScript refresher", "The language of Web3 tooling and frontends.", False),
+        ("Week 5", "Smart-contract concepts", "What contracts can (and can't) do; reading real ones.", False),
+      ]),
+      (1, "Solidity", "Weeks 6–11", "Write, test, and deploy real smart contracts.", [
+        ("Week 6", "Solidity syntax", "Types, functions, modifiers, events — in Remix.", False),
+        ("Week 7", "Contract patterns", "Ownership, access control, upgradability basics.", False),
+        ("Week 8", "Testing", "Hardhat/Foundry tests — the habit that prevents disasters.", False),
+        ("Week 9", "Tokens (ERC-20)", "Build and deploy your own token, properly.", False),
+        ("Week 10", "NFTs (ERC-721)", "Mint an NFT collection with on-chain metadata.", False),
+        ("Week 11 · Project ▶", "Token on testnet", "Deploy a verified token contract with a test suite.", True),
+      ]),
+      (2, "dApps", "Weeks 12–17", "Connect contracts to real user interfaces.", [
+        ("Week 12", "ethers.js / viem", "Talk to contracts from JavaScript.", False),
+        ("Week 13", "Wallet connection", "Sign-in with wallet, transactions from the browser.", False),
+        ("Week 14", "Decentralized storage", "IPFS for images and metadata.", False),
+        ("Week 15", "Reading the chain", "Events, indexing, The Graph basics.", False),
+        ("Week 16", "Oracles", "Chainlink — bringing real-world data on-chain.", False),
+        ("Week 17 · Project ▶", "Full dApp", "A complete mint site or voting dApp, live on a testnet.", True),
+      ]),
+      (3, "Security & Portfolio", "Weeks 18–22", "Think like an auditor — the highest-paid skill in Web3.", [
+        ("Week 18", "Common exploits", "Reentrancy, overflow, front-running — and their fixes.", False),
+        ("Week 19", "Ethernaut challenges", "Hack intentionally-vulnerable contracts, legally.", False),
+        ("Week 20", "Best practices", "Audits, OpenZeppelin libraries, checklists.", False),
+        ("Week 21", "DeFi concepts", "How swaps, lending, and staking actually work.", False),
+        ("Week 22 · Capstone ▶", "Audited dApp", "A polished dApp with tests and a self-audit writeup.", True),
+      ]),
+    ],
+    "projects": [
+      ("Start here", "1 · CryptoZombies Course", "Learn Solidity by building a game — free and interactive."),
+      ("Tokens", "2 · Your Own ERC-20 Token", "Deployed, verified, and tested on a public testnet."),
+      ("NFTs", "3 · NFT Collection + Mint Page", "ERC-721 contract with IPFS metadata and a mint frontend."),
+      ("In demand", "4 · Full dApp", "Voting or crowdfunding dApp — contract + wallet-connected UI."),
+      ("Capstone", "5 · Audited Capstone dApp", "Full test suite, security self-audit, and documentation."),
+    ],
+    "steps": [
+      ("Install MetaMask", "Free wallet extension — switch it to a test network (no real money)."),
+      ("Do CryptoZombies lesson 1", "cryptozombies.io — you'll write your first Solidity in 30 minutes."),
+      ("Deploy in Remix", "remix.ethereum.org — deploy a Hello-World contract to a testnet today."),
+    ],
+    "resources": "Cyfrin Updraft, Alchemy University, CryptoZombies, Ethernaut, Solidity docs",
+    "note": "This roadmap teaches blockchain development, not crypto trading. Buying, trading, or speculating on tokens is risky and regulated differently across countries — build the technology; don't gamble on it. Everything here uses free test networks.",
+  },
+
+  {
+    "slug": "ar-vr",
+    "name": "AR/VR (XR) Developer",
+    "accent": "AR/VR Developer",
+    "h1_pre": "Become an ", "h1_post": " from scratch",
+    "meta": "A 22-week roadmap to become an AR/VR (XR) developer from scratch — C#, Unity, 3D fundamentals, mobile AR, VR interaction, optimization, and published XR projects.",
+    "lead": "Build worlds people can step into. Go from zero to shipping AR apps on phones and VR experiences on headsets in about five months — the skills behind gaming, training, and the spatial web.",
+    "stats": [("22", "weeks · ~10–12 hrs/wk"), ("5", "XR projects"), ("4", "phases · to published XR"), ("₹0", "free tools · phone AR")],
+    "rule_title": "Prototype in 3D → test on device → optimize",
+    "rule_lead": "XR only feels real on a device. Build small, run it on your phone (or headset) early, and optimize relentlessly — a smooth simple scene beats a beautiful slideshow every time.",
+    "phases": [
+      (0, "Foundations", "Weeks 1–5", "C#, Unity, and thinking in three dimensions.", [
+        ("Week 1", "C# basics", "Variables, methods, classes — Unity's language.", False),
+        ("Week 2", "Unity editor", "Scenes, GameObjects, components, play mode.", False),
+        ("Week 3", "3D intuition", "Vectors, transforms, rotation — without heavy math.", False),
+        ("Week 4", "Physics & interaction", "Rigidbodies, colliders, triggers, input.", False),
+        ("Week 5", "Git for Unity", "Version control that survives binary assets.", False),
+      ]),
+      (1, "Unity Depth", "Weeks 6–11", "From empty scene to polished mobile AR.", [
+        ("Week 6", "UI & prefabs", "Reusable objects and world-space interfaces.", False),
+        ("Week 7", "Animation & audio", "Animator, timelines, spatial sound basics.", False),
+        ("Week 8", "Materials & lighting", "Make scenes look good on a budget.", False),
+        ("Week 9", "AR Foundation", "Plane detection and anchors on your own phone.", False),
+        ("Week 10", "AR interaction", "Place, scale, and manipulate virtual objects.", False),
+        ("Week 11 · Project ▶", "AR placement app", "A furniture/poster previewer running on your phone.", True),
+      ]),
+      (2, "VR Development", "Weeks 12–17", "Presence, hands, and comfort — real VR skills.", [
+        ("Week 12", "XR Interaction Toolkit", "Rigs, controllers, grabbing and UI in VR.", False),
+        ("Week 13", "Locomotion", "Teleport vs smooth movement — comfort first.", False),
+        ("Week 14", "Hands & interaction design", "Natural grabbing, poking, and feedback.", False),
+        ("Week 15", "Standalone optimization", "Hit frame rate on Quest-class hardware.", False),
+        ("Week 16", "Polish & haptics", "Sound, vibration, and juice that sells presence.", False),
+        ("Week 17 · Project ▶", "VR experience", "A room-scale game or training scene (simulator OK).", True),
+      ]),
+      (3, "Ship & Portfolio", "Weeks 18–22", "XR UX, performance, and published proof.", [
+        ("Week 18", "XR UX rules", "Comfort, motion sickness, readability in space.", False),
+        ("Week 19", "Profiling", "Find and fix what's eating your frame rate.", False),
+        ("Week 20", "WebXR taste", "A browser-based XR scene anyone can open.", False),
+        ("Week 21", "Publishing", "Play Store for AR; App Lab route for VR.", False),
+        ("Week 22 · Capstone ▶", "Published XR app", "A polished AR or VR project, public and documented.", True),
+      ]),
+    ],
+    "projects": [
+      ("Start here", "1 · 3D Mini-Game", "A simple Unity game — proves C#, physics, and scene skills."),
+      ("Mobile AR", "2 · AR Placement App", "Place and scale 3D furniture in your real room via phone."),
+      ("VR", "3 · VR Interaction Scene", "Grab, throw, and manipulate objects with full comfort options."),
+      ("In demand", "4 · AR Learning App", "An educational AR experience — anatomy, planets, or machines."),
+      ("Capstone", "5 · Published XR Experience", "A complete app on the Play Store or shared as WebXR."),
+    ],
+    "steps": [
+      ("Install Unity Hub", "unity.com — free personal license, the industry-standard XR engine."),
+      ("Do 'Create with Code' hour one", "Unity Learn's free path — you'll move a player around today."),
+      ("Run the AR sample on your phone", "AR Foundation samples — see a cube sit on your real desk."),
+    ],
+    "resources": "Unity Learn, Meta Quest Developer Hub, Google Codelabs, Valem Tutorials, Brackeys",
+    "note": "No headset needed to start: a recent Android phone covers all of mobile AR, and Unity's XR Device Simulator lets you build VR interactions before you ever touch a Quest.",
+  },
+
+  {
+    "slug": "iot-robotics",
+    "name": "IoT & Robotics Engineer",
+    "accent": "IoT & Robotics Engineer",
+    "h1_pre": "Become an ", "h1_post": " from scratch",
+    "meta": "A 22-week roadmap to become an IoT and robotics engineer from scratch — electronics, Arduino, ESP32, sensors, MQTT and cloud dashboards, Raspberry Pi, OpenCV, ROS 2, and an autonomous capstone.",
+    "lead": "Make your code move things in the real world. Go from zero electronics to connected devices and a working robot in about five months — the hands-on path into Industry 4.0.",
+    "stats": [("22", "weeks · ~10–12 hrs/wk"), ("5", "hardware projects"), ("4", "phases · code to robot"), ("~₹2K", "one starter kit (or free sims)")],
+    "rule_title": "Wire it → code it → make it move",
+    "rule_lead": "Hardware punishes theory-only learning instantly. Build every circuit, flash every sketch, and let things fail — a burnt LED teaches more than a perfect lecture. Free simulators count when parts aren't handy.",
+    "phases": [
+      (0, "Foundations", "Weeks 1–5", "Electronics and the first microcontroller.", [
+        ("Week 1", "Electricity basics", "Voltage, current, resistance, breadboards — safely.", False),
+        ("Week 2", "Arduino first steps", "Digital/analog pins, blink, buttons (Wokwi works too).", False),
+        ("Week 3", "C/C++ for embedded", "Just enough to write clean sketches.", False),
+        ("Week 4", "Sensors", "Temperature, distance, light, motion — read them all.", False),
+        ("Week 5", "Actuators", "LEDs, buzzers, servos, relays — make things happen.", False),
+      ]),
+      (1, "IoT", "Weeks 6–11", "Put your devices on the internet.", [
+        ("Week 6", "ESP32 & WiFi", "The ₹300 chip that connects anything to the internet.", False),
+        ("Week 7", "MQTT", "The messaging protocol of IoT, hands-on.", False),
+        ("Week 8", "Cloud dashboards", "Stream sensor data to live charts (free tiers).", False),
+        ("Week 9", "Control from anywhere", "Switch devices from your phone, safely.", False),
+        ("Week 10", "Power & reliability", "Batteries, sleep modes, surviving reboots.", False),
+        ("Week 11 · Project ▶", "Smart-home node", "A WiFi sensor + relay node with a live dashboard.", True),
+      ]),
+      (2, "Robotics", "Weeks 12–17", "Motors, vision, and a robot that decides.", [
+        ("Week 12", "Motors & drivers", "DC motors, H-bridges, PWM speed control.", False),
+        ("Week 13", "Robot chassis", "Build a two-wheel-drive robot base.", False),
+        ("Week 14", "Raspberry Pi + Python", "A Linux brain for bigger robots.", False),
+        ("Week 15", "Computer vision", "OpenCV basics — follow a line or a colored ball.", False),
+        ("Week 16", "Control loops", "Sense → decide → act; simple PID intuition.", False),
+        ("Week 17 · Project ▶", "Autonomous robot", "An obstacle-avoiding or line-following robot.", True),
+      ]),
+      (3, "Integration", "Weeks 18–22", "Robots + cloud + polish = Industry 4.0 portfolio.", [
+        ("Week 18", "Robot telemetry", "Stream your robot's sensors to your IoT dashboard.", False),
+        ("Week 19", "ROS 2 taste", "The framework real robotics companies use.", False),
+        ("Week 20", "Mechanics & mounting", "3D-printed or hand-built parts that don't fall off.", False),
+        ("Week 21", "Testing & safety", "Fail-safes, e-stops, and honest documentation.", False),
+        ("Week 22 · Capstone ▶", "Connected robot system", "A robot you can monitor and command over the internet.", True),
+      ]),
+    ],
+    "projects": [
+      ("Start here", "1 · Sensor Station", "Read three sensors and display live values (Wokwi or real board)."),
+      ("IoT", "2 · WiFi Weather Node", "An ESP32 that streams temperature to a live cloud dashboard."),
+      ("Automation", "3 · Smart-Home Controller", "Control lights/appliances from your phone via MQTT."),
+      ("In demand", "4 · Vision Line-Follower", "A robot that follows a track using a camera and OpenCV."),
+      ("Capstone", "5 · Internet-Connected Robot", "Drive and monitor your robot from a web dashboard."),
+    ],
+    "steps": [
+      ("Open Wokwi", "wokwi.com — a free online Arduino/ESP32 simulator. No hardware needed."),
+      ("Blink an LED", "The 'hello world' of hardware — in the simulator or on a real board."),
+      ("Read one sensor", "Wire (or simulate) a temperature sensor and print its values. Started."),
+    ],
+    "resources": "Arduino docs, Wokwi simulator, Random Nerd Tutorials, Paul McWhorter (YouTube), ROS 2 docs",
+    "note": "A basic Arduino/ESP32 starter kit costs about ₹1,500–2,500 and covers the first three months. Until you have one, Wokwi and Tinkercad simulate almost everything free — never let missing parts stop the learning.",
+  },
 ]
 
 # Career outcomes per domain (indicative India starting ranges, 2026).
@@ -564,7 +820,22 @@ OUTCOMES = {
   "data-engineering": {
     "titles": ["Data Engineer", "Analytics Engineer", "ETL Developer", "Big Data Engineer"],
     "salary": "₹6–14 LPA", "suits": "You like building robust systems — the plumbing that powers every dashboard and AI model."},
+  "prompt-engineering": {
+    "titles": ["Prompt Engineer", "GenAI Specialist", "AI Automation Builder", "AI Content Strategist"],
+    "salary": "₹4–12 LPA", "suits": "You love experimenting with AI tools and turning fuzzy goals into precise instructions — where clear writing meets logic."},
+  "blockchain-web3": {
+    "titles": ["Blockchain Developer", "Smart Contract Engineer", "Web3 Frontend Developer", "Junior Security Auditor"],
+    "salary": "₹5–15 LPA", "suits": "You're drawn to new tech frontiers and want to build systems where the code itself enforces the rules."},
+  "ar-vr": {
+    "titles": ["AR/VR Developer", "Unity Developer", "XR Interaction Designer", "3D Application Developer"],
+    "salary": "₹4–12 LPA", "suits": "You want to build immersive worlds and spatial interfaces people can step into — gaming meets the future of computing."},
+  "iot-robotics": {
+    "titles": ["IoT Engineer", "Embedded Systems Engineer", "Robotics Engineer", "Firmware Developer"],
+    "salary": "₹4–10 LPA", "suits": "You like building things you can touch — where your code spins motors, reads sensors, and lights up the real world."},
 }
+
+# Slugs shown with a "New" badge on the hub.
+NEW_SLUGS = {"prompt-engineering", "blockchain-web3", "ar-vr", "iot-robotics"}
 
 # AI/ML is already a hand-built page; list it in the hub.
 HUB_EXTRA = {
@@ -904,7 +1175,7 @@ def build_print(d):
 </style></head><body>
   <div class="cover">
     <div class="kicker">PathAhead · Free Roadmap</div>
-    <h1>Become a<br>%%NAME%%<br>from Scratch</h1>
+    <h1>%%H1PRE%%<br>%%NAME%%<br>from Scratch</h1>
     <p>%%LEAD%%</p>
     <div class="stats">%%STATS%%</div>
     <div class="foot">A free PathAhead learning resource · adjust the pace to your life — the order matters more than the dates.</div>
@@ -950,6 +1221,7 @@ def build_print(d):
     oc = OUTCOMES[d["slug"]]
     roles = " · ".join(oc["titles"])
     repl = {
+        "%%H1PRE%%": d["h1_pre"].strip(),
         "%%NAME%%": d["name"], "%%CSS%%": PRINT_CSS, "%%LEAD%%": d["lead"], "%%STATS%%": stats,
         "%%RULETITLE%%": d["rule_title"], "%%RULELEAD%%": d["rule_lead"], "%%NOTE%%": note_html,
         "%%PHASES%%": render_phases_print(d["phases"]),
@@ -965,6 +1237,8 @@ def build_print(d):
 # ----------------------------------------------------------------------
 # HUB PAGE
 # ----------------------------------------------------------------------
+COUNT_WORDS = {8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen"}
+
 def build_hub(domains):
     def card(href, pdf, badge, name, blurb, weeks, projs):
         return (
@@ -982,8 +1256,9 @@ def build_hub(domains):
         projs = d["stats"][1][0] + " projects"
         blurb = d["meta"].split("—", 1)[1].strip() if "—" in d["meta"] else d["meta"]
         blurb = blurb.rstrip(".") + "."
+        badge = "New" if d["slug"] in NEW_SLUGS else "Free"
         cards.append(card(d["slug"] + "-roadmap.html", "roadmaps/%s-roadmap.pdf" % d["slug"],
-                          "Free", d["name"], blurb, weeks, projs))
+                          badge, d["name"], blurb, weeks, projs))
     cards_html = "\n        ".join(cards)
     return """<!DOCTYPE html>
 <html lang="en">
@@ -991,7 +1266,7 @@ def build_hub(domains):
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Career Roadmaps — PathAhead | Learn Any Tech Career from Scratch</title>
-  <meta name="description" content="Free, step-by-step roadmaps to learn any tech career from scratch — AI/ML, web development, data science, cybersecurity, cloud/DevOps, mobile, UI/UX, and data engineering." />
+  <meta name="description" content="Free, step-by-step roadmaps to learn any tech career from scratch — AI/ML, prompt engineering, web development, data science, cybersecurity, cloud/DevOps, mobile, UI/UX, data engineering, blockchain/Web3, AR/VR, and IoT & robotics." />
   <meta name="theme-color" content="#2563EB" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta property="og:type" content="website" />
@@ -1041,7 +1316,7 @@ def build_hub(domains):
     <div class="container">
       <div class="section-head">
         <span class="eyebrow reveal">Choose Your Path</span>
-        <h2 class="h-xl reveal reveal-d1">Eight roadmaps, one place to start</h2>
+        <h2 class="h-xl reveal reveal-d1">%%COUNT%% roadmaps, one place to start</h2>
       </div>
       <div class="rm-grid reveal">
         %%CARDS%%
@@ -1066,7 +1341,7 @@ def build_hub(domains):
   <script src="js/main.js"></script>
 </body>
 </html>
-""".replace("%%CARDS%%", cards_html)
+""".replace("%%CARDS%%", cards_html).replace("%%COUNT%%", COUNT_WORDS.get(len(domains) + 1, str(len(domains) + 1)))
 
 # ----------------------------------------------------------------------
 # WRITE FILES

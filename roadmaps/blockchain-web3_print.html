@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Blockchain / Web3 Developer Roadmap</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:#1e293b; font-size:10.5pt; line-height:1.5; margin:0; }
+  h1,h2,h3,h4 { color:#0f172a; margin:0; }
+  .cover { height:247mm; display:flex; flex-direction:column; justify-content:center; background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%); color:#fff; border-radius:14px; padding:0 20mm; break-after:page; }
+  .cover .kicker { font-size:12pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.85; }
+  .cover h1 { color:#fff; font-size:34pt; font-weight:900; line-height:1.08; margin:14px 0 18px; }
+  .cover p { font-size:12.5pt; max-width:150mm; opacity:.95; line-height:1.5; }
+  .cover .stats { display:flex; gap:26px; margin-top:36px; flex-wrap:wrap; }
+  .cover .stat .n { font-size:28pt; font-weight:900; line-height:1; }
+  .cover .stat .l { font-size:9.5pt; opacity:.9; margin-top:4px; }
+  .cover .foot { margin-top:42px; font-size:10pt; opacity:.8; }
+  .sec-kick { font-size:9pt; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#2563eb; }
+  h2.sec { font-size:19pt; font-weight:800; margin:4px 0 4px; }
+  .rule { height:3px; width:54px; background:#2563eb; border-radius:2px; margin:8px 0 14px; }
+  .lead { color:#475569; font-size:10.5pt; margin-bottom:16px; }
+  .phase { border:1px solid #e2e8f0; border-radius:12px; padding:15px 17px; margin-bottom:13px; break-inside:avoid; }
+  .phase-head { display:flex; align-items:center; gap:12px; margin-bottom:9px; }
+  .pnum { width:32px; height:32px; flex:0 0 32px; border-radius:9px; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:12pt; background:linear-gradient(135deg,#2563eb,#7c3aed); }
+  .phase-head h3 { font-size:12.5pt; } .phase-head .dates { font-size:8.5pt; color:#64748b; font-weight:600; }
+  .goal { color:#64748b; font-size:9pt; margin:0 0 11px; }
+  .weeks { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+  .wk { border:1px solid #e8edf3; border-radius:8px; padding:7px 10px; background:#f8fafc; }
+  .wk.proj { border-color:#2563eb; background:#eff4ff; }
+  .wk .d { font-size:7pt; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#2563eb; }
+  .wk h4 { font-size:9pt; margin:2px 0 2px; } .wk p { font-size:8pt; color:#64748b; margin:0; line-height:1.35; }
+  .projects { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  .proj { border:1px solid #e2e8f0; border-radius:10px; padding:11px 13px; break-inside:avoid; }
+  .proj .tag { display:inline-block; font-size:7pt; font-weight:700; color:#2563eb; background:#eef2ff; padding:2px 8px; border-radius:999px; margin-bottom:5px; }
+  .proj h4 { font-size:10pt; margin:0 0 3px; } .proj p { font-size:8.5pt; color:#475569; margin:0; line-height:1.4; }
+  .steps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:11px; margin-top:8px; }
+  .step { border:1px solid #e2e8f0; border-radius:10px; padding:13px; break-inside:avoid; }
+  .step .n { width:24px; height:24px; border-radius:50%; background:#2563eb; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:9.5pt; margin-bottom:7px; }
+  .step h4 { font-size:9.5pt; margin:0 0 3px; } .step p { font-size:8.3pt; color:#64748b; margin:0; line-height:1.4; }
+  .callout { border-left:4px solid #2563eb; background:#f8fafc; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9.5pt; }
+  .note-print { border-left:4px solid #d97706; background:#fffbeb; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9pt; color:#7c2d12; }
+  .res-print { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .rcol { border:1px solid #e2e8f0; border-radius:10px; padding:10px 13px; break-inside:avoid; }
+  .rcol .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:4px; }
+  .rcol ul { padding-left:15px; margin:0; } .rcol ul li { font-size:8.3pt; margin:3px 0; line-height:1.35; }
+  .rcol a { color:#2563eb; text-decoration:none; }
+  .pc-outcomes { display:grid; grid-template-columns:1.6fr 1fr; gap:10px; margin:14px 0; break-inside:avoid; }
+  .pc-roles, .pc-salary { border:1px solid #e2e8f0; border-radius:10px; padding:11px 14px; background:#f8fafc; font-size:9pt; }
+  .pc-roles .k, .pc-salary .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:3px; }
+  .pc-salary { background:linear-gradient(135deg,#eef2ff,#f8fafc); text-align:center; }
+  .pc-salary .v { font-size:15pt; font-weight:900; color:#2563eb; }
+  .footer { margin-top:20px; padding-top:11px; border-top:1px solid #e2e8f0; font-size:8pt; color:#94a3b8; }
+  .spacer { break-after:page; }
+</style></head><body>
+  <div class="cover">
+    <div class="kicker">PathAhead · Free Roadmap</div>
+    <h1>Become a<br>Blockchain / Web3 Developer<br>from Scratch</h1>
+    <p>Build the systems where code enforces the rules. Go from zero to deploying smart contracts and full dApps in about five months — everything on free testnets.</p>
+    <div class="stats"><div class="stat"><div class="n">22</div><div class="l">weeks · ~10–12 hrs/wk</div></div><div class="stat"><div class="n">5</div><div class="l">on-chain projects</div></div><div class="stat"><div class="n">4</div><div class="l">phases · to deployed dApp</div></div><div class="stat"><div class="n">₹0</div><div class="l">free testnets only</div></div></div>
+    <div class="foot">A free PathAhead learning resource · adjust the pace to your life — the order matters more than the dates.</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The One Rule</div>
+    <h2 class="sec">Build on testnets → verify on-chain → document</h2><div class="rule"></div>
+    <p class="lead">Web3 is learned by shipping contracts, not watching charts. Everything below is deployed to free test networks, verified publicly, and written up on GitHub — real proof anyone can check on-chain.</p>
+    <div class="note-print"><strong>Legal &amp; ethical use only.</strong> This roadmap teaches blockchain development, not crypto trading. Buying, trading, or speculating on tokens is risky and regulated differently across countries — build the technology; don't gamble on it. Everything here uses free test networks.</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The Roadmap</div>
+    <h2 class="sec">Four phases, step by step</h2><div class="rule"></div>
+    <div class="phase"><div class="phase-head"><span class="pnum">0</span><div><h3>Foundations</h3><span class="dates">Weeks 1–5</span></div></div><p class="goal">How blockchains actually work, before any code.</p><div class="weeks"><div class="wk"><div class="d">Week 1</div><h4>Blockchain mechanics</h4><p>Blocks, hashing, consensus, why it can't be quietly edited.</p></div><div class="wk"><div class="d">Week 2</div><h4>Ethereum & wallets</h4><p>Accounts, gas, transactions; set up MetaMask on a testnet.</p></div><div class="wk"><div class="d">Week 3</div><h4>Cryptography basics</h4><p>Public/private keys, signatures, hashes in practice.</p></div><div class="wk"><div class="d">Week 4</div><h4>JavaScript refresher</h4><p>The language of Web3 tooling and frontends.</p></div><div class="wk"><div class="d">Week 5</div><h4>Smart-contract concepts</h4><p>What contracts can (and can't) do; reading real ones.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">1</span><div><h3>Solidity</h3><span class="dates">Weeks 6–11</span></div></div><p class="goal">Write, test, and deploy real smart contracts.</p><div class="weeks"><div class="wk"><div class="d">Week 6</div><h4>Solidity syntax</h4><p>Types, functions, modifiers, events — in Remix.</p></div><div class="wk"><div class="d">Week 7</div><h4>Contract patterns</h4><p>Ownership, access control, upgradability basics.</p></div><div class="wk"><div class="d">Week 8</div><h4>Testing</h4><p>Hardhat/Foundry tests — the habit that prevents disasters.</p></div><div class="wk"><div class="d">Week 9</div><h4>Tokens (ERC-20)</h4><p>Build and deploy your own token, properly.</p></div><div class="wk"><div class="d">Week 10</div><h4>NFTs (ERC-721)</h4><p>Mint an NFT collection with on-chain metadata.</p></div><div class="wk proj"><div class="d">Week 11 · Project ▶</div><h4>Token on testnet</h4><p>Deploy a verified token contract with a test suite.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">2</span><div><h3>dApps</h3><span class="dates">Weeks 12–17</span></div></div><p class="goal">Connect contracts to real user interfaces.</p><div class="weeks"><div class="wk"><div class="d">Week 12</div><h4>ethers.js / viem</h4><p>Talk to contracts from JavaScript.</p></div><div class="wk"><div class="d">Week 13</div><h4>Wallet connection</h4><p>Sign-in with wallet, transactions from the browser.</p></div><div class="wk"><div class="d">Week 14</div><h4>Decentralized storage</h4><p>IPFS for images and metadata.</p></div><div class="wk"><div class="d">Week 15</div><h4>Reading the chain</h4><p>Events, indexing, The Graph basics.</p></div><div class="wk"><div class="d">Week 16</div><h4>Oracles</h4><p>Chainlink — bringing real-world data on-chain.</p></div><div class="wk proj"><div class="d">Week 17 · Project ▶</div><h4>Full dApp</h4><p>A complete mint site or voting dApp, live on a testnet.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">3</span><div><h3>Security & Portfolio</h3><span class="dates">Weeks 18–22</span></div></div><p class="goal">Think like an auditor — the highest-paid skill in Web3.</p><div class="weeks"><div class="wk"><div class="d">Week 18</div><h4>Common exploits</h4><p>Reentrancy, overflow, front-running — and their fixes.</p></div><div class="wk"><div class="d">Week 19</div><h4>Ethernaut challenges</h4><p>Hack intentionally-vulnerable contracts, legally.</p></div><div class="wk"><div class="d">Week 20</div><h4>Best practices</h4><p>Audits, OpenZeppelin libraries, checklists.</p></div><div class="wk"><div class="d">Week 21</div><h4>DeFi concepts</h4><p>How swaps, lending, and staking actually work.</p></div><div class="wk proj"><div class="d">Week 22 · Capstone ▶</div><h4>Audited dApp</h4><p>A polished dApp with tests and a self-audit writeup.</p></div></div></div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="section">
+    <div class="sec-kick">Build a Portfolio</div>
+    <h2 class="sec">Five projects that get you hired</h2><div class="rule"></div>
+    <p class="lead">Projects beat certificates. Do them in order — each builds on the last. Put every one on GitHub with a clear README: problem → approach → result.</p>
+    <div class="projects"><div class="proj"><span class="tag">Start here</span><h4>1 · CryptoZombies Course</h4><p>Learn Solidity by building a game — free and interactive.</p></div><div class="proj"><span class="tag">Tokens</span><h4>2 · Your Own ERC-20 Token</h4><p>Deployed, verified, and tested on a public testnet.</p></div><div class="proj"><span class="tag">NFTs</span><h4>3 · NFT Collection + Mint Page</h4><p>ERC-721 contract with IPFS metadata and a mint frontend.</p></div><div class="proj"><span class="tag">In demand</span><h4>4 · Full dApp</h4><p>Voting or crowdfunding dApp — contract + wallet-connected UI.</p></div><div class="proj"><span class="tag">Capstone</span><h4>5 · Audited Capstone dApp</h4><p>Full test suite, security self-audit, and documentation.</p></div></div>
+    <div class="pc-outcomes">
+      <div class="pc-roles"><span class="k">Roles you can apply for</span>Blockchain Developer · Smart Contract Engineer · Web3 Frontend Developer · Junior Security Auditor</div>
+      <div class="pc-salary"><span class="k">Typical starting salary · India</span><span class="v">₹5–15 LPA</span></div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top:16px"><div class="sec-kick">Learn It</div><h2 class="sec">Learning resources</h2><div class="rule"></div><p class="lead">Every item links to the real source (clickable in this PDF).</p><div class="res-print"><div class="rcol"><span class="k">Books</span><ul><li><a href="https://www.google.com/search?q=Mastering%20Bitcoin%20by%20Andreas%20Antonopoulos" target="_blank" rel="noopener noreferrer">Mastering Bitcoin by Andreas Antonopoulos</a></li><li><a href="https://www.google.com/search?q=Mastering%20Ethereum%20by%20Andreas%20Antonopoulos%20and%20Gavin%20Wood" target="_blank" rel="noopener noreferrer">Mastering Ethereum by Andreas Antonopoulos and Gavin Wood</a></li><li><a href="https://www.google.com/search?q=The%20Infinite%20Machine%20by%20Camila%20Russo" target="_blank" rel="noopener noreferrer">The Infinite Machine by Camila Russo</a></li></ul></div><div class="rcol"><span class="k">Courses</span><ul><li><a href="https://updraft.cyfrin.io/" target="_blank" rel="noopener noreferrer">Cyfrin Updraft Solidity course</a></li><li><a href="https://university.alchemy.com/" target="_blank" rel="noopener noreferrer">Alchemy University Ethereum Developer Bootcamp</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Blockchain Specialization (Coursera)</a></li><li><a href="https://docs.soliditylang.org/" target="_blank" rel="noopener noreferrer">CryptoZombies interactive Solidity</a></li></ul></div><div class="rcol"><span class="k">YouTube</span><ul><li><a href="https://www.youtube.com/@PatrickAlphaC" target="_blank" rel="noopener noreferrer">Patrick Collins</a></li><li><a href="https://www.youtube.com/@DappUniversity" target="_blank" rel="noopener noreferrer">Dapp University</a></li><li><a href="https://www.youtube.com/@WhiteboardCrypto" target="_blank" rel="noopener noreferrer">Whiteboard Crypto</a></li><li><a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">freeCodeCamp Solidity course</a></li></ul></div><div class="rcol"><span class="k">Practice</span><ul><li><a href="https://cryptozombies.io/" target="_blank" rel="noopener noreferrer">CryptoZombies</a></li><li><a href="https://ethernaut.openzeppelin.com/" target="_blank" rel="noopener noreferrer">Ethernaut by OpenZeppelin</a></li><li><a href="https://remix.ethereum.org/" target="_blank" rel="noopener noreferrer">Remix IDE</a></li><li><a href="https://speedrunethereum.com/" target="_blank" rel="noopener noreferrer">SpeedRunEthereum</a></li><li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a></li></ul></div></div></div>
+
+  <div class="section" style="margin-top:20px">
+    <div class="sec-kick">Do This Today</div>
+    <h2 class="sec">Your first step (takes 30 minutes)</h2><div class="rule"></div>
+    <div class="steps"><div class="step"><div class="n">1</div><h4>Install MetaMask</h4><p>Free wallet extension — switch it to a test network (no real money).</p></div><div class="step"><div class="n">2</div><h4>Do CryptoZombies lesson 1</h4><p>cryptozombies.io — you'll write your first Solidity in 30 minutes.</p></div><div class="step"><div class="n">3</div><h4>Deploy in Remix</h4><p>remix.ethereum.org — deploy a Hello-World contract to a testnet today.</p></div></div>
+    <div class="callout"><strong>Job-ready checklist:</strong> 3–5 solid projects on GitHub (≥1 deployed or documented) · can explain your work in an interview · comfortable with the core tools of the field · a portfolio or profile recruiters can find.</div>
+    <div class="footer">PathAhead — India's premium career guidance platform. This roadmap is a free educational resource; timelines are a guide and everyone learns at a different pace. Referenced third-party resources (Cyfrin Updraft, Alchemy University, CryptoZombies, Ethernaut, Solidity docs) are for learning only and are not affiliated with PathAhead.</div>
+  </div>
+</body></html>

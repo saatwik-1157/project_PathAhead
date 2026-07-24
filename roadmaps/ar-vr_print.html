@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AR/VR (XR) Developer Roadmap</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:#1e293b; font-size:10.5pt; line-height:1.5; margin:0; }
+  h1,h2,h3,h4 { color:#0f172a; margin:0; }
+  .cover { height:247mm; display:flex; flex-direction:column; justify-content:center; background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%); color:#fff; border-radius:14px; padding:0 20mm; break-after:page; }
+  .cover .kicker { font-size:12pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.85; }
+  .cover h1 { color:#fff; font-size:34pt; font-weight:900; line-height:1.08; margin:14px 0 18px; }
+  .cover p { font-size:12.5pt; max-width:150mm; opacity:.95; line-height:1.5; }
+  .cover .stats { display:flex; gap:26px; margin-top:36px; flex-wrap:wrap; }
+  .cover .stat .n { font-size:28pt; font-weight:900; line-height:1; }
+  .cover .stat .l { font-size:9.5pt; opacity:.9; margin-top:4px; }
+  .cover .foot { margin-top:42px; font-size:10pt; opacity:.8; }
+  .sec-kick { font-size:9pt; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#2563eb; }
+  h2.sec { font-size:19pt; font-weight:800; margin:4px 0 4px; }
+  .rule { height:3px; width:54px; background:#2563eb; border-radius:2px; margin:8px 0 14px; }
+  .lead { color:#475569; font-size:10.5pt; margin-bottom:16px; }
+  .phase { border:1px solid #e2e8f0; border-radius:12px; padding:15px 17px; margin-bottom:13px; break-inside:avoid; }
+  .phase-head { display:flex; align-items:center; gap:12px; margin-bottom:9px; }
+  .pnum { width:32px; height:32px; flex:0 0 32px; border-radius:9px; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:12pt; background:linear-gradient(135deg,#2563eb,#7c3aed); }
+  .phase-head h3 { font-size:12.5pt; } .phase-head .dates { font-size:8.5pt; color:#64748b; font-weight:600; }
+  .goal { color:#64748b; font-size:9pt; margin:0 0 11px; }
+  .weeks { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+  .wk { border:1px solid #e8edf3; border-radius:8px; padding:7px 10px; background:#f8fafc; }
+  .wk.proj { border-color:#2563eb; background:#eff4ff; }
+  .wk .d { font-size:7pt; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#2563eb; }
+  .wk h4 { font-size:9pt; margin:2px 0 2px; } .wk p { font-size:8pt; color:#64748b; margin:0; line-height:1.35; }
+  .projects { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  .proj { border:1px solid #e2e8f0; border-radius:10px; padding:11px 13px; break-inside:avoid; }
+  .proj .tag { display:inline-block; font-size:7pt; font-weight:700; color:#2563eb; background:#eef2ff; padding:2px 8px; border-radius:999px; margin-bottom:5px; }
+  .proj h4 { font-size:10pt; margin:0 0 3px; } .proj p { font-size:8.5pt; color:#475569; margin:0; line-height:1.4; }
+  .steps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:11px; margin-top:8px; }
+  .step { border:1px solid #e2e8f0; border-radius:10px; padding:13px; break-inside:avoid; }
+  .step .n { width:24px; height:24px; border-radius:50%; background:#2563eb; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:9.5pt; margin-bottom:7px; }
+  .step h4 { font-size:9.5pt; margin:0 0 3px; } .step p { font-size:8.3pt; color:#64748b; margin:0; line-height:1.4; }
+  .callout { border-left:4px solid #2563eb; background:#f8fafc; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9.5pt; }
+  .note-print { border-left:4px solid #d97706; background:#fffbeb; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9pt; color:#7c2d12; }
+  .res-print { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .rcol { border:1px solid #e2e8f0; border-radius:10px; padding:10px 13px; break-inside:avoid; }
+  .rcol .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:4px; }
+  .rcol ul { padding-left:15px; margin:0; } .rcol ul li { font-size:8.3pt; margin:3px 0; line-height:1.35; }
+  .rcol a { color:#2563eb; text-decoration:none; }
+  .pc-outcomes { display:grid; grid-template-columns:1.6fr 1fr; gap:10px; margin:14px 0; break-inside:avoid; }
+  .pc-roles, .pc-salary { border:1px solid #e2e8f0; border-radius:10px; padding:11px 14px; background:#f8fafc; font-size:9pt; }
+  .pc-roles .k, .pc-salary .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:3px; }
+  .pc-salary { background:linear-gradient(135deg,#eef2ff,#f8fafc); text-align:center; }
+  .pc-salary .v { font-size:15pt; font-weight:900; color:#2563eb; }
+  .footer { margin-top:20px; padding-top:11px; border-top:1px solid #e2e8f0; font-size:8pt; color:#94a3b8; }
+  .spacer { break-after:page; }
+</style></head><body>
+  <div class="cover">
+    <div class="kicker">PathAhead · Free Roadmap</div>
+    <h1>Become an<br>AR/VR (XR) Developer<br>from Scratch</h1>
+    <p>Build worlds people can step into. Go from zero to shipping AR apps on phones and VR experiences on headsets in about five months — the skills behind gaming, training, and the spatial web.</p>
+    <div class="stats"><div class="stat"><div class="n">22</div><div class="l">weeks · ~10–12 hrs/wk</div></div><div class="stat"><div class="n">5</div><div class="l">XR projects</div></div><div class="stat"><div class="n">4</div><div class="l">phases · to published XR</div></div><div class="stat"><div class="n">₹0</div><div class="l">free tools · phone AR</div></div></div>
+    <div class="foot">A free PathAhead learning resource · adjust the pace to your life — the order matters more than the dates.</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The One Rule</div>
+    <h2 class="sec">Prototype in 3D → test on device → optimize</h2><div class="rule"></div>
+    <p class="lead">XR only feels real on a device. Build small, run it on your phone (or headset) early, and optimize relentlessly — a smooth simple scene beats a beautiful slideshow every time.</p>
+    <div class="note-print"><strong>Legal &amp; ethical use only.</strong> No headset needed to start: a recent Android phone covers all of mobile AR, and Unity's XR Device Simulator lets you build VR interactions before you ever touch a Quest.</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The Roadmap</div>
+    <h2 class="sec">Four phases, step by step</h2><div class="rule"></div>
+    <div class="phase"><div class="phase-head"><span class="pnum">0</span><div><h3>Foundations</h3><span class="dates">Weeks 1–5</span></div></div><p class="goal">C#, Unity, and thinking in three dimensions.</p><div class="weeks"><div class="wk"><div class="d">Week 1</div><h4>C# basics</h4><p>Variables, methods, classes — Unity's language.</p></div><div class="wk"><div class="d">Week 2</div><h4>Unity editor</h4><p>Scenes, GameObjects, components, play mode.</p></div><div class="wk"><div class="d">Week 3</div><h4>3D intuition</h4><p>Vectors, transforms, rotation — without heavy math.</p></div><div class="wk"><div class="d">Week 4</div><h4>Physics & interaction</h4><p>Rigidbodies, colliders, triggers, input.</p></div><div class="wk"><div class="d">Week 5</div><h4>Git for Unity</h4><p>Version control that survives binary assets.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">1</span><div><h3>Unity Depth</h3><span class="dates">Weeks 6–11</span></div></div><p class="goal">From empty scene to polished mobile AR.</p><div class="weeks"><div class="wk"><div class="d">Week 6</div><h4>UI & prefabs</h4><p>Reusable objects and world-space interfaces.</p></div><div class="wk"><div class="d">Week 7</div><h4>Animation & audio</h4><p>Animator, timelines, spatial sound basics.</p></div><div class="wk"><div class="d">Week 8</div><h4>Materials & lighting</h4><p>Make scenes look good on a budget.</p></div><div class="wk"><div class="d">Week 9</div><h4>AR Foundation</h4><p>Plane detection and anchors on your own phone.</p></div><div class="wk"><div class="d">Week 10</div><h4>AR interaction</h4><p>Place, scale, and manipulate virtual objects.</p></div><div class="wk proj"><div class="d">Week 11 · Project ▶</div><h4>AR placement app</h4><p>A furniture/poster previewer running on your phone.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">2</span><div><h3>VR Development</h3><span class="dates">Weeks 12–17</span></div></div><p class="goal">Presence, hands, and comfort — real VR skills.</p><div class="weeks"><div class="wk"><div class="d">Week 12</div><h4>XR Interaction Toolkit</h4><p>Rigs, controllers, grabbing and UI in VR.</p></div><div class="wk"><div class="d">Week 13</div><h4>Locomotion</h4><p>Teleport vs smooth movement — comfort first.</p></div><div class="wk"><div class="d">Week 14</div><h4>Hands & interaction design</h4><p>Natural grabbing, poking, and feedback.</p></div><div class="wk"><div class="d">Week 15</div><h4>Standalone optimization</h4><p>Hit frame rate on Quest-class hardware.</p></div><div class="wk"><div class="d">Week 16</div><h4>Polish & haptics</h4><p>Sound, vibration, and juice that sells presence.</p></div><div class="wk proj"><div class="d">Week 17 · Project ▶</div><h4>VR experience</h4><p>A room-scale game or training scene (simulator OK).</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">3</span><div><h3>Ship & Portfolio</h3><span class="dates">Weeks 18–22</span></div></div><p class="goal">XR UX, performance, and published proof.</p><div class="weeks"><div class="wk"><div class="d">Week 18</div><h4>XR UX rules</h4><p>Comfort, motion sickness, readability in space.</p></div><div class="wk"><div class="d">Week 19</div><h4>Profiling</h4><p>Find and fix what's eating your frame rate.</p></div><div class="wk"><div class="d">Week 20</div><h4>WebXR taste</h4><p>A browser-based XR scene anyone can open.</p></div><div class="wk"><div class="d">Week 21</div><h4>Publishing</h4><p>Play Store for AR; App Lab route for VR.</p></div><div class="wk proj"><div class="d">Week 22 · Capstone ▶</div><h4>Published XR app</h4><p>A polished AR or VR project, public and documented.</p></div></div></div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="section">
+    <div class="sec-kick">Build a Portfolio</div>
+    <h2 class="sec">Five projects that get you hired</h2><div class="rule"></div>
+    <p class="lead">Projects beat certificates. Do them in order — each builds on the last. Put every one on GitHub with a clear README: problem → approach → result.</p>
+    <div class="projects"><div class="proj"><span class="tag">Start here</span><h4>1 · 3D Mini-Game</h4><p>A simple Unity game — proves C#, physics, and scene skills.</p></div><div class="proj"><span class="tag">Mobile AR</span><h4>2 · AR Placement App</h4><p>Place and scale 3D furniture in your real room via phone.</p></div><div class="proj"><span class="tag">VR</span><h4>3 · VR Interaction Scene</h4><p>Grab, throw, and manipulate objects with full comfort options.</p></div><div class="proj"><span class="tag">In demand</span><h4>4 · AR Learning App</h4><p>An educational AR experience — anatomy, planets, or machines.</p></div><div class="proj"><span class="tag">Capstone</span><h4>5 · Published XR Experience</h4><p>A complete app on the Play Store or shared as WebXR.</p></div></div>
+    <div class="pc-outcomes">
+      <div class="pc-roles"><span class="k">Roles you can apply for</span>AR/VR Developer · Unity Developer · XR Interaction Designer · 3D Application Developer</div>
+      <div class="pc-salary"><span class="k">Typical starting salary · India</span><span class="v">₹4–12 LPA</span></div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top:16px"><div class="sec-kick">Learn It</div><h2 class="sec">Learning resources</h2><div class="rule"></div><p class="lead">Every item links to the real source (clickable in this PDF).</p><div class="res-print"><div class="rcol"><span class="k">Books</span><ul><li><a href="https://www.google.com/search?q=Augmented%20Reality%20Principles%20and%20Practice%20by%20Dieter%20Schmalstieg%20and%20Tobias%20Hollerer" target="_blank" rel="noopener noreferrer">Augmented Reality Principles and Practice by Dieter Schmalstieg and Tobias Hollerer</a></li><li><a href="https://www.google.com/search?q=Learning%20Virtual%20Reality%20by%20Tony%20Parisi" target="_blank" rel="noopener noreferrer">Learning Virtual Reality by Tony Parisi</a></li><li><a href="https://www.google.com/search?q=Understanding%20Virtual%20Reality%20by%20William%20Sherman%20and%20Alan%20Craig" target="_blank" rel="noopener noreferrer">Understanding Virtual Reality by William Sherman and Alan Craig</a></li></ul></div><div class="rcol"><span class="k">Courses</span><ul><li><a href="https://learn.unity.com/" target="_blank" rel="noopener noreferrer">Unity Learn XR (free)</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Introduction to Virtual Reality by Coursera</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Introduction to Augmented Reality and ARCore by Coursera</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">XR Development by Meta on Coursera</a></li></ul></div><div class="rcol"><span class="k">YouTube</span><ul><li><a href="https://www.youtube.com/@ValemTutorials" target="_blank" rel="noopener noreferrer">Valem Tutorials</a></li><li><a href="https://www.youtube.com/@dilmerv" target="_blank" rel="noopener noreferrer">Dilmer Valecillos</a></li><li><a href="https://www.youtube.com/@Brackeys" target="_blank" rel="noopener noreferrer">Brackeys</a></li></ul></div><div class="rcol"><span class="k">Practice</span><ul><li><a href="https://www.google.com/search?q=Unity%20Asset%20Store" target="_blank" rel="noopener noreferrer">Unity Asset Store</a></li><li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a></li><li><a href="https://developers.meta.com/horizon/" target="_blank" rel="noopener noreferrer">Meta Quest Developer Hub</a></li></ul></div></div></div>
+
+  <div class="section" style="margin-top:20px">
+    <div class="sec-kick">Do This Today</div>
+    <h2 class="sec">Your first step (takes 30 minutes)</h2><div class="rule"></div>
+    <div class="steps"><div class="step"><div class="n">1</div><h4>Install Unity Hub</h4><p>unity.com — free personal license, the industry-standard XR engine.</p></div><div class="step"><div class="n">2</div><h4>Do 'Create with Code' hour one</h4><p>Unity Learn's free path — you'll move a player around today.</p></div><div class="step"><div class="n">3</div><h4>Run the AR sample on your phone</h4><p>AR Foundation samples — see a cube sit on your real desk.</p></div></div>
+    <div class="callout"><strong>Job-ready checklist:</strong> 3–5 solid projects on GitHub (≥1 deployed or documented) · can explain your work in an interview · comfortable with the core tools of the field · a portfolio or profile recruiters can find.</div>
+    <div class="footer">PathAhead — India's premium career guidance platform. This roadmap is a free educational resource; timelines are a guide and everyone learns at a different pace. Referenced third-party resources (Unity Learn, Meta Quest Developer Hub, Google Codelabs, Valem Tutorials, Brackeys) are for learning only and are not affiliated with PathAhead.</div>
+  </div>
+</body></html>

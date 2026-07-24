@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>IoT & Robotics Engineer Roadmap</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:#1e293b; font-size:10.5pt; line-height:1.5; margin:0; }
+  h1,h2,h3,h4 { color:#0f172a; margin:0; }
+  .cover { height:247mm; display:flex; flex-direction:column; justify-content:center; background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%); color:#fff; border-radius:14px; padding:0 20mm; break-after:page; }
+  .cover .kicker { font-size:12pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase; opacity:.85; }
+  .cover h1 { color:#fff; font-size:34pt; font-weight:900; line-height:1.08; margin:14px 0 18px; }
+  .cover p { font-size:12.5pt; max-width:150mm; opacity:.95; line-height:1.5; }
+  .cover .stats { display:flex; gap:26px; margin-top:36px; flex-wrap:wrap; }
+  .cover .stat .n { font-size:28pt; font-weight:900; line-height:1; }
+  .cover .stat .l { font-size:9.5pt; opacity:.9; margin-top:4px; }
+  .cover .foot { margin-top:42px; font-size:10pt; opacity:.8; }
+  .sec-kick { font-size:9pt; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#2563eb; }
+  h2.sec { font-size:19pt; font-weight:800; margin:4px 0 4px; }
+  .rule { height:3px; width:54px; background:#2563eb; border-radius:2px; margin:8px 0 14px; }
+  .lead { color:#475569; font-size:10.5pt; margin-bottom:16px; }
+  .phase { border:1px solid #e2e8f0; border-radius:12px; padding:15px 17px; margin-bottom:13px; break-inside:avoid; }
+  .phase-head { display:flex; align-items:center; gap:12px; margin-bottom:9px; }
+  .pnum { width:32px; height:32px; flex:0 0 32px; border-radius:9px; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:12pt; background:linear-gradient(135deg,#2563eb,#7c3aed); }
+  .phase-head h3 { font-size:12.5pt; } .phase-head .dates { font-size:8.5pt; color:#64748b; font-weight:600; }
+  .goal { color:#64748b; font-size:9pt; margin:0 0 11px; }
+  .weeks { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+  .wk { border:1px solid #e8edf3; border-radius:8px; padding:7px 10px; background:#f8fafc; }
+  .wk.proj { border-color:#2563eb; background:#eff4ff; }
+  .wk .d { font-size:7pt; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#2563eb; }
+  .wk h4 { font-size:9pt; margin:2px 0 2px; } .wk p { font-size:8pt; color:#64748b; margin:0; line-height:1.35; }
+  .projects { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  .proj { border:1px solid #e2e8f0; border-radius:10px; padding:11px 13px; break-inside:avoid; }
+  .proj .tag { display:inline-block; font-size:7pt; font-weight:700; color:#2563eb; background:#eef2ff; padding:2px 8px; border-radius:999px; margin-bottom:5px; }
+  .proj h4 { font-size:10pt; margin:0 0 3px; } .proj p { font-size:8.5pt; color:#475569; margin:0; line-height:1.4; }
+  .steps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:11px; margin-top:8px; }
+  .step { border:1px solid #e2e8f0; border-radius:10px; padding:13px; break-inside:avoid; }
+  .step .n { width:24px; height:24px; border-radius:50%; background:#2563eb; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:9.5pt; margin-bottom:7px; }
+  .step h4 { font-size:9.5pt; margin:0 0 3px; } .step p { font-size:8.3pt; color:#64748b; margin:0; line-height:1.4; }
+  .callout { border-left:4px solid #2563eb; background:#f8fafc; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9.5pt; }
+  .note-print { border-left:4px solid #d97706; background:#fffbeb; padding:11px 15px; border-radius:0 8px 8px 0; margin:13px 0; font-size:9pt; color:#7c2d12; }
+  .res-print { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .rcol { border:1px solid #e2e8f0; border-radius:10px; padding:10px 13px; break-inside:avoid; }
+  .rcol .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:4px; }
+  .rcol ul { padding-left:15px; margin:0; } .rcol ul li { font-size:8.3pt; margin:3px 0; line-height:1.35; }
+  .rcol a { color:#2563eb; text-decoration:none; }
+  .pc-outcomes { display:grid; grid-template-columns:1.6fr 1fr; gap:10px; margin:14px 0; break-inside:avoid; }
+  .pc-roles, .pc-salary { border:1px solid #e2e8f0; border-radius:10px; padding:11px 14px; background:#f8fafc; font-size:9pt; }
+  .pc-roles .k, .pc-salary .k { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#2563eb; display:block; margin-bottom:3px; }
+  .pc-salary { background:linear-gradient(135deg,#eef2ff,#f8fafc); text-align:center; }
+  .pc-salary .v { font-size:15pt; font-weight:900; color:#2563eb; }
+  .footer { margin-top:20px; padding-top:11px; border-top:1px solid #e2e8f0; font-size:8pt; color:#94a3b8; }
+  .spacer { break-after:page; }
+</style></head><body>
+  <div class="cover">
+    <div class="kicker">PathAhead · Free Roadmap</div>
+    <h1>Become an<br>IoT & Robotics Engineer<br>from Scratch</h1>
+    <p>Make your code move things in the real world. Go from zero electronics to connected devices and a working robot in about five months — the hands-on path into Industry 4.0.</p>
+    <div class="stats"><div class="stat"><div class="n">22</div><div class="l">weeks · ~10–12 hrs/wk</div></div><div class="stat"><div class="n">5</div><div class="l">hardware projects</div></div><div class="stat"><div class="n">4</div><div class="l">phases · code to robot</div></div><div class="stat"><div class="n">~₹2K</div><div class="l">one starter kit (or free sims)</div></div></div>
+    <div class="foot">A free PathAhead learning resource · adjust the pace to your life — the order matters more than the dates.</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The One Rule</div>
+    <h2 class="sec">Wire it → code it → make it move</h2><div class="rule"></div>
+    <p class="lead">Hardware punishes theory-only learning instantly. Build every circuit, flash every sketch, and let things fail — a burnt LED teaches more than a perfect lecture. Free simulators count when parts aren't handy.</p>
+    <div class="note-print"><strong>Legal &amp; ethical use only.</strong> A basic Arduino/ESP32 starter kit costs about ₹1,500–2,500 and covers the first three months. Until you have one, Wokwi and Tinkercad simulate almost everything free — never let missing parts stop the learning.</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-kick">The Roadmap</div>
+    <h2 class="sec">Four phases, step by step</h2><div class="rule"></div>
+    <div class="phase"><div class="phase-head"><span class="pnum">0</span><div><h3>Foundations</h3><span class="dates">Weeks 1–5</span></div></div><p class="goal">Electronics and the first microcontroller.</p><div class="weeks"><div class="wk"><div class="d">Week 1</div><h4>Electricity basics</h4><p>Voltage, current, resistance, breadboards — safely.</p></div><div class="wk"><div class="d">Week 2</div><h4>Arduino first steps</h4><p>Digital/analog pins, blink, buttons (Wokwi works too).</p></div><div class="wk"><div class="d">Week 3</div><h4>C/C++ for embedded</h4><p>Just enough to write clean sketches.</p></div><div class="wk"><div class="d">Week 4</div><h4>Sensors</h4><p>Temperature, distance, light, motion — read them all.</p></div><div class="wk"><div class="d">Week 5</div><h4>Actuators</h4><p>LEDs, buzzers, servos, relays — make things happen.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">1</span><div><h3>IoT</h3><span class="dates">Weeks 6–11</span></div></div><p class="goal">Put your devices on the internet.</p><div class="weeks"><div class="wk"><div class="d">Week 6</div><h4>ESP32 & WiFi</h4><p>The ₹300 chip that connects anything to the internet.</p></div><div class="wk"><div class="d">Week 7</div><h4>MQTT</h4><p>The messaging protocol of IoT, hands-on.</p></div><div class="wk"><div class="d">Week 8</div><h4>Cloud dashboards</h4><p>Stream sensor data to live charts (free tiers).</p></div><div class="wk"><div class="d">Week 9</div><h4>Control from anywhere</h4><p>Switch devices from your phone, safely.</p></div><div class="wk"><div class="d">Week 10</div><h4>Power & reliability</h4><p>Batteries, sleep modes, surviving reboots.</p></div><div class="wk proj"><div class="d">Week 11 · Project ▶</div><h4>Smart-home node</h4><p>A WiFi sensor + relay node with a live dashboard.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">2</span><div><h3>Robotics</h3><span class="dates">Weeks 12–17</span></div></div><p class="goal">Motors, vision, and a robot that decides.</p><div class="weeks"><div class="wk"><div class="d">Week 12</div><h4>Motors & drivers</h4><p>DC motors, H-bridges, PWM speed control.</p></div><div class="wk"><div class="d">Week 13</div><h4>Robot chassis</h4><p>Build a two-wheel-drive robot base.</p></div><div class="wk"><div class="d">Week 14</div><h4>Raspberry Pi + Python</h4><p>A Linux brain for bigger robots.</p></div><div class="wk"><div class="d">Week 15</div><h4>Computer vision</h4><p>OpenCV basics — follow a line or a colored ball.</p></div><div class="wk"><div class="d">Week 16</div><h4>Control loops</h4><p>Sense → decide → act; simple PID intuition.</p></div><div class="wk proj"><div class="d">Week 17 · Project ▶</div><h4>Autonomous robot</h4><p>An obstacle-avoiding or line-following robot.</p></div></div></div>
+<div class="phase"><div class="phase-head"><span class="pnum">3</span><div><h3>Integration</h3><span class="dates">Weeks 18–22</span></div></div><p class="goal">Robots + cloud + polish = Industry 4.0 portfolio.</p><div class="weeks"><div class="wk"><div class="d">Week 18</div><h4>Robot telemetry</h4><p>Stream your robot's sensors to your IoT dashboard.</p></div><div class="wk"><div class="d">Week 19</div><h4>ROS 2 taste</h4><p>The framework real robotics companies use.</p></div><div class="wk"><div class="d">Week 20</div><h4>Mechanics & mounting</h4><p>3D-printed or hand-built parts that don't fall off.</p></div><div class="wk"><div class="d">Week 21</div><h4>Testing & safety</h4><p>Fail-safes, e-stops, and honest documentation.</p></div><div class="wk proj"><div class="d">Week 22 · Capstone ▶</div><h4>Connected robot system</h4><p>A robot you can monitor and command over the internet.</p></div></div></div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="section">
+    <div class="sec-kick">Build a Portfolio</div>
+    <h2 class="sec">Five projects that get you hired</h2><div class="rule"></div>
+    <p class="lead">Projects beat certificates. Do them in order — each builds on the last. Put every one on GitHub with a clear README: problem → approach → result.</p>
+    <div class="projects"><div class="proj"><span class="tag">Start here</span><h4>1 · Sensor Station</h4><p>Read three sensors and display live values (Wokwi or real board).</p></div><div class="proj"><span class="tag">IoT</span><h4>2 · WiFi Weather Node</h4><p>An ESP32 that streams temperature to a live cloud dashboard.</p></div><div class="proj"><span class="tag">Automation</span><h4>3 · Smart-Home Controller</h4><p>Control lights/appliances from your phone via MQTT.</p></div><div class="proj"><span class="tag">In demand</span><h4>4 · Vision Line-Follower</h4><p>A robot that follows a track using a camera and OpenCV.</p></div><div class="proj"><span class="tag">Capstone</span><h4>5 · Internet-Connected Robot</h4><p>Drive and monitor your robot from a web dashboard.</p></div></div>
+    <div class="pc-outcomes">
+      <div class="pc-roles"><span class="k">Roles you can apply for</span>IoT Engineer · Embedded Systems Engineer · Robotics Engineer · Firmware Developer</div>
+      <div class="pc-salary"><span class="k">Typical starting salary · India</span><span class="v">₹4–10 LPA</span></div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top:16px"><div class="sec-kick">Learn It</div><h2 class="sec">Learning resources</h2><div class="rule"></div><p class="lead">Every item links to the real source (clickable in this PDF).</p><div class="res-print"><div class="rcol"><span class="k">Books</span><ul><li><a href="https://www.google.com/search?q=Making%20Embedded%20Systems%20by%20Elecia%20White" target="_blank" rel="noopener noreferrer">Making Embedded Systems by Elecia White</a></li><li><a href="https://www.google.com/search?q=The%20C%20Programming%20Language%20by%20Brian%20Kernighan%20and%20Dennis%20Ritchie" target="_blank" rel="noopener noreferrer">The C Programming Language by Brian Kernighan and Dennis Ritchie</a></li><li><a href="https://www.google.com/search?q=Programming%20Embedded%20Systems%20by%20Michael%20Barr%20and%20Anthony%20Massa" target="_blank" rel="noopener noreferrer">Programming Embedded Systems by Michael Barr and Anthony Massa</a></li></ul></div><div class="rcol"><span class="k">Courses</span><ul><li><a href="https://nptel.ac.in/" target="_blank" rel="noopener noreferrer">Introduction to Embedded Systems by NPTEL (free)</a></li><li><a href="https://nptel.ac.in/" target="_blank" rel="noopener noreferrer">Internet of Things by NPTEL (free)</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Introduction to the Internet of Things by Coursera</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Embedded Systems by Coursera</a></li></ul></div><div class="rcol"><span class="k">YouTube</span><ul><li><a href="https://www.youtube.com/results?search_query=Andreas%20Spiess" target="_blank" rel="noopener noreferrer">Andreas Spiess</a></li><li><a href="https://www.youtube.com/results?search_query=GreatScott" target="_blank" rel="noopener noreferrer">GreatScott</a></li><li><a href="https://www.youtube.com/results?search_query=Ben%20Eater" target="_blank" rel="noopener noreferrer">Ben Eater</a></li></ul></div><div class="rcol"><span class="k">Practice</span><ul><li><a href="https://docs.arduino.cc/" target="_blank" rel="noopener noreferrer">Arduino Project Hub</a></li><li><a href="https://wokwi.com/" target="_blank" rel="noopener noreferrer">Wokwi</a></li><li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a></li></ul></div></div></div>
+
+  <div class="section" style="margin-top:20px">
+    <div class="sec-kick">Do This Today</div>
+    <h2 class="sec">Your first step (takes 30 minutes)</h2><div class="rule"></div>
+    <div class="steps"><div class="step"><div class="n">1</div><h4>Open Wokwi</h4><p>wokwi.com — a free online Arduino/ESP32 simulator. No hardware needed.</p></div><div class="step"><div class="n">2</div><h4>Blink an LED</h4><p>The 'hello world' of hardware — in the simulator or on a real board.</p></div><div class="step"><div class="n">3</div><h4>Read one sensor</h4><p>Wire (or simulate) a temperature sensor and print its values. Started.</p></div></div>
+    <div class="callout"><strong>Job-ready checklist:</strong> 3–5 solid projects on GitHub (≥1 deployed or documented) · can explain your work in an interview · comfortable with the core tools of the field · a portfolio or profile recruiters can find.</div>
+    <div class="footer">PathAhead — India's premium career guidance platform. This roadmap is a free educational resource; timelines are a guide and everyone learns at a different pace. Referenced third-party resources (Arduino docs, Wokwi simulator, Random Nerd Tutorials, Paul McWhorter (YouTube), ROS 2 docs) are for learning only and are not affiliated with PathAhead.</div>
+  </div>
+</body></html>

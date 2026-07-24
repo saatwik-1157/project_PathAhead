@@ -573,5 +573,57 @@ window.RESOURCES = {
       "GitHub",
       "Meta Quest Developer Hub"
     ]
+  },
+  "prompt-engineering": {
+    books: [
+      "The Art of Prompt Engineering by Nathan Hunter",
+      "Co-Intelligence by Ethan Mollick",
+      "Prompt Engineering for Generative AI by James Phoenix and Mike Taylor"
+    ],
+    courses: [
+      "ChatGPT Prompt Engineering for Developers (DeepLearning.AI)",
+      "Google Prompting Essentials (Coursera)",
+      "Anthropic Prompt Engineering Interactive Tutorial (GitHub)",
+      "Generative AI for Everyone (Coursera)"
+    ],
+    youtube: [
+      "AI Explained",
+      "Matt Wolfe",
+      "freeCodeCamp Prompt Engineering course",
+      "Fireship"
+    ],
+    practice: [
+      "OpenAI Playground",
+      "Google AI Studio",
+      "Anthropic Console",
+      "Hugging Face Spaces",
+      "GitHub"
+    ]
+  },
+  "blockchain-web3": {
+    books: [
+      "Mastering Bitcoin by Andreas Antonopoulos",
+      "Mastering Ethereum by Andreas Antonopoulos and Gavin Wood",
+      "The Infinite Machine by Camila Russo"
+    ],
+    courses: [
+      "Cyfrin Updraft Solidity course",
+      "Alchemy University Ethereum Developer Bootcamp",
+      "Blockchain Specialization (Coursera)",
+      "CryptoZombies interactive Solidity"
+    ],
+    youtube: [
+      "Patrick Collins",
+      "Dapp University",
+      "Whiteboard Crypto",
+      "freeCodeCamp Solidity course"
+    ],
+    practice: [
+      "CryptoZombies",
+      "Ethernaut by OpenZeppelin",
+      "Remix IDE",
+      "SpeedRunEthereum",
+      "GitHub"
+    ]
   }
 };
