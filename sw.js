@@ -1,5 +1,5 @@
 /* PathAhead — Service Worker (offline support, always-fresh when online) */
-const CACHE = "pathahead-v7";
+const CACHE = "pathahead-v8";
 const CORE = [
   "index.html", "about.html", "programs.html", "for-colleges.html", "for-students.html",
   "gallery.html", "testimonials.html", "faq.html", "contact.html",
@@ -33,7 +33,11 @@ self.addEventListener("fetch", (e) => {
   // (Keeps content/assets up to date after every deploy, while still working offline.)
   e.respondWith(
     fetch(req)
-      .then((res) => { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); return res; })
+      .then((res) => {
+        // Only cache good responses — never pin an error page in a visitor's cache.
+        if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
+        return res;
+      })
       .catch(() => caches.match(req).then((m) => m || (req.mode === "navigate" ? caches.match("index.html") : undefined)))
   );
 });
