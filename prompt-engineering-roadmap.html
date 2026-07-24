@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Engineer / GenAI Specialist Roadmap — PathAhead | Learn from Scratch</title>
+  <meta name="description" content="A 16-week roadmap to master prompt engineering and generative AI from scratch — how LLMs work, advanced prompting, AI APIs, RAG, agents, and real AI-powered projects." />
+  <meta name="theme-color" content="#2563EB" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PathAhead" />
+  <meta property="og:title" content="Prompt Engineer / GenAI Specialist Roadmap — PathAhead" />
+  <meta property="og:description" content="A 16-week roadmap to master prompt engineering and generative AI from scratch — how LLMs work, advanced prompting, AI APIs, RAG, agents, and real AI-powered projects." />
+  <meta property="og:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .roadmap-phase{border:1px solid var(--border);border-radius:18px;padding:26px 24px;margin-bottom:22px;background:var(--surface)}
+    .roadmap-phase .phase-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+    .phase-num{width:44px;height:44px;flex:0 0 44px;border-radius:12px;display:grid;place-items:center;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--primary),#7c3aed)}
+    .phase-dates{font-weight:600;color:var(--muted);font-size:.92rem}
+    .phase-goal{color:var(--muted);margin:2px 0 18px}
+    .week-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+    .week{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--bg)}
+    .week h4{margin:0 0 6px;font-size:.98rem}
+    .week .wk-date{font-size:.78rem;font-weight:700;color:var(--primary);letter-spacing:.02em;text-transform:uppercase}
+    .week p{margin:6px 0 0;font-size:.88rem;color:var(--muted);line-height:1.5}
+    .week.is-project{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary) inset}
+    .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:8px}
+    .stat-box{border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;background:var(--surface)}
+    .stat-box .n{font-size:1.9rem;font-weight:900;color:var(--primary);line-height:1}
+    .stat-box .l{color:var(--muted);font-size:.85rem;margin-top:6px}
+    .proj-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+    .proj{border:1px solid var(--border);border-radius:14px;padding:18px 18px 16px;background:var(--surface)}
+    .proj .tag{display:inline-block;font-size:.72rem;font-weight:700;color:var(--primary);background:var(--primary-soft);padding:3px 10px;border-radius:999px;margin-bottom:8px}
+    .proj h4{margin:0 0 6px;font-size:1.02rem}
+    .proj p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55}
+    .note-band{border-left:4px solid var(--primary);background:var(--primary-soft);padding:14px 18px;border-radius:0 12px 12px 0;margin:8px auto 0;max-width:820px;font-size:.9rem;color:var(--text)}
+    .disclaimer{font-size:.82rem;color:var(--muted);max-width:760px;margin:14px auto 0;text-align:center}
+    .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+    .res-grid .col h5{margin:0 0 8px;font-size:.95rem;color:var(--primary)}
+    .res-grid .col ul{padding-left:18px;margin:0}
+    .res-grid .col ul li{margin:6px 0;font-size:.9rem;line-height:1.5}
+    .res-grid a{color:var(--primary);text-decoration:none;border-bottom:1px solid transparent}
+    .res-grid a:hover{border-bottom-color:currentColor}
+    .res-universal{font-size:.85rem;color:var(--muted);margin-top:18px;border-top:1px solid var(--border);padding-top:14px}
+    .res-universal a{color:var(--primary);text-decoration:none}.res-universal a:hover{text-decoration:underline}
+    .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+    .outcomes{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;align-items:stretch}
+    .oc-card{border:1px solid var(--border);border-radius:16px;padding:22px 24px;background:var(--surface)}
+    .oc-card h4{margin:0 0 4px;font-size:1rem}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+    .chip{background:var(--primary-soft);color:var(--primary);font-weight:600;font-size:.85rem;padding:6px 13px;border-radius:999px}
+    .oc-suits{color:var(--muted);font-size:.92rem;margin:0}
+    .oc-salary{border:1px solid var(--border);border-radius:16px;padding:22px 24px;background:linear-gradient(135deg,var(--primary-soft),var(--surface));text-align:center;display:flex;flex-direction:column;justify-content:center}
+    .oc-salary .n{font-size:2rem;font-weight:900;color:var(--primary);line-height:1}
+    .oc-salary .l{color:var(--muted);font-size:.85rem;margin-top:8px}
+    .oc-note{font-size:.8rem;color:var(--muted);max-width:820px;margin:16px auto 0;text-align:center}
+    @media(max-width:640px){.outcomes{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+  <section class="page-hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <span class="eyebrow reveal">Free Roadmap</span>
+      <h1 class="h-xl reveal reveal-d1">Become a <span class="text-accent">Prompt Engineer</span> from scratch</h1>
+      <p class="lead reveal reveal-d2">The newest skill in tech — talk to AI so well it does real work. Go from casual ChatGPT user to building AI-powered tools in about four months, no degree required.</p>
+      <div class="stat-row reveal reveal-d2" style="margin-top:26px"><div class="stat-box"><div class="n">16</div><div class="l">weeks · ~8–10 hrs/wk</div></div><div class="stat-box"><div class="n">5</div><div class="l">portfolio projects</div></div><div class="stat-box"><div class="n">4</div><div class="l">phases · user to builder</div></div><div class="stat-box"><div class="n">₹0</div><div class="l">free AI tools only</div></div></div>
+      <div class="hero-actions reveal reveal-d2">
+        <a href="roadmaps/prompt-engineering-roadmap.pdf" class="btn btn-primary btn-lg" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download PDF
+        </a>
+        <a href="roadmaps.html" class="btn btn-outline btn-lg">All roadmaps</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">The one rule</span>
+        <h2 class="h-xl reveal reveal-d1">Prompt → test → iterate</h2>
+        <p class="lead reveal reveal-d2">Prompting is an experimental skill, not a magic-words game. Keep a prompt journal: write a prompt, score the output, change one thing, run it again. Every project below ships with the prompts that power it.</p>
+      </div>
+      <div class="note-band reveal"><strong>Important:</strong> Prompt engineering is strongest as a multiplier: pair it with a domain you care about — coding, content, data, research — and you become the person who gets 10× more out of AI than everyone around you.</div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">Where This Leads</span>
+        <h2 class="h-xl reveal reveal-d1">Career outcomes</h2>
+      </div>
+      <div class="outcomes reveal">
+        <div class="oc-card">
+          <h4>Roles you can apply for</h4>
+          <div class="chips"><span class="chip">Prompt Engineer</span><span class="chip">GenAI Specialist</span><span class="chip">AI Automation Builder</span><span class="chip">AI Content Strategist</span></div>
+          <p class="oc-suits"><strong>Who it suits:</strong> You love experimenting with AI tools and turning fuzzy goals into precise instructions — where clear writing meets logic.</p>
+        </div>
+        <div class="oc-salary">
+          <div class="n">₹4–12 LPA</div>
+          <div class="l">typical starting range in India</div>
+        </div>
+      </div>
+      <p class="oc-note">Indicative 2026 starting ranges in India — actual pay varies widely by city, company, and skill. Salary is an outcome of skill and a strong project portfolio, not a guarantee.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">The Roadmap</span>
+        <h2 class="h-xl reveal reveal-d1">Four phases, step by step</h2>
+      </div>
+      <div class="roadmap-phase reveal"><div class="phase-top"><span class="phase-num">0</span><div><h3 style="margin:0">Foundations</h3><span class="phase-dates">Weeks 1–3</span></div></div><p class="phase-goal">Understand what LLMs actually are — and how to steer them.</p><div class="week-grid"><div class="week"><span class="wk-date">Week 1</span><h4>How LLMs work</h4><p>Tokens, context windows, temperature, why models hallucinate.</p></div><div class="week"><span class="wk-date">Week 2</span><h4>The core patterns</h4><p>Zero-shot, few-shot examples, role prompting, output formats.</p></div><div class="week"><span class="wk-date">Week 3</span><h4>The model landscape</h4><p>ChatGPT, Claude, Gemini — strengths, limits, free tiers.</p></div></div></div>
+      <div class="roadmap-phase reveal"><div class="phase-top"><span class="phase-num">1</span><div><h3 style="margin:0">Advanced Prompting</h3><span class="phase-dates">Weeks 4–7</span></div></div><p class="phase-goal">The techniques that separate pros from casual users.</p><div class="week-grid"><div class="week"><span class="wk-date">Week 4</span><h4>Reasoning prompts</h4><p>Chain-of-thought, step decomposition, self-critique.</p></div><div class="week"><span class="wk-date">Week 5</span><h4>Structured output</h4><p>Force clean JSON, tables, and schemas from any model.</p></div><div class="week"><span class="wk-date">Week 6</span><h4>System prompts & personas</h4><p>Build reliable assistants with tone and guardrails.</p></div><div class="week is-project"><span class="wk-date">Week 7 · Project ▶</span><h4>Prompt library</h4><p>A tested, documented library of 25+ reusable prompts.</p></div></div></div>
+      <div class="roadmap-phase reveal"><div class="phase-top"><span class="phase-num">2</span><div><h3 style="margin:0">Building with AI</h3><span class="phase-dates">Weeks 8–12</span></div></div><p class="phase-goal">Go beyond the chat box — call models from code and tools.</p><div class="week-grid"><div class="week"><span class="wk-date">Week 8</span><h4>Playgrounds & APIs</h4><p>OpenAI Playground, Google AI Studio, API keys and params.</p></div><div class="week"><span class="wk-date">Week 9</span><h4>Python for AI calls</h4><p>Just enough Python to call an LLM API and parse results.</p></div><div class="week"><span class="wk-date">Week 10</span><h4>RAG basics</h4><p>Embeddings and retrieval — make AI answer from YOUR data.</p></div><div class="week"><span class="wk-date">Week 11</span><h4>Agents & tool use</h4><p>Function calling, multi-step AI workflows, automation.</p></div><div class="week is-project"><span class="wk-date">Week 12 · Project ▶</span><h4>AI assistant</h4><p>A custom assistant that answers from documents you give it.</p></div></div></div>
+      <div class="roadmap-phase reveal"><div class="phase-top"><span class="phase-num">3</span><div><h3 style="margin:0">Applied GenAI</h3><span class="phase-dates">Weeks 13–16</span></div></div><p class="phase-goal">Multimodal AI, ethics, and a portfolio that proves it.</p><div class="week-grid"><div class="week"><span class="wk-date">Week 13</span><h4>Images & multimodal</h4><p>Image generation and vision prompts done professionally.</p></div><div class="week"><span class="wk-date">Week 14</span><h4>Evaluation & safety</h4><p>Test prompts systematically; bias, misuse, and limits.</p></div><div class="week"><span class="wk-date">Week 15</span><h4>Domain playbooks</h4><p>Apply GenAI to study, content, code, and research workflows.</p></div><div class="week is-project"><span class="wk-date">Week 16 · Capstone ▶</span><h4>AI-powered product</h4><p>Ship a complete AI tool with documented prompt design.</p></div></div></div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">Build a Portfolio</span>
+        <h2 class="h-xl reveal reveal-d1">Five projects that get you hired</h2>
+        <p class="lead reveal reveal-d2">Projects beat certificates. Do them in order — each builds on the last. Put every one on GitHub with a clear README.</p>
+      </div>
+      <div class="proj-list reveal"><div class="proj"><span class="tag">Start here</span><h4>1 · Prompt Library</h4><p>25+ tested prompts for study, writing, and coding — with before/after outputs.</p></div><div class="proj"><span class="tag">Personas</span><h4>2 · Custom AI Study Buddy</h4><p>A system-prompted assistant that teaches your syllabus, step by step.</p></div><div class="proj"><span class="tag">Structured</span><h4>3 · Data Extractor</h4><p>Turn messy text into clean JSON/tables reliably — the #1 business use case.</p></div><div class="proj"><span class="tag">In demand</span><h4>4 · RAG Document Assistant</h4><p>An assistant that answers questions from your own notes or PDFs.</p></div><div class="proj"><span class="tag">Capstone</span><h4>5 · AI-Powered Tool</h4><p>A complete working AI product — prompts, code, and a writeup of the design.</p></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow reveal">Learn It</span><h2 class="h-xl reveal reveal-d1">Learning resources</h2><p class="lead reveal reveal-d2">Click any resource to open it — free and well-known first, then build something with it.</p></div>
+      <div class="res-grid reveal"><div class="col"><h5>Books</h5><ul><li><a href="https://www.google.com/search?q=The%20Art%20of%20Prompt%20Engineering%20by%20Nathan%20Hunter" target="_blank" rel="noopener noreferrer">The Art of Prompt Engineering by Nathan Hunter</a></li><li><a href="https://www.google.com/search?q=Co-Intelligence%20by%20Ethan%20Mollick" target="_blank" rel="noopener noreferrer">Co-Intelligence by Ethan Mollick</a></li><li><a href="https://www.google.com/search?q=Prompt%20Engineering%20for%20Generative%20AI%20by%20James%20Phoenix%20and%20Mike%20Taylor" target="_blank" rel="noopener noreferrer">Prompt Engineering for Generative AI by James Phoenix and Mike Taylor</a></li></ul></div><div class="col"><h5>Courses</h5><ul><li><a href="https://www.deeplearning.ai/short-courses/" target="_blank" rel="noopener noreferrer">ChatGPT Prompt Engineering for Developers (DeepLearning.AI)</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Google Prompting Essentials (Coursera)</a></li><li><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial" target="_blank" rel="noopener noreferrer">Anthropic Prompt Engineering Interactive Tutorial (GitHub)</a></li><li><a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Generative AI for Everyone (Coursera)</a></li></ul></div><div class="col"><h5>YouTube</h5><ul><li><a href="https://www.youtube.com/@aiexplained-official" target="_blank" rel="noopener noreferrer">AI Explained</a></li><li><a href="https://www.youtube.com/@mreflow" target="_blank" rel="noopener noreferrer">Matt Wolfe</a></li><li><a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">freeCodeCamp Prompt Engineering course</a></li><li><a href="https://www.youtube.com/@Fireship" target="_blank" rel="noopener noreferrer">Fireship</a></li></ul></div><div class="col"><h5>Practice</h5><ul><li><a href="https://platform.openai.com/playground" target="_blank" rel="noopener noreferrer">OpenAI Playground</a></li><li><a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer">Google AI Studio</a></li><li><a href="https://console.anthropic.com/" target="_blank" rel="noopener noreferrer">Anthropic Console</a></li><li><a href="https://huggingface.co/spaces" target="_blank" rel="noopener noreferrer">Hugging Face Spaces</a></li><li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a></li></ul></div></div><p class="res-universal">Universal (any field): <a href="https://roadmap.sh/" target="_blank" rel="noopener noreferrer">roadmap.sh</a> · <a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">freeCodeCamp</a> · <a href="https://education.github.com/pack" target="_blank" rel="noopener noreferrer">GitHub Student Pack</a> · <a href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">Coursera</a></p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow reveal">Do This Today</span>
+        <h2 class="h-xl reveal reveal-d1">Your first step (takes 30 minutes)</h2>
+      </div>
+      <div class="cards cols-3"><div class="card reveal"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h3>1. Create free AI accounts</h3><p>ChatGPT, Claude, and Google AI Studio — three free tiers, three different brains.</p></div><div class="card reveal reveal-d1"><div class="card-icon is-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 1.5 5 1.5 5 1.5c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 8.5c0 3.5 3 5.5 6 5.5a4.8 4.8 0 0 0-1 3.5V22"/></svg></div><h3>2. Do one guided tutorial</h3><p>Anthropic's free interactive prompt-engineering tutorial teaches the real patterns.</p></div><div class="card reveal reveal-d2"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><h3>3. Rewrite one prompt 5 times</h3><p>Take a prompt you use, improve it five times, note what changed. You've started.</p></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-band reveal">
+        <h2 class="h-xl">Not sure which path is right for you?</h2>
+        <p>PathAhead helps you choose the career that fits you — with guidance built for Intermediate students. Explore every roadmap in one place.</p>
+        <div class="cta-actions">
+          <a href="roadmaps.html" class="btn btn-primary btn-lg">See All Roadmaps</a>
+          <a href="for-students.html#register" class="btn btn-outline btn-lg" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)">Register Your Interest</a>
+        </div>
+      </div>
+      <p class="disclaimer">This roadmap is a free educational resource. Timelines are a guide — everyone learns at a different pace. Referenced resources (DeepLearning.AI short courses, Anthropic prompt tutorial, Google Prompting Essentials, OpenAI Playground, Hugging Face) are for learning only and are not affiliated with PathAhead.</p>
+    </div>
+  </section>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
