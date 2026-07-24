@@ -1,6 +1,3 @@
-# Local integration keys — NEVER commit these
-js/config.js
-
 # Local dev / preview tooling
 .claude/
 
