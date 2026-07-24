@@ -12,11 +12,11 @@
   <meta property="og:site_name" content="PathAhead" />
   <meta property="og:title" content="PathAhead — Your Career Starts Here" />
   <meta property="og:description" content="Premium career awareness workshops for Intermediate students across India — practical guidance, AI awareness and future-ready learning." />
-  <meta property="og:image" content="assets/og-image.svg" />
+  <meta property="og:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PathAhead — Your Career Starts Here" />
   <meta name="twitter:description" content="Premium career workshops for Intermediate students across India." />
-  <meta name="twitter:image" content="assets/og-image.svg" />
+  <meta name="twitter:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
   <!-- Structured data (SEO) -->
   <script type="application/ld+json">
   {
@@ -34,6 +34,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="assets/img/students-group.jpg" fetchpriority="high" />
   <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -41,39 +42,47 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-bg"><span class="aurora-1"></span><span class="aurora-2"></span></div>
     <div class="hero-grid"></div>
-    <div class="hero-floats">
-      <div class="float-card fc-1">
-        <span class="fc-ic" style="background:var(--primary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.5 5.5 21 7.5 13.5 2 9 9 9 12 2"/></svg></span>
-        <div><div class="fc-k">4.9/5</div><div class="fc-s">Average rating</div></div>
-      </div>
-      <div class="float-card fc-2">
-        <span class="fc-ic" style="background:var(--secondary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
-        <div><div class="fc-k">5,000+</div><div class="fc-s">Students guided</div></div>
-      </div>
-      <div class="float-card fc-3">
-        <span class="fc-ic" style="background:var(--ink)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
-        <div><div class="fc-k">30+</div><div class="fc-s">Partner colleges</div></div>
-      </div>
-    </div>
-    <div class="container hero-inner">
-      <span class="eyebrow reveal">★ India’s Premium Career Guidance</span>
-      <h1 class="h-xxl reveal reveal-d1">Your Career <span class="text-accent">Starts Here.</span></h1>
-      <p class="lead reveal reveal-d2">Helping Intermediate students make smarter career decisions before college through practical workshops, career guidance and future-ready learning.</p>
-      <div class="hero-actions reveal reveal-d3">
-        <a href="contact.html" class="btn btn-primary btn-lg">Book a Workshop
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-        <a href="assets/PathAhead-Brochure.html" target="_blank" class="btn btn-outline btn-lg">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download Brochure
-        </a>
-      </div>
-      <div class="hero-trust reveal reveal-d3">
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Trusted by Schools & Colleges</span>
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Practical, Future-Ready Content</span>
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Unbiased Guidance</span>
+    <div class="container">
+      <div class="hero-split">
+        <div class="hero-copy">
+          <span class="eyebrow reveal">★ India’s Premium Career Guidance</span>
+          <h1 class="h-xxl reveal reveal-d1">Your Career <span class="text-gradient">Starts Here.</span></h1>
+          <p class="lead reveal reveal-d2">Helping Intermediate students make smarter career decisions before college through practical workshops, career guidance and future-ready learning.</p>
+          <div class="hero-actions reveal reveal-d3">
+            <a href="contact.html" class="btn btn-primary btn-lg">Book a Workshop
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="assets/PathAhead-Brochure.html" target="_blank" class="btn btn-outline btn-lg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Brochure
+            </a>
+          </div>
+          <div class="hero-trust reveal reveal-d3">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Trusted by Schools & Colleges</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Practical, Future-Ready Content</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Unbiased Guidance</span>
+          </div>
+        </div>
+        <div class="hero-media reveal reveal-d2">
+          <div class="hm-blob"></div>
+          <svg class="hm-dots" viewBox="0 0 110 110" fill="currentColor" aria-hidden="true"><g><circle cx="5" cy="5" r="3"/><circle cx="30" cy="5" r="3"/><circle cx="55" cy="5" r="3"/><circle cx="80" cy="5" r="3"/><circle cx="105" cy="5" r="3"/><circle cx="5" cy="30" r="3"/><circle cx="30" cy="30" r="3"/><circle cx="55" cy="30" r="3"/><circle cx="80" cy="30" r="3"/><circle cx="105" cy="30" r="3"/><circle cx="5" cy="55" r="3"/><circle cx="30" cy="55" r="3"/><circle cx="55" cy="55" r="3"/><circle cx="80" cy="55" r="3"/><circle cx="105" cy="55" r="3"/><circle cx="5" cy="80" r="3"/><circle cx="30" cy="80" r="3"/><circle cx="55" cy="80" r="3"/><circle cx="80" cy="80" r="3"/><circle cx="105" cy="80" r="3"/><circle cx="5" cy="105" r="3"/><circle cx="30" cy="105" r="3"/><circle cx="55" cy="105" r="3"/><circle cx="80" cy="105" r="3"/><circle cx="105" cy="105" r="3"/></g></svg>
+          <figure class="hm-main"><img src="assets/img/students-group.jpg" alt="Students collaborating and laughing during a PathAhead workshop" fetchpriority="high" /></figure>
+          <figure class="hm-sub"><img src="assets/img/presentation.jpg" alt="A mentor presenting career guidance to students" loading="lazy" /></figure>
+          <div class="float-card fc-1">
+            <span class="fc-ic" style="background:var(--secondary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.5 5.5 21 7.5 13.5 2 9 9 9 12 2"/></svg></span>
+            <div><div class="fc-k">4.9/5</div><div class="fc-s">Average rating</div></div>
+          </div>
+          <div class="float-card fc-2">
+            <span class="fc-ic" style="background:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
+            <div><div class="fc-k">5,000+</div><div class="fc-s">Students guided</div></div>
+          </div>
+          <div class="float-card fc-3">
+            <span class="fc-ic" style="background:var(--teal)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+            <div><div class="fc-k">30+</div><div class="fc-s">Partner colleges</div></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -111,10 +120,33 @@
       <div class="cards cols-3">
         <div class="card reveal"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><h3>Tailored to you</h3><p>35 engineering branches, 25 career domains, 36 states &amp; UTs — combined into one plan built around your profile and goal.</p></div>
         <div class="card reveal reveal-d1"><div class="card-icon is-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><circle cx="7" cy="12" r="2"/><circle cx="17" cy="12" r="2"/></svg></div><h3>Semester timeline</h3><p>See exactly what to learn and build each semester — with "you are here" progress and tickable checklists that save automatically.</p></div>
-        <div class="card reveal reveal-d2"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h3>Resources &amp; PDF</h3><p>Clickable books, courses and practice sites for every domain — plus shareable links and a downloadable PDF of your roadmap.</p></div>
+        <div class="card reveal reveal-d2"><div class="card-icon is-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h3>Resources &amp; PDF</h3><p>Clickable books, courses and practice sites for every domain — plus shareable links and a downloadable PDF of your roadmap.</p></div>
+      </div>
+      <div class="builder-mock reveal">
+        <div class="bm-window" role="img" aria-label="Preview of a personalised career roadmap inside the Career Builder">
+          <div class="bm-bar"><span></span><span></span><span></span><em>pathahead · career builder</em></div>
+          <div class="bm-body">
+            <div class="bm-side">
+              <div class="bm-profile"><span class="bm-avatar">S</span><div><b>CSE · 2nd Year</b><small>Target: AI Engineer</small></div></div>
+              <div class="bm-progress"><div class="bm-track"><span style="width:64%"></span></div><small>Roadmap progress · 64%</small></div>
+              <ul class="bm-list">
+                <li class="done">Python basics</li>
+                <li class="done">DSA foundations</li>
+                <li class="now">ML fundamentals</li>
+                <li>Projects &amp; internships</li>
+              </ul>
+            </div>
+            <div class="bm-main">
+              <div class="bm-sem" style="--c:#2563EB"><b>Sem 3</b><span>DSA · Git · Maths for ML</span></div>
+              <div class="bm-sem" style="--c:#8B5CF6"><b>Sem 4</b><span>ML basics · first Kaggle</span></div>
+              <div class="bm-sem" style="--c:#F97316"><b>Sem 5</b><span>Projects · internship hunt</span></div>
+              <div class="bm-sem" style="--c:#14B8A6"><b>Sem 6</b><span>Specialise · portfolio</span></div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="center" style="margin-top:34px">
-        <a href="career-roadmap.html" class="btn btn-primary btn-lg">Open the Career Builder →</a>
+        <a href="career-roadmap.html" class="btn btn-primary btn-lg">Open the Career Builder <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
   </section>
@@ -139,22 +171,22 @@
           <p>Awareness of emerging technologies like AI, Data Science and modern engineering domains — before college begins.</p>
         </div>
         <div class="card reveal reveal-d2">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
+          <div class="card-icon is-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
           <h3>Practical Roadmaps</h3>
           <p>Step-by-step career blueprints tailored to Indian Intermediate students — not generic, one-size-fits-all advice.</p>
         </div>
         <div class="card reveal">
-          <div class="card-icon is-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="card-icon is-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
           <h3>Expert Mentorship</h3>
           <p>Guidance from professionals who understand both the education system and industry demands.</p>
         </div>
         <div class="card reveal reveal-d1">
-          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="card-icon is-pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
           <h3>Comprehensive Resources</h3>
           <p>Students receive detailed career guides, checklists and access to ongoing support after every workshop.</p>
         </div>
         <div class="card reveal reveal-d2">
-          <div class="card-icon is-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="card-icon is-teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
           <h3>Unbiased Advice</h3>
           <p>Independent guidance focused solely on the student’s best interests and aptitude — never on commissions.</p>
         </div>
@@ -194,11 +226,69 @@
     </div>
   </section>
 
+  <!-- ============ CAREER JOURNEY (graphic) ============ -->
+  <section class="section-sm" id="journey">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow is-violet reveal">The Journey</span>
+        <h2 class="h-xl reveal reveal-d1">From confusion to a <span class="text-gradient">clear path</span></h2>
+        <p class="lead reveal reveal-d2">Five milestones, one guided journey — how PathAhead takes a student from “no idea” to future-ready.</p>
+      </div>
+      <div class="journey-wrap reveal">
+        <svg class="journey-svg" viewBox="0 0 1000 330" role="img" aria-label="Journey graphic: Inter 1st Year, PathAhead Workshop, Personal Roadmap, Right College and Branch, then Future-Ready Career">
+          <defs>
+            <linearGradient id="jpath" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#2563EB"/><stop offset=".35" stop-color="#8B5CF6"/><stop offset=".7" stop-color="#EC4899"/><stop offset="1" stop-color="#F97316"/>
+            </linearGradient>
+          </defs>
+          <path d="M70 250 C150 250 200 190 280 190 S420 230 500 230 S640 150 720 150 S860 80 920 80" fill="none" stroke="url(#jpath)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 14"/>
+          <circle cx="180" cy="130" r="5" fill="#14B8A6" opacity=".45"/>
+          <circle cx="420" cy="300" r="4" fill="#F97316" opacity=".45"/>
+          <circle cx="620" cy="70" r="5" fill="#2563EB" opacity=".4"/>
+          <circle cx="820" cy="240" r="4" fill="#8B5CF6" opacity=".45"/>
+          <path d="M950 34 l4.2 9.4 10.3 1.1 -7.7 6.9 2.1 10.1 -8.9 -5.2 -8.9 5.2 2.1 -10.1 -7.7 -6.9 10.3 -1.1 z" fill="#F59E0B"/>
+          <g class="jn">
+            <circle cx="70" cy="250" r="16" fill="#2563EB"/><text x="70" y="255" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">1</text>
+            <text class="jl" x="70" y="292" text-anchor="middle">Inter 1st Year</text>
+            <text class="js" x="70" y="310" text-anchor="middle">Curiosity begins</text>
+          </g>
+          <g class="jn">
+            <circle cx="280" cy="190" r="16" fill="#F97316"/><text x="280" y="195" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">2</text>
+            <text class="jl" x="280" y="140" text-anchor="middle">PathAhead Workshop</text>
+            <text class="js" x="280" y="158" text-anchor="middle">2 hours of clarity</text>
+          </g>
+          <g class="jn">
+            <circle cx="500" cy="230" r="16" fill="#8B5CF6"/><text x="500" y="235" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">3</text>
+            <text class="jl" x="500" y="272" text-anchor="middle">Personal Roadmap</text>
+            <text class="js" x="500" y="290" text-anchor="middle">A plan that fits you</text>
+          </g>
+          <g class="jn">
+            <circle cx="720" cy="150" r="16" fill="#14B8A6"/><text x="720" y="155" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">4</text>
+            <text class="jl" x="720" y="100" text-anchor="middle">Right College &amp; Branch</text>
+            <text class="js" x="720" y="118" text-anchor="middle">Confident choice</text>
+          </g>
+          <g class="jn">
+            <circle cx="920" cy="80" r="16" fill="#EC4899"/><text x="920" y="85" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">5</text>
+            <text class="jl" x="920" y="122" text-anchor="middle">Future-Ready Career</text>
+            <text class="js" x="920" y="140" text-anchor="middle">Goal unlocked</text>
+          </g>
+        </svg>
+        <div class="journey-list">
+          <div class="jl-item" style="--jc:#2563EB"><span class="jl-dot">1</span><div><h3>Inter 1st Year</h3><p>Curiosity begins</p></div></div>
+          <div class="jl-item" style="--jc:#F97316"><span class="jl-dot">2</span><div><h3>PathAhead Workshop</h3><p>2 hours of clarity</p></div></div>
+          <div class="jl-item" style="--jc:#8B5CF6"><span class="jl-dot">3</span><div><h3>Personal Roadmap</h3><p>A plan that fits you</p></div></div>
+          <div class="jl-item" style="--jc:#14B8A6"><span class="jl-dot">4</span><div><h3>Right College &amp; Branch</h3><p>Confident choice</p></div></div>
+          <div class="jl-item" style="--jc:#EC4899"><span class="jl-dot">5</span><div><h3>Future-Ready Career</h3><p>Goal unlocked</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ PROGRAMS ============ -->
   <section class="section section-alt" id="programs">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow reveal">Our Programs</span>
+        <span class="eyebrow is-orange reveal">Our Programs</span>
         <h2 class="h-xl reveal reveal-d1">Tailored workshops for every stage</h2>
         <p class="lead reveal reveal-d2">Designed specifically for Intermediate 1st and 2nd year students.</p>
       </div>
@@ -206,8 +296,8 @@
         <!-- Program 1 -->
         <article class="program-card reveal">
           <div class="bar"></div>
+          <figure class="program-media"><img src="assets/img/workshop.jpg" alt="Students collaborating during the Future Ready workshop" loading="lazy" /><span class="pm-chip">For Inter 1st Year</span></figure>
           <div class="program-body">
-            <span class="program-tag">For Inter 1st Year</span>
             <h3>Future Ready</h3>
             <div class="program-meta">
               <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 2 Hours</span>
@@ -226,8 +316,8 @@
         <!-- Program 2 -->
         <article class="program-card orange reveal reveal-d1">
           <div class="bar"></div>
+          <figure class="program-media"><img src="assets/img/presentation.jpg" alt="A mentor presenting the Career Blueprint session to students" loading="lazy" /><span class="pm-chip">For Inter 2nd Year</span></figure>
           <div class="program-body">
-            <span class="program-tag">For Inter 2nd Year</span>
             <h3>Career Blueprint</h3>
             <div class="program-meta">
               <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 2 Hours</span>
@@ -245,7 +335,7 @@
         </article>
       </div>
       <div class="center" style="margin-top:40px">
-        <a href="programs.html" class="btn btn-ghost">View All Programs →</a>
+        <a href="programs.html" class="btn btn-ghost">View All Programs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
   </section>
@@ -254,7 +344,7 @@
   <section class="section" id="how">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow reveal">How It Works</span>
+        <span class="eyebrow is-teal reveal">How It Works</span>
         <h2 class="h-xl reveal reveal-d1">From booking to breakthrough — in four steps</h2>
       </div>
       <div class="cards cols-4">
@@ -266,12 +356,30 @@
     </div>
   </section>
 
+  <!-- ============ WORKSHOPS IN ACTION (photo band) ============ -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow is-orange reveal">Workshops in Action</span>
+        <h2 class="h-xl reveal reveal-d1">Real sessions. Real students. <span class="text-gradient">Real energy.</span></h2>
+      </div>
+      <div class="photo-band">
+        <figure class="pb-item reveal"><span class="pb-tag" style="background:var(--primary)">Interactive</span><img src="assets/img/workshop.jpg" alt="Students discussing career options around laptops during a workshop" loading="lazy" /><figcaption>Career talks that feel like conversations</figcaption></figure>
+        <figure class="pb-item reveal reveal-d1"><span class="pb-tag" style="background:var(--violet)">Hands-on</span><img src="assets/img/tech.jpg" alt="Students exploring technology together at a PathAhead session" loading="lazy" /><figcaption>Tech &amp; AI demos students can touch</figcaption></figure>
+        <figure class="pb-item reveal reveal-d2"><span class="pb-tag" style="background:var(--teal)">Focused</span><img src="assets/img/study.jpg" alt="A student taking notes while planning their career roadmap" loading="lazy" /><figcaption>Every student leaves with a plan</figcaption></figure>
+      </div>
+      <div class="center" style="margin-top:32px">
+        <a href="gallery.html" class="btn btn-ghost">See the full gallery <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ CAREER DOMAINS EXPLORER ============ -->
   <section class="section section-alt" id="domains">
     <div class="container">
       <div class="section-head">
         <div class="accent-bar reveal"></div>
-        <span class="eyebrow reveal">Explore the Future</span>
+        <span class="eyebrow is-pink reveal">Explore the Future</span>
         <h2 class="h-xl reveal reveal-d1">The careers we open students’ eyes to</h2>
         <p class="lead reveal reveal-d2">Tap a domain to see where tomorrow’s opportunities are — and what it takes to get there.</p>
       </div>
@@ -289,41 +397,47 @@
           <div class="domain-card">
             <div class="d-emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/><circle cx="12" cy="12" r="2"/></svg></div>
             <div><h3>Artificial Intelligence</h3><p>From ChatGPT to self-driving cars — AI is reshaping every industry. We show students what AI really is, where it’s heading, and how to be part of it.</p><div class="d-tags"><span>Machine Learning</span><span>Generative AI</span><span>Prompt Engineering</span><span>AI Ethics</span></div></div>
+            <div class="d-chart" aria-hidden="true"><svg viewBox="0 0 120 70" fill="currentColor"><rect x="4" y="52" width="16" height="18" rx="4" opacity=".3"/><rect x="27" y="42" width="16" height="28" rx="4" opacity=".45"/><rect x="50" y="32" width="16" height="38" rx="4" opacity=".6"/><rect x="73" y="20" width="16" height="50" rx="4" opacity=".8"/><rect x="96" y="6" width="16" height="64" rx="4"/></svg><span class="d-trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Exploding demand</span></div>
           </div>
         </div>
         <div class="domain-panel" data-domain="data">
           <div class="domain-card alt">
             <div class="d-emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></svg></div>
             <div><h3>Data Science &amp; Analytics</h3><p>Every company runs on data. We introduce students to the field that turns numbers into decisions — one of the most in-demand careers today.</p><div class="d-tags"><span>Python</span><span>Statistics</span><span>Visualization</span><span>Big Data</span></div></div>
+            <div class="d-chart" aria-hidden="true"><svg viewBox="0 0 120 70" fill="currentColor"><rect x="4" y="52" width="16" height="18" rx="4" opacity=".3"/><rect x="27" y="42" width="16" height="28" rx="4" opacity=".45"/><rect x="50" y="32" width="16" height="38" rx="4" opacity=".6"/><rect x="73" y="20" width="16" height="50" rx="4" opacity=".8"/><rect x="96" y="6" width="16" height="64" rx="4"/></svg><span class="d-trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> High growth</span></div>
           </div>
         </div>
         <div class="domain-panel" data-domain="cyber">
           <div class="domain-card">
             <div class="d-emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
             <div><h3>Cybersecurity</h3><p>As the world goes digital, protecting it becomes critical. We explain the ethical-hacking and security careers keeping people and businesses safe.</p><div class="d-tags"><span>Ethical Hacking</span><span>Network Security</span><span>Cryptography</span></div></div>
+            <div class="d-chart" aria-hidden="true"><svg viewBox="0 0 120 70" fill="currentColor"><rect x="4" y="52" width="16" height="18" rx="4" opacity=".3"/><rect x="27" y="42" width="16" height="28" rx="4" opacity=".45"/><rect x="50" y="32" width="16" height="38" rx="4" opacity=".6"/><rect x="73" y="20" width="16" height="50" rx="4" opacity=".8"/><rect x="96" y="6" width="16" height="64" rx="4"/></svg><span class="d-trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Critical need</span></div>
           </div>
         </div>
         <div class="domain-panel" data-domain="cloud">
           <div class="domain-card alt">
             <div class="d-emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
             <div><h3>Cloud &amp; DevOps</h3><p>The invisible backbone of the internet. We show how apps and services scale to millions — and the fast-growing careers that make it happen.</p><div class="d-tags"><span>AWS / Azure</span><span>Containers</span><span>Automation</span></div></div>
+            <div class="d-chart" aria-hidden="true"><svg viewBox="0 0 120 70" fill="currentColor"><rect x="4" y="52" width="16" height="18" rx="4" opacity=".3"/><rect x="27" y="42" width="16" height="28" rx="4" opacity=".45"/><rect x="50" y="32" width="16" height="38" rx="4" opacity=".6"/><rect x="73" y="20" width="16" height="50" rx="4" opacity=".8"/><rect x="96" y="6" width="16" height="64" rx="4"/></svg><span class="d-trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Fast growing</span></div>
           </div>
         </div>
         <div class="domain-panel" data-domain="soft">
           <div class="domain-card">
             <div class="d-emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
             <div><h3>Software Engineering</h3><p>The classic path that still powers it all. We break down what developers actually do and the languages worth learning first.</p><div class="d-tags"><span>Web &amp; Mobile</span><span>Programming</span><span>Problem Solving</span></div></div>
+            <div class="d-chart" aria-hidden="true"><svg viewBox="0 0 120 70" fill="currentColor"><rect x="4" y="52" width="16" height="18" rx="4" opacity=".3"/><rect x="27" y="42" width="16" height="28" rx="4" opacity=".45"/><rect x="50" y="32" width="16" height="38" rx="4" opacity=".6"/><rect x="73" y="20" width="16" height="50" rx="4" opacity=".8"/><rect x="96" y="6" width="16" height="64" rx="4"/></svg><span class="d-trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Evergreen demand</span></div>
           </div>
         </div>
         <div class="domain-panel" data-domain="robotics">
           <div class="domain-card alt">
             <div class="d-emoji"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="12" rx="2"/><path d="M12 8V5M9 2h6M9 14h.01M15 14h.01"/></svg></div>
             <div><h3>Robotics &amp; Automation</h3><p>Where hardware meets intelligence. We spark curiosity about the mechatronics and automation careers building the physical future.</p><div class="d-tags"><span>Embedded Systems</span><span>IoT</span><span>Mechatronics</span></div></div>
+            <div class="d-chart" aria-hidden="true"><svg viewBox="0 0 120 70" fill="currentColor"><rect x="4" y="52" width="16" height="18" rx="4" opacity=".3"/><rect x="27" y="42" width="16" height="28" rx="4" opacity=".45"/><rect x="50" y="32" width="16" height="38" rx="4" opacity=".6"/><rect x="73" y="20" width="16" height="50" rx="4" opacity=".8"/><rect x="96" y="6" width="16" height="64" rx="4"/></svg><span class="d-trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Rising fast</span></div>
           </div>
         </div>
       </div>
       <div class="center" style="margin-top:40px">
-        <a href="roadmaps.html" class="btn btn-primary btn-lg">Explore free learn-from-scratch roadmaps →</a>
+        <a href="roadmaps.html" class="btn btn-primary btn-lg">Explore free learn-from-scratch roadmaps <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <p class="lead" style="margin-top:14px;font-size:.95rem">Step-by-step plans for 8 tech careers — AI/ML, web, data, cybersecurity, cloud, mobile, UI/UX and more. Free, with downloadable PDFs.</p>
       </div>
     </div>
@@ -333,7 +447,7 @@
   <section class="section" id="benefits">
     <div class="container split">
       <div class="split-text reveal">
-        <span class="eyebrow">Benefits</span>
+        <span class="eyebrow is-green">Benefits</span>
         <h2 class="h-lg" style="margin:16px 0">What students walk away with</h2>
         <p class="muted" style="margin-bottom:22px">Every workshop is designed to leave students clearer, more confident and better prepared for the decisions ahead.</p>
         <ul class="check-list">
@@ -344,15 +458,16 @@
         </ul>
         <a href="for-students.html" class="btn btn-primary" style="margin-top:26px">See Student Benefits</a>
       </div>
-      <div class="panel reveal reveal-d1">
-        <div class="pill-list" style="justify-content:center">
+      <div class="panel media-panel reveal reveal-d1">
+        <img src="assets/img/students-group.jpg" alt="A group of students working together after a PathAhead workshop" loading="lazy" />
+        <div class="mp-badge mp-b1"><span class="ic" style="background:var(--secondary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></span> Certificate included</div>
+        <div class="mp-badge mp-b2"><span class="ic" style="background:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span> Career guides &amp; kits</div>
+        <div class="pill-list">
           <span class="pill">Career Guide</span>
-          <span class="pill">Technology Roadmap</span>
-          <span class="pill">Engineering Guide</span>
-          <span class="pill">Career Checklist</span>
+          <span class="pill">Tech Roadmap</span>
+          <span class="pill">Checklist</span>
           <span class="pill">Resource Kit</span>
-          <span class="pill">Certificate</span>
-          <span class="pill">Community Access</span>
+          <span class="pill">Community</span>
         </div>
       </div>
     </div>
@@ -362,13 +477,13 @@
   <section class="section section-alt" id="colleges">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow reveal">Why Colleges Choose Us</span>
+        <span class="eyebrow is-sky reveal">Why Colleges Choose Us</span>
         <h2 class="h-xl reveal reveal-d1">A trusted partner for your institution</h2>
       </div>
       <div class="cards cols-3">
         <div class="card reveal"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div><h3>Value for Students</h3><p>Genuinely useful guidance that improves student outcomes and satisfaction.</p></div>
         <div class="card reveal reveal-d1"><div class="card-icon is-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-6 0v4"/><rect x="2" y="9" width="20" height="12" rx="2"/></svg></div><h3>Zero Hassle</h3><p>We handle content, delivery and materials. Your team just picks a date.</p></div>
-        <div class="card reveal reveal-d2"><div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3>Measurable Impact</h3><p>Structured outcomes, certificates and feedback you can share with parents.</p></div>
+        <div class="card reveal reveal-d2"><div class="card-icon is-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3>Measurable Impact</h3><p>Structured outcomes, certificates and feedback you can share with parents.</p></div>
       </div>
       <div class="center" style="margin-top:40px"><a href="for-colleges.html" class="btn btn-dark">Partner With PathAhead</a></div>
     </div>
@@ -379,10 +494,10 @@
     <div class="container">
       <div class="stats reveal">
         <div class="cards cols-4">
-          <div class="stat"><div class="num" data-count="50" data-suffix="+">0</div><div class="label">Workshops Delivered</div></div>
-          <div class="stat"><div class="num" data-count="5000" data-suffix="+">0</div><div class="label">Students Guided</div></div>
-          <div class="stat"><div class="num" data-count="30" data-suffix="+">0</div><div class="label">Partner Institutions</div></div>
-          <div class="stat"><div class="num" data-count="4.9" data-suffix="/5">0</div><div class="label">Average Rating</div></div>
+          <div class="stat"><div class="stat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div class="num" data-count="50" data-suffix="+">0</div><div class="label">Workshops Delivered</div></div>
+          <div class="stat"><div class="stat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="num" data-count="5000" data-suffix="+">0</div><div class="label">Students Guided</div></div>
+          <div class="stat"><div class="stat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg></div><div class="num" data-count="30" data-suffix="+">0</div><div class="label">Partner Institutions</div></div>
+          <div class="stat"><div class="stat-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.5 5.5 21 7.5 13.5 2 9 9 9 12 2"/></svg></div><div class="num" data-count="4.9" data-suffix="/5">0</div><div class="label">Average Rating</div></div>
         </div>
       </div>
     </div>
@@ -406,27 +521,27 @@
   <section class="section" id="testimonials">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow reveal">Testimonials</span>
+        <span class="eyebrow is-violet reveal">Testimonials</span>
         <h2 class="h-xl reveal reveal-d1">Trusted by students, teachers &amp; principals</h2>
       </div>
       <div class="cards cols-3">
         <div class="tcard reveal">
           <div class="stars">★★★★★</div>
           <blockquote>“The workshop gave me total clarity on which engineering branch fits me. I finally feel confident about my choices.”</blockquote>
-          <div class="person"><span class="avatar" style="background:#2563EB">A</span><div><div class="name">Ananya R.</div><div class="role">Intermediate 2nd Year Student</div></div></div>
+          <div class="person"><span class="avatar" style="background:linear-gradient(135deg,#2563EB,#8B5CF6)">A</span><div><div class="name">Ananya R.</div><div class="role">Intermediate 2nd Year Student</div></div></div>
         </div>
         <div class="tcard reveal reveal-d1">
           <div class="stars">★★★★★</div>
           <blockquote>“PathAhead’s session was practical and engaging. Our students were talking about AI careers for days afterward.”</blockquote>
-          <div class="person"><span class="avatar" style="background:#F97316">S</span><div><div class="name">S. Kumar</div><div class="role">Faculty, Junior College</div></div></div>
+          <div class="person"><span class="avatar" style="background:linear-gradient(135deg,#F97316,#EC4899)">S</span><div><div class="name">S. Kumar</div><div class="role">Faculty, Junior College</div></div></div>
         </div>
         <div class="tcard reveal reveal-d2">
           <div class="stars">★★★★★</div>
           <blockquote>“Professional, well-structured and genuinely valuable for our students. We’re booking them again next year.”</blockquote>
-          <div class="person"><span class="avatar" style="background:#1E293B">P</span><div><div class="name">Dr. Priya M.</div><div class="role">Principal</div></div></div>
+          <div class="person"><span class="avatar" style="background:linear-gradient(135deg,#14B8A6,#2563EB)">P</span><div><div class="name">Dr. Priya M.</div><div class="role">Principal</div></div></div>
         </div>
       </div>
-      <div class="center" style="margin-top:40px"><a href="testimonials.html" class="btn btn-ghost">Read More Stories →</a></div>
+      <div class="center" style="margin-top:40px"><a href="testimonials.html" class="btn btn-ghost">Read More Stories <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
     </div>
   </section>
 
@@ -434,7 +549,7 @@
   <section class="section section-alt" id="faq">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow reveal">FAQ</span>
+        <span class="eyebrow is-teal reveal">FAQ</span>
         <h2 class="h-xl reveal reveal-d1">Frequently asked questions</h2>
       </div>
       <div class="accordion reveal">
@@ -451,7 +566,7 @@
   <section class="section-sm">
     <div class="container">
       <div class="newsletter reveal">
-        <span class="eyebrow">Stay Updated</span>
+        <span class="eyebrow is-pink">Stay Updated</span>
         <h2 class="h-lg" style="margin:16px 0 6px">Career tips &amp; workshop updates</h2>
         <p class="muted">Join our newsletter — no spam, just useful guidance.</p>
         <form data-newsletter novalidate>

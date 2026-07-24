@@ -1,5 +1,5 @@
 /* PathAhead — Service Worker (offline support, always-fresh when online) */
-const CACHE = "pathahead-v6";
+const CACHE = "pathahead-v7";
 const CORE = [
   "index.html", "about.html", "programs.html", "for-colleges.html", "for-students.html",
   "gallery.html", "testimonials.html", "faq.html", "contact.html",
@@ -7,7 +7,7 @@ const CORE = [
   "css/styles.css", "js/main.js",
   "career-data/branches.js", "career-data/domains.js", "career-data/states.js",
   "career-data/years.js", "career-data/resources.js", "career-data/builder.js",
-  "assets/favicon.svg", "assets/icon.svg", "assets/og-image.svg",
+  "assets/favicon.svg", "assets/icon.svg", "assets/og-image.png",
   "manifest.webmanifest"
 ];
 
