@@ -11,22 +11,17 @@
   <meta property="og:site_name" content="PathAhead" />
   <meta property="og:title" content="Gallery — PathAhead" />
   <meta property="og:description" content="Moments from PathAhead workshops across schools and colleges in India." />
-  <meta property="og:image" content="assets/og-image.svg" />
+  <meta property="og:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="assets/og-image.svg" />
+  <meta name="twitter:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    /* Gallery placeholder tiles — swap the background for real photos when ready */
-    .gp1{background:linear-gradient(135deg,#2563EB,#1E40AF)}
-    .gp2{background:linear-gradient(135deg,#F97316,#EA580C)}
-    .gp3{background:linear-gradient(135deg,#0F172A,#334155)}
-    .gp4{background:linear-gradient(135deg,#1E40AF,#2563EB)}
-    .gp5{background:linear-gradient(135deg,#EA580C,#F97316)}
-    .gp6{background:linear-gradient(135deg,#334155,#0F172A)}
+    /* CTA tile at the end of the photo grid */
+    .gp6{background:linear-gradient(135deg,#2563EB,#7C3AED 55%,#DB2777)}
   </style>
 </head>
 <body>
@@ -43,14 +38,13 @@
   <section class="section">
     <div class="container">
       <div class="gallery-grid reveal">
-        <div class="g-item gp1"><div class="g-label"><div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><div class="g-cap">Interactive Session</div><div class="g-sub">Students engaged &amp; asking questions</div></div></div>
-        <div class="g-item gp2 tall"><div class="g-label"><div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><div class="g-cap">Career Talk</div><div class="g-sub">Exploring future paths</div></div></div>
-        <div class="g-item gp3"><div class="g-label"><div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div><div class="g-cap">Certificates</div><div class="g-sub">Recognising participation</div></div></div>
-        <div class="g-item gp4"><div class="g-label"><div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div class="g-cap">Live Demos</div><div class="g-sub">Technology &amp; AI awareness</div></div></div>
-        <div class="g-item gp5"><div class="g-label"><div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-6 0v4"/><path d="M12 12v6"/><rect x="2" y="9" width="20" height="12" rx="2"/></svg></div><div class="g-cap">Q&amp;A Time</div><div class="g-sub">Every question answered</div></div></div>
-        <div class="g-item gp6 tall"><div class="g-label"><div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div><div class="g-cap">Campus Visits</div><div class="g-sub">Across schools &amp; colleges</div></div></div>
+        <div class="g-item has-photo"><span class="g-chip" style="background:var(--primary)">Session</span><img src="assets/img/workshop.jpg" alt="Students discussing around laptops during an interactive PathAhead session" loading="lazy" /><div class="g-label"><div class="g-cap">Interactive Session</div><div class="g-sub">Students engaged &amp; asking questions</div></div></div>
+        <div class="g-item has-photo tall"><span class="g-chip" style="background:var(--secondary)">Career Talk</span><img src="assets/img/presentation.jpg" alt="A mentor presenting career paths to a hall of students" loading="lazy" /><div class="g-label"><div class="g-cap">Career Talk</div><div class="g-sub">Exploring future paths</div></div></div>
+        <div class="g-item has-photo"><span class="g-chip" style="background:var(--violet)">Teamwork</span><img src="assets/img/students-group.jpg" alt="A group of students laughing while working together" loading="lazy" /><div class="g-label"><div class="g-cap">Group Activities</div><div class="g-sub">Learning together, out loud</div></div></div>
+        <div class="g-item has-photo"><span class="g-chip" style="background:var(--teal)">Tech Demo</span><img src="assets/img/tech.jpg" alt="Students exploring technology during a live demo" loading="lazy" /><div class="g-label"><div class="g-cap">Live Demos</div><div class="g-sub">Technology &amp; AI awareness</div></div></div>
+        <div class="g-item has-photo"><span class="g-chip" style="background:var(--pink)">Planning</span><img src="assets/img/study.jpg" alt="A student taking notes and planning their career roadmap" loading="lazy" /><div class="g-label"><div class="g-cap">Roadmap Time</div><div class="g-sub">Every student leaves with a plan</div></div></div>
+        <div class="g-item gp6 tall"><div class="g-label"><div class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div><div class="g-cap">Campus Visits</div><div class="g-sub">Your campus could be next — book a workshop</div></div></div>
       </div>
-      <p class="center muted reveal" style="margin-top:28px;font-size:.9rem">Placeholder tiles shown. Replace the <code>.g-item</code> backgrounds with your real workshop photos anytime.</p>
     </div>
   </section>
 
@@ -65,7 +59,7 @@
       <div class="cards cols-3">
         <div class="card center reveal" style="display:grid;place-items:center;min-height:200px"><div><div class="card-icon" style="margin:0 auto 14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><p class="muted">Video coming soon</p></div></div>
         <div class="card center reveal reveal-d1" style="display:grid;place-items:center;min-height:200px"><div><div class="card-icon is-orange" style="margin:0 auto 14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><p class="muted">Video coming soon</p></div></div>
-        <div class="card center reveal reveal-d2" style="display:grid;place-items:center;min-height:200px"><div><div class="card-icon" style="margin:0 auto 14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><p class="muted">Video coming soon</p></div></div>
+        <div class="card center reveal reveal-d2" style="display:grid;place-items:center;min-height:200px"><div><div class="card-icon is-purple" style="margin:0 auto 14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><p class="muted">Video coming soon</p></div></div>
       </div>
     </div>
   </section>
@@ -81,5 +75,43 @@
   </section>
 
   <script src="js/main.js"></script>
+  <script>
+    // Lightbox: click any gallery photo to view it full-screen
+    (function () {
+      var items = document.querySelectorAll(".g-item.has-photo");
+      if (!items.length) return;
+      var lb = document.createElement("div");
+      lb.className = "lightbox";
+      lb.setAttribute("role", "dialog");
+      lb.setAttribute("aria-modal", "true");
+      lb.setAttribute("aria-label", "Photo viewer");
+      lb.innerHTML = '<button class="lb-close" aria-label="Close photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><figure><img alt="" /><figcaption></figcaption></figure>';
+      document.body.appendChild(lb);
+      var img = lb.querySelector("img"), cap = lb.querySelector("figcaption"), btn = lb.querySelector(".lb-close"), last = null;
+      function open(item) {
+        var src = item.querySelector("img");
+        img.src = src.currentSrc || src.src; img.alt = src.alt;
+        var c = item.querySelector(".g-cap");
+        cap.textContent = c ? c.textContent : "";
+        lb.classList.add("open"); document.body.classList.add("lb-open");
+        last = item; btn.focus();
+      }
+      function close() {
+        lb.classList.remove("open"); document.body.classList.remove("lb-open");
+        if (last) last.focus();
+      }
+      items.forEach(function (it) {
+        it.setAttribute("tabindex", "0");
+        it.setAttribute("role", "button");
+        var c = it.querySelector(".g-cap");
+        it.setAttribute("aria-label", "View photo: " + (c ? c.textContent : "workshop moment"));
+        it.addEventListener("click", function () { open(it); });
+        it.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(it); } });
+      });
+      btn.addEventListener("click", close);
+      lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape" && lb.classList.contains("open")) close(); });
+    })();
+  </script>
 </body>
 </html>

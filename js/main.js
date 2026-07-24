@@ -654,6 +654,9 @@
     }
     if (!head.querySelector('link[rel="manifest"]')) add("link", { rel: "manifest", href: "manifest.webmanifest" });
     if (!head.querySelector('link[rel="apple-touch-icon"]')) add("link", { rel: "apple-touch-icon", href: "assets/icon.svg" });
+    if (!head.querySelector('meta[name="theme-color"][media]')) {
+      add("meta", { name: "theme-color", media: "(prefers-color-scheme: dark)", content: "#0B1220" });
+    }
   }
 
   /* ============================================================
