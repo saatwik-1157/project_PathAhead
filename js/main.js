@@ -55,10 +55,10 @@
     { label: "Home",         href: "index.html" },
     { label: "About",        href: "about.html" },
     { label: "Programs",     href: "programs.html" },
-    { label: "For Colleges", href: "for-colleges.html" },
-    { label: "For Students", href: "for-students.html" },
+    { label: "Colleges",     href: "for-colleges.html" },
+    { label: "Students",     href: "for-students.html" },
     { label: "Roadmaps",     href: "roadmaps.html" },
-    { label: "Career Builder", href: "career-roadmap.html" },
+    { label: "Builder",      href: "career-roadmap.html" },
     { label: "Gallery",      href: "gallery.html" },
     { label: "Testimonials", href: "testimonials.html" },
     { label: "FAQ",          href: "faq.html" },
@@ -100,17 +100,12 @@
     } catch (e) {}
   })();
 
+  // The site is dark-only by design (professional AI aesthetic). This just
+  // guarantees the attribute every [data-theme="dark"] rule depends on, even
+  // if a page was cached before the light theme was retired.
   function initTheme() {
-    var btn = document.getElementById("themeToggle");
-    if (!btn) return;
-    btn.addEventListener("click", function () {
-      var wasDark = document.documentElement.getAttribute("data-theme") === "dark";
-      if (wasDark) document.documentElement.removeAttribute("data-theme");
-      else document.documentElement.setAttribute("data-theme", "dark");
-      try { localStorage.setItem("pathahead-theme", wasDark ? "light" : "dark"); } catch (e) {}
-      var m = document.querySelector('meta[name="theme-color"]');
-      if (m) m.setAttribute("content", wasDark ? "#2563EB" : "#0B1220");
-    });
+    document.documentElement.setAttribute("data-theme", "dark");
+    try { localStorage.removeItem("pathahead-theme"); } catch (e) {}
   }
 
   // Brand mark: uses assets/logo-mark.png; falls back to the inline SVG badge if missing.
@@ -140,9 +135,6 @@
         "</a>" +
         '<nav class="nav-links" aria-label="Primary">' + links + "</nav>" +
         '<div class="nav-cta">' +
-          '<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">' +
-            '<span class="moon">' + I.moon + "</span><span class=\"sun\">" + I.sun + "</span>" +
-          "</button>" +
           '<a href="contact.html" class="btn btn-primary">Book a Workshop</a>' +
           '<button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">' + I.menu + "</button>" +
         "</div>" +
@@ -591,6 +583,23 @@
       });
     });
 
+    // Cards tilt in 3D toward the cursor.
+    if (window.matchMedia("(min-width: 1025px)").matches) {
+      document.querySelectorAll(".card, .tcard, .rm-card").forEach(function (card) {
+        card.classList.add("tilt3d");
+        card.addEventListener("mousemove", function (e) {
+          var r = card.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+          card.style.setProperty("--ty", (px * 7).toFixed(2) + "deg");
+          card.style.setProperty("--tx", (-py * 7).toFixed(2) + "deg");
+        });
+        card.addEventListener("mouseleave", function () {
+          card.style.setProperty("--tx", "0deg");
+          card.style.setProperty("--ty", "0deg");
+        });
+      });
+    }
+
     // Statement CTAs lean toward the cursor. Uses --bx/--by so it never
     // collides with the --mx/--my the card spotlight sets on ancestors.
     var MAX = 5;
@@ -606,6 +615,235 @@
         btn.style.setProperty("--by", "0px");
       });
     });
+  }
+
+  /* ============================================================
+     3D career explorer — a rotating sphere of careers with a live
+     explanation panel. Hand-rolled projection on a 2D canvas: no WebGL
+     and no library, so it stays fast on low-end phones and needs no build.
+     ============================================================ */
+  var ORBIT = [
+    { n: "Artificial Intelligence", c: "#8B5CF6", d: 96, href: "ai-ml-roadmap.html",
+      t: ["Machine Learning", "Deep Learning", "LLMs"],
+      x: "Machines that learn from data instead of being programmed rule by rule — now behind search, medicine, self-driving cars and ChatGPT." },
+    { n: "Prompt Engineering", c: "#A78BFA", d: 94, href: "prompt-engineering-roadmap.html",
+      t: ["Generative AI", "RAG", "AI Agents"],
+      x: "The newest skill in tech: directing AI systems precisely enough to do real work — part clear writing, part logic, part experimentation." },
+    { n: "Software Engineering", c: "#3B82F6", d: 92, href: "web-development-roadmap.html",
+      t: ["Web & Mobile", "APIs", "Problem Solving"],
+      x: "The classic path that still powers everything. You design, build and maintain the software the rest of the world runs on." },
+    { n: "Cybersecurity", c: "#EC4899", d: 90, href: "cybersecurity-roadmap.html",
+      t: ["Ethical Hacking", "SOC & Defense", "Cryptography"],
+      x: "As everything moves online, someone has to defend it. You think like an attacker to protect people, money and infrastructure." },
+    { n: "Data Science", c: "#14B8A6", d: 88, href: "data-science-roadmap.html",
+      t: ["Python", "Statistics", "Visualization"],
+      x: "Turning messy numbers into decisions. Every company collects data; very few can explain what it actually means." },
+    { n: "Cloud & DevOps", c: "#0EA5E9", d: 86, href: "cloud-devops-roadmap.html",
+      t: ["AWS / Azure", "Containers", "Automation"],
+      x: "The invisible backbone of the internet — the engineers who make apps survive millions of users without falling over." },
+    { n: "UI/UX Design", c: "#E879F9", d: 80, href: "ui-ux-design-roadmap.html",
+      t: ["Figma", "Research", "Prototyping"],
+      x: "Deciding how a product should feel to use. No coding required to start — it is empathy and problem-solving made visual." },
+    { n: "IoT & Robotics", c: "#F97316", d: 78, href: "iot-robotics-roadmap.html",
+      t: ["Embedded", "Sensors", "Automation"],
+      x: "Where code meets the physical world: devices that sense, decide and move. The engine room of Industry 4.0." },
+    { n: "AR / VR (XR)", c: "#22C55E", d: 74, href: "ar-vr-roadmap.html",
+      t: ["Unity", "3D", "Spatial UX"],
+      x: "Building worlds people step inside — used for gaming, surgical training, factory simulation and the spatial web." },
+    { n: "Blockchain / Web3", c: "#F59E0B", d: 70, href: "blockchain-web3-roadmap.html",
+      t: ["Solidity", "Smart Contracts", "Security"],
+      x: "Systems where the code itself enforces the rules, with no central authority — and where security mistakes are permanent." }
+  ];
+
+  function initOrbit() {
+    var wrap = document.querySelector("[data-orbit]");
+    if (!wrap) return;
+    var canvas = wrap.querySelector(".orbit-canvas");
+    var panel = wrap.querySelector(".orbit-panel");
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Distribute the careers evenly over a sphere (Fibonacci lattice).
+    var N = ORBIT.length, pts = [];
+    for (var i = 0; i < N; i++) {
+      var y = 1 - (i / (N - 1)) * 2;
+      var rad = Math.sqrt(Math.max(0, 1 - y * y));
+      var theta = i * 2.39996;
+      pts.push({ x: Math.cos(theta) * rad, y: y, z: Math.sin(theta) * rad, i: i });
+    }
+    // Pre-compute each node's two nearest neighbours for the connecting web.
+    var edges = [];
+    pts.forEach(function (a) {
+      var others = pts.filter(function (b) { return b !== a; }).sort(function (p, q) {
+        var dp = (p.x - a.x) * (p.x - a.x) + (p.y - a.y) * (p.y - a.y) + (p.z - a.z) * (p.z - a.z);
+        var dq = (q.x - a.x) * (q.x - a.x) + (q.y - a.y) * (q.y - a.y) + (q.z - a.z) * (q.z - a.z);
+        return dp - dq;
+      });
+      others.slice(0, 2).forEach(function (b) {
+        if (!edges.some(function (e) { return (e[0] === b.i && e[1] === a.i); })) edges.push([a.i, b.i]);
+      });
+    });
+
+    var yaw = 0.6, pitch = -0.25, targetYaw = yaw, targetPitch = pitch;
+    var selected = 0, hover = -1, W = 0, H = 0, DPR = 1, screenPts = [], visible = true;
+
+    function size() {
+      var r = canvas.parentNode.getBoundingClientRect();
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      W = Math.max(280, r.width); H = Math.max(280, r.height);
+      canvas.width = W * DPR; canvas.height = H * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+
+    function project(p, R, f, cx, cy) {
+      var cY = Math.cos(yaw), sY = Math.sin(yaw), cP = Math.cos(pitch), sP = Math.sin(pitch);
+      var x = p.x * R, y = p.y * R, z = p.z * R;
+      var x1 = x * cY + z * sY, z1 = -x * sY + z * cY;
+      var y1 = y * cP - z1 * sP, z2 = y * sP + z1 * cP;
+      var s = f / (f + z2);
+      return { sx: cx + x1 * s, sy: cy + y1 * s, s: s, z: z2 };
+    }
+
+    function draw() {
+      // Leave headroom at the bottom so nodes never collide with the hint text.
+      var R = Math.min(W * 0.44, H * 0.41), f = R * 3.2, cx = W / 2, cy = H * 0.47;
+      ctx.clearRect(0, 0, W, H);
+      screenPts = pts.map(function (p) { return project(p, R, f, cx, cy); });
+
+      // connective web, back-to-front
+      edges.map(function (e) {
+        return { e: e, z: (screenPts[e[0]].z + screenPts[e[1]].z) / 2 };
+      }).sort(function (a, b) { return b.z - a.z; }).forEach(function (o) {
+        var a = screenPts[o.e[0]], b = screenPts[o.e[1]];
+        var lit = (o.e[0] === selected || o.e[1] === selected);
+        ctx.beginPath();
+        ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy);
+        ctx.strokeStyle = lit ? ORBIT[selected].c : "#ffffff";
+        ctx.globalAlpha = lit ? 0.30 : 0.07 * Math.max(.25, (a.s + b.s) / 2);
+        ctx.lineWidth = lit ? 1.4 : 1;
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+
+      // nodes, back-to-front so nearer ones overlap correctly
+      pts.map(function (p, idx) { return { idx: idx, sp: screenPts[idx] }; })
+        .sort(function (a, b) { return b.sp.z - a.sp.z; })
+        .forEach(function (o) {
+          var d = ORBIT[o.idx], sp = o.sp;
+          var isSel = o.idx === selected, isHov = o.idx === hover;
+          var depth = Math.max(.28, Math.min(1, sp.s * 0.92));
+          var r = (isSel ? 11 : 7) * sp.s;
+
+          if (isSel || isHov) {
+            var g = ctx.createRadialGradient(sp.sx, sp.sy, 0, sp.sx, sp.sy, r * 3.6);
+            g.addColorStop(0, d.c); g.addColorStop(1, "rgba(0,0,0,0)");
+            ctx.globalAlpha = isSel ? .35 : .2;
+            ctx.fillStyle = g;
+            ctx.beginPath(); ctx.arc(sp.sx, sp.sy, r * 3.6, 0, 6.2832); ctx.fill();
+          }
+          ctx.globalAlpha = depth;
+          ctx.fillStyle = d.c;
+          ctx.beginPath(); ctx.arc(sp.sx, sp.sy, r, 0, 6.2832); ctx.fill();
+          if (isSel) {
+            ctx.globalAlpha = .9; ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.arc(sp.sx, sp.sy, r + 5, 0, 6.2832); ctx.stroke();
+          }
+          // Label only the nearest faces (plus selected/hovered) so labels
+          // don't pile up, and keep the text inside the canvas edges.
+          if (sp.s > 1.06 || isSel || isHov) {
+            ctx.globalAlpha = isSel ? 1 : Math.min(.95, (sp.s - .98) * 5);
+            ctx.fillStyle = isSel ? "#fff" : "#C9CDD6";
+            ctx.font = (isSel ? "700 " : "600 ") + Math.max(11, 13 * sp.s).toFixed(0) +
+              "px Inter, system-ui, sans-serif";
+            ctx.textAlign = "center";
+            var half = ctx.measureText(d.n).width / 2 + 6;
+            ctx.fillText(d.n, Math.max(half, Math.min(W - half, sp.sx)), sp.sy - r - 9);
+          }
+        });
+      ctx.globalAlpha = 1;
+    }
+
+    function select(idx) {
+      selected = idx;
+      var d = ORBIT[idx];
+      panel.style.setProperty("--op-color", d.c);
+      panel.querySelector(".op-kick span").textContent = "Career Domain";
+      panel.querySelector("h3").textContent = d.n;
+      panel.querySelector(".op-desc").textContent = d.x;
+      panel.querySelector(".op-tags").innerHTML = d.t.map(function (t) {
+        return "<span>" + t + "</span>";
+      }).join("");
+      panel.querySelector(".op-bar i").style.width = d.d + "%";
+      panel.querySelector(".op-demand").textContent = "Industry demand · " + d.d + "/100";
+      var link = panel.querySelector(".op-link");
+      link.setAttribute("href", d.href);
+      link.querySelector("span").textContent = "Open the " + d.n + " roadmap";
+    }
+
+    // ---- interaction: drag to rotate, click/tap to select ----
+    var dragging = false, moved = 0, lastX = 0, lastY = 0;
+    canvas.addEventListener("pointerdown", function (e) {
+      dragging = true; moved = 0; lastX = e.clientX; lastY = e.clientY;
+      canvas.setPointerCapture && canvas.setPointerCapture(e.pointerId);
+    });
+    canvas.addEventListener("pointermove", function (e) {
+      var r = canvas.getBoundingClientRect();
+      if (dragging) {
+        var dx = e.clientX - lastX, dy = e.clientY - lastY;
+        moved += Math.abs(dx) + Math.abs(dy);
+        targetYaw += dx * 0.006;
+        targetPitch = Math.max(-1.1, Math.min(1.1, targetPitch + dy * 0.005));
+        lastX = e.clientX; lastY = e.clientY;
+      } else {
+        var mx = e.clientX - r.left, my = e.clientY - r.top, best = -1, bd = 26;
+        screenPts.forEach(function (sp, idx) {
+          var d = Math.hypot(sp.sx - mx, sp.sy - my);
+          if (d < bd) { bd = d; best = idx; }
+        });
+        if (best !== hover) { hover = best; canvas.style.cursor = best >= 0 ? "pointer" : "grab"; }
+      }
+    });
+    canvas.addEventListener("pointerup", function (e) {
+      dragging = false;
+      if (moved < 6) {
+        var r = canvas.getBoundingClientRect();
+        var mx = e.clientX - r.left, my = e.clientY - r.top, best = -1, bd = 30;
+        screenPts.forEach(function (sp, idx) {
+          var d = Math.hypot(sp.sx - mx, sp.sy - my);
+          if (d < bd) { bd = d; best = idx; }
+        });
+        if (best >= 0) select(best);
+      }
+    });
+    canvas.addEventListener("pointerleave", function () { dragging = false; hover = -1; });
+
+    // keyboard access: cycle domains, Enter opens the roadmap
+    canvas.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") { select((selected + 1) % N); e.preventDefault(); }
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { select((selected - 1 + N) % N); e.preventDefault(); }
+      else if (e.key === "Enter") { window.location.href = ORBIT[selected].href; }
+    });
+
+    // Only animate while on screen — no background battery drain.
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: 0.05 })
+        .observe(wrap);
+    }
+
+    function loop() {
+      if (visible) {
+        if (!dragging && !still) targetYaw += 0.0016;
+        yaw += (targetYaw - yaw) * 0.08;
+        pitch += (targetPitch - pitch) * 0.08;
+        draw();
+      }
+      requestAnimationFrame(loop);
+    }
+
+    size(); select(0); draw();
+    if (still) { /* static render only */ } else loop();
+    window.addEventListener("resize", function () { size(); draw(); });
   }
 
   /* ============================================================
@@ -746,6 +984,7 @@
     initAnchors();
     initSpotlight();
     initPremium();
+    initOrbit();
     initChooser();
     initDomains();
   });

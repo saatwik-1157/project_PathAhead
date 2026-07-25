@@ -941,13 +941,13 @@ def render_steps_web(steps):
 def build_page(d):
     note_html = ('<div class="note-band reveal"><strong>Important:</strong> %s</div>' % d["note"]) if d["note"] else ""
     tmpl = """<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>%%NAME%% Roadmap — PathAhead | Learn from Scratch</title>
   <meta name="description" content="%%META%%" />
-  <meta name="theme-color" content="#2563EB" />
+  <meta name="theme-color" content="#08090C" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="PathAhead" />
@@ -958,8 +958,7 @@ def build_page(d):
   <meta name="twitter:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 %%STYLE%%
 </head>
@@ -1169,7 +1168,7 @@ def render_steps_print(steps):
 def build_print(d):
     note_html = ('<div class="note-print"><strong>Legal &amp; ethical use only.</strong> %s</div>' % d["note"]) if d["note"] else ""
     stats = "".join('<div class="stat"><div class="n">%s</div><div class="l">%s</div></div>' % (n, l) for n, l in d["stats"])
-    tmpl = """<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>%%NAME%% Roadmap</title>
+    tmpl = """<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><title>%%NAME%% Roadmap</title>
 <style>
 %%CSS%%
 </style></head><body>
@@ -1261,13 +1260,13 @@ def build_hub(domains):
                           badge, d["name"], blurb, weeks, projs))
     cards_html = "\n        ".join(cards)
     return """<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Career Roadmaps — PathAhead | Learn Any Tech Career from Scratch</title>
   <meta name="description" content="Free, step-by-step roadmaps to learn any tech career from scratch — AI/ML, prompt engineering, web development, data science, cybersecurity, cloud/DevOps, mobile, UI/UX, data engineering, blockchain/Web3, AR/VR, and IoT & robotics." />
-  <meta name="theme-color" content="#2563EB" />
+  <meta name="theme-color" content="#08090C" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="PathAhead" />
@@ -1278,8 +1277,7 @@ def build_hub(domains):
   <meta name="twitter:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <script>try{var t=localStorage.getItem('pathahead-theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
     .rm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}

@@ -533,7 +533,7 @@ body.drawer-open { overflow: hidden; }
 /* ============================================================
    RESPONSIVE
    ============================================================ */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .nav-links { display: none; }
   .nav-toggle { display: grid; }
   .contact-split { grid-template-columns: 1fr; }
@@ -685,15 +685,16 @@ body.drawer-open { overflow: hidden; }
    DARK MODE
    ============================================================ */
 [data-theme="dark"] {
-  --bg: #0B1220;
-  --text: #E2E8F0;
-  --muted: #94A3B8;
-  --muted-2: #64748B;
-  --surface: #131C30;
-  --surface-2: #1C2740;
-  --border: #27334D;
-  --border-strong: #3B4A66;
-  --ink: #F1F5F9;
+  /* True near-black, professional-AI palette (the only theme the site ships). */
+  --bg: #08090C;
+  --text: #E7E9EE;
+  --muted: #9BA1AC;
+  --muted-2: #6B7280;
+  --surface: #101114;
+  --surface-2: #17181D;
+  --border: #23252B;
+  --border-strong: #34373F;
+  --ink: #F7F8FA;
   --primary-soft: rgba(37, 99, 235, 0.22);
   --secondary-soft: rgba(249, 115, 22, 0.18);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -740,8 +741,8 @@ body.drawer-open { overflow: hidden; }
 [data-theme="dark"] .float-card { background: rgba(19, 28, 48, 0.82); border-color: rgba(255, 255, 255, 0.08); }
 
 /* Elements that use --ink as a BACKGROUND (would otherwise flip to light) */
-[data-theme="dark"] .footer { background: #070C16; }
-[data-theme="dark"] .cta-band { background: linear-gradient(135deg, #14203A, #0A1220); }
+[data-theme="dark"] .footer { background: #050608; }
+[data-theme="dark"] .cta-band { background: linear-gradient(135deg, #12131A, #08090C); }
 [data-theme="dark"] .btn-dark { background: var(--primary); }
 [data-theme="dark"] .btn-dark:hover { background: var(--primary-dark); }
 [data-theme="dark"] .domain-tab.active { background: var(--primary); border-color: var(--primary); color: #fff; }
@@ -1316,28 +1317,30 @@ body.lb-open { overflow: hidden; }
    PREMIUM IDENTITY — editorial display type, grain, signature detail
    ============================================================ */
 :root {
-  --display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  /* Geometric technical sans for display type — the register modern AI and
+     developer-tool companies use. Inter still carries all body/UI text. */
+  --display: 'Space Grotesk', 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* ---- Display typeface: serif headlines against the Inter UI ---- */
 h1, h2, .h-xxl, .h-xl, .h-lg,
 .quote-band blockquote,
 .stat .num, .stat-box .n, .oc-salary .n,
-.cta-band h2, .newsletter h2 {
+.cta-band h2, .newsletter h2, .kin-track, .orbit-panel h3 {
   font-family: var(--display);
-  font-weight: 400;
-  letter-spacing: -0.015em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-feature-settings: "ss01" 1, "ss03" 1;
 }
-.h-xxl { font-size: clamp(3rem, 6.6vw, 5.2rem); line-height: 1.02; }
-.h-xl  { font-size: clamp(2.3rem, 4.6vw, 3.5rem); line-height: 1.06; }
-.h-lg  { font-size: clamp(1.85rem, 3.4vw, 2.6rem); line-height: 1.1; }
-.quote-band blockquote { font-size: clamp(1.5rem, 3vw, 2.3rem); font-weight: 400; line-height: 1.28; }
-.stat .num, .stat-box .n { letter-spacing: -0.02em; }
-/* h3/h4 stay Inter — display type for statements, sans for interface */
-h3, h4 { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-
-/* Italic serif accent — used on a few key words */
-.text-italic { font-style: italic; }
+.h-xxl { font-size: clamp(2.85rem, 5.9vw, 4.6rem); line-height: 1.04; }
+.h-xl  { font-size: clamp(2.15rem, 4.1vw, 3.1rem); line-height: 1.08; }
+.h-lg  { font-size: clamp(1.75rem, 3.1vw, 2.35rem); line-height: 1.14; }
+.quote-band blockquote { font-size: clamp(1.4rem, 2.7vw, 2.1rem); font-weight: 600; line-height: 1.34; letter-spacing: -0.025em; }
+.stat .num, .stat-box .n, .oc-salary .n { letter-spacing: -0.035em; }
+/* h3/h4 stay Inter — display face for statements, Inter for interface */
+h3, h4 { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; letter-spacing: -0.015em; }
+/* Body copy: slightly tighter, more technical rhythm */
+.lead { letter-spacing: -0.01em; }
+.eyebrow { font-family: var(--display); letter-spacing: .10em; font-weight: 600; font-size: 12px; }
 
 /* ---- Film grain: the texture that separates designed from generic ---- */
 body::after {
@@ -1390,13 +1393,25 @@ body { counter-reset: sec; }
   .hero:hover .hero-light, .page-hero:hover .hero-light { opacity: 1; }
 }
 
-/* ---- Masked heading reveal (wipes up instead of plain fade) ---- */
-@media (prefers-reduced-motion: no-preference) {
-  h1.reveal, h2.reveal {
-    clip-path: inset(0 0 100% 0);
-    transition: opacity .8s var(--ease), transform .8s var(--ease), clip-path 1.05s var(--ease);
-  }
-  h1.reveal.in, h2.reveal.in { clip-path: inset(-.22em 0 -.22em 0); }
+/* ---- Heading reveal: a slightly longer, softer rise than body content.
+   Deliberately NOT a clip-path wipe — a stalled clip animation leaves the
+   headline invisible, and no flourish is worth risking the main headline. ---- */
+h1.reveal, h2.reveal {
+  transform: translateY(30px);
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+h1.reveal.in, h2.reveal.in { transform: translateY(0); }
+
+/* ---- Nav: 11 links + toggle + CTA overflowed the 1200px container on
+   ~1440px laptops (the CTA was clipped off-screen). Give the bar its own
+   wider container, keep labels on one line, and tighten before the drawer. ---- */
+.nav .container { max-width: 1400px; }
+.nav-links a { white-space: nowrap; }
+@media (max-width: 1460px) {
+  .nav-links { gap: 0; }
+  .nav-links a { padding: 9px 10px; font-size: .9rem; }
+  .brand { font-size: 1.2rem; }
+  .nav-cta .btn { padding: 12px 20px; font-size: .95rem; }
 }
 
 /* ---- Magnetic buttons (JS sets --bx/--by; NOT --mx/--my, which cards use) ---- */
@@ -1416,18 +1431,93 @@ body { counter-reset: sec; }
 .card, .tcard, .program-card, .acc-item, .info-card { border-color: color-mix(in srgb, var(--border) 88%, var(--primary)); }
 .acc-a-inner a, .footer-about a, .disclaimer a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 
+/* ============================================================
+   BLACK THEME + 3D — dark-only surface treatment and depth
+   ============================================================ */
+
+/* The light theme is retired; the toggle is no longer rendered. */
+.theme-toggle { display: none !important; }
+
+/* Crisper grid + deeper glows read better on near-black */
+.hero-grid {
+  background-image: linear-gradient(rgba(96, 165, 250, .07) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(96, 165, 250, .07) 1px, transparent 1px);
+}
+.section-alt {
+  background-image: radial-gradient(620px 320px at 6% 0%, rgba(37, 99, 235, .07), transparent 62%),
+                    radial-gradient(620px 320px at 94% 100%, rgba(139, 92, 246, .06), transparent 62%);
+}
+/* A hairline light along the top edge of raised surfaces — the detail that
+   makes dark UI look lit rather than flat. */
+.card, .tcard, .program-card, .acc-item, .info-card, .stat-box, .roadmap-phase, .rm-card {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .045), var(--shadow-sm);
+}
+.btn-primary { box-shadow: 0 8px 26px rgba(37, 99, 235, .34), inset 0 1px 0 rgba(255, 255, 255, .18); }
+
+/* ---- 3D tilt on cards (self-contained perspective, no preserve-3d) ---- */
+@media (hover: hover) and (min-width: 1025px) {
+  .card.tilt3d, .tcard.tilt3d, .rm-card.tilt3d {
+    transform: perspective(900px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg)) translateY(-6px);
+    transition: transform .18s ease-out, box-shadow .28s var(--ease), border-color .28s var(--ease);
+  }
+}
+
+/* ---- 3D career explorer ---- */
+.orbit-wrap {
+  position: relative; display: grid; grid-template-columns: 1.15fr .85fr; gap: 28px;
+  align-items: stretch; border: 1px solid var(--border); border-radius: var(--r-lg);
+  background:
+    radial-gradient(700px 420px at 20% 10%, rgba(37, 99, 235, .10), transparent 60%),
+    radial-gradient(600px 400px at 85% 90%, rgba(139, 92, 246, .10), transparent 60%),
+    var(--surface);
+  padding: 20px; overflow: hidden;
+}
+.orbit-stage { position: relative; min-height: 520px; border-radius: var(--r); overflow: hidden; }
+.orbit-canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
+.orbit-canvas:active { cursor: grabbing; }
+/* Top-left: the sphere's glow reaches the bottom edge, so the hint lives up here. */
+.orbit-hint {
+  position: absolute; left: 12px; top: 10px; margin: 0; font-size: .76rem; font-weight: 600;
+  color: var(--muted-2); letter-spacing: .03em; pointer-events: none;
+}
+.orbit-panel {
+  align-self: center; background: rgba(8, 9, 12, .55); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 26px 24px; backdrop-filter: blur(10px);
+}
+.orbit-panel .op-kick {
+  display: inline-flex; align-items: center; gap: 8px; font-size: .72rem; font-weight: 800;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--op-color, var(--primary));
+  margin-bottom: 12px;
+}
+.orbit-panel .op-kick i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
+.orbit-panel h3 { font-size: 1.5rem; margin-bottom: 10px; }
+.orbit-panel p { color: var(--muted); font-size: .96rem; margin-bottom: 16px; }
+.op-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.op-tags span {
+  font-size: .78rem; font-weight: 600; padding: 5px 11px; border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--op-color, var(--primary)) 16%, transparent);
+  color: var(--op-color, var(--primary));
+}
+.op-bar { height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; margin-bottom: 7px; }
+.op-bar i { display: block; height: 100%; border-radius: 6px; background: var(--op-color, var(--primary)); transition: width .6s var(--ease); }
+.op-demand { font-size: .78rem; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.op-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; font-weight: 700; font-size: .92rem; color: var(--op-color, var(--primary)); }
+.op-link svg { width: 16px; height: 16px; }
+@media (max-width: 900px) {
+  .orbit-wrap { grid-template-columns: 1fr; }
+  .orbit-stage { min-height: 340px; }
+}
+
 /* Safety net: reveal animations are JS-driven, so if scripting is off the
    content must still be visible rather than permanently hidden. */
 @media (scripting: none) {
-  .reveal { opacity: 1 !important; transform: none !important; }
-  h1.reveal, h2.reveal { clip-path: none !important; }
+  .reveal, h1.reveal, h2.reveal { opacity: 1 !important; transform: none !important; }
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition-duration: .01ms !important; }
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; }
-  h1.reveal, h2.reveal { clip-path: none; }
+  .reveal, h1.reveal, h2.reveal { opacity: 1; transform: none; }
   .btn.is-magnetic { transform: none; }
 }
