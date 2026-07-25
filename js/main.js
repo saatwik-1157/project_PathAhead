@@ -571,6 +571,44 @@
   }
 
   /* ============================================================
+     Premium interactions — hero cursor light + magnetic CTAs.
+     Desktop pointers only, and skipped entirely for reduced motion.
+     ============================================================ */
+  function initPremium() {
+    var fine = window.matchMedia && window.matchMedia("(hover: hover)").matches;
+    var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!fine || still) return;
+
+    // A soft light that follows the cursor across the hero.
+    document.querySelectorAll(".hero, .page-hero").forEach(function (hero) {
+      var light = document.createElement("div");
+      light.className = "hero-light";
+      hero.insertBefore(light, hero.firstChild);
+      hero.addEventListener("mousemove", function (e) {
+        var r = hero.getBoundingClientRect();
+        hero.style.setProperty("--sx", ((e.clientX - r.left) / r.width * 100) + "%");
+        hero.style.setProperty("--sy", ((e.clientY - r.top) / r.height * 100) + "%");
+      });
+    });
+
+    // Statement CTAs lean toward the cursor. Uses --bx/--by so it never
+    // collides with the --mx/--my the card spotlight sets on ancestors.
+    var MAX = 5;
+    document.querySelectorAll(".hero-actions .btn-lg, .cta-actions .btn-lg").forEach(function (btn) {
+      btn.classList.add("is-magnetic");
+      btn.addEventListener("mousemove", function (e) {
+        var r = btn.getBoundingClientRect();
+        btn.style.setProperty("--bx", (((e.clientX - r.left) / r.width - .5) * 2 * MAX).toFixed(2) + "px");
+        btn.style.setProperty("--by", (((e.clientY - r.top) / r.height - .5) * 2 * MAX).toFixed(2) + "px");
+      });
+      btn.addEventListener("mouseleave", function () {
+        btn.style.setProperty("--bx", "0px");
+        btn.style.setProperty("--by", "0px");
+      });
+    });
+  }
+
+  /* ============================================================
      Program chooser (data-chooser)
      ============================================================ */
   function initChooser() {
@@ -707,6 +745,7 @@
     initNewsletter();
     initAnchors();
     initSpotlight();
+    initPremium();
     initChooser();
     initDomains();
   });
