@@ -1312,9 +1312,122 @@ body.lb-open { overflow: hidden; }
 [data-theme="dark"] .media-panel .pill-list .pill { background: rgba(19,28,48,.88); color: var(--text); }
 [data-theme="dark"] .text-gradient { background: linear-gradient(92deg, #60A5FA 10%, #A78BFA 55%, #FB923C 100%); -webkit-background-clip: text; background-clip: text; }
 
+/* ============================================================
+   PREMIUM IDENTITY — editorial display type, grain, signature detail
+   ============================================================ */
+:root {
+  --display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+}
+
+/* ---- Display typeface: serif headlines against the Inter UI ---- */
+h1, h2, .h-xxl, .h-xl, .h-lg,
+.quote-band blockquote,
+.stat .num, .stat-box .n, .oc-salary .n,
+.cta-band h2, .newsletter h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+.h-xxl { font-size: clamp(3rem, 6.6vw, 5.2rem); line-height: 1.02; }
+.h-xl  { font-size: clamp(2.3rem, 4.6vw, 3.5rem); line-height: 1.06; }
+.h-lg  { font-size: clamp(1.85rem, 3.4vw, 2.6rem); line-height: 1.1; }
+.quote-band blockquote { font-size: clamp(1.5rem, 3vw, 2.3rem); font-weight: 400; line-height: 1.28; }
+.stat .num, .stat-box .n { letter-spacing: -0.02em; }
+/* h3/h4 stay Inter — display type for statements, sans for interface */
+h3, h4 { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+/* Italic serif accent — used on a few key words */
+.text-italic { font-style: italic; }
+
+/* ---- Film grain: the texture that separates designed from generic ---- */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 150; pointer-events: none;
+  opacity: .04; mix-blend-mode: multiply; background-size: 200px 200px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+[data-theme="dark"] body::after { mix-blend-mode: screen; opacity: .05; }
+@media (max-width: 700px) { body::after { display: none; } }
+
+/* ---- Oversized ghost numerals behind section headings ---- */
+body { counter-reset: sec; }
+.section-head { position: relative; counter-increment: sec; }
+.section-head::before {
+  content: counter(sec, decimal-leading-zero);
+  position: absolute; top: -.38em; left: 50%; transform: translateX(-50%);
+  font-family: var(--display); font-size: clamp(4.5rem, 11vw, 8rem); line-height: 1;
+  letter-spacing: -.04em; color: var(--ink); opacity: .05; z-index: 0; pointer-events: none;
+  user-select: none;
+}
+[data-theme="dark"] .section-head::before { opacity: .075; }
+.section-head > * { position: relative; z-index: 1; }
+
+/* ---- Kinetic type band ---- */
+.kinetic {
+  overflow: hidden; padding: 30px 0; border-block: 1px solid var(--border);
+  background: var(--surface);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.kin-track {
+  display: flex; align-items: center; gap: 34px; width: max-content;
+  animation: kinScroll 34s linear infinite;
+  font-family: var(--display); font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1;
+  white-space: nowrap; color: var(--ink);
+}
+.kinetic:hover .kin-track { animation-play-state: paused; }
+.kin-track .outline { color: transparent; -webkit-text-stroke: 1px var(--muted-2); }
+.kin-track .kdot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+@keyframes kinScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---- Hero cursor light (desktop) ---- */
+.hero, .page-hero { --sx: 50%; --sy: 30%; }
+.hero-light {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0;
+  transition: opacity .5s var(--ease);
+  background: radial-gradient(360px circle at var(--sx) var(--sy), rgba(139, 92, 246, .13), transparent 70%);
+}
+@media (hover: hover) and (min-width: 1025px) {
+  .hero:hover .hero-light, .page-hero:hover .hero-light { opacity: 1; }
+}
+
+/* ---- Masked heading reveal (wipes up instead of plain fade) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  h1.reveal, h2.reveal {
+    clip-path: inset(0 0 100% 0);
+    transition: opacity .8s var(--ease), transform .8s var(--ease), clip-path 1.05s var(--ease);
+  }
+  h1.reveal.in, h2.reveal.in { clip-path: inset(-.22em 0 -.22em 0); }
+}
+
+/* ---- Magnetic buttons (JS sets --bx/--by; NOT --mx/--my, which cards use) ---- */
+.btn.is-magnetic { transform: translate(var(--bx, 0px), calc(var(--by, 0px) - 2px)); }
+
+/* ---- Branded scrollbar ---- */
+* { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary), var(--violet));
+  border-radius: 999px; border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--primary-dark), var(--violet-deep)); }
+
+/* ---- Hairline detail on cards & refined link underlines ---- */
+.card, .tcard, .program-card, .acc-item, .info-card { border-color: color-mix(in srgb, var(--border) 88%, var(--primary)); }
+.acc-a-inner a, .footer-about a, .disclaimer a { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+/* Safety net: reveal animations are JS-driven, so if scripting is off the
+   content must still be visible rather than permanently hidden. */
+@media (scripting: none) {
+  .reveal { opacity: 1 !important; transform: none !important; }
+  h1.reveal, h2.reveal { clip-path: none !important; }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition-duration: .01ms !important; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; }
+  h1.reveal, h2.reveal { clip-path: none; }
+  .btn.is-magnetic { transform: none; }
 }

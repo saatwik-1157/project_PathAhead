@@ -1,5 +1,5 @@
 /* PathAhead — Service Worker (offline support, always-fresh when online) */
-const CACHE = "pathahead-v8";
+const CACHE = "pathahead-v9";
 const CORE = [
   "index.html", "about.html", "programs.html", "for-colleges.html", "for-students.html",
   "gallery.html", "testimonials.html", "faq.html", "contact.html",
