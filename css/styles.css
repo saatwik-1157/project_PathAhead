@@ -1515,7 +1515,7 @@ h1.reveal.in, h2.reveal.in { transform: translateY(0); }
    ============================================================ */
 .hero-solar {
   position: relative; overflow: hidden; text-align: center;
-  padding: clamp(56px, 8vw, 92px) 0 0; min-height: min(920px, 96vh);
+  padding: clamp(44px, 5.5vw, 68px) 0 clamp(30px, 4vw, 52px); min-height: min(880px, 94vh);
   display: flex; flex-direction: column; isolation: isolate;
 }
 .hero-solar .container { position: relative; z-index: 5; }
@@ -1524,8 +1524,13 @@ h1.reveal.in, h2.reveal.in { transform: translateY(0); }
 /* No blur filters here: on large layers they get promoted and can composite
    over the hero text on some GPUs. The radial gradients are soft already. */
 .solar {
-  position: absolute; left: 50%; bottom: -80%; transform: translateX(-50%);
-  width: min(1180px, 130vw); aspect-ratio: 1; pointer-events: none; z-index: 0;
+  /* Sits low as a warm horizon glow so it frames the network instead of
+     competing with it. */
+  /* Anchored so the arc always peaks ~270px above the hero's bottom edge,
+     whatever the hero height (a % bottom drifts with the container). */
+  position: absolute; left: 50%; transform: translateX(-50%);
+  width: min(1320px, 140vw); aspect-ratio: 1; pointer-events: none; z-index: 0;
+  bottom: calc(84px - min(1320px, 140vw));
 }
 .solar .halo {
   position: absolute; inset: -20%; border-radius: 50%;
@@ -1537,8 +1542,8 @@ h1.reveal.in, h2.reveal.in { transform: translateY(0); }
     var(--sun-hot) 0%, #FF8A2B 20%, #E8551B 40%, rgba(140, 42, 8, .55) 62%, rgba(0, 0, 0, 0) 76%);
 }
 .solar .rim {
-  position: absolute; inset: 0; border-radius: 50%;
-  border: 2px solid rgba(255, 240, 222, .95);
+  position: absolute; inset: 0; border-radius: 50%; opacity: .38;
+  border: 1.5px solid rgba(255, 240, 222, .9);
   -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .5) 24%, transparent 44%);
           mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .5) 24%, transparent 44%);
 }
@@ -1564,7 +1569,7 @@ h1.reveal.in, h2.reveal.in { transform: translateY(0); }
 .badge-split:hover svg { transform: translateX(2px); }
 
 .hero-solar h1 { margin: 26px auto 0; max-width: 15ch; }
-.hero-solar .lead { max-width: 620px; margin: 20px auto 0; }
+.hero-solar .lead { max-width: 760px; margin: 18px auto 0; }
 .hero-solar .hero-actions { justify-content: center; margin-top: 32px; }
 
 /* cropped product dashboard sitting over the sun */
@@ -1595,7 +1600,7 @@ h1.reveal.in, h2.reveal.in { transform: translateY(0); }
 @media (max-width: 760px) {
   .app-body { grid-template-columns: repeat(2, 1fr); }
   .app-nav { display: none; }
-  .solar { bottom: -84%; width: 150vw; }
+  .neural { aspect-ratio: 1000 / 420; }
 }
 
 /* warm gradient text to match the solar palette */
@@ -1615,6 +1620,99 @@ h1.reveal.in, h2.reveal.in { transform: translateY(0); }
   border-color: rgba(255, 255, 255, .14); backdrop-filter: blur(8px);
 }
 .btn-outline:hover { border-color: rgba(255, 255, 255, .3); color: var(--ink); }
+
+/* ============================================================
+   NEURAL NETWORK HERO VISUAL — 3D node graph with energy pulses
+   ============================================================ */
+.neural-stage {
+  position: relative; z-index: 5; width: min(1000px, 92vw);
+  margin: clamp(22px, 3.2vw, 40px) auto 0; perspective: 1400px;
+}
+.neural {
+  /* The SVG stretches with the box (preserveAspectRatio="none") and the tiles
+     are positioned in %, so changing this ratio rescales wires and tiles
+     together — they stay connected at any height. */
+  position: relative; width: 100%; aspect-ratio: 1000 / 310;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--nrx, 13deg)) rotateY(var(--nry, 0deg));
+  transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+}
+.nw-wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.nw-wires .w { fill: none; stroke: rgba(255, 255, 255, .13); stroke-width: 1.2; }
+.nw-wires .w-lit { stroke: url(#nwGrad); stroke-width: 1.6; opacity: .85; }
+.nw-wires .pulse { fill: #FFD9A8; filter: drop-shadow(0 0 6px rgba(255, 138, 43, .95)); }
+
+/* glassy node tiles */
+.nw-tile, .nw-hub {
+  position: absolute; transform-style: preserve-3d;
+  display: grid; place-items: center; text-align: center;
+  border-radius: 16px; color: var(--ink); text-decoration: none;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .10);
+  backdrop-filter: blur(6px);
+}
+.nw-tile {
+  width: 8.4%; aspect-ratio: 1; left: calc(var(--x) - 4.2%); top: var(--y);
+  translate: 0 -50%; transform: translateZ(var(--z, 0px));
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+}
+.nw-tile svg { width: 44%; height: 44%; color: var(--muted); transition: color .25s; }
+.nw-tile b {
+  position: absolute; top: 104%; left: 50%; transform: translateX(-50%);
+  font-size: clamp(9px, .82vw, 12px); font-weight: 700; letter-spacing: .01em;
+  color: var(--muted-2); white-space: nowrap; transition: color .25s;
+}
+.nw-tile:hover, .nw-tile:focus-visible {
+  border-color: rgba(255, 138, 43, .65);
+  box-shadow: 0 14px 40px rgba(255, 107, 26, .28), inset 0 1px 0 rgba(255, 255, 255, .18);
+  transform: translateZ(calc(var(--z, 0px) + 26px));
+}
+.nw-tile:hover svg, .nw-tile:focus-visible svg { color: var(--primary); }
+.nw-tile:hover b, .nw-tile:focus-visible b { color: var(--ink); }
+
+/* central hub */
+.nw-hub {
+  width: 12.4%; aspect-ratio: 1; left: 43.8%; top: 50%; translate: 0 -50%;
+  transform: translateZ(52px); border-radius: 20px;
+  background: linear-gradient(160deg, rgba(255, 138, 43, .30), rgba(255, 90, 20, .10));
+  border-color: rgba(255, 150, 70, .5);
+  box-shadow: 0 0 60px rgba(255, 107, 26, .35), inset 0 1px 0 rgba(255, 255, 255, .22);
+}
+.nw-hub span {
+  font-family: var(--display); font-weight: 700; letter-spacing: -.02em;
+  font-size: clamp(15px, 1.7vw, 25px); color: #fff;
+}
+.nw-hub::after {
+  content: ""; position: absolute; inset: -18%; border-radius: 26px;
+  border: 1px solid rgba(255, 138, 43, .22); animation: hubRing 3.4s ease-in-out infinite;
+}
+@keyframes hubRing { 0%, 100% { opacity: .5; transform: scale(1); } 50% { opacity: .15; transform: scale(1.07); } }
+
+/* diagonal light beam from the top-right, as in the reference */
+.hero-solar .beam {
+  position: absolute; top: -20%; right: -14%; width: 66%; height: 86%; z-index: 0; pointer-events: none;
+  background: radial-gradient(60% 55% at 82% 12%, rgba(255, 146, 56, .22), rgba(255, 110, 30, .07) 42%, transparent 72%);
+  transform: rotate(-14deg);
+}
+
+/* thin announcement strip above the nav */
+.topbar {
+  position: relative; z-index: 101; background: #050608;
+  border-bottom: 1px solid rgba(255, 255, 255, .07); font-size: .8rem;
+}
+.topbar .container { display: flex; align-items: center; gap: 16px; height: 40px; }
+.topbar a.tb-left { display: inline-flex; align-items: center; gap: 9px; color: var(--text); font-weight: 600; }
+.topbar a.tb-left i { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); flex: none; box-shadow: 0 0 10px var(--primary); }
+.topbar a.tb-left svg { width: 13px; height: 13px; color: var(--muted); }
+.topbar .tb-right { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+.topbar .tb-right a { color: var(--muted); font-weight: 600; }
+.topbar .tb-right a:hover { color: var(--ink); }
+@media (max-width: 760px) {
+  .topbar .tb-right { display: none; }
+  .topbar .container { justify-content: center; }
+  .nw-tile b { display: none; }
+}
 
 /* Safety net: reveal animations are JS-driven, so if scripting is off the
    content must still be visible rather than permanently hidden. */
