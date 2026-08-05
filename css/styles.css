@@ -1540,6 +1540,40 @@ h1.reveal.in, h2.reveal.in { transform: translateY(0); }
 /* Photo-band images pan inside their frames under ScrollTrigger */
 .pb-item { overflow: hidden; }
 
+/* ============================================================
+   Premium polish
+   ============================================================ */
+/* Branded text selection */
+::selection { background: rgba(139, 92, 246, .45); color: #fff; }
+
+/* Slim gradient scrollbar (webkit) + tinted thin scrollbar (firefox) */
+html { scrollbar-width: thin; scrollbar-color: #4C5A85 #0A0C11; }
+::-webkit-scrollbar { width: 11px; }
+::-webkit-scrollbar-track { background: #0A0C11; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary), var(--violet));
+  border-radius: 999px; border: 3px solid #0A0C11;
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #3B82F6, #A78BFA); }
+
+/* Nav links: gradient underline sweeps in on hover (active keeps its own) */
+.nav-links a:not(.active)::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: 3px; height: 3px; border-radius: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--violet));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .28s var(--ease);
+}
+.nav-links a:not(.active):hover::after { transform: scaleX(1); }
+
+/* Cards: border warms toward the brand violet on hover */
+.card:hover, .tcard:hover, .program-card:hover { border-color: rgba(139, 92, 246, .35); }
+
+/* Stat figures read as engineered, not typeset */
+.stat .num { font-variant-numeric: tabular-nums; }
+
+/* Primary buttons get a machined inner top-light */
+.btn-primary { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 8px 22px rgba(37, 99, 235, .28); }
+
 /* Layered floating — different durations so the hero cards never sync up */
 .float-card.fc-1 { animation-duration: 5.2s; }
 .float-card.fc-2 { animation-duration: 6.4s; }
