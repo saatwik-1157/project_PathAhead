@@ -1714,6 +1714,222 @@ h1.reveal.in, h2.reveal.in { transform: translateY(0); }
   .nw-tile b { display: none; }
 }
 
+/* ============================================================
+   SITE-WIDE UNIFICATION — one accent, glass surfaces, solar light.
+   Everything below deliberately overrides the earlier multi-hue system;
+   distinct hues now survive only in the 3D explorer, where different
+   colours carry meaning (one per career).
+   ============================================================ */
+
+/* Display face on every heading level, not just h1/h2 */
+h3, h4 { font-family: var(--display); font-weight: 700; letter-spacing: -.022em; }
+.card h3 { font-size: 1.2rem; }
+
+/* ---- Icon tiles: depth instead of hue ---- */
+.card-icon, .card-icon.is-orange, .card-icon.is-purple, .card-icon.is-teal,
+.card-icon.is-green, .card-icon.is-pink, .card-icon.is-sky {
+  background: linear-gradient(160deg, rgba(255, 107, 26, .20), rgba(255, 255, 255, .03));
+  border: 1px solid rgba(255, 255, 255, .09);
+  color: var(--primary);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .10);
+}
+.card::after,
+.card:has(.card-icon.is-orange)::after, .card:has(.card-icon.is-purple)::after,
+.card:has(.card-icon.is-green)::after,  .card:has(.card-icon.is-pink)::after,
+.card:has(.card-icon.is-teal)::after,   .card:has(.card-icon.is-sky)::after {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+.card:hover, .tcard:hover, .program-card:hover, .rm-card:hover {
+  border-color: rgba(255, 138, 43, .38);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 138, 43, .12),
+              inset 0 1px 0 rgba(255, 255, 255, .07);
+}
+
+/* ---- One eyebrow style everywhere ---- */
+.eyebrow.is-orange, .eyebrow.is-violet, .eyebrow.is-teal,
+.eyebrow.is-green, .eyebrow.is-pink, .eyebrow.is-sky,
+[data-theme="dark"] .eyebrow.is-violet, [data-theme="dark"] .eyebrow.is-teal,
+[data-theme="dark"] .eyebrow.is-green, [data-theme="dark"] .eyebrow.is-pink,
+[data-theme="dark"] .eyebrow.is-sky {
+  color: #FFB27A; background: rgba(255, 107, 26, .12); border: 1px solid rgba(255, 107, 26, .28);
+}
+
+/* ---- Sections: warm wash on black ---- */
+.section-alt { background-color: #0A0B0E; background-image:
+  radial-gradient(680px 340px at 8% 0%, rgba(255, 107, 26, .07), transparent 62%),
+  radial-gradient(680px 340px at 92% 100%, rgba(255, 138, 43, .05), transparent 62%); }
+
+/* ---- Interior page heroes get the solar treatment ---- */
+.page-hero { position: relative; overflow: hidden; background-image: none; }
+.page-hero::before {
+  content: ""; position: absolute; top: -30%; right: -12%; width: 60%; height: 90%; pointer-events: none;
+  background: radial-gradient(58% 55% at 80% 15%, rgba(255, 146, 56, .18), transparent 70%);
+  transform: rotate(-14deg);
+}
+.page-hero::after {
+  content: ""; position: absolute; left: 50%; bottom: -72%; transform: translateX(-50%);
+  width: min(1100px, 130vw); aspect-ratio: 1; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 107, 26, .16), rgba(255, 90, 20, .05) 44%, transparent 68%);
+}
+.page-hero .container { position: relative; z-index: 2; }
+
+/* ---- Stats band: glass, not a blue slab ---- */
+.stats {
+  background-color: var(--surface);
+  background-image: radial-gradient(700px 320px at 15% 0%, rgba(255, 107, 26, .16), transparent 62%),
+                    radial-gradient(600px 320px at 88% 100%, rgba(255, 176, 32, .10), transparent 62%);
+  border: 1px solid rgba(255, 255, 255, .08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+.stats::before, .stats::after { display: none; }
+.stat .num .suffix { color: var(--primary); }
+.stat .stat-ic { background: rgba(255, 107, 26, .16); border-color: rgba(255, 138, 43, .28); color: #FFB27A; }
+@media (min-width: 821px) { .stats .cols-4 .stat:not(:first-child) { border-left-color: rgba(255, 255, 255, .08); } }
+
+/* ---- Steps, journey and progress marks ---- */
+.cards .step:nth-child(1)::before, .cards .step:nth-child(2)::before,
+.cards .step:nth-child(3)::before, .cards .step:nth-child(4)::before,
+.steps .step:nth-child(1)::before, .steps .step:nth-child(2)::before,
+.steps .step:nth-child(3)::before, .steps .step:nth-child(4)::before {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 8px 20px rgba(255, 107, 26, .28);
+}
+.timeline::before { background: rgba(255, 255, 255, .10); }
+.tl-item::before { background: var(--bg); border-color: var(--primary); box-shadow: 0 0 0 4px rgba(255, 107, 26, .14); }
+.tl-item .year { color: var(--primary); }
+
+/* ---- Tabs, chips and choosers: glass pills with a solar active state ---- */
+.domain-tab, .chip, .chooser-btns button,
+[data-theme="dark"] .domain-tab, [data-theme="dark"] .chip, [data-theme="dark"] .chooser-btns button {
+  background: rgba(255, 255, 255, .04); border: 1.5px solid rgba(255, 255, 255, .10); color: var(--muted);
+}
+.domain-tab:hover, .chip:hover, .chooser-btns button:hover { border-color: rgba(255, 138, 43, .45); color: var(--ink); transform: translateY(-2px); }
+.domain-tab.active, .chip.active, .chooser-btns button.active, .chooser-btns button.active.orange,
+[data-theme="dark"] .domain-tab.active {
+  background: linear-gradient(120deg, var(--primary), #FF8A3D); border-color: transparent; color: #fff;
+  box-shadow: 0 8px 22px rgba(255, 107, 26, .30);
+}
+.domain-tab[data-domain] svg { color: var(--muted); }
+.domain-tab.active svg { color: #fff; }
+.domain-panel .d-emoji { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+.domain-panel .d-tags span, .domain-card .d-tags span { background: rgba(255, 107, 26, .12); color: #FFB27A; }
+.domain-panel .domain-card { background-image: radial-gradient(460px 240px at 94% 0%, rgba(255, 107, 26, .08), transparent 62%); }
+.d-chart, .d-trend, .domain-panel .d-chart, .domain-panel .d-trend { color: #FFB27A; }
+.chooser-result .tag, .chooser-result .tag.orange { background: rgba(255, 107, 26, .14); color: #FFB27A; }
+
+/* ---- FAQ ---- */
+.acc-q::before,
+.acc-item:nth-child(5n+2) .acc-q::before, .acc-item:nth-child(5n+3) .acc-q::before,
+.acc-item:nth-child(5n+4) .acc-q::before, .acc-item:nth-child(5n+5) .acc-q::before {
+  background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #1A0D02;
+}
+.acc-item.open .acc-q .icon { background: var(--primary); }
+
+/* ---- Testimonials & quote ---- */
+.tcard, .cards .tcard:nth-child(2), .cards .tcard:nth-child(3) { border-top-color: var(--primary); }
+.tcard blockquote::before,
+.cards .tcard:nth-child(2) blockquote::before, .cards .tcard:nth-child(3) blockquote::before { color: var(--primary); }
+.tcard .stars { color: var(--secondary); }
+.quote-band {
+  background: linear-gradient(var(--surface), var(--surface)) padding-box,
+              linear-gradient(120deg, rgba(255, 107, 26, .55), rgba(255, 176, 32, .35)) border-box;
+}
+.quote-band .qmark { color: var(--primary); }
+
+/* ---- Programs ---- */
+.program-card .bar, .program-card.orange .bar { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+.program-tag, .program-card.orange .program-tag { background: rgba(255, 107, 26, .14); color: #FFB27A; }
+.check-list li svg, .check-list.orange li svg { color: var(--primary); }
+.program-media::after, .program-card.orange .program-media::after {
+  background: linear-gradient(180deg, rgba(255, 107, 26, .18), transparent 45%, rgba(2, 6, 23, .45));
+}
+
+/* ---- Compare columns ---- */
+.compare-col { background: var(--surface); border-color: rgba(255, 255, 255, .08); }
+.compare-col.good { border-color: rgba(255, 138, 43, .38);
+  background: linear-gradient(180deg, rgba(255, 107, 26, .10), var(--surface) 72%); }
+.compare-col.good h3 .tagdot { background: var(--primary); }
+.compare-col.good li svg { color: var(--primary); }
+[data-theme="dark"] .compare-col.bad { background: linear-gradient(180deg, rgba(239, 68, 68, .08), var(--surface) 72%); }
+
+/* ---- Marquee & kinetic type ---- */
+.marquee-track .m-item,
+.marquee-track .m-item:nth-of-type(5n+1), .marquee-track .m-item:nth-of-type(5n+2),
+.marquee-track .m-item:nth-of-type(5n+3), .marquee-track .m-item:nth-of-type(5n+4),
+.marquee-track .m-item:nth-of-type(5n+5) {
+  background: rgba(255, 255, 255, .03); border-color: rgba(255, 255, 255, .09); color: var(--muted);
+}
+.marquee-track .m-item svg,
+.marquee-track .m-item:nth-of-type(5n+1) svg, .marquee-track .m-item:nth-of-type(5n+2) svg,
+.marquee-track .m-item:nth-of-type(5n+3) svg, .marquee-track .m-item:nth-of-type(5n+4) svg,
+.marquee-track .m-item:nth-of-type(5n+5) svg { color: var(--primary); }
+.kinetic { background: #0A0B0E; border-color: rgba(255, 255, 255, .07); }
+.kin-track .outline { -webkit-text-stroke: 1px rgba(255, 255, 255, .22); }
+
+/* ---- Forms ---- */
+.form-wrap { background: var(--surface); border-color: rgba(255, 255, 255, .08); }
+[data-theme="dark"] .field input, [data-theme="dark"] .field select,
+[data-theme="dark"] .field textarea, [data-theme="dark"] .newsletter input {
+  background: rgba(255, 255, 255, .03); border-color: rgba(255, 255, 255, .10); color: var(--text);
+}
+.field input:focus, .field select:focus, .field textarea:focus, .newsletter input:focus {
+  border-color: var(--primary); box-shadow: 0 0 0 4px rgba(255, 107, 26, .16);
+}
+.field label .req { color: var(--primary); }
+:focus-visible { box-shadow: 0 0 0 3px rgba(255, 107, 26, .45); }
+.info-card .ic, .info-card.orange .ic { background: rgba(255, 107, 26, .14); color: var(--primary); }
+
+/* ---- Newsletter & CTA ---- */
+.newsletter, [data-theme="dark"] .newsletter {
+  background: var(--surface); border-color: rgba(255, 255, 255, .08);
+  background-image: radial-gradient(600px 300px at 12% 0%, rgba(255, 107, 26, .12), transparent 64%),
+                    radial-gradient(520px 280px at 90% 100%, rgba(255, 176, 32, .08), transparent 64%);
+}
+.newsletter::before, .newsletter::after { display: none; }
+.cta-band, [data-theme="dark"] .cta-band {
+  background-color: #0A0B0E;
+  background-image: linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px),
+                    radial-gradient(520px 340px at 50% 128%, rgba(255, 107, 26, .34), transparent 64%);
+  background-size: 44px 44px, 44px 44px, auto;
+  border: 1px solid rgba(255, 255, 255, .08);
+}
+
+/* ---- Footer ---- */
+.footer::before { background: linear-gradient(90deg, transparent, var(--primary) 30%, var(--secondary) 70%, transparent); }
+.socials a:hover, .socials a:nth-child(2):hover, .socials a:nth-child(3):hover, .socials a:nth-child(4):hover { background: var(--primary); }
+.footer-contact svg { color: var(--primary); }
+
+/* ---- Roadmap hub cards ---- */
+.rm-badge { color: #FFB27A; background: rgba(255, 107, 26, .12); }
+.rm-go { color: var(--primary); }
+.rm-card { background: var(--surface); border-color: rgba(255, 255, 255, .08); }
+
+/* ---- Career-builder mock ---- */
+.bm-window { background: var(--surface); border-color: rgba(255, 255, 255, .09); }
+.bm-bar { background: rgba(255, 255, 255, .03); border-color: rgba(255, 255, 255, .07); }
+.bm-track span, .bm-avatar { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+.bm-list li.now::before { border-color: var(--primary); background: var(--primary); }
+.bm-list li.done::before { border-color: var(--secondary); background: var(--secondary); }
+.bm-sem { background: rgba(255, 255, 255, .02); border-color: rgba(255, 255, 255, .07); }
+
+/* ---- Misc accents ---- */
+.accent-bar { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+.hero-trust svg { color: var(--primary); }
+.scroll-progress { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+.nav-links a.active { color: var(--primary); }
+.nav-links a.active::after { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+.to-top { background: var(--primary); box-shadow: 0 10px 26px rgba(255, 107, 26, .40); }
+.to-top:hover { background: var(--primary-dark); }
+.text-accent { color: var(--primary); }
+.g-item.has-photo::after { background: linear-gradient(180deg, rgba(255, 107, 26, .10), rgba(2, 6, 23, .06) 40%, rgba(2, 6, 23, .78)); }
+.pb-item::before { background: linear-gradient(160deg, rgba(255, 107, 26, .14), transparent 55%); }
+.hero-media figure::after { background: linear-gradient(160deg, rgba(255, 107, 26, .14), transparent 50%); }
+.media-panel::after { background: linear-gradient(200deg, rgba(255, 107, 26, .12), transparent 40%, rgba(2, 6, 23, .66) 92%); }
+.split .panel, [data-theme="dark"] .split .panel {
+  background: linear-gradient(150deg, rgba(255, 107, 26, .10), var(--surface) 70%); border-color: rgba(255, 255, 255, .08);
+}
+
 /* Safety net: reveal animations are JS-driven, so if scripting is off the
    content must still be visible rather than permanently hidden. */
 @media (scripting: none) {
