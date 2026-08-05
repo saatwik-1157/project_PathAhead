@@ -51,6 +51,10 @@
     db: function () { return !!(CONFIG.supabaseUrl && CONFIG.supabaseAnonKey); }
   };
 
+  // `secondary` keeps a page out of the top bar but not out of the site: all
+  // eleven still appear in the drawer and the footer. Eleven links plus the
+  // brand and two CTAs could not fit a laptop-width bar, which clipped the
+  // "Book a Workshop" button off-screen between 1200px and 1460px.
   var NAV = [
     { label: "Home",         href: "index.html" },
     { label: "About",        href: "about.html" },
@@ -59,9 +63,9 @@
     { label: "Students",     href: "for-students.html" },
     { label: "Roadmaps",     href: "roadmaps.html" },
     { label: "Builder",      href: "career-roadmap.html" },
-    { label: "Gallery",      href: "gallery.html" },
-    { label: "Testimonials", href: "testimonials.html" },
-    { label: "FAQ",          href: "faq.html" },
+    { label: "Gallery",      href: "gallery.html",      secondary: true },
+    { label: "Testimonials", href: "testimonials.html", secondary: true },
+    { label: "FAQ",          href: "faq.html",          secondary: true },
     { label: "Contact",      href: "contact.html" }
   ];
 
@@ -121,7 +125,12 @@
      BUILD: Navbar
      ============================================================ */
   function buildNav() {
-    var links = NAV.map(function (n) {
+    // Primary bar: everything except the secondary pages. A secondary page
+    // still shows in the bar while you are on it, so the current page is
+    // never missing from the navigation.
+    var links = NAV.filter(function (n) {
+      return !n.secondary || n.href.toLowerCase() === here;
+    }).map(function (n) {
       var active = n.href.toLowerCase() === here ? " active" : "";
       return '<a href="' + n.href + '" class="' + active.trim() + '">' + n.label + "</a>";
     }).join("");
@@ -208,7 +217,10 @@
      BUILD: Footer
      ============================================================ */
   function buildFooter() {
-    var quick = NAV.slice(0, 5).map(function (n) { return '<a href="' + n.href + '">' + n.label + "</a>"; }).join("");
+    // Every page, not just the first few: the top bar now leaves Gallery,
+    // Testimonials and FAQ to the drawer, and the drawer is mobile-only — so
+    // the footer is the only place a desktop visitor can reach them.
+    var quick = NAV.map(function (n) { return '<a href="' + n.href + '">' + n.label + "</a>"; }).join("");
     var progs =
       '<a href="programs.html">Future Ready</a>' +
       '<a href="programs.html">Career Blueprint</a>' +

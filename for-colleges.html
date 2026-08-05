@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>For Colleges — PathAhead | Partner With Us</title>
   <meta name="description" content="Partner with PathAhead to bring premium career workshops to your students. See benefits, workshop process, outcomes and submit an inquiry." />
+  <link rel="canonical" href="https://saatwik-1157.github.io/project_PathAhead/for-colleges.html" />
   <meta name="theme-color" content="#08090C" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta property="og:type" content="website" />
@@ -106,17 +107,17 @@
         <div class="form-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> <span>Thank you! Your inquiry has been received. Our team will contact you shortly.</span></div>
         <form data-form="college_inquiry" novalidate>
           <div class="form-grid">
-            <div class="field"><label>Contact Person <span class="req">*</span></label><input type="text" name="name" placeholder="Your full name" required /><span class="err">Please enter your name.</span></div>
-            <div class="field"><label>Designation</label><input type="text" name="designation" placeholder="e.g. Principal, Coordinator" /></div>
-            <div class="field"><label>College / School <span class="req">*</span></label><input type="text" name="college" placeholder="Institution name" required /><span class="err">Please enter your institution.</span></div>
-            <div class="field"><label>City <span class="req">*</span></label><input type="text" name="city" placeholder="City" required /><span class="err">Please enter your city.</span></div>
-            <div class="field"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone" data-type="phone" placeholder="+91 XXXXXXXXXX" required /><span class="err">Enter a valid phone number.</span></div>
-            <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="email" placeholder="you@college.edu" required /><span class="err">Enter a valid email.</span></div>
-            <div class="field"><label>Which program?</label>
-              <select name="program"><option value="">Select a program</option><option>Future Ready (Inter 1st Year)</option><option>Career Blueprint (Inter 2nd Year)</option><option>Both Programs</option><option>Not sure yet</option></select>
+            <div class="field"><label for="f-name">Contact Person <span class="req">*</span></label><input id="f-name" type="text" name="name" placeholder="Your full name" required /><span class="err">Please enter your name.</span></div>
+            <div class="field"><label for="f-designation">Designation</label><input id="f-designation" type="text" name="designation" placeholder="e.g. Principal, Coordinator" /></div>
+            <div class="field"><label for="f-college">College / School <span class="req">*</span></label><input id="f-college" type="text" name="college" placeholder="Institution name" required /><span class="err">Please enter your institution.</span></div>
+            <div class="field"><label for="f-city">City <span class="req">*</span></label><input id="f-city" type="text" name="city" placeholder="City" required /><span class="err">Please enter your city.</span></div>
+            <div class="field"><label for="f-phone">Phone Number <span class="req">*</span></label><input id="f-phone" type="tel" name="phone" data-type="phone" placeholder="+91 XXXXXXXXXX" required /><span class="err">Enter a valid phone number.</span></div>
+            <div class="field"><label for="f-email">Email <span class="req">*</span></label><input id="f-email" type="email" name="email" placeholder="you@college.edu" required /><span class="err">Enter a valid email.</span></div>
+            <div class="field"><label for="f-program">Which program?</label>
+              <select id="f-program" name="program"><option value="">Select a program</option><option>Future Ready (Inter 1st Year)</option><option>Career Blueprint (Inter 2nd Year)</option><option>Both Programs</option><option>Not sure yet</option></select>
             </div>
-            <div class="field"><label>Approx. no. of students</label><input type="text" name="students" placeholder="e.g. 120" /></div>
-            <div class="field full"><label>Message</label><textarea name="message" placeholder="Preferred dates, requirements or questions…"></textarea></div>
+            <div class="field"><label for="f-students">Approx. no. of students</label><input id="f-students" type="text" name="students" placeholder="e.g. 120" /></div>
+            <div class="field full"><label for="f-message">Message</label><textarea id="f-message" name="message" placeholder="Preferred dates, requirements or questions…"></textarea></div>
           </div>
           <button type="submit" class="btn btn-primary btn-lg" style="margin-top:22px">Submit Inquiry</button>
           <p class="form-note">By submitting, you agree to be contacted by PathAhead regarding your inquiry.</p>

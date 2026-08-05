@@ -327,6 +327,16 @@
       .from(hero.querySelector(".hero-media"), { y: 34, autoAlpha: 0, scale: 0.96, duration: 0.9 }, 0.3)
       // float cards keep their CSS `floaty` transform loop — fade opacity only
       .from(hero.querySelectorAll(".float-card"), { autoAlpha: 0, duration: 0.5, stagger: 0.12 }, "-=0.4");
+
+    // The timeline starts by hiding the headline, lead and buttons, so the
+    // hero is blank until it finishes. That is a single point of failure: the
+    // ticker is driven by requestAnimationFrame, which browsers pause in a
+    // backgrounded tab and throttle under load, and one thrown error mid-
+    // timeline would strand the rest. Timers keep firing when frames do not,
+    // so jump to the finished state if the animation has not got there itself.
+    setTimeout(function () {
+      if (tl.progress() < 1) tl.progress(1);
+    }, 4000);
   }
 
   function scrollEffects() {
@@ -450,6 +460,34 @@
     });
   }
 
+  /* Headings and cards are hidden up front and revealed by ScrollTrigger, so
+     anything that stops a trigger from firing — a mis-measured start position
+     after fonts or images shift the layout, a stalled frame loop — leaves that
+     text invisible with no way back. Sweep on scroll (a real event, not a
+     frame callback) and show anything that has reached the viewport but is
+     still hidden. Costs nothing when the animations are working, because then
+     nothing matches. */
+  function revealGuard() {
+    var SEL = ".g-word, .card.reveal, .tcard.reveal, .step.reveal, .program-card.reveal";
+    var last = 0;
+    function sweep() {
+      var h = window.innerHeight || 0;
+      Array.prototype.forEach.call(document.querySelectorAll(SEL), function (el) {
+        if (parseFloat(getComputedStyle(el).opacity) > 0.05) return;
+        var r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > h) return;      // still off-screen: leave it alone
+        gsap.set(el, { clearProps: "all" });
+      });
+    }
+    addEventListener("scroll", function () {
+      var now = +new Date();
+      if (now - last < 400) return;
+      last = now;
+      sweep();
+    }, { passive: true });
+    setTimeout(sweep, 4500);
+  }
+
   function initGsap() {
     if (!window.gsap || !window.ScrollTrigger) { root.classList.remove("anim-hold"); return; }
     gsap.registerPlugin(ScrollTrigger);
@@ -458,6 +496,7 @@
     headingReveals();
     cardBatches();
     scrollEffects();
+    revealGuard();
   }
 
   ready(function () {
