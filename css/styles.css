@@ -927,7 +927,7 @@ body.drawer-open { overflow: hidden; }
 
 /* ---- Richer stats band ---- */
 .stats {
-  background: linear-gradient(120deg, var(--primary) 0%, var(--primary-darker) 45%, var(--violet-deep) 100%);
+  background: linear-gradient(120deg, var(--primary) 0%, var(--primary-darker) 55%, #7A2E08 100%);
   position: relative; overflow: hidden;
 }
 .stats::before {
@@ -957,10 +957,10 @@ body.drawer-open { overflow: hidden; }
    ============================================================ */
 
 /* ---- Gradient buttons ---- */
-.btn-primary { background: linear-gradient(120deg, var(--primary), var(--violet-deep)); }
-.btn-primary:hover { background: linear-gradient(120deg, var(--primary-dark), #6D28D9); }
-.btn-secondary { background: linear-gradient(120deg, #C2410C, #BE185D); }
-.btn-secondary:hover { background: linear-gradient(120deg, #9A3510, #9D174D); }
+.btn-primary { background: linear-gradient(120deg, var(--primary), #FF8A3D); }
+.btn-primary:hover { background: linear-gradient(120deg, var(--primary-dark), var(--secondary)); }
+.btn-secondary { background: linear-gradient(120deg, #C2410C, var(--secondary)); }
+.btn-secondary:hover { background: linear-gradient(120deg, #9A3510, #E58A00); }
 
 /* ---- Nav: gradient underline on the active link ---- */
 .nav-links a { position: relative; }
@@ -1929,6 +1929,91 @@ h3, h4 { font-family: var(--display); font-weight: 700; letter-spacing: -.022em;
 .split .panel, [data-theme="dark"] .split .panel {
   background: linear-gradient(150deg, rgba(255, 107, 26, .10), var(--surface) 70%); border-color: rgba(255, 255, 255, .08);
 }
+
+/* ============================================================
+   NAVIGATION & FOOTER — the last surfaces still on the old skin
+   ============================================================ */
+
+/* ---- Nav: a floating glass bar, not a solid slab ---- */
+.nav {
+  background: transparent; border-bottom: 1px solid transparent;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  transition: background .3s var(--ease), border-color .3s var(--ease), backdrop-filter .3s var(--ease);
+}
+[data-theme="dark"] .nav { background: transparent; }
+.nav.scrolled, [data-theme="dark"] .nav.scrolled {
+  background: rgba(8, 9, 12, .72);
+  backdrop-filter: saturate(150%) blur(16px); -webkit-backdrop-filter: saturate(150%) blur(16px);
+  border-bottom-color: rgba(255, 255, 255, .08);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .45);
+}
+.nav-inner { height: 68px; }
+
+/* links: display face, tighter, with a soft glass hover */
+.nav-links a {
+  font-family: var(--display); font-weight: 600; font-size: .92rem; letter-spacing: -.01em;
+  color: var(--muted); border-radius: 10px; padding: 8px 12px;
+}
+.nav-links a:hover { color: var(--ink); background: rgba(255, 255, 255, .06); }
+[data-theme="dark"] .nav-links a:hover { background: rgba(255, 255, 255, .06); }
+.nav-links a.active { color: var(--ink); background: rgba(255, 107, 26, .12); }
+.nav-links a.active::after { left: 12px; right: 12px; bottom: 4px; height: 2px; }
+
+/* the quiet second CTA (ghost), paired with the solar one */
+.btn-quiet {
+  background: rgba(255, 255, 255, .05); color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, .12); padding: 11px 18px; font-size: .92rem;
+}
+.btn-quiet:hover { background: rgba(255, 255, 255, .09); border-color: rgba(255, 255, 255, .22); transform: translateY(-1px); }
+.nav-cta { gap: 10px; }
+.nav-cta .btn-primary { padding: 11px 20px; font-size: .92rem; }
+@media (max-width: 1200px) { .nav-secondary { display: none; } }
+@media (max-width: 560px) { .nav-cta .btn-primary { display: none; } }
+
+/* brand mark reads as part of the dark UI */
+.brand { font-family: var(--display); letter-spacing: -.03em; }
+.brand-logo, [data-theme="dark"] .brand-logo {
+  background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .10);
+}
+
+/* hamburger */
+.nav-toggle { border: 1px solid rgba(255, 255, 255, .12); background: rgba(255, 255, 255, .04); }
+.nav-toggle:hover { background: rgba(255, 255, 255, .09); }
+
+/* ---- Mobile drawer to match ---- */
+.nav-drawer, [data-theme="dark"] .nav-drawer {
+  background: rgba(8, 9, 12, .96);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  padding: 22px 20px 32px;
+}
+.nav-drawer a {
+  font-family: var(--display); font-weight: 600; font-size: 1.02rem; color: var(--text);
+  border-bottom: 1px solid rgba(255, 255, 255, .06); border-radius: 12px; padding: 14px 14px;
+}
+.nav-drawer a.active, [data-theme="dark"] .nav-drawer a.active {
+  color: #fff; background: rgba(255, 107, 26, .14); border-bottom-color: transparent;
+}
+.nav-drawer .btn { margin-top: 18px; }
+
+/* ---- Footer: dark glass with solar structure ---- */
+.footer, [data-theme="dark"] .footer {
+  background: #060709; position: relative;
+  background-image: radial-gradient(760px 340px at 50% 0%, rgba(255, 107, 26, .07), transparent 62%);
+}
+.footer-grid { border-bottom-color: rgba(255, 255, 255, .07); }
+.footer h2 {
+  font-family: var(--display); font-size: .78rem; letter-spacing: .10em; text-transform: uppercase;
+  color: var(--muted-2); font-weight: 700;
+}
+.footer-col a { color: var(--muted); border-radius: 8px; transition: color .2s, padding-left .2s; }
+.footer-col a:hover { color: var(--primary); padding-left: 4px; }
+.footer-col a.btn:hover { padding-left: 0; color: #fff; }
+.socials a {
+  background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .10); color: var(--muted);
+}
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, .06); padding-top: 24px; color: var(--muted-2); }
+.footer-admin:hover { color: var(--primary); }
 
 /* Safety net: reveal animations are JS-driven, so if scripting is off the
    content must still be visible rather than permanently hidden. */

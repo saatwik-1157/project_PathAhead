@@ -135,6 +135,7 @@
         "</a>" +
         '<nav class="nav-links" aria-label="Primary">' + links + "</nav>" +
         '<div class="nav-cta">' +
+          '<a href="contact.html" class="btn btn-quiet nav-secondary">Talk to us</a>' +
           '<a href="contact.html" class="btn btn-primary">Book a Workshop</a>' +
           '<button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">' + I.menu + "</button>" +
         "</div>" +
