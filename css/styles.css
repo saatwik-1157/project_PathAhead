@@ -1574,6 +1574,70 @@ html { scrollbar-width: thin; scrollbar-color: #4C5A85 #0A0C11; }
 /* Primary buttons get a machined inner top-light */
 .btn-primary { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 8px 22px rgba(37, 99, 235, .28); }
 
+/* ============================================================
+   Depth pass — living surfaces, tactile feedback, signature close
+   ============================================================ */
+/* CTA band: the aurora inside slowly breathes (imperceptible at a glance) */
+.cta-band::before {
+  content: ""; position: absolute; inset: -35%; pointer-events: none;
+  background:
+    radial-gradient(38% 52% at 24% 32%, rgba(37, 99, 235, .30), transparent 65%),
+    radial-gradient(34% 48% at 76% 68%, rgba(139, 92, 246, .26), transparent 65%),
+    radial-gradient(26% 40% at 58% 18%, rgba(20, 184, 166, .12), transparent 60%);
+  animation: ctaAurora 18s ease-in-out infinite alternate;
+}
+@keyframes ctaAurora {
+  from { transform: rotate(0deg) scale(1); }
+  to   { transform: rotate(7deg) scale(1.14); }
+}
+.cta-band > * { position: relative; z-index: 1; }
+
+/* Every button answers the press */
+.btn:active { transform: translateY(0) scale(.97); }
+
+/* Hero scroll cue — a falling light on a hairline */
+.hero-scroll {
+  position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
+  width: 2px; height: 52px; z-index: 2; overflow: hidden; border-radius: 2px;
+  background: rgba(255, 255, 255, .10);
+}
+.hero-scroll span {
+  position: absolute; left: 0; top: -40%; width: 100%; height: 40%;
+  background: linear-gradient(180deg, transparent, var(--violet));
+  animation: scrollCue 2.2s cubic-bezier(.55, 0, .35, 1) infinite;
+}
+@keyframes scrollCue { to { top: 110%; } }
+@media (max-width: 700px) { .hero-scroll { display: none; } }
+
+/* Testimonial & quote avatars: hairline gradient ring */
+.person .avatar, .qauthor .avatar {
+  box-shadow: 0 0 0 2px #0B0D12, 0 0 0 3.5px rgba(139, 92, 246, .55);
+}
+
+/* Newsletter input: focus glows in brand light */
+.newsletter input:focus {
+  border-color: var(--violet);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, .18), 0 0 24px rgba(139, 92, 246, .12);
+}
+
+/* FAQ: rows acknowledge the cursor */
+.acc-item:hover { border-color: rgba(139, 92, 246, .35); }
+.acc-item.open { border-color: rgba(139, 92, 246, .5); box-shadow: 0 0 0 1px rgba(139, 92, 246, .18); }
+
+/* Alt sections get hairline edges — quiet structure */
+[data-theme="dark"] .section-alt {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .045), inset 0 -1px 0 rgba(255, 255, 255, .045);
+}
+
+/* Footer: a giant ghost wordmark closes the page like a colophon */
+.footer { overflow: hidden; }
+.footer::after {
+  content: "PathAhead"; position: absolute; left: 50%; bottom: -.34em; transform: translateX(-50%);
+  font-family: var(--display); font-weight: 700; font-size: clamp(6rem, 17vw, 15rem);
+  letter-spacing: -.05em; line-height: 1; color: #fff; opacity: .035;
+  pointer-events: none; user-select: none; white-space: nowrap;
+}
+
 /* Layered floating — different durations so the hero cards never sync up */
 .float-card.fc-1 { animation-duration: 5.2s; }
 .float-card.fc-2 { animation-duration: 6.4s; }
