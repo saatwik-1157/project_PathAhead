@@ -4,8 +4,42 @@
   publish = "."
   functions = "netlify/functions"
 
+# Pinned so a change to Netlify's default Node cannot break the function.
+[build.environment]
+  NODE_VERSION = "22"
+
 [functions]
   node_bundler = "esbuild"
+
+# The whole repo is the publish directory, so the source that supports the
+# build would otherwise be downloadable. These are served, not secret — no key
+# lives in any of them — but there is no reason to hand them out. `force` is
+# required: without it a real file on disk wins over the rule.
+# Note this does not touch the function itself, which is served from
+# /.netlify/functions/* (leading dot) and is unaffected.
+[[redirects]]
+  from = "/netlify/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/node_modules/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/package-lock.json"
+  to = "/404.html"
+  status = 404
+  force = true
 
 # Serve a friendly 404
 [[redirects]]

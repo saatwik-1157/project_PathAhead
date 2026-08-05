@@ -18,3 +18,4 @@ profile-readmes/
 # Python
 __pycache__/
 *.pyc
+.netlify/
