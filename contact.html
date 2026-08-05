@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — PathAhead | Book a Workshop</title>
   <meta name="description" content="Contact PathAhead to book a career workshop. Call +91 7780109877 or email nirishapavuluri@gmail.com. Fill our contact form and we'll get back to you." />
+  <link rel="canonical" href="https://saatwik-1157.github.io/project_PathAhead/contact.html" />
   <meta name="theme-color" content="#08090C" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta property="og:type" content="website" />
@@ -72,12 +73,12 @@
           <div class="form-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> <span>Thank you! Your message has been sent. We’ll be in touch soon.</span></div>
           <form data-form="contact" novalidate>
             <div class="form-grid">
-              <div class="field"><label>Name <span class="req">*</span></label><input type="text" name="name" placeholder="Your full name" required /><span class="err">Please enter your name.</span></div>
-              <div class="field"><label>College / School <span class="req">*</span></label><input type="text" name="college" placeholder="Institution name" required /><span class="err">Please enter your institution.</span></div>
-              <div class="field"><label>City <span class="req">*</span></label><input type="text" name="city" placeholder="City" required /><span class="err">Please enter your city.</span></div>
-              <div class="field"><label>Phone Number <span class="req">*</span></label><input type="tel" name="phone" data-type="phone" placeholder="+91 XXXXXXXXXX" required /><span class="err">Enter a valid phone number.</span></div>
-              <div class="field full"><label>Email <span class="req">*</span></label><input type="email" name="email" placeholder="you@email.com" required /><span class="err">Enter a valid email.</span></div>
-              <div class="field full"><label>Message <span class="req">*</span></label><textarea name="message" placeholder="How can we help? Tell us about your college, preferred dates or questions…" required></textarea><span class="err">Please enter a message.</span></div>
+              <div class="field"><label for="f-name">Name <span class="req">*</span></label><input id="f-name" type="text" name="name" placeholder="Your full name" required /><span class="err">Please enter your name.</span></div>
+              <div class="field"><label for="f-college">College / School <span class="req">*</span></label><input id="f-college" type="text" name="college" placeholder="Institution name" required /><span class="err">Please enter your institution.</span></div>
+              <div class="field"><label for="f-city">City <span class="req">*</span></label><input id="f-city" type="text" name="city" placeholder="City" required /><span class="err">Please enter your city.</span></div>
+              <div class="field"><label for="f-phone">Phone Number <span class="req">*</span></label><input id="f-phone" type="tel" name="phone" data-type="phone" placeholder="+91 XXXXXXXXXX" required /><span class="err">Enter a valid phone number.</span></div>
+              <div class="field full"><label for="f-email">Email <span class="req">*</span></label><input id="f-email" type="email" name="email" placeholder="you@email.com" required /><span class="err">Enter a valid email.</span></div>
+              <div class="field full"><label for="f-message">Message <span class="req">*</span></label><textarea id="f-message" name="message" placeholder="How can we help? Tell us about your college, preferred dates or questions…" required></textarea><span class="err">Please enter a message.</span></div>
             </div>
             <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top:22px">Send Message</button>
             <p class="form-note">By submitting, you agree to be contacted by PathAhead regarding your message.</p>

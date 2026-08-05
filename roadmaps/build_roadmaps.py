@@ -953,6 +953,8 @@ def build_page(d):
   <meta property="og:site_name" content="PathAhead" />
   <meta property="og:title" content="%%NAME%% Roadmap — PathAhead" />
   <meta property="og:description" content="%%META%%" />
+  <link rel="canonical" href="https://saatwik-1157.github.io/project_PathAhead/%%SLUG%%-roadmap.html" />
+  <meta property="og:url" content="https://saatwik-1157.github.io/project_PathAhead/%%SLUG%%-roadmap.html" />
   <meta property="og:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
@@ -1073,6 +1075,7 @@ def build_page(d):
     chips_html = "".join('<span class="chip">%s</span>' % t for t in oc["titles"])
     repl = {
         "%%NAME%%": d["name"], "%%META%%": d["meta"], "%%STYLE%%": PAGE_STYLE,
+        "%%SLUG%%": d["slug"],
         "%%H1PRE%%": d["h1_pre"], "%%ACCENT%%": d["accent"], "%%H1POST%%": d["h1_post"],
         "%%LEAD%%": d["lead"], "%%STATS%%": stats_html,
         "%%PDF%%": "roadmaps/%s-roadmap.pdf" % d["slug"],
@@ -1274,6 +1277,8 @@ def build_hub(domains):
   <meta property="og:site_name" content="PathAhead" />
   <meta property="og:title" content="Career Roadmaps — PathAhead" />
   <meta property="og:description" content="Free step-by-step roadmaps to learn any tech career from scratch." />
+  <link rel="canonical" href="https://saatwik-1157.github.io/project_PathAhead/roadmaps.html" />
+  <meta property="og:url" content="https://saatwik-1157.github.io/project_PathAhead/roadmaps.html" />
   <meta property="og:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />

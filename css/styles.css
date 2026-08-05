@@ -2243,3 +2243,14 @@ html { scrollbar-width: thin; scrollbar-color: #4C5A85 #0A0C11; }
   0%, 60% { left: -60%; }
   85%, 100% { left: 130%; }
 }
+
+/* ---- No sideways drift on phones ----------------------------------------
+   The hero's decorative layers (sun, halo, beams, network) are deliberately
+   wider than the screen, and on narrow viewports they leaked ~54px of real
+   horizontal scroll on the home page — the whole page slid under your thumb.
+   `overflow-x: hidden` on <html> would fix it but would also kill the sticky
+   navbar, because a clipping scroll container breaks `position: sticky` in
+   its descendants. `clip` does the same clipping without creating a scroll
+   container, so the nav keeps sticking. ---- */
+html { overflow-x: clip; }
+body { overflow-x: clip; }

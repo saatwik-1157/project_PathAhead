@@ -69,7 +69,12 @@ export default async (req) => {
     .filter((m) => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
     .map((m) => ({ role: m.role, content: m.content.slice(0, MAX_CHARS) }));
 
-  if (!messages.length || messages[0].role !== "user") {
+  // Trimming to the last MAX_TURNS can land mid-exchange, leaving an assistant
+  // reply first. The API requires the conversation to open with a user turn, so
+  // drop the dangling replies rather than rejecting a long, valid chat.
+  while (messages.length && messages[0].role !== "user") messages.shift();
+
+  if (!messages.length) {
     return json({ error: "conversation must start with a user message" }, 400);
   }
 
