@@ -1521,3 +1521,39 @@ h1.reveal.in, h2.reveal.in { transform: translateY(0); }
   .reveal, h1.reveal, h2.reveal { opacity: 1; transform: none; }
   .btn.is-magnetic { transform: none; }
 }
+
+/* ============================================================
+   Motion & 3D layer (js/motion.js) — WebGL hero + GSAP hooks
+   ============================================================ */
+/* WebGL constellation fills the hero background layer */
+.hero-3d { position: absolute; inset: 0; overflow: hidden; }
+.hero-3d canvas { width: 100% !important; height: 100% !important; display: block; }
+
+/* While GSAP is loading, hold the hero's reveal elements hidden so the
+   CSS reveal and the GSAP intro never double-play. A 3s timeout in
+   motion.js removes this class if GSAP never arrives. */
+.anim-hold .hero .reveal { opacity: 0 !important; transform: none !important; transition: none !important; }
+
+/* Headline word-split spans (GSAP staggers these in 3D) */
+.g-word { display: inline-block; will-change: transform; transform-style: preserve-3d; }
+
+/* Photo-band images pan inside their frames under ScrollTrigger */
+.pb-item { overflow: hidden; }
+
+/* Layered floating — different durations so the hero cards never sync up */
+.float-card.fc-1 { animation-duration: 5.2s; }
+.float-card.fc-2 { animation-duration: 6.4s; }
+.float-card.fc-3 { animation-duration: 4.6s; }
+
+/* Premium gleam — a light sweep crosses the big CTAs every ~6s */
+.btn-primary.btn-lg { position: relative; overflow: hidden; }
+.btn-primary.btn-lg::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 42%; left: -60%;
+  background: linear-gradient(105deg, transparent, rgba(255,255,255,.30), transparent);
+  pointer-events: none;
+  animation: btnGleam 6s ease-in-out infinite;
+}
+@keyframes btnGleam {
+  0%, 60% { left: -60%; }
+  85%, 100% { left: 130%; }
+}
