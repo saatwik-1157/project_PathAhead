@@ -151,6 +151,19 @@
     document.body.insertBefore(el, document.body.firstChild);
     document.body.insertBefore(drawer, el.nextSibling);
 
+    // Thin announcement strip above the nav.
+    var top = document.createElement("div");
+    top.className = "topbar";
+    top.innerHTML = '<div class="container">' +
+      '<a class="tb-left" href="roadmaps.html"><i></i>New — 12 free career roadmaps, with downloadable PDFs' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>' +
+      '<div class="tb-right">' +
+        '<a href="for-students.html">For students</a>' +
+        '<a href="for-colleges.html">For colleges</a>' +
+        '<a href="tel:' + CONFIG.phoneHref + '">' + CONFIG.phone + '</a>' +
+      "</div></div>";
+    document.body.insertBefore(top, document.body.firstChild);
+
     // Sticky shadow on scroll
     function onScroll() { el.classList.toggle("scrolled", window.scrollY > 8); }
     onScroll();
@@ -582,6 +595,22 @@
         hero.style.setProperty("--sy", ((e.clientY - r.top) / r.height * 100) + "%");
       });
     });
+
+    // The career network leans in 3D as the pointer moves across the hero.
+    var stage = document.querySelector("[data-neural]");
+    if (stage) {
+      var net = stage.querySelector(".neural"), hero = stage.closest(".hero") || stage;
+      hero.addEventListener("mousemove", function (e) {
+        var r = hero.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+        net.style.setProperty("--nry", (px * 16).toFixed(2) + "deg");
+        net.style.setProperty("--nrx", (13 - py * 10).toFixed(2) + "deg");
+      });
+      hero.addEventListener("mouseleave", function () {
+        net.style.setProperty("--nry", "0deg");
+        net.style.setProperty("--nrx", "13deg");
+      });
+    }
 
     // Cards tilt in 3D toward the cursor.
     if (window.matchMedia("(min-width: 1025px)").matches) {
