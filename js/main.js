@@ -877,6 +877,159 @@
   }
 
   /* ============================================================
+     AI Career Counsellor — talks to /.netlify/functions/counsellor,
+     which holds the API key server-side. The browser never sees a key.
+     Degrades politely anywhere the function isn't deployed.
+     ============================================================ */
+  var AI_ENDPOINT = "/.netlify/functions/counsellor";
+
+  function buildCounsellor() {
+    var fab = document.createElement("button");
+    fab.className = "ai-fab";
+    fab.setAttribute("aria-label", "Ask the AI career counsellor");
+    fab.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+      '<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 2v2M15 2v2M2 9h2M2 15h2M20 9h2M20 15h2"/>' +
+      '<circle cx="9.5" cy="11" r="1.2" fill="currentColor"/><circle cx="14.5" cy="11" r="1.2" fill="currentColor"/>' +
+      '<path d="M9 15.5c1.8 1.2 4.2 1.2 6 0"/></svg>';
+
+    var panel = document.createElement("div");
+    panel.className = "ai-panel";
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-label", "AI career counsellor");
+    panel.innerHTML =
+      '<div class="ai-head">' +
+        '<span class="ai-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9.5" cy="11" r="1.2" fill="currentColor"/><circle cx="14.5" cy="11" r="1.2" fill="currentColor"/><path d="M9 15.5c1.8 1.2 4.2 1.2 6 0"/></svg></span>' +
+        '<div><b>Career Counsellor</b><small>Free · powered by AI</small></div>' +
+        '<button class="ai-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>' +
+      "</div>" +
+      '<div class="ai-log" aria-live="polite"></div>' +
+      '<div class="ai-chips">' +
+        "<button>I don't know what to choose</button>" +
+        "<button>Which engineering branch suits me?</button>" +
+        "<button>What is AI/ML actually?</button>" +
+      "</div>" +
+      '<form class="ai-form"><input type="text" placeholder="Ask about courses, branches, careers…" aria-label="Your question" autocomplete="off" maxlength="1500" />' +
+        '<button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>' +
+      "</form>" +
+      '<p class="ai-note">AI can make mistakes — confirm anything important with us.</p>';
+
+    document.body.appendChild(fab);
+    document.body.appendChild(panel);
+
+    var log = panel.querySelector(".ai-log");
+    var form = panel.querySelector(".ai-form");
+    var input = panel.querySelector("input");
+    var sendBtn = form.querySelector("button");
+    var chips = panel.querySelector(".ai-chips");
+    var history = [];
+    var busy = false;
+
+    function bubble(text, who) {
+      var el = document.createElement("div");
+      el.className = "ai-msg " + who;
+      el.textContent = text;
+      log.appendChild(el);
+      log.scrollTop = log.scrollHeight;
+      return el;
+    }
+
+    // Turn "/cybersecurity-roadmap.html" style references into real links.
+    function linkify(el) {
+      el.innerHTML = el.innerHTML.replace(/(^|[\s(])\/([a-z0-9-]+\.html)/gi,
+        '$1<a href="/$2">$2</a>');
+    }
+
+    function greet() {
+      bubble(
+        "Hi! I'm PathAhead's career counsellor. Tell me which year you're in and what subjects you enjoy — I'll help you figure out what to do next.",
+        "bot"
+      );
+    }
+
+    function open() {
+      panel.classList.add("open");
+      fab.style.display = "none";
+      if (!log.children.length) greet();
+      input.focus();
+    }
+    function close() {
+      panel.classList.remove("open");
+      fab.style.display = "";
+      fab.focus();
+    }
+
+    fab.addEventListener("click", open);
+    panel.querySelector(".ai-close").addEventListener("click", close);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && panel.classList.contains("open")) close();
+    });
+    chips.addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (b && !busy) { input.value = b.textContent; form.requestSubmit(sendBtn); }
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var text = input.value.trim();
+      if (!text || busy) return;
+
+      bubble(text, "you");
+      history.push({ role: "user", content: text });
+      input.value = "";
+      chips.style.display = "none";
+      busy = true;
+      sendBtn.disabled = true;
+
+      var out = bubble("", "bot");
+      out.innerHTML = '<span class="ai-typing"><i></i><i></i><i></i></span>';
+
+      fetch(AI_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history }),
+      })
+        .then(function (res) {
+          // 404/405/501 = no function here (e.g. GitHub Pages or a plain
+          // static server); 503 = deployed but no API key set yet.
+          if ([404, 405, 501, 503].indexOf(res.status) !== -1) throw new Error("not_available");
+          if (!res.ok || !res.body) throw new Error("bad_response");
+
+          var reader = res.body.getReader();
+          var decoder = new TextDecoder();
+          var acc = "";
+          out.textContent = "";
+
+          return (function pump() {
+            return reader.read().then(function (r) {
+              if (r.done) {
+                history.push({ role: "assistant", content: acc });
+                linkify(out);
+                return;
+              }
+              acc += decoder.decode(r.value, { stream: true });
+              out.textContent = acc;
+              log.scrollTop = log.scrollHeight;
+              return pump();
+            });
+          })();
+        })
+        .catch(function (err) {
+          var msg = (err && err.message === "not_available")
+            ? "The AI counsellor isn't switched on yet. In the meantime, call PathAhead on +91 7780109877 or use the contact page — a real person will help."
+            : "Something went wrong reaching the counsellor. Please try again, or call +91 7780109877.";
+          out.textContent = msg;
+          history.pop(); // don't keep a turn that never got an answer
+        })
+        .then(function () {
+          busy = false;
+          sendBtn.disabled = false;
+          input.focus();
+          log.scrollTop = log.scrollHeight;
+        });
+    });
+  }
+
+  /* ============================================================
      Program chooser (data-chooser)
      ============================================================ */
   function initChooser() {
@@ -1003,6 +1156,7 @@
     buildFooter();
     buildToTop();
     buildWhatsApp();
+    buildCounsellor();
     registerSW();
     initScrollProgress();
     initReveal();
