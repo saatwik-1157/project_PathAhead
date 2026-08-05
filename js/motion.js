@@ -339,7 +339,7 @@
     if (jPath) gsap.to(jPath, { strokeDashoffset: -300, duration: 14, ease: "none", repeat: -1 });
 
     // Stats pop up one by one.
-    if (document.querySelector(".stat")) {
+    if (document.querySelector(".stats .stat")) {
       gsap.from(".stat", {
         y: 38, autoAlpha: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
         scrollTrigger: { trigger: ".stats", start: "top 82%" }

@@ -1062,6 +1062,7 @@ def build_page(d):
 
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/motion.js" defer></script>
 </body>
 </html>
 """
@@ -1337,6 +1338,7 @@ def build_hub(domains):
 
   <script src="js/config.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/motion.js" defer></script>
 </body>
 </html>
 """.replace("%%CARDS%%", cards_html).replace("%%COUNT%%", COUNT_WORDS.get(len(domains) + 1, str(len(domains) + 1)))
