@@ -1,6 +1,11 @@
 # Netlify deploy config for PathAhead (static site)
+# The site itself has no build step; only the functions get their deps installed.
 [build]
   publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
 
 # Serve a friendly 404
 [[redirects]]
