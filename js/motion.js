@@ -308,6 +308,13 @@
     root.classList.remove("anim-hold");
 
     var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    // Solar hero (badge + sun + app mock). GSAP ignores targets that aren't
+    // present, so this stays safe for any hero variant.
+    if (hero.querySelector(".badge-split")) {
+      tl.from(hero.querySelector(".badge-split"), { y: 24, autoAlpha: 0, duration: 0.55 })
+        .from(hero.querySelector(".solar"), { yPercent: 14, autoAlpha: 0, duration: 1.4, ease: "power2.out" }, 0)
+        .from(hero.querySelector(".app-mock"), { y: 46, autoAlpha: 0, duration: 0.95 }, 0.45);
+    }
     tl.from(hero.querySelector(".eyebrow"), { y: 24, autoAlpha: 0, duration: 0.55 })
       .from(words, {
         yPercent: 115, autoAlpha: 0, rotateX: -50,

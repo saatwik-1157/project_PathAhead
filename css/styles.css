@@ -26,14 +26,15 @@
 
 /* ---------- Design Tokens ---------- */
 :root {
-  /* Brand palette (from brief) */
-  --primary: #2563EB;
-  --primary-dark: #1D4ED8;
-  --primary-darker: #1E40AF;
-  --primary-soft: #EFF4FF;
-  --secondary: #F97316;
-  --secondary-dark: #EA580C;
-  --secondary-soft: #FFF3EA;
+  /* Brand palette — solar orange on black (RedSun-style AI product look) */
+  --primary: #FF6B1A;
+  --primary-dark: #EA580C;
+  --primary-darker: #C2410C;
+  --primary-soft: rgba(255, 107, 26, .14);
+  --secondary: #FFB020;
+  --secondary-dark: #E58A00;
+  --secondary-soft: rgba(255, 176, 32, .14);
+  --sun-hot: #FFD9A8;
 
   /* Accent rainbow (visual upgrade) — rgba softs work on light & dark surfaces */
   --violet: #8B5CF6;
@@ -109,7 +110,8 @@ h1, h2, h3, h4 { line-height: 1.15; color: var(--ink); font-weight: 800; letter-
 .eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
-  color: #1D4ED8; background: #E7EEFE; /* solid, AA-contrast on any section (incl. dark heroes) */
+  color: #FFB27A; background: rgba(255, 107, 26, .12);
+  border: 1px solid rgba(255, 107, 26, .28);
   padding: 7px 14px; border-radius: var(--r-pill);
 }
 .eyebrow.is-orange { color: var(--secondary-dark); background: var(--secondary-soft); }
@@ -695,8 +697,8 @@ body.drawer-open { overflow: hidden; }
   --border: #23252B;
   --border-strong: #34373F;
   --ink: #F7F8FA;
-  --primary-soft: rgba(37, 99, 235, 0.22);
-  --secondary-soft: rgba(249, 115, 22, 0.18);
+  --primary-soft: rgba(255, 107, 26, 0.16);
+  --secondary-soft: rgba(255, 176, 32, 0.14);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
   --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.5);
@@ -1507,6 +1509,112 @@ h1.reveal.in, h2.reveal.in { transform: translateY(0); }
   .orbit-wrap { grid-template-columns: 1fr; }
   .orbit-stage { min-height: 340px; }
 }
+
+/* ============================================================
+   SOLAR HERO — centered AI-product hero with a rising sun arc
+   ============================================================ */
+.hero-solar {
+  position: relative; overflow: hidden; text-align: center;
+  padding: clamp(56px, 8vw, 92px) 0 0; min-height: min(920px, 96vh);
+  display: flex; flex-direction: column; isolation: isolate;
+}
+.hero-solar .container { position: relative; z-index: 5; }
+
+/* the sun: glowing disc with a white-hot rim, rising from below */
+/* No blur filters here: on large layers they get promoted and can composite
+   over the hero text on some GPUs. The radial gradients are soft already. */
+.solar {
+  position: absolute; left: 50%; bottom: -80%; transform: translateX(-50%);
+  width: min(1180px, 130vw); aspect-ratio: 1; pointer-events: none; z-index: 0;
+}
+.solar .halo {
+  position: absolute; inset: -20%; border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 122, 40, .30) 0%, rgba(255, 90, 20, .10) 40%, transparent 66%);
+}
+.solar .disc {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle at 50% 46%,
+    var(--sun-hot) 0%, #FF8A2B 20%, #E8551B 40%, rgba(140, 42, 8, .55) 62%, rgba(0, 0, 0, 0) 76%);
+}
+.solar .rim {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid rgba(255, 240, 222, .95);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .5) 24%, transparent 44%);
+          mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .5) 24%, transparent 44%);
+}
+/* soft diagonal light spill across the top-left, as in the reference */
+.hero-solar .streak {
+  position: absolute; top: -12%; left: -8%; width: 65%; height: 72%; z-index: 0; pointer-events: none;
+  background: linear-gradient(155deg, rgba(255, 255, 255, .05), transparent 62%);
+  transform: rotate(-8deg);
+}
+
+/* split announcement pill */
+.badge-split {
+  display: inline-flex; align-items: center; gap: 0; border-radius: var(--r-pill); overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .10); background: rgba(255, 255, 255, .04);
+  font-size: .82rem; font-weight: 600; backdrop-filter: blur(8px);
+}
+.badge-split b {
+  background: linear-gradient(120deg, var(--primary), var(--secondary));
+  color: #1A0D02; padding: 7px 13px; font-weight: 800; font-size: .78rem; letter-spacing: .01em;
+}
+.badge-split span { padding: 7px 15px 7px 13px; color: var(--text); display: inline-flex; align-items: center; gap: 8px; }
+.badge-split svg { width: 14px; height: 14px; color: var(--muted); }
+.badge-split:hover svg { transform: translateX(2px); }
+
+.hero-solar h1 { margin: 26px auto 0; max-width: 15ch; }
+.hero-solar .lead { max-width: 620px; margin: 20px auto 0; }
+.hero-solar .hero-actions { justify-content: center; margin-top: 32px; }
+
+/* cropped product dashboard sitting over the sun */
+.app-mock {
+  position: relative; z-index: 2; width: min(1080px, 92vw); margin: clamp(40px, 6vw, 74px) auto 0;
+  border: 1px solid rgba(255, 255, 255, .12); border-bottom: none; border-radius: 18px 18px 0 0;
+  background: rgba(10, 11, 14, .82); backdrop-filter: blur(16px); overflow: hidden;
+  box-shadow: 0 -24px 90px rgba(255, 107, 26, .20), 0 -2px 0 rgba(255, 255, 255, .06) inset, 0 40px 90px rgba(0, 0, 0, .6);
+  -webkit-mask-image: linear-gradient(180deg, #000 68%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 68%, transparent 100%);
+}
+.app-bar { display: flex; align-items: center; gap: 26px; padding: 15px 22px; border-bottom: 1px solid rgba(255, 255, 255, .07); }
+.app-brand { display: inline-flex; align-items: center; gap: 3px; font-weight: 800; font-size: .82rem; letter-spacing: .10em; color: var(--ink); }
+.app-brand i { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); display: inline-block; margin-bottom: 7px; }
+.app-nav { display: flex; gap: 22px; flex-wrap: nowrap; overflow: hidden; }
+.app-nav span { display: inline-flex; align-items: center; gap: 7px; font-size: .82rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.app-nav span:first-child { color: var(--ink); }
+.app-nav svg { width: 15px; height: 15px; }
+.app-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+.app-right .dot-av { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); flex: none; }
+.app-right svg { width: 17px; height: 17px; color: var(--muted); }
+.app-body { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 20px 22px 34px; }
+.app-tile { border: 1px solid rgba(255, 255, 255, .07); border-radius: 12px; padding: 14px; background: rgba(255, 255, 255, .02); text-align: left; }
+.app-tile .k { font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-2); }
+.app-tile .v { font-family: var(--display); font-size: 1.5rem; font-weight: 700; color: var(--ink); margin-top: 6px; letter-spacing: -.03em; }
+.app-tile .s { height: 4px; border-radius: 4px; margin-top: 10px; background: rgba(255, 255, 255, .08); overflow: hidden; }
+.app-tile .s i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+@media (max-width: 760px) {
+  .app-body { grid-template-columns: repeat(2, 1fr); }
+  .app-nav { display: none; }
+  .solar { bottom: -84%; width: 150vw; }
+}
+
+/* warm gradient text to match the solar palette */
+.text-gradient {
+  background: linear-gradient(100deg, #FFCF8A 0%, var(--primary) 45%, #FF4D2D 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+[data-theme="dark"] .text-gradient { background: linear-gradient(100deg, #FFD9A8 0%, #FF8A3D 48%, #FF5A2C 100%); -webkit-background-clip: text; background-clip: text; }
+
+/* Nav CTA gets the solar treatment */
+.nav .btn-primary, .hero-actions .btn-primary {
+  background: linear-gradient(120deg, var(--primary), #FF8A3D);
+  box-shadow: 0 8px 26px rgba(255, 107, 26, .32), inset 0 1px 0 rgba(255, 255, 255, .22);
+}
+.btn-outline {
+  background: rgba(255, 255, 255, .04); color: var(--ink);
+  border-color: rgba(255, 255, 255, .14); backdrop-filter: blur(8px);
+}
+.btn-outline:hover { border-color: rgba(255, 255, 255, .3); color: var(--ink); }
 
 /* Safety net: reveal animations are JS-driven, so if scripting is off the
    content must still be visible rather than permanently hidden. */
