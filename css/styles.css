@@ -2319,3 +2319,37 @@ body { overflow-x: clip; }
   .btn { white-space: normal; text-align: center; max-width: 100%; }
   .btn-lg { padding-left: 20px; padding-right: 20px; font-size: 1rem; }
 }
+
+/* ---- Photos while they load ----------------------------------------------
+   These are lazy-loaded, so on a phone a card can be on screen for a moment
+   before its photo arrives. Until then the browser paints the alt text as
+   plain words across the card — which is what "Students discussing career
+   options during a workshop" sprawling over the tile was. Give every content
+   photo a solid block to occupy and stop the alt text being drawn: it stays
+   in the markup and is still announced by screen readers, it just is not
+   rendered as loose text on top of the design. ---- */
+.pb-item img,
+.program-media img,
+.g-item img,
+.gallery-grid img,
+.card img,
+figure img {
+  background: linear-gradient(135deg, #14161B, #0D0F13);
+  color: transparent;
+  font-size: 0;
+}
+
+/* ---- Floating buttons must not sit on the page's own buttons --------------
+   The AI and WhatsApp launchers are fixed to the bottom-right corner, so the
+   last call to action on a page ended up underneath them. Leave room at the
+   end of the page, and tuck the buttons in a little on small screens. ---- */
+@media (max-width: 720px) {
+  /* .footer, not `footer` — the element selector loses to the existing
+     `.footer { padding: … }` shorthand and the space never appeared. */
+  .footer, .site-footer { padding-bottom: 104px; }
+  .ai-fab { right: 16px; bottom: 84px; width: 52px; height: 52px; }
+  .wa-wrap { right: 16px; bottom: 18px; }
+  .wa-btn { width: 52px; height: 52px; }
+  .wa-btn svg { width: 26px; height: 26px; }
+  .wa-menu { bottom: 64px; }
+}
