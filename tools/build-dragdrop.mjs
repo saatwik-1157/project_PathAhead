@@ -26,8 +26,13 @@ const ZIP = path.join(ROOT, "PathAhead-site.zip");
 
 // DEPLOY.md and tools/ stay out — they are for whoever maintains the site, not
 // for visitors, and the publish directory is served as-is.
-const FILES = ["sw.js", "sitemap.xml", "robots.txt"];
-const DIRS = ["css", "js", "assets", "roadmaps"];
+const FILES = ["sw.js", "sitemap.xml", "robots.txt", "manifest.webmanifest"];
+// The repo root also holds unrelated projects, so this is a list rather than
+// "copy everything". Missing one is silent and costly — leaving out
+// career-data shipped a Career Builder whose Branch dropdown was empty,
+// because every option comes from those files. The check at the end of this
+// script now refuses to build if a page references something that is not here.
+const DIRS = ["css", "js", "assets", "roadmaps", "career-data"];
 
 // A deploy config without the build step — the function is already bundled.
 // Written from Node so it lands as UTF-8 with no byte-order mark: PowerShell's
@@ -105,6 +110,65 @@ for (const d of DIRS) {
   if (fs.existsSync(path.join(ROOT, d))) fs.cpSync(path.join(ROOT, d), path.join(OUT, d), { recursive: true });
 }
 fs.writeFileSync(path.join(OUT, "netlify.toml"), TOML, "utf8");
+
+// Every local file the pages ask for must actually be in the package. This is
+// what would have caught career-data going missing: the HTML referenced it,
+// the package did not contain it, and the only symptom on the live site was an
+// empty dropdown.
+{
+  const refs = new Set();
+  const addRef = (ref) => {
+    if (/^(https?:|mailto:|tel:|#|data:|javascript:)/.test(ref)) return;
+    const clean = ref.split("#")[0].split("?")[0].replace(/^\.\//, "").replace(/^\//, "");
+    if (clean) refs.add(clean);
+  };
+
+  for (const f of fs.readdirSync(OUT).filter((f) => f.endsWith(".html"))) {
+    const html = fs.readFileSync(path.join(OUT, f), "utf8");
+    for (const m of html.matchAll(/(?:src|href)="([^"]+)"/g)) addRef(m[1]);
+  }
+
+  // The service worker precaches a list of its own, and `caches.addAll` rejects
+  // the whole install if a single entry 404s — so one missing file silently
+  // costs offline support entirely, with nothing visible on the page to show
+  // for it. career-data was in that list while missing from the package.
+  const swPath = path.join(OUT, "sw.js");
+  if (fs.existsSync(swPath)) {
+    const sw = fs.readFileSync(swPath, "utf8");
+    const core = sw.match(/const\s+CORE\s*=\s*\[([\s\S]*?)\]/);
+    if (core) for (const m of core[1].matchAll(/"([^"]+)"/g)) addRef(m[1]);
+  }
+
+  // Things main.js adds to <head> at runtime, which no HTML file mentions.
+  for (const m of fs.readFileSync(path.join(OUT, "js", "main.js"), "utf8")
+    .matchAll(/(?:rel:\s*"(?:manifest|apple-touch-icon)"[^}]*?href:\s*"([^"]+)")/g)) addRef(m[1]);
+
+  // Anything a page asks for that the folder lists above did not bring: take
+  // just that file from the repo. This is how the AI/ML roadmap PDF gets in
+  // without shipping the working files that sit beside it.
+  const missing = [];
+  let pulled = 0;
+  for (const ref of refs) {
+    const dest = path.join(OUT, ref);
+    if (fs.existsSync(dest)) continue;
+    const from = path.join(ROOT, ref);
+    if (fs.existsSync(from) && fs.statSync(from).isFile()) {
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.copyFileSync(from, dest);
+      pulled++;
+      console.log("  + " + ref);
+    } else {
+      missing.push(ref);
+    }
+  }
+  if (pulled) console.log(`  (${pulled} referenced file${pulled === 1 ? "" : "s"} pulled in individually)`);
+
+  if (missing.length) {
+    console.error("\nThe pages reference files that do not exist anywhere:");
+    for (const m of missing) console.error("  -", m);
+    process.exit(1);
+  }
+}
 
 // Sanity check: no bundle may import a package that will not be installed.
 for (const fn of functions) {
