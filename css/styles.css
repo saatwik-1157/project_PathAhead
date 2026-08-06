@@ -2254,3 +2254,68 @@ html { scrollbar-width: thin; scrollbar-color: #4C5A85 #0A0C11; }
    container, so the nav keeps sticking. ---- */
 html { overflow-x: clip; }
 body { overflow-x: clip; }
+
+/* ---- WhatsApp: two numbers answer, so the button opens a chooser ---------
+   .wa-btn keeps its own fixed position (it is a button now, not a link), and
+   the menu is anchored to the same corner just above it. ---- */
+.wa-wrap { position: fixed; right: 24px; bottom: 24px; z-index: 90; }
+.wa-wrap .wa-btn { position: static; right: auto; bottom: auto; border: 0; cursor: pointer; }
+.wa-wrap.open .wa-btn { transform: scale(1.04); }
+
+.wa-menu {
+  position: absolute; right: 0; bottom: 70px; min-width: 232px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 10px; box-shadow: 0 24px 60px rgba(0, 0, 0, .55);
+  display: grid; gap: 4px;
+  animation: waIn .18s var(--ease) both;
+}
+.wa-menu[hidden] { display: none; }
+@keyframes waIn { from { opacity: 0; transform: translateY(8px); } }
+
+.wa-menu-title {
+  margin: 4px 8px 6px; font-size: .74rem; font-weight: 800; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--muted);
+}
+.wa-menu a {
+  display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 11px;
+  color: var(--ink); font-weight: 700; font-size: .95rem; white-space: nowrap;
+  transition: background .2s var(--ease);
+}
+.wa-menu a:hover, .wa-menu a:focus-visible { background: rgba(37, 211, 102, .14); color: #25D366; }
+.wa-menu a svg { width: 20px; height: 20px; color: #25D366; flex: none; }
+
+/* Sit clear of the AI launcher on small screens. */
+@media (max-width: 480px) {
+  .wa-menu { min-width: 208px; }
+}
+
+/* ---- Mobile fixes ---------------------------------------------------------
+   .compare was a fixed two-column grid at every width. On a phone the two
+   columns plus their 34px padding needed ~402px inside a 344px container, so
+   the right-hand "With PathAhead" card was cut off — and because the page
+   clips horizontal overflow, there was no way to scroll across and read it.
+   It just silently vanished. ---- */
+@media (max-width: 720px) {
+  .compare { grid-template-columns: 1fr; gap: 16px; }
+  .compare-col { padding: 24px 20px; }
+  .compare-col h3 { font-size: 1.08rem; margin-bottom: 16px; }
+}
+
+/* Comfortable touch targets. 44px is the size a fingertip reliably hits;
+   several buttons sat at 38px. The :not(.btn) matters — without it this rule
+   also caught the "Book a Workshop" button sitting inside the footer column
+   and replaced its own padding and height with a plain link's. */
+@media (max-width: 720px) {
+  .btn { min-height: 44px; }
+  .footer-col a:not(.btn), .nav-drawer a:not(.btn) { min-height: 40px; display: flex; align-items: center; }
+  .wa-menu a { min-height: 46px; }
+}
+
+/* Long button labels ("Explore free learn-from-scratch roadmaps") are wider
+   than a phone. Buttons keep their label on one line by default, so it ran
+   420px wide inside a 344px column and the end was clipped away. Let the text
+   wrap instead of forcing the button off the screen. */
+@media (max-width: 720px) {
+  .btn { white-space: normal; text-align: center; max-width: 100%; }
+  .btn-lg { padding-left: 20px; padding-right: 20px; font-size: 1rem; }
+}

@@ -77,16 +77,23 @@ const TOML = `# PathAhead — drag-and-drop deploy package.
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, "netlify", "functions"), { recursive: true });
 
-console.log("bundling the counsellor function…");
-// `shell: true` because on Windows npx is a .cmd shim, which cannot be
-// spawned directly — Node raises EINVAL.
-execFileSync(
-  "npx",
-  ["esbuild", "netlify/functions/counsellor.mjs", "--bundle", "--platform=node",
-   "--format=esm", "--target=node22", "--log-level=warning",
-   `--outfile="${path.join(OUT, "netlify", "functions", "counsellor.mjs")}"`],
-  { cwd: ROOT, stdio: "inherit", shell: true }
-);
+// Every function, so adding one does not silently ship unbundled.
+const FN_DIR = path.join(ROOT, "netlify", "functions");
+const functions = fs.readdirSync(FN_DIR).filter((f) => f.endsWith(".mjs") || f.endsWith(".js"));
+if (!functions.length) { console.error("No functions found in netlify/functions"); process.exit(1); }
+
+for (const fn of functions) {
+  console.log(`bundling ${fn}…`);
+  // `shell: true` because on Windows npx is a .cmd shim, which cannot be
+  // spawned directly — Node raises EINVAL.
+  execFileSync(
+    "npx",
+    ["esbuild", `netlify/functions/${fn}`, "--bundle", "--platform=node",
+     "--format=esm", "--target=node22", "--log-level=warning",
+     `--outfile="${path.join(OUT, "netlify", "functions", fn)}"`],
+    { cwd: ROOT, stdio: "inherit", shell: true }
+  );
+}
 
 for (const f of fs.readdirSync(ROOT).filter((f) => f.endsWith(".html"))) {
   fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
@@ -99,14 +106,16 @@ for (const d of DIRS) {
 }
 fs.writeFileSync(path.join(OUT, "netlify.toml"), TOML, "utf8");
 
-// Sanity check: the bundle must not import anything it cannot resolve.
-const bundle = fs.readFileSync(path.join(OUT, "netlify", "functions", "counsellor.mjs"), "utf8");
-const bare = [...bundle.matchAll(/^import\s.*?from\s+"([^."][^"]*)"/gm)]
-  .map((m) => m[1])
-  .filter((s) => !s.startsWith("node:"));
-if (bare.length) {
-  console.error("\nThe bundle still needs packages that will not be installed:", [...new Set(bare)].join(", "));
-  process.exit(1);
+// Sanity check: no bundle may import a package that will not be installed.
+for (const fn of functions) {
+  const bundle = fs.readFileSync(path.join(OUT, "netlify", "functions", fn), "utf8");
+  const bare = [...bundle.matchAll(/^import\s.*?from\s+"([^."][^"]*)"/gm)]
+    .map((m) => m[1])
+    .filter((s) => !s.startsWith("node:"));
+  if (bare.length) {
+    console.error(`\n${fn} still needs packages that will not be installed:`, [...new Set(bare)].join(", "));
+    process.exit(1);
+  }
 }
 
 // --keep leaves the folder in place instead of zipping it. The repo root holds

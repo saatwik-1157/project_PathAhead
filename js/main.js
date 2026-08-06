@@ -19,27 +19,23 @@
     year: 2026,
 
     /* ============================================================
-       INTEGRATIONS — fill these in to go fully live.
-       Leave blank to run in safe "demo mode" (saves to browser only).
-       Full step-by-step setup lives in SETUP.md
+       INTEGRATIONS
        ============================================================ */
-    siteUrl: "https://saatwik-1157.github.io/project_PathAhead",   // live domain (used for canonical + sitemap)
+    siteUrl: "https://pathahead22.netlify.app",   // live domain (canonical + sitemap)
 
-    // 🔑 Integration keys live in js/config.js (git-ignored) so they aren't committed.
-    //    Copy js/config.example.js → js/config.js and fill them in.
+    // Web3Forms key lives in js/config.js. It is safe in the browser by
+    // design — it only allows submitting to the inbox it belongs to.
     web3formsKey: "",       // set in js/config.js — https://web3forms.com
-    supabaseUrl: "",        // set in js/config.js — https://supabase.com
-    supabaseAnonKey: "",    // set in js/config.js
 
-    // 3) ANALYTICS (optional): privacy-friendly Plausible — put your domain here.
+    // Leads are stored server-side by netlify/functions/leads.mjs, and the
+    // admin passcode is checked there against the ADMIN_PASSCODE environment
+    // variable. Neither the store nor the passcode is reachable from here.
+
+    // Privacy-friendly Plausible — put your domain here to switch it on.
     analyticsDomain: "",
 
-    // 4) WHATSAPP: pre-filled message for the floating chat button.
-    whatsappMsg: "Hi PathAhead! I'd like to book a career workshop for our students.",
-
-    // 5) ADMIN (demo mode only): passcode for the /admin.html preview.
-    //    In live mode, real Supabase email/password auth is used instead.
-    adminPasscode: "pathahead"
+    // Pre-filled message for the WhatsApp buttons.
+    whatsappMsg: "Hi PathAhead! I'd like to book a career workshop for our students."
   };
 
   // Allow overriding config without editing this file (optional): window.PATHAHEAD_CONFIG
@@ -47,8 +43,7 @@
   window.PATHAHEAD = CONFIG; // expose for admin.html etc.
 
   var isConfigured = {
-    email: function () { return !!CONFIG.web3formsKey; },
-    db: function () { return !!(CONFIG.supabaseUrl && CONFIG.supabaseAnonKey); }
+    email: function () { return !!CONFIG.web3formsKey; }
   };
 
   // `secondary` keeps a page out of the top bar but not out of the site: all
@@ -240,7 +235,8 @@
               '<a href="#" aria-label="LinkedIn">' + SOCIAL.linkedin + "</a>" +
               '<a href="#" aria-label="Instagram">' + SOCIAL.instagram + "</a>" +
               '<a href="#" aria-label="YouTube">' + SOCIAL.youtube + "</a>" +
-              '<a href="https://wa.me/' + CONFIG.phoneHref.replace("+", "") + '" aria-label="WhatsApp">' + SOCIAL.whatsapp + "</a>" +
+              '<a href="https://wa.me/' + CONFIG.phoneHref.replace("+", "") + '" aria-label="WhatsApp ' + CONFIG.phone + '">' + SOCIAL.whatsapp + "</a>" +
+              '<a href="https://wa.me/' + CONFIG.phone2Href.replace("+", "") + '" aria-label="WhatsApp ' + CONFIG.phone2 + '">' + SOCIAL.whatsapp + "</a>" +
             "</div>" +
           "</div>" +
           '<div class="footer-col"><h2>Quick Links</h2>' + quick + "</div>" +
@@ -373,8 +369,7 @@
   }
 
   /* ============================================================
-     Forms — validation + fake submit + localStorage (admin-ready)
-     Later: replace saveSubmission() with a Supabase/Firebase call.
+     Forms — validate, email the lead, and store it server-side
      ============================================================ */
   // Local backup — always runs, so no lead is ever lost even if a network call fails.
   function saveLocal(kind, data) {
@@ -386,19 +381,7 @@
     } catch (e) { /* storage may be blocked; ignore */ }
   }
 
-  // Lazy-load the Supabase client only when it's actually configured/needed.
-  var _supabasePromise = null;
-  function getSupabase() {
-    if (!isConfigured.db()) return Promise.resolve(null);
-    if (_supabasePromise) return _supabasePromise;
-    _supabasePromise = import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm")
-      .then(function (m) { return m.createClient(CONFIG.supabaseUrl, CONFIG.supabaseAnonKey); })
-      .catch(function () { return null; });
-    return _supabasePromise;
-  }
-  window.PATHAHEAD_getSupabase = getSupabase;
-
-  // Email the lead via Web3Forms (free, no backend needed).
+  // Email the lead via Web3Forms.
   function sendToEmail(kind, data) {
     if (!isConfigured.email()) return Promise.resolve(false);
     var labels = { contact: "Contact", college_inquiry: "College Inquiry", student_registration: "Student Registration", newsletter: "Newsletter" };
@@ -416,28 +399,24 @@
     }).then(function (r) { return r.ok; }).catch(function () { return false; });
   }
 
-  // Store the lead in Supabase (table: submissions).
-  function sendToDb(kind, data) {
-    return getSupabase().then(function (sb) {
-      if (!sb) return false;
-      return sb.from("submissions").insert({ kind: kind, payload: data })
-        .then(function (res) { return !res.error; })
-        .catch(function () { return false; });
-    });
+  // Store the lead server-side so it survives the visitor's browser and shows
+  // up in the admin panel from any device. Resolves false where the function
+  // is not available (a plain static host), which is fine — email still runs.
+  function sendToStore(kind, data) {
+    return fetch("/.netlify/functions/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind: kind, data: data })
+    }).then(function (r) { return r.ok; }).catch(function () { return false; });
   }
 
-  // Orchestrate: always back up locally, then send to whatever is configured.
-  // Resolves { delivered: bool, demo: bool } — demo = nothing configured (still "succeeds" locally).
+  // Send the lead every way available and report whether any of them worked.
+  // The local copy is a fallback for the visitor, not the record of truth.
   function sendSubmission(kind, data) {
     saveLocal(kind, data);
-    var anyConfigured = isConfigured.email() || isConfigured.db();
-    if (!anyConfigured) {
-      return new Promise(function (res) { setTimeout(function () { res({ delivered: true, demo: true }); }, 600); });
-    }
-    return Promise.all([sendToEmail(kind, data), sendToDb(kind, data)])
+    return Promise.all([sendToEmail(kind, data), sendToStore(kind, data)])
       .then(function (results) {
-        var delivered = results.some(function (r) { return r === true; });
-        return { delivered: delivered, demo: false };
+        return { delivered: results.some(function (r) { return r === true; }) };
       });
   }
 
@@ -1100,14 +1079,60 @@
   /* ============================================================
      Floating WhatsApp button
      ============================================================ */
+  function waLink(href) {
+    return "https://wa.me/" + href.replace("+", "") + "?text=" + encodeURIComponent(CONFIG.whatsappMsg);
+  }
+
+  // Two numbers answer WhatsApp, so the button opens a chooser rather than
+  // guessing. One number would still work as a plain link, so it stays one.
   function buildWhatsApp() {
-    var a = document.createElement("a");
-    a.className = "wa-btn";
-    a.href = "https://wa.me/" + CONFIG.phoneHref.replace("+", "") + "?text=" + encodeURIComponent(CONFIG.whatsappMsg);
-    a.target = "_blank"; a.rel = "noopener";
-    a.setAttribute("aria-label", "Chat with us on WhatsApp");
-    a.innerHTML = SOCIAL.whatsapp;
-    document.body.appendChild(a);
+    var numbers = [
+      { label: CONFIG.phone, href: CONFIG.phoneHref },
+      { label: CONFIG.phone2, href: CONFIG.phone2Href }
+    ].filter(function (n) { return n.label && n.href; });
+
+    if (numbers.length < 2) {
+      var a = document.createElement("a");
+      a.className = "wa-btn";
+      a.href = waLink(numbers[0].href);
+      a.target = "_blank"; a.rel = "noopener";
+      a.setAttribute("aria-label", "Chat with us on WhatsApp");
+      a.innerHTML = SOCIAL.whatsapp;
+      document.body.appendChild(a);
+      return;
+    }
+
+    var wrap = document.createElement("div");
+    wrap.className = "wa-wrap";
+    wrap.innerHTML =
+      '<div class="wa-menu" id="waMenu" role="menu" aria-label="Chat on WhatsApp" hidden>' +
+        '<p class="wa-menu-title">Chat on WhatsApp</p>' +
+        numbers.map(function (n) {
+          return '<a role="menuitem" target="_blank" rel="noopener" href="' + waLink(n.href) + '">' +
+            SOCIAL.whatsapp + "<span>" + n.label + "</span></a>";
+        }).join("") +
+      "</div>" +
+      '<button class="wa-btn" id="waBtn" aria-haspopup="true" aria-expanded="false" ' +
+        'aria-controls="waMenu" aria-label="Chat with us on WhatsApp">' + SOCIAL.whatsapp + "</button>";
+    document.body.appendChild(wrap);
+
+    var btn = wrap.querySelector("#waBtn");
+    var menu = wrap.querySelector("#waMenu");
+    function setOpen(open) {
+      menu.hidden = !open;
+      wrap.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      setOpen(menu.hidden);
+    });
+    document.addEventListener("click", function (e) {
+      if (!wrap.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setOpen(false);
+    });
   }
 
   /* ============================================================

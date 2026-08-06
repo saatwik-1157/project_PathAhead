@@ -4,6 +4,7 @@
   "description": "PathAhead — static site. This package.json exists only so Netlify installs dependencies for the serverless functions; the site itself has no build step.",
   "type": "module",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.70.0"
+    "@anthropic-ai/sdk": "^0.70.0",
+    "@netlify/blobs": "^10.7.12"
   }
 }
