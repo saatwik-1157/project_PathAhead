@@ -23,11 +23,29 @@ Leave the build settings alone. `netlify.toml` already declares them:
 | Functions directory | `netlify/functions` | where the counsellor lives |
 | Node version | 22 | pinned so a Netlify default change cannot break the function |
 
-Every `git push` then redeploys automatically.
+Every `git push` then redeploys automatically. This is the route to prefer —
+Netlify installs the dependency and bundles the function for you.
 
-> **Do not drag-and-drop a zip if you want the AI.** A zip upload skips
-> `npm install`, so `@anthropic-ai/sdk` is missing and the counsellor fails
-> even with the key set. Drag-and-drop is fine for the static site only.
+### Or upload by hand
+
+A plain zip of the repo would break the AI: a manual upload skips
+`npm install`, so `@anthropic-ai/sdk` would be missing and the counsellor
+would fail even with the key set.
+
+`PathAhead-site.zip` avoids that — the function inside it is already bundled,
+so it needs no npm install and no build step:
+
+```bash
+node tools/build-dragdrop.mjs
+```
+
+Then drop the extracted folder on **Netlify → Sites → Deploy manually**.
+Tested by extracting the zip to an empty directory and serving it with
+nothing installed: pages, function and streaming reply all work.
+
+The trade-off is that a manual upload has no link to git, so every future
+change means rebuilding and re-uploading. Connect the repository instead if
+you can.
 
 ---
 
