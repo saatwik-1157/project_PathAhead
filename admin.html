@@ -21,7 +21,6 @@
     .admin-right { display: flex; align-items: center; gap: 10px; }
     .admin-user { font-size: .82rem; color: var(--muted); font-weight: 600; margin-right: 4px; }
     .admin-badge { font-size: .72rem; font-weight: 700; padding: 6px 12px; border-radius: 999px; letter-spacing: .02em; white-space: nowrap; }
-    .badge-demo { background: var(--secondary-soft); color: var(--secondary-dark); }
     .badge-live { background: #ECFDF5; color: #059669; }
     [data-theme="dark"] .badge-live { background: rgba(16,185,129,.16); color: #34D399; }
     .icon-btn { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; color: var(--muted); border: 1px solid var(--border); background: var(--bg); transition: all .2s; }
@@ -86,13 +85,7 @@
       <h1 class="center" style="font-size:1.35rem;margin:8px 0 4px">Admin Dashboard</h1>
       <p class="center muted" id="login-sub" style="font-size:.9rem;margin-bottom:24px">Sign in to view submissions.</p>
       <form id="login-form">
-        <div id="live-fields" style="display:none">
-          <div class="field" style="margin-bottom:14px"><label for="admin-email">Email</label><input type="email" id="admin-email" placeholder="you@example.com" autocomplete="username" /></div>
-          <div class="field"><label for="admin-pass">Password</label><input type="password" id="admin-pass" placeholder="Your password" autocomplete="current-password" /></div>
-        </div>
-        <div id="demo-fields">
-          <div class="field"><label for="admin-code">Passcode</label><input type="password" id="admin-code" placeholder="Enter passcode" autocomplete="off" /></div>
-        </div>
+        <div class="field"><label for="admin-code">Passcode</label><input type="password" id="admin-code" placeholder="Enter passcode" autocomplete="current-password" /></div>
         <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top:20px" id="login-btn">Sign In</button>
         <p class="err-msg" id="login-err">Incorrect credentials. Please try again.</p>
       </form>
@@ -114,9 +107,6 @@
     </div>
 
     <div class="container" style="padding-top:28px;padding-bottom:64px">
-      <div id="demo-note" style="display:none;background:var(--secondary-soft);border:1px solid rgba(249,115,22,.3);color:var(--secondary-dark);padding:14px 18px;border-radius:var(--r);font-size:.9rem;margin-bottom:22px">
-        <strong>Demo mode.</strong> Showing submissions saved in <em>this browser</em>. Connect Supabase (see SETUP.md) for a live database across all visitors.
-      </div>
 
       <div class="stat-row">
         <div class="mini c-blue"><div class="mini-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="n" id="c-contact">0</div><div class="l">Contact Messages</div></div>
@@ -148,67 +138,86 @@
   <script>
   (function () {
     "use strict";
-    var CFG = window.PATHAHEAD || {};
-    var LIVE = !!(CFG.supabaseUrl && CFG.supabaseAnonKey);
-    var DEMO_PASSCODE = CFG.adminPasscode || "pathahead";
+    var ENDPOINT = "/.netlify/functions/leads";
     var KINDS = { college_inquiry: "College Inquiries", student_registration: "Student Registrations", contact: "Contact Messages", newsletter: "Newsletter" };
     var store = { college_inquiry: [], student_registration: [], contact: [], newsletter: [] };
     var current = "college_inquiry";
     var filterText = "";
-    var sb = null, adminEmail = "";
+    var passcode = "";
     var el = function (id) { return document.getElementById(id); };
 
-    // Dark-only by design — no theme toggle.
+    // The passcode is checked by the function, never here — this page cannot
+    // tell a right one from a wrong one until the server answers. It is kept
+    // in sessionStorage so a refresh does not sign you out, and it goes no
+    // further than this tab.
+    try { passcode = sessionStorage.getItem("pathahead_admin") || ""; } catch (e) {}
 
-    // Login UI
-    el("live-fields").style.display = LIVE ? "block" : "none";
-    el("demo-fields").style.display = LIVE ? "none" : "block";
-    el("login-sub").textContent = LIVE ? "Sign in with your admin account." : "Demo mode — enter the passcode to preview saved submissions.";
+    el("login-sub").textContent = "Enter the admin passcode to view submissions.";
 
     el("login-form").addEventListener("submit", function (e) {
       e.preventDefault();
       el("login-err").classList.remove("show");
       var btn = el("login-btn"); btn.disabled = true; btn.textContent = "Signing in…";
-      function fail(msg) { el("login-err").textContent = msg; el("login-err").classList.add("show"); btn.disabled = false; btn.textContent = "Sign In"; }
-      if (LIVE) {
-        window.PATHAHEAD_getSupabase().then(function (client) {
-          sb = client;
-          return client.auth.signInWithPassword({ email: el("admin-email").value.trim(), password: el("admin-pass").value });
-        }).then(function (res) {
-          if (res && res.error) { fail(res.error.message || "Sign-in failed."); return; }
-          adminEmail = (res.data.user && res.data.user.email) || "";
-          openDash();
-        }).catch(function () { fail("Could not reach the server."); });
-      } else {
-        if (el("admin-code").value === DEMO_PASSCODE) { adminEmail = "Demo user"; openDash(); }
-        else fail("Incorrect passcode.");
-      }
+      signIn(el("admin-code").value).catch(function (msg) {
+        el("login-err").textContent = msg;
+        el("login-err").classList.add("show");
+        btn.disabled = false; btn.textContent = "Sign In";
+      });
     });
+
+    function signIn(code) {
+      return fetch(ENDPOINT, { headers: { "x-admin-passcode": code } }).then(function (r) {
+        if (r.status === 401) throw "Incorrect passcode.";
+        if (r.status === 503) throw "Admin access is not set up on this site yet.";
+        if (!r.ok) throw "Could not reach the server.";
+        return r.json();
+      }).then(function (data) {
+        passcode = code;
+        try { sessionStorage.setItem("pathahead_admin", code); } catch (e) {}
+        openDash();
+        fill(data);
+      }, function (err) {
+        throw (typeof err === "string" ? err : "Could not reach the server.");
+      });
+    }
 
     function openDash() {
       el("login").style.display = "none";
       el("dash").style.display = "block";
-      el("mode-badge").textContent = LIVE ? "● Live" : "● Demo";
-      el("mode-badge").className = "admin-badge " + (LIVE ? "badge-live" : "badge-demo");
-      el("admin-user").textContent = adminEmail ? ("Signed in · " + adminEmail) : "";
-      el("demo-note").style.display = LIVE ? "none" : "block";
-      loadData();
+      el("mode-badge").textContent = "● Live";
+      el("mode-badge").className = "admin-badge badge-live";
+      el("admin-user").textContent = "Signed in";
+    }
+
+    function fill(data) {
+      store = { college_inquiry: [], student_registration: [], contact: [], newsletter: [] };
+      (data.leads || []).forEach(function (row) {
+        if (store[row.kind]) store[row.kind].push({ data: row.payload || {}, at: row.received, key: row.key });
+      });
+      render();
     }
 
     function loadData() {
-      if (LIVE && sb) {
-        sb.from("submissions").select("kind,payload,created_at").order("created_at", { ascending: false }).then(function (res) {
-          store = { college_inquiry: [], student_registration: [], contact: [], newsletter: [] };
-          (res.data || []).forEach(function (row) { if (store[row.kind]) store[row.kind].push({ data: row.payload || {}, at: row.created_at }); });
-          render();
-        });
-      } else {
-        Object.keys(store).forEach(function (k) {
-          try { store[k] = JSON.parse(localStorage.getItem("pathahead_" + k) || "[]").slice().reverse(); } catch (e) { store[k] = []; }
-        });
-        render();
-      }
+      return fetch(ENDPOINT, { headers: { "x-admin-passcode": passcode } })
+        .then(function (r) {
+          if (r.status === 401) { signOut(); return null; }
+          return r.ok ? r.json() : null;
+        })
+        .then(function (data) { if (data) fill(data); });
     }
+
+    function signOut() {
+      passcode = "";
+      try { sessionStorage.removeItem("pathahead_admin"); } catch (e) {}
+      el("dash").style.display = "none";
+      el("login").style.display = "flex";
+      el("login-btn").disabled = false;
+      el("login-btn").textContent = "Sign In";
+      el("admin-code").value = "";
+    }
+
+    // Already signed in this tab — go straight in.
+    if (passcode) signIn(passcode).catch(function () { signOut(); });
 
     function render() {
       el("c-college").textContent = store.college_inquiry.length;
@@ -259,7 +268,7 @@
     });
     el("search").addEventListener("input", function () { filterText = this.value.trim(); renderTable(); });
     el("refresh-btn").addEventListener("click", loadData);
-    el("logout-btn").addEventListener("click", function () { if (LIVE && sb) { try { sb.auth.signOut(); } catch (e) {} } location.reload(); });
+    el("logout-btn").addEventListener("click", signOut);
 
     el("export-btn").addEventListener("click", function () {
       var rows = filtered(); if (!rows.length) return;
