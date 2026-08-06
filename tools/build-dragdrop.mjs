@@ -24,8 +24,10 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT = path.join(ROOT, "dist-dragdrop");
 const ZIP = path.join(ROOT, "PathAhead-site.zip");
 
-const FILES = ["sw.js", "sitemap.xml", "robots.txt", "DEPLOY.md"];
-const DIRS = ["css", "js", "assets", "roadmaps", "tools"];
+// DEPLOY.md and tools/ stay out — they are for whoever maintains the site, not
+// for visitors, and the publish directory is served as-is.
+const FILES = ["sw.js", "sitemap.xml", "robots.txt"];
+const DIRS = ["css", "js", "assets", "roadmaps"];
 
 // A deploy config without the build step — the function is already bundled.
 // Written from Node so it lands as UTF-8 with no byte-order mark: PowerShell's
@@ -107,10 +109,18 @@ if (bare.length) {
   process.exit(1);
 }
 
-fs.rmSync(ZIP, { force: true });
-execFileSync("powershell", ["-NoProfile", "-Command",
-  `Compress-Archive -Path '${OUT}\\*' -DestinationPath '${ZIP}'`], { stdio: "inherit" });
-fs.rmSync(OUT, { recursive: true, force: true });
-
-console.log(`\nDone — ${ZIP} (${(fs.statSync(ZIP).size / 1048576).toFixed(1)} MB)`);
-console.log("Self-contained: no npm install, no build step. Set ANTHROPIC_API_KEY on the site and the AI works.");
+// --keep leaves the folder in place instead of zipping it. The repo root holds
+// unrelated projects, personal PDFs and node_modules, so `netlify deploy` must
+// never be pointed at it — deploy this folder instead.
+if (process.argv.includes("--keep")) {
+  console.log(`\nDone — ${OUT}`);
+  console.log("Deploy with:");
+  console.log(`  npx netlify deploy --prod --dir "${OUT}" --functions "${path.join(OUT, "netlify", "functions")}"`);
+} else {
+  fs.rmSync(ZIP, { force: true });
+  execFileSync("powershell", ["-NoProfile", "-Command",
+    `Compress-Archive -Path '${OUT}\\*' -DestinationPath '${ZIP}'`], { stdio: "inherit" });
+  fs.rmSync(OUT, { recursive: true, force: true });
+  console.log(`\nDone — ${ZIP} (${(fs.statSync(ZIP).size / 1048576).toFixed(1)} MB)`);
+  console.log("Self-contained: no npm install, no build step. Set ANTHROPIC_API_KEY on the site and the AI works.");
+}
