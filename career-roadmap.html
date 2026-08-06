@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Career Roadmap Builder — PathAhead | Personalised Engineering Roadmaps</title>
-  <meta name="description" content="Build a personalised engineering career roadmap: pick your branch, year, domain, state and goal to get a tailored plan — skills, semester plan, projects, internships, placements and more." />
+  <title>Career Roadmap Builder — PathAhead | Personalised Career Roadmaps</title>
+  <meta name="description" content="Build a personalised career roadmap for any course — engineering, medical, commerce, science, arts, law, design and more. Pick your course, year, domain, state and goal for a tailored plan." />
   <meta name="theme-color" content="#08090C" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="PathAhead" />
   <meta property="og:title" content="Career Roadmap Builder — PathAhead" />
-  <meta property="og:description" content="Pick your branch, year, domain and state to generate a personalised engineering career roadmap." />
+  <meta property="og:description" content="Pick your course, year, domain and state to generate a personalised career roadmap — any stream, not just engineering." />
   <meta property="og:image" content="https://pathahead22.netlify.app/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://pathahead22.netlify.app/assets/og-image.png" />
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="canonical" href="https://pathahead22.netlify.app/career-roadmap.html" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebApplication","name":"PathAhead Career Roadmap Builder","applicationCategory":"EducationApplication","operatingSystem":"Web","description":"Build a personalised engineering career roadmap by branch, year, target domain, state and goal — with a semester timeline, projects, internships, placements and clickable learning resources.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"provider":{"@type":"Organization","name":"PathAhead"}}
+  {"@context":"https://schema.org","@type":"WebApplication","name":"PathAhead Career Roadmap Builder","applicationCategory":"EducationApplication","operatingSystem":"Web","description":"Build a personalised career roadmap for any course — engineering, medical, commerce, science, arts, law, design and more — by course, year, target domain, state and goal — with a semester timeline, projects, internships, placements and clickable learning resources.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"provider":{"@type":"Organization","name":"PathAhead"}}
   </script>
   <style>
     .builder{border:1px solid var(--border);border-radius:20px;padding:26px;background:var(--surface);max-width:960px;margin:0 auto}
@@ -104,8 +104,8 @@
     <div class="hero-bg"></div>
     <div class="container">
       <span class="eyebrow reveal">Personalised Roadmap</span>
-      <h1 class="h-xl reveal reveal-d1">Build <span class="text-accent">your</span> engineering career roadmap</h1>
-      <p class="lead reveal reveal-d2">Pick your branch, year, target domain, state and goal — and get a tailored plan covering skills, a semester-by-semester schedule, projects, internships, placements, and your next steps. Free, and yours to follow.</p>
+      <h1 class="h-xl reveal reveal-d1">Build <span class="text-accent">your</span> career roadmap</h1>
+      <p class="lead reveal reveal-d2">Engineering, medical, commerce, science, arts, law, design and more — 97 courses. Pick yours along with your year, target domain, state and goal, and get a tailored plan covering skills, a semester-by-semester schedule, projects, internships, placements and your next steps. Free, and yours to follow.</p>
     </div>
   </section>
 
@@ -113,13 +113,13 @@
     <div class="container">
       <div class="builder reveal">
         <div class="builder-grid">
-          <div class="fld"><label for="sel-branch">Branch</label><select id="sel-branch"><option value="">Select branch…</option></select></div>
+          <div class="fld"><label for="sel-branch">Course / Branch</label><select id="sel-branch"><option value="">Select your course…</option></select></div>
           <div class="fld"><label for="sel-year">Year of study</label><select id="sel-year">
             <option value="1">1st Year</option><option value="2">2nd Year</option>
             <option value="3">3rd Year</option><option value="4">Final Year</option>
             <option value="0">Diploma / Other</option>
           </select></div>
-          <div class="fld"><label for="sel-domain">Target domain</label><select id="sel-domain"><option value="">Select branch first…</option></select></div>
+          <div class="fld"><label for="sel-domain">Target domain</label><select id="sel-domain"><option value="">Select your course first…</option></select></div>
           <div class="fld"><label for="sel-state">State / UT</label><select id="sel-state"><option value="">Select state…</option></select></div>
           <div class="fld"><label for="sel-goal">Career goal</label><select id="sel-goal">
             <option value="placement">Placement (job)</option>
@@ -163,6 +163,7 @@
   <script src="career-data/domains.js"></script>
   <script src="career-data/states.js"></script>
   <script src="career-data/years.js"></script>
+  <script src="career-data/years-general.js"></script>
   <script src="career-data/resources.js"></script>
   <script src="career-data/builder.js"></script>
   <script src="js/main.js"></script>

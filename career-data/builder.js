@@ -178,13 +178,70 @@
   var NUM = 0;
   function block(title, inner){ NUM++; return '<div class="rm-block reveal"><h3><span class="rm-num">'+NUM+'</span>'+esc(title)+'</h3>'+inner+'</div>'; }
 
+  // Does this combination involve writing code or building software? Judged on
+  // the chosen career domain first, because that is what the student is
+  // actually aiming at — a B.Sc Physics student targeting data science needs
+  // the technical track, and a CSE student targeting civil services does not.
+  // The course stream decides only when no domain has been picked.
+  var TECH_DOMAINS = {
+    "software-development":1, "web-development":1, "ai-ml":1, "data-science":1,
+    "cyber-security":1, "cloud-devops":1, "mobile-development":1, "data-engineering":1,
+    "embedded-iot":1, "vlsi-semiconductor":1, "robotics-automation":1, "testing-qa":1,
+    "blockchain-web3":1, "game-development":1, "ar-vr":1, "ui-ux-design":1,
+    "product-management":1, "biomedical-bioinformatics":1
+  };
+  var TECH_STREAMS = { "Engineering (B.Tech / B.E.)":1, "Computer Applications":1 };
+
+  function isTechPath(branch, domain){
+    if(domain) return !!TECH_DOMAINS[domain.slug];
+    return !!(branch && TECH_STREAMS[branch.stream]);
+  }
+
   // ---- Populate selects ---------------------------------------------------
   function opt(v,l){ return '<option value="'+esc(v)+'">'+esc(l)+'</option>'; }
 
+  // Streams in the order a student is likely to look for them, rather than
+  // alphabetically — engineering first because most of this site's traffic is
+  // engineering, then the other large streams.
+  var STREAM_ORDER = [
+    "Engineering (B.Tech / B.E.)",
+    "Medical & Health Sciences",
+    "Commerce & Management",
+    "Science (B.Sc)",
+    "Computer Applications",
+    "Arts & Humanities",
+    "Law",
+    "Design & Fine Arts",
+    "Architecture & Planning",
+    "Media & Communication",
+    "Education",
+    "Agriculture & Allied",
+    "Hospitality & Tourism",
+    "Defence & Maritime"
+  ];
+
+  // 97 courses is far too many for one flat list to scroll through, so they are
+  // grouped by stream. <optgroup> is what makes this pleasant on a phone: iOS
+  // and Android both render the group headings in their native picker.
   function fillBranches(){
     var sel=document.getElementById("sel-branch");
-    var b=(window.BRANCHES||[]).slice().sort(function(a,c){return a.name.localeCompare(c.name);});
-    sel.innerHTML='<option value="">Select branch…</option>'+b.map(function(x){return opt(x.slug,x.name);}).join("");
+    var all=(window.BRANCHES||[]).slice();
+    var byStream={};
+    all.forEach(function(b){
+      var s=b.stream||"Other";
+      (byStream[s]=byStream[s]||[]).push(b);
+    });
+    var order=STREAM_ORDER.filter(function(s){return byStream[s];})
+      .concat(Object.keys(byStream).filter(function(s){return STREAM_ORDER.indexOf(s)===-1;}).sort());
+
+    var html='<option value="">Select your course…</option>';
+    order.forEach(function(s){
+      var list=byStream[s].sort(function(a,c){return a.name.localeCompare(c.name);});
+      html+='<optgroup label="'+esc(s)+'">'+
+        list.map(function(x){return opt(x.slug,x.name);}).join("")+
+      "</optgroup>";
+    });
+    sel.innerHTML=html;
   }
   function fillStates(){
     var sel=document.getElementById("sel-state");
@@ -250,7 +307,11 @@
     html+=block("Skills Required", skInner);
 
     // 4. Semester Plan
-    var sems=[]; (window.YEARS||[]).forEach(function(y){ (y.semesters||[]).forEach(function(s){ sems.push({y:y.year,foc:y.focus,s:s}); }); });
+    // window.YEARS is the engineering track — semester 3 says "learn data
+    // structures, build a CRUD app". Correct for B.Tech, wrong for MBBS or
+    // B.Com, so those courses get the general track instead.
+    var years = isTechPath(branch, domain) ? (window.YEARS||[]) : (window.YEARS_GENERAL||window.YEARS||[]);
+    var sems=[]; years.forEach(function(y){ (y.semesters||[]).forEach(function(s){ sems.push({y:y.year,foc:y.focus,s:s}); }); });
     var nowSet={}; if(year>=1&&year<=4){ nowSet[year*2-1]=1; nowSet[year*2]=1; }
     var curSem = (year>=1&&year<=4) ? year*2-1 : 0;
     var timelineHtml='<div class="timeline"><div class="tl-track">'+sems.map(function(o){
@@ -335,7 +396,10 @@
 
     // 9-12 Checklists (interactive — progress saved in your browser)
     html+=block("Resume Checklist", checklist("Resume", RESUME));
-    html+=block("GitHub Checklist", checklist("GitHub", GITHUB));
+    // A GitHub profile is how a software candidate proves ability. For a
+    // medical, law or hospitality student it is noise, so it is only shown
+    // where it actually counts for something.
+    if(isTechPath(branch, domain)) html+=block("GitHub Checklist", checklist("GitHub", GITHUB));
     html+=block("LinkedIn Checklist", checklist("LinkedIn", LINKEDIN));
     html+=block("Interview Preparation", checklist("Interview", INTERVIEW));
 
