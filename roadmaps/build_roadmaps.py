@@ -953,11 +953,11 @@ def build_page(d):
   <meta property="og:site_name" content="PathAhead" />
   <meta property="og:title" content="%%NAME%% Roadmap — PathAhead" />
   <meta property="og:description" content="%%META%%" />
-  <link rel="canonical" href="https://saatwik-1157.github.io/project_PathAhead/%%SLUG%%-roadmap.html" />
-  <meta property="og:url" content="https://saatwik-1157.github.io/project_PathAhead/%%SLUG%%-roadmap.html" />
-  <meta property="og:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
+  <link rel="canonical" href="https://pathahead22.netlify.app/%%SLUG%%-roadmap.html" />
+  <meta property="og:url" content="https://pathahead22.netlify.app/%%SLUG%%-roadmap.html" />
+  <meta property="og:image" content="https://pathahead22.netlify.app/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
+  <meta name="twitter:image" content="https://pathahead22.netlify.app/assets/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -1277,11 +1277,11 @@ def build_hub(domains):
   <meta property="og:site_name" content="PathAhead" />
   <meta property="og:title" content="Career Roadmaps — PathAhead" />
   <meta property="og:description" content="Free step-by-step roadmaps to learn any tech career from scratch." />
-  <link rel="canonical" href="https://saatwik-1157.github.io/project_PathAhead/roadmaps.html" />
-  <meta property="og:url" content="https://saatwik-1157.github.io/project_PathAhead/roadmaps.html" />
-  <meta property="og:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
+  <link rel="canonical" href="https://pathahead22.netlify.app/roadmaps.html" />
+  <meta property="og:url" content="https://pathahead22.netlify.app/roadmaps.html" />
+  <meta property="og:image" content="https://pathahead22.netlify.app/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://saatwik-1157.github.io/project_PathAhead/assets/og-image.png" />
+  <meta name="twitter:image" content="https://pathahead22.netlify.app/assets/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
