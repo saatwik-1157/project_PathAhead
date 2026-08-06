@@ -21,3 +21,5 @@ __pycache__/
 .netlify/
 PathAhead-site.zip
 dist-dragdrop/
+PathAhead-demo.mp4
+.record-tmp.mjs
