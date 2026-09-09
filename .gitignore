@@ -1,27 +1,61 @@
-# Local dev / preview tooling
+# ============================================================
+# PathAhead — this repository is the PathAhead website ONLY.
+#
+# The workspace folder it lives in also holds ~20 unrelated
+# projects (see 00_MASTER_INDEX/PROJECT_INDEX.md). Everything
+# below the "workspace" heading is deliberately ignored so a
+# stray `git add -A` can never commit another project, another
+# person's repository, or ~10 GB of dependencies into this one.
+# ============================================================
+
+# --- Workspace folders that are NOT PathAhead ---------------
+00_MASTER_INDEX/
+01_PROJECTS/
+03_ARCHIVE/
+04_UNCLASSIFIED/
+_AUDIT_BACKUP/
+
+# --- Secrets -------------------------------------------------
+# js/config.js is committed deliberately (public client keys —
+# see the comment at the top of that file). Nothing else is.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p8
+*.p12
+*.keystore
+*.jks
+
+# --- Local dev / preview tooling -----------------------------
 .claude/
 
-# OS files
+# --- OS files ------------------------------------------------
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Editor
+# --- Editor --------------------------------------------------
 .vscode/
 .idea/
 
-# Logs & temp
+# --- Logs & dependencies -------------------------------------
 *.log
 node_modules/
-profile-readmes/
 
-# Python
+# --- Python --------------------------------------------------
 __pycache__/
 *.pyc
+
+# --- Build / deploy artefacts --------------------------------
 .netlify/
-PathAhead-site.zip
 dist-dragdrop/
-PathAhead-demo.mp4
 .record-tmp.mjs
-PathAhead-linkedin/
+
+# --- Large media & deploy bundles (kept locally, not in git) --
+PathAhead-demo.mp4
 PathAhead-demo-60s.mp4
+PathAhead-linkedin/
+PathAhead-site.zip
+PathAhead-netlify.zip
