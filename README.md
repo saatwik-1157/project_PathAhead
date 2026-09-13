@@ -172,7 +172,7 @@ Designed & developed by **two members**:
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/saatwik-1157"><b>Saathwik</b></a><br/>
+      <a href="https://github.com/saatwik-1157"><b>Saatwik Sairaam Vasamsetti</b></a><br/>
       <a href="https://github.com/saatwik-1157">@saatwik-1157</a>
     </td>
     <td align="center">
