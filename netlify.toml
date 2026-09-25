@@ -49,6 +49,13 @@
   status = 404
   force = true
 
+# apps/web/README.md is for maintainers, not visitors.
+[[redirects]]
+  from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # Serve a friendly 404
 [[redirects]]
   from = "/*"

@@ -19,8 +19,8 @@ Leave the build settings alone. `netlify.toml` already declares them:
 | Setting | Value | Why |
 |---|---|---|
 | Build command | *(empty)* | nothing to compile |
-| Publish directory | `.` | the repo root is the site |
-| Functions directory | `netlify/functions` | where the counsellor lives |
+| Publish directory | `apps/web` | only the site is published; URLs stay at the root |
+| Functions directory | `apps/api/functions` | the counsellor and lead-store functions |
 | Node version | 22 | pinned so a Netlify default change cannot break the function |
 
 Every `git push` then redeploys automatically. This is the route to prefer —
@@ -36,7 +36,7 @@ would fail even with the key set.
 so it needs no npm install and no build step:
 
 ```bash
-node tools/build-dragdrop.mjs
+node scripts/build-dragdrop.mjs
 ```
 
 Then drop the extracted folder on **Netlify → Sites → Deploy manually**.
@@ -82,7 +82,7 @@ duplicate of the old one and keeps ranking the old one.
 Once you know the live URL, run this once and push:
 
 ```bash
-node tools/set-domain.mjs https://your-site.netlify.app
+node scripts/set-domain.mjs https://your-site.netlify.app
 ```
 
 It rewrites every page, `sitemap.xml`, `robots.txt` and the roadmap generator
@@ -108,20 +108,22 @@ has not been redeployed since it was added.
 ## What is where
 
 ```
-*.html                     24 pages (12 roadmap pages are generated)
-css/styles.css             all styling
-js/main.js                 nav, footer, forms, chat widget — injected at runtime
-js/motion.js               GSAP + Three.js motion layer (progressive enhancement)
-js/config.js               Web3Forms key (public by design)
-netlify/functions/         the AI counsellor
-roadmaps/build_roadmaps.py regenerates the 12 roadmap pages — edit this, not the HTML
-tools/set-domain.mjs       switch the site to a new domain
+apps/web/                           everything Netlify publishes
+apps/web/*.html                     24 pages (12 roadmap pages are generated)
+apps/web/css/styles.css             all styling
+apps/web/js/main.js                 nav, footer, forms, chat widget — injected at runtime
+apps/web/js/motion.js               GSAP + Three.js motion layer (progressive enhancement)
+apps/web/js/config.js               Web3Forms key (public by design)
+apps/web/roadmaps/build_roadmaps.py regenerates the 12 roadmap pages — edit this, not the HTML
+apps/api/functions/                 the AI counsellor and the lead store
+scripts/set-domain.mjs              switch the site to a new domain
+scripts/build-dragdrop.mjs          build the manual-upload zip
 ```
 
 **The roadmap pages are generated.** Editing
 `cybersecurity-roadmap.html` by hand works until someone reruns the generator,
-which overwrites it. Change `roadmaps/build_roadmaps.py` instead and run
-`python roadmaps/build_roadmaps.py`.
+which overwrites it. Change `apps/web/roadmaps/build_roadmaps.py` instead and run
+`python apps/web/roadmaps/build_roadmaps.py`.
 
 ## Forms
 
