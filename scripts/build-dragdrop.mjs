@@ -9,7 +9,7 @@
    This bundles the function into one self-contained file first,
    so the package needs no npm install and no build step at all.
 
-     node tools/build-dragdrop.mjs
+     node scripts/build-dragdrop.mjs
 
    Output: PathAhead-site.zip in the repo root.
 
@@ -20,14 +20,18 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 
-const ROOT = path.resolve(import.meta.dirname, "..");
-const OUT = path.join(ROOT, "dist-dragdrop");
-const ZIP = path.join(ROOT, "PathAhead-site.zip");
+// REPO is the repository root (package.json, node_modules, output go here);
+// WEB is the published site (apps/web) the package is copied from.
+const REPO = path.resolve(import.meta.dirname, "..");
+const WEB = path.join(REPO, "apps", "web");
+const FN_SRC = path.join(REPO, "apps", "api", "functions");
+const OUT = path.join(REPO, "dist-dragdrop");
+const ZIP = path.join(REPO, "PathAhead-site.zip");
 
-// DEPLOY.md and tools/ stay out — they are for whoever maintains the site, not
+// docs/ and scripts/ stay out — they are for whoever maintains the site, not
 // for visitors, and the publish directory is served as-is.
 const FILES = ["sw.js", "sitemap.xml", "robots.txt", "manifest.webmanifest"];
-// The repo root also holds unrelated projects, so this is a list rather than
+// apps/web also holds working files (roadmap sources, the promo kit), so this is a list rather than
 // "copy everything". Missing one is silent and costly — leaving out
 // career-data shipped a Career Builder whose Branch dropdown was empty,
 // because every option comes from those files. The check at the end of this
@@ -41,7 +45,7 @@ const DIRS = ["css", "js", "assets", "roadmaps", "career-data"];
 // allowed in keys", pointing at line 1).
 const TOML = `# PathAhead — drag-and-drop deploy package.
 #
-# The counsellor function in netlify/functions is already bundled, so this
+# The functions in netlify/functions are already bundled, so this
 # package needs no npm install and no build step. Drop the folder on Netlify
 # and the AI works as soon as ANTHROPIC_API_KEY is set.
 [build]
@@ -83,9 +87,8 @@ fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, "netlify", "functions"), { recursive: true });
 
 // Every function, so adding one does not silently ship unbundled.
-const FN_DIR = path.join(ROOT, "netlify", "functions");
-const functions = fs.readdirSync(FN_DIR).filter((f) => f.endsWith(".mjs") || f.endsWith(".js"));
-if (!functions.length) { console.error("No functions found in netlify/functions"); process.exit(1); }
+const functions = fs.readdirSync(FN_SRC).filter((f) => f.endsWith(".mjs") || f.endsWith(".js"));
+if (!functions.length) { console.error("No functions found in apps/api/functions"); process.exit(1); }
 
 for (const fn of functions) {
   console.log(`bundling ${fn}…`);
@@ -93,21 +96,21 @@ for (const fn of functions) {
   // spawned directly — Node raises EINVAL.
   execFileSync(
     "npx",
-    ["esbuild", `netlify/functions/${fn}`, "--bundle", "--platform=node",
+    ["esbuild", `apps/api/functions/${fn}`, "--bundle", "--platform=node",
      "--format=esm", "--target=node22", "--log-level=warning",
      `--outfile="${path.join(OUT, "netlify", "functions", fn)}"`],
-    { cwd: ROOT, stdio: "inherit", shell: true }
+    { cwd: REPO, stdio: "inherit", shell: true }
   );
 }
 
-for (const f of fs.readdirSync(ROOT).filter((f) => f.endsWith(".html"))) {
-  fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
+for (const f of fs.readdirSync(WEB).filter((f) => f.endsWith(".html"))) {
+  fs.copyFileSync(path.join(WEB, f), path.join(OUT, f));
 }
 for (const f of FILES) {
-  if (fs.existsSync(path.join(ROOT, f))) fs.copyFileSync(path.join(ROOT, f), path.join(OUT, f));
+  if (fs.existsSync(path.join(WEB, f))) fs.copyFileSync(path.join(WEB, f), path.join(OUT, f));
 }
 for (const d of DIRS) {
-  if (fs.existsSync(path.join(ROOT, d))) fs.cpSync(path.join(ROOT, d), path.join(OUT, d), { recursive: true });
+  if (fs.existsSync(path.join(WEB, d))) fs.cpSync(path.join(WEB, d), path.join(OUT, d), { recursive: true });
 }
 fs.writeFileSync(path.join(OUT, "netlify.toml"), TOML, "utf8");
 
@@ -151,7 +154,7 @@ fs.writeFileSync(path.join(OUT, "netlify.toml"), TOML, "utf8");
   for (const ref of refs) {
     const dest = path.join(OUT, ref);
     if (fs.existsSync(dest)) continue;
-    const from = path.join(ROOT, ref);
+    const from = path.join(WEB, ref);
     if (fs.existsSync(from) && fs.statSync(from).isFile()) {
       fs.mkdirSync(path.dirname(dest), { recursive: true });
       fs.copyFileSync(from, dest);

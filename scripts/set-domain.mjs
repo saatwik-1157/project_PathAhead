@@ -9,7 +9,7 @@
 
    Run this once with the live URL:
 
-     node tools/set-domain.mjs https://pathahead.netlify.app
+     node scripts/set-domain.mjs https://pathahead.netlify.app
 
    It rewrites every page, the roadmap generator (so
    regenerating cannot put the old domain back) sitemap.xml and
@@ -18,11 +18,12 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const ROOT = path.resolve(import.meta.dirname, "..");
+// The published site lives in apps/web; every path below is relative to it.
+const ROOT = path.resolve(import.meta.dirname, "..", "apps", "web");
 
 const raw = process.argv[2];
 if (!raw) {
-  console.error("Usage: node tools/set-domain.mjs https://your-site.netlify.app");
+  console.error("Usage: node scripts/set-domain.mjs https://your-site.netlify.app");
   process.exit(1);
 }
 
