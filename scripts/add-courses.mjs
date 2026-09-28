@@ -7,14 +7,15 @@
    groups everything by stream, and adds the career domains
    those courses lead to.
 
-   Run once:  node tools/add-courses.mjs
+   Run once:  node scripts/add-courses.mjs
    ============================================================ */
 import fs from "node:fs";
 import path from "node:path";
 
-const ROOT = path.resolve(import.meta.dirname, "..");
-const BR = path.join(ROOT, "career-data", "branches.js");
-const DM = path.join(ROOT, "career-data", "domains.js");
+// The site lives in apps/web; this script sits in scripts/ at the repo root.
+const WEB = path.resolve(import.meta.dirname, "..", "apps", "web");
+const BR = path.join(WEB, "career-data", "branches.js");
+const DM = path.join(WEB, "career-data", "domains.js");
 
 /* ---------- helpers so each entry stays readable ---------- */
 const course = (stream, group, slug, name, summary, subjects, skills, tools, topDomains, higher, exams) => ({

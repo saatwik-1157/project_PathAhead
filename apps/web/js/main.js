@@ -27,7 +27,7 @@
     // design — it only allows submitting to the inbox it belongs to.
     web3formsKey: "",       // set in js/config.js — https://web3forms.com
 
-    // Leads are stored server-side by netlify/functions/leads.mjs, and the
+    // Leads are stored server-side by apps/api/functions/leads.mjs, and the
     // admin passcode is checked there against the ADMIN_PASSCODE environment
     // variable. Neither the store nor the passcode is reachable from here.
 

@@ -1,22 +1,30 @@
-# Netlify deploy config for PathAhead (static site)
+# Netlify deploy config for PathAhead (static site + Netlify Functions)
 # The site itself has no build step; only the functions get their deps installed.
+#
+# Layout:
+#   apps/web/            everything the site serves (published as the site root,
+#                        so /about.html, /sw.js, /roadmaps/*.pdf keep their URLs)
+#   apps/api/functions/  Netlify Functions, served at /.netlify/functions/*
+#   package.json         at the repo root (the base directory), so Netlify's
+#                        `npm install` runs there and the bundler resolves the
+#                        functions' dependencies from ./node_modules
 [build]
-  publish = "."
-  functions = "netlify/functions"
+  publish = "apps/web"
 
 # Pinned so a change to Netlify's default Node cannot break the function.
 [build.environment]
   NODE_VERSION = "22"
 
 [functions]
+  directory = "apps/api/functions"
   node_bundler = "esbuild"
 
-# The whole repo is the publish directory, so the source that supports the
-# build would otherwise be downloadable. These are served, not secret — no key
-# lives in any of them — but there is no reason to hand them out. `force` is
-# required: without it a real file on disk wins over the rule.
-# Note this does not touch the function itself, which is served from
-# /.netlify/functions/* (leading dot) and is unaffected.
+# Only apps/web is published now, so none of these paths exist in the deploy
+# any more. The rules are kept as a belt-and-braces guard in case the publish
+# directory is ever pointed back at the repo root (e.g. by a dashboard
+# override). `force` is required: without it a real file on disk wins.
+# Note this does not touch the functions, which are served from
+# /.netlify/functions/* (leading dot) and are unaffected.
 [[redirects]]
   from = "/netlify/*"
   to = "/404.html"
@@ -37,6 +45,13 @@
 
 [[redirects]]
   from = "/package-lock.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# apps/web/README.md is for maintainers, not visitors.
+[[redirects]]
+  from = "/README.md"
   to = "/404.html"
   status = 404
   force = true

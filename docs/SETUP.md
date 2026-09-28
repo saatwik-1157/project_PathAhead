@@ -1,6 +1,12 @@
 # PathAhead — Go-Live Setup Guide
 
-Your site works **right now** in "demo mode" (form submissions are saved in the visitor's browser). To turn it into a real, production-grade lead system, complete the steps below. Everything is controlled from **one place**: the `CONFIG` block at the top of [`js/main.js`](js/main.js).
+> **Paths:** file paths in this guide (`js/main.js`, `js/config.js`, …) are
+> relative to `apps/web/`, the folder Netlify publishes. Leads are now also
+> stored server-side by `apps/api/functions/leads.mjs` (Netlify Blobs), and
+> Supabase is currently disconnected — see [DEPLOY.md](DEPLOY.md) for the
+> current deploy and environment-variable steps.
+
+Your site works **right now** in "demo mode" (form submissions are saved in the visitor's browser). To turn it into a real, production-grade lead system, complete the steps below. Everything is controlled from **one place**: the `CONFIG` block at the top of [`js/main.js`](../apps/web/js/main.js).
 
 There is **no build step** — edit the file, save, re-upload. That's it.
 
